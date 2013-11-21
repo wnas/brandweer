@@ -1,10 +1,9 @@
 {
     "dummy": {
-        "contact": {
+        "contact":{
             "name":"gerben",
-            "companyname":"de vrolijke fluiter",
-            "address": {
-                "street":"het gelukkige straatje",
+            "address":{
+                "street":"streetname",
                 "number":"2",
                 "postalcode":"1234aa",
                 "municipility":"Den Bosch"
@@ -19,4 +18,5 @@
     Naam,Adres,E-mail,Telefoonnummer,Bedrijfsnaam,verblijfsobject code (BAG),
     pandcontour (BAG),functies en onderliggende deelfuncties,informatie en 
     afbeeldingen van gasflessen,informatie en afbeeldingen van gevaarlijke stoffen
+
  */

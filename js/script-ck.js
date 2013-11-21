@@ -1,0 +1,1 @@
+var brandweer=function(){var e={src:"js/json/dummy.js"},t=function(){n()},n=function(){$.getJSON(e.src,function(e){console.log(e.dummy);var t=e.dummy.contact.companyname;alert(t)})};return{init:t}}();brandweer.init();
