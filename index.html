@@ -1,9 +1,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>test</title>
+    <title>brandweer</title>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-
+	<h1>app</h1>
+	<section>
+		<article>
+			<h2>Persoonsgegevens</h2>
+			<div class="b-container">
+				<label class="b-label" for="naam">naam</label>
+				<input class="b-text b-name" type="text" id="naam" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="bedrijfsnaam">bedrijfsnaam</label>
+				<input class="b-text b-companyname" type="text" id="bedrijfsnaam" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="adres-straat">straat</label>
+				<input class="b-text b-street" type="text" id="adres-straat" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="adres-huisnummer">nr</label>
+				<input class="b-text b-housenumber" type="text" id="adres-huisnummer" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="adres-postcode">postcode</label>
+				<input class="b-text b-postalcode" type="text" id="adres-postcode" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="adres-plaats">plaats</label>
+				<input class="b-text b-municipality" type="text" id="adres-plaats" readonly>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="email">email</label>
+				<input class="b-email" type="email" id="email" readonly>
+			</div>
+			
+		</article>
+		<article>
+			<h2>kaart</h2>
+			<kaart>kaart</kaart>
+			<div class="b-container">
+				<span>Zijn de juiste panden geselecteerd?</span>
+				
+				<label class="b-label" for="j"><input class="b-radio" type="radio" name="correctpand" id="j">ja</label>
+				<label class="b-label" for="n"><input class="b-radio" type="radio" name="correctpand" id="n">nee</label>
+			</div>
+			<div class="b-container">
+				<h3>contactpersonen bij calamiteiten</h3>
+				<div class="b-container">
+					<label class="b-label" for="naam1">naam</label>
+					<input class="b-text b-name" type="text" id="naam1">
+				</div>
+				<div class="b-container">
+					<label class="b-label" for="tel1">telefoonnummer</label>
+					<input class="b-tel" type=tel id="tel1">
+				</div>
+				<div class="b-container">
+					<label class="b-label" for="email1">email</label>
+					<input class="b-email" type=email id="email1">
+				</div>
+				<div class="b-container">
+					<label class="b-label" for="extra">voeg een contact persoon toe</label>
+					<button id="extra">Voeg toe</button>
+				</div>
+			</div>
+		</article>
+		<article>
+			<h2>functie</h2>
+			<div class="b-container">
+				<label class="b-label" for="hoofdf">functie</label>
+				<select name="h" id="hoofdf"><option value="d">select</option></select>
+			</div>
+			<div class="b-container">
+				<label class="b-label" for="subf">sub functie</label>
+				<select name="s" id="subf"><option value="d">select</option></select>
+			</div>
+		</article>
+	</section>
 </body>
 </html>
