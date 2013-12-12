@@ -46,6 +46,10 @@ fieldset {
     width: 100%;
     display:block;
     padding: @padding;
+    @media only screen and(min-width:700px){
+      display:inline-block;
+      width: 40%;
+    }
   }
   .f-required .f-label {     
       &::after {
@@ -85,6 +89,9 @@ fieldset {
     border: @border;
     border-radius: .4rem;
     width: 100%;
+    @media only screen and(min-width:700px){
+      width: 50%;
+    }
   }
   .f-select {
     width: 100%;
