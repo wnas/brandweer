@@ -1,3 +1,7 @@
+@border : 1px solid blue;
+@padding: 5px;
+@theme-color: teal;
+@secondary-color: brown;
 .f-form {
   outline: 1px solid red;
 }
@@ -80,7 +84,7 @@ fieldset {
       font-size: 1rem;
     }
     &:after {
-      .select-after;
+      //.select-after;
     }
   }
   .f-input,
@@ -92,6 +96,7 @@ fieldset {
     @media only screen and(min-width:700px){
       width: 50%;
     }
+
   }
   .f-select {
     width: 100%;
@@ -114,7 +119,7 @@ fieldset {
       visibility: hidden;
       &:checked ~ .f-inner-label::before {
        background-color:#000; 
-        .radio-checkbox-checked-before;
+        //.radio-checkbox-checked-before;
       }
      
       
@@ -125,7 +130,7 @@ fieldset {
   .f-inner-label {
       padding: @padding;
       &::before {
-        .radio-checkbox-before;
+       // .radio-checkbox-before;
         
       }
     }
