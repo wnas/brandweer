@@ -1,29 +1,9 @@
-@border : 1px solid blue;
-@padding: 5px;
+
 @theme-color: teal;
-@secondary-color: brown;
-.f-form {
-  outline: 1px solid red;
-}
-body,
-fieldset,
-div,
-input {
-  padding: 0;
-  margin: 0;
-}
-body {
-  font-family: helvetica, arial, sans-serif;
-  background-color:#fff;
-  max-width: 20rem;
-  margin: 0 auto;  
-}
-body,
-.f-input,
-.f-select,
-.f-button{
-  font-size: 1rem;
-}
+
+
+
+
 .f-input,
 .f-select,
 .f-button {
@@ -40,10 +20,10 @@ fieldset {
     display:block;
     font-size: 1.5rem;
     padding: .5rem;
-    border-bottom: @border;
+    border-bottom: @input-border;
   }
   .f-container {
-    padding: .5rem;
+    padding: .5rem 0;
     position:relative;
   }
   .f-label {
@@ -52,7 +32,9 @@ fieldset {
     padding: @padding;
     @media only screen and(min-width:700px){
       display:inline-block;
-      width: 40%;
+      width:  40%;
+      width: -webkit-calc(50% - @padding-total);
+      width: calc(50% - @padding-total);
     }
   }
   .f-required .f-label {     
@@ -87,15 +69,35 @@ fieldset {
       //.select-after;
     }
   }
+  .f-input {
+    // make sure that ipad and iphone get proper elements
+    -webkit-appearance:none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-border-radius: 0;
+  }
   .f-input,
   .f-select{
+
     padding: @padding;
-    border: @border;
-    border-radius: .4rem;
+    border: @input-border;
     width: 100%;
     @media only screen and(min-width:700px){
-      width: 50%;
+      width: 40%;
+      width: -webkit-calc(50% - 2px - @padding-total);
+      width: calc(50% - 2px - @padding-total);
     }
+    &:focus {
+      outline: none;
+      background-color: lighten( @secondary-color, 2%);
+    }
+    &:disabled {
+      border-color:#ccc;
+      color: #ccc;
+    }
+  &:readonly {
+    border-width: 0 0 1px;
+  }
 
   }
   .f-select {
@@ -119,7 +121,7 @@ fieldset {
       visibility: hidden;
       &:checked ~ .f-inner-label::before {
        background-color:#000; 
-        //.radio-checkbox-checked-before;
+        .radio-checkbox-checked-before;
       }
      
       

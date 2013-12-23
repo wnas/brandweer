@@ -3,27 +3,53 @@
 <head>
     <title>brandweer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--[if lt IE 9]>
+    <script src="js/vendors/html5shiv.js"></script>
+    <![endif]-->
 
     <!--geo shizzle -->
     <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
     <script src="js/leaflet-0.7.1/leaflet.js"></script>
 
     <link  rel="stylesheet" href="css/style.css" />
-    <style>
-        #map {
-            height: 400px;
-            outline: 1px solid red;
-        }
-    </style>
+
+    <!--[if lt IE 8]>
+    <link  rel="stylesheet" href="css/ie7.css" />
+    <![endif]-->
+
 </head>
 <body>
 
-	<header>
-		<a href="index.html" class="logo">Brandweer</a>
+	<header id="header">
+		<div class="container">
+
+		</div>
+        <nav>
+            <ul class="top-navigation">
+                <li class="top-navigation-item done"><a href="#contact"><span>1</span></a></li>
+                <li class="top-navigation-item active"><a href=""><span>2</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>3</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>4</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>5</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>6</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>7</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>8</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>9</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>10</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>11</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>12</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>13</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>14</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>15</span></a></li>
+                <li class="top-navigation-item"><a href=""><span>16</span></a></li>
+            </ul>
+        </nav>
 	</header>
-    <p></p><a href="hb.html">see some handlebars</a> or should we use <a href="dust.html">dust</a></p>
-	<main>
+    <!--<p></p><a href="hb.html">see some handlebars</a> or should we use <a href="dust.html">dust</a></p>-->
+	<main id="main">
 		<h1>Brandweer dus wel</h1>
+        <p>Ingelogd als : <span>Wilfred Nas</span></p>
+
 		<section>
 			<form action="#" class="f-form">
 				<fieldset id="contact">
@@ -31,17 +57,17 @@
 
 					<div class="f-container">
 						<label class="f-label" for="firstname">Voornaam</label>
-						<input class="f-input f-text b-name" type="text" id="firstname">
+						<input class="f-input f-text b-name" type="text" id="firstname" value="Wilfred Martinus Wilhelmus Theodorus" >
 					</div>
 
                     <div class="f-container">
                         <label class="f-label" for="surname">Achternaam</label>
-                        <input class="f-input f-text b-name" type="text" id="surname">
+                        <input class="f-input f-text b-name" type="text" id="surname" value="Nas">
                     </div>
 
 					<div class="f-container">
 						<label class="f-label" for="companyname">Bedrijfsnaam</label>
-						<input class="f-input f-text b-companyname" type="text" id="companyname">
+						<input class="f-input f-text b-companyname" type="text" id="companyname" readonly>
 					</div>
 
                     <fieldset id="address">
@@ -77,11 +103,18 @@
                         <input class="f-input f-telephone" type="tel" id="telephone">
                     </div>
 
+                    <nav>
+                        <button type="submit" class="f-button f-button-primary">
+                            <span>Next</span>
+                        </button>
+
+                    </nav>
+
 				</fieldset>
 
-				<fieldset>
+				<fieldset id="kaart">
 					<h2>kaart</h2>
-					<div id="map">kaart</div>
+					<div id="map" class="map">kaart</div>
 					<div class="f-container">
 						<span>Zijn de juiste panden geselecteerd?</span>
 						
