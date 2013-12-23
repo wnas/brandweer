@@ -3,9 +3,17 @@
 <head>
     <title>brandweer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link type="text/css" rel="stylesheet" href="css/style.css" media="all">
-    <style>
 
+    <!--geo shizzle -->
+    <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
+    <script src="js/leaflet-0.7.1/leaflet.js"></script>
+
+    <link  rel="stylesheet" href="css/style.css" />
+    <style>
+        #map {
+            height: 400px;
+            outline: 1px solid red;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +70,7 @@
 				</fieldset>
 				<fieldset>
 					<h2>kaart</h2>
-					<kaart>kaart</kaart>
+					<div id="map">kaart</div>
 					<div class="f-container">
 						<span>Zijn de juiste panden geselecteerd?</span>
 						
@@ -110,7 +118,7 @@
 		</section>
 	</main>
 
-    <script src="js/json/dummy.js"></script>
+
 	<script src=js/vendors/jquery/jquery.js></script>
 	<script src=js/script.js></script>
 </body>

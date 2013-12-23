@@ -196,13 +196,14 @@ var brandweer = function(){
 
     },	init = function(){
 		populate();
+        doMaps();
 	},	populate = function(){
 		// console.log($.get(config.src));
-//		$.getJSON( config.src , function( data ) {
-//			console.log(data.dummy);
-//			var cn = data.dummy.contact.companyname;
-//			alert(cn);
-//		});
+		$.getJSON( config.src , function( data ) {
+			console.log(data.dummy);
+			var cn = data.dummy.contact.companyname;
+			//alert(cn);
+		});
         console.log(config.data.dummy);
         var contact = config.data.dummy.contact;
         for( key in contact){
@@ -215,7 +216,19 @@ var brandweer = function(){
                 console.log(contact[key]);
             }
         }
-	};
+    },  doMaps = function(){
+        var coords = [51.690599, 5.3064146];
+        var map = L.map('map').setView(coords, 18);
+        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+            subDomains = ['1','2','3','4'],
+            cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains: subDomains, maxZoom: 18});
+
+        map.addLayer(cloudmade);
+
+        var marker = L.marker(coords).addTo(map);
+
+        marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>");
+    };
 	return {
 		init:init
 	};
