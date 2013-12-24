@@ -1,19 +1,54 @@
 {
-    "dummy": {
+    "data": {
         "contact": {
-            "firstname":"voornaam",
-            "surname":"achternaam",
-            "companyname":"bedrijfsnaam",
-            "address": {
-                "street":"straat naam",
-                "number":"2",
-                "addition": "a",
-                "postalcode":"1234aa",
-                "municipality":"Den Bosch"
+            "firstname":{
+                "type":"text",
+                "value": "gerben"
+             },
+            "lastname":{
+                "type":"text",
+                "value": "Hoeve"
             },
-            "email":"gerben@mail.ma",
-            "tel":"+316123456789"
+            "address":{
+                "type":"group",
+                "value":{
+                    "street":{
+                        "type":"text",
+                        "value":"straatnaam"
+                    },
+                    "number":{
+                        "type":"number",
+                        "value":"2"
+                    },
+                    "addition":{
+                        "type":"text",
+                        "value":""
+                    }
+                }
+            },
+            "email":{
+                "type":"email",
+                "value":"e@ma.il"
+            },
+            "telephone":{
+                "type":"tel",
+                "value":"06-12345678"
+            }
         },
+//        "contact": {
+//            "firstname":"Gerben",
+//            "surname":"Hoeve",
+//            "companyname":"GH designs",
+//            "address": {
+//                "street":"grote markt",
+//                "number":"2",
+//                "addition": "",
+//                "postalcode":"1234aa",
+//                "municipality":"Den Bosch"
+//            },
+//            "email":"gerben@mail.ma",
+//            "telephone":"+316123456789"
+//        },
         "buildings": [
              {
                 "entrance":{
@@ -36,8 +71,8 @@
                         }
                     ]
                 },
-                "function":"functiona",
-                "subfunction": "subfunctiona",
+                "function":"functions",
+                "subfunction": "subfunction",
                 "gas":{
                     "places": [
                         {
