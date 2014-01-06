@@ -18,40 +18,50 @@
         <p>{{comment}}</p>
     </li>
 </script>
-<script id="introduction" type="text/x-handlebars-template" >
-    <li>
-        <span class="meta">{{name}} on {{date}}</span>
-        <p>{{comment}}</p>
-    </li>
-
+<script id="contact" type="text/x-handlebars-template" >
+    {{#each contact}}
+        <div>
+            {{render_inputs}}
+        </div>
+    {{/each}}
 </script>
 <ul id="yeah"></ul>
-<ul id="test"></ul>
+<article id="contact-tmpl"></article>
 
 <script type="text/javascript">
     // handlebars templating is go...
+//
+//    // get the template
+//    var source = $("#ajax-comment").html();
+//
+//    // compile the template
+//    var template = Handlebars.compile(source);
+//    // set up the data
+//    var data = {
+//        name: "Jack",
+//        date: "12/04/12",
+//        comment: "This is a really awesome tutorial. Thanks."
+//    };
+//
+//    // inject it...
+//    $("#yeah").append(template(data));
 
-    // get the template
-    var source = $("#ajax-comment").html();
-
-    // compile the template
-    var template = Handlebars.compile(source);
-    // set up the data
-    var data = {
-        name: "Jack",
-        date: "12/04/12",
-        comment: "This is a really awesome tutorial. Thanks."
-    };
-
-    // inject it...
-    $("#yeah").append(template(data));
-
-    var intro = $('#introduction').html()
+    var contact = $('#contact').html()
 //    console.log(intro);
-    var introTemplate = Handlebars.compile(intro);
-    var dummyData = $.getJSON('js/json/dummydata.js');
-    console.log(dummyData);
-    $('#test').append(introTemplate(dummyData));
+    var contactTemplate = Handlebars.compile(contact);
+
+    Handlebars.registerHelper('render_inputs', function() {
+        return new Handlebars.SafeString(
+                "<label for='contact-"+ this.name +"'>"+this.name+"</label><input  id='contact-"+ this.name +"' type='" + this.type + "' value='"+ this.value + "' >"
+        );
+    });
+    $.getJSON('js/json/dummy.js',function(data){
+        var res = data.data;
+        console.log(res);
+        $('#contact-tmpl').append(contactTemplate(res));
+    });
+
+
 
 
 </script>

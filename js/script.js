@@ -2,44 +2,26 @@ var brandweer = function () {
     var config = {
         // foo: bar
         "src":"js/json/dummy.js"
-
-
     }, init = function () {
-        var contact;
-        var test = {
-            src : config.src,
-            part : 'contact'
-        }
-      //  getData(test);
+
         populate();
 
       //  testing();
-    }, getData = function (test) {
-        console.log(test);
-        $.getJSON(test.src,function(data){
-            console.log(data);
-        })
     }, populate = function () {
-        console.log('populate');
-        var tar = config.src;
-        console.log(tar);
-        $.getJSON(tar,function(data){
-            console.log(data);
-        })
-        $.getJSON(tar, function (data) {
-            console.log('getjson')
-            var contact = data.contact.firstname.value;
-            console.log(contact);
-            for (key in contact) {
-                if (typeof contact[key] === "object") {
-                    var address = contact[key];
-                    for (i in address) {
-                        $('#'+i).val(address[i]);
-                    }
-                } else {
-                    $('#'+key).val(contact[key]);
-                }
-            }
+
+
+        var contact = $('#contact-tmpl').html()
+
+        var contactTemplate = Handlebars.compile(contact);
+
+        Handlebars.registerHelper('render_inputs', function() {
+            return new Handlebars.SafeString(
+                "<label for='contact-"+ this.name +"' class='f-label'>"+this.name+"</label><input class='f-input' id='contact-"+ this.name +"' type='" + this.type + "' value='"+ this.value + "' >"
+            );
+        });
+        $.getJSON('js/json/dummy.js',function(data){
+            var res = data.data;
+            $('#contact').append(contactTemplate(res));
         });
 
 
