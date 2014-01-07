@@ -65,6 +65,14 @@ doMaps();
         var marker = L.marker(coords).addTo(map);
 
         marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
+        function onMapClick(e) {
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);
+        }
+
+        map.on('click', onMapClick);
 
     }, testing = function () {
 
