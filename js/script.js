@@ -7,26 +7,52 @@ var brandweer = function () {
         populate();
 
       //  testing();
+doMaps();
+    }, render = function(tmpl_name, tmpl_data){
+
+        if ( !render.tmpl_cache ) {
+            render.tmpl_cache = {};
+        }
+
+        if ( ! render.tmpl_cache[tmpl_name] ) {
+            var tmpl_dir = '/templates';
+            var tmpl_url = tmpl_dir + '/' + tmpl_name + '.html';
+
+            var tmpl_string;
+            $.ajax({
+                url: tmpl_url,
+                method: 'GET',
+                async: false,
+                success: function(data) {
+                    tmpl_string = data;
+                }
+            });
+
+            render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
+        }
+
+        return render.tmpl_cache[tmpl_name](tmpl_data);
+
     }, populate = function () {
 
+        var contact = render('contact', {});
+        var buildings = render('buildings',{});
 
-        var contact = $('#contact-tmpl').html()
 
         var contactTemplate = Handlebars.compile(contact);
+        var buildingTemplate = Handlebars.compile(buildings);
 
-        Handlebars.registerHelper('render_inputs', function() {
-            return new Handlebars.SafeString(
-                "<label for='contact-"+ this.name +"' class='f-label'>"+this.name+"</label><input class='f-input' id='contact-"+ this.name +"' type='" + this.type + "' value='"+ this.value + "' >"
-            );
-        });
+
         $.getJSON('js/json/dummy.js',function(data){
             var res = data.data;
-            $('#contact').append(contactTemplate(res));
+            console.log(res);
+            $('#contact').prepend(contactTemplate(data.data));
+            $('#buildings').append(buildingTemplate(res))
         });
 
 
     }, doMaps = function () {
-        $('#kaart').show();
+       // $('#kaart').show();
 
         var coords = [51.690599, 5.3064146];
         var map = L.map('map').setView(coords, 18);
@@ -42,9 +68,14 @@ var brandweer = function () {
 
     }, testing = function () {
 
-        $('#contact button[type=submit]').click(function () {
+
+        $('button[type=submit]').click(function () {
             $('fieldset').hide();
-            doMaps();
+            var $nextFieldset = $(this).closest('fieldset').next(),
+                $kaart = $('kaart');
+            $nextFieldset.show();
+
+                doMaps();
 
         });
     };

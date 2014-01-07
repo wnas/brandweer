@@ -4,46 +4,70 @@
             {
                 "name":"firstname",
                 "type":"text",
-                "value": "gerben"
+                "value": "emiel",
+                "required":"f-required"
 
             },
             {
                 "name":"lastname",
                 "type":"text",
-                "value": "Hoeve"
+                "value": "Hoeve",
+                "required":"f-required"
             },
+        {
+            "name":"bedrijfsnaam",
+            "type":"text",
+            "value": "Geweldig bedrijf",
+            "required":"f-required"
+        },
             {
                 "name":"street",
                 "type":"text",
-                "value":"straatnaam"
+                "value":"straatnaam",
+                "required":""
             },
             {
                 "name":"number",
                 "type":"number",
-                "value":"2"
+                "value":"2",
+                "required":"f-required"
             },
             {
-                "name":"addition",
+                "name":"huisnummer toevoeging",
                 "type":"text",
-                "value":""
+                "value":"",
+                "required":""
 
+            },
+            {
+                "name":"postcode",
+                "type":"text",
+                "value":"1245 ab",
+                "required":"f-required"
             },
             {
                 "name":"email",
                 "type":"email",
-                "value":"e@ma.il"
+                "value":"e@ma.il",
+                "required":""
 
             },
             {
                 "name":"telephone",
                 "type":"tel",
-                "value":"06-12345678"
+                "value":"06-12345678",
+                "required":""
             }
         ],
-        "buildings": [
+        "foo":[
+            {"text":"hallo"},
+            {"text":"daar"}
+        ],
+        "buildings":[
              {
-                "entrance":{
-                    "main":{
+                "entrance":[
+                    {
+                        "type":"main",
                         "geometry":{
                             "type": "Point",
                             "coordinates": [
@@ -51,17 +75,18 @@
                             ]
                         }
                     },
-                    "sub": [
-                        {
-                            "geometry":{
-                                "type": "Point",
-                                "coordinates": [
-                                    51.690599, 5.3064146
-                                ]
-                            }
+
+                    {
+                        "type":"sub",
+                        "geometry":{
+                            "type": "Point",
+                            "coordinates": [
+                                51.690599, 5.3064146
+                            ]
                         }
-                    ]
-                },
+                    }
+
+                ],
                 "function":"functions",
                 "subfunction": "subfunction",
                 "gas":{
@@ -88,6 +113,16 @@
                                      51.690599, 5.3064146
                                  ]
                              }
+                         },
+                         {
+                             "kind":"bar",
+                             "amount":"1",
+                             "geometry":{
+                                 "type": "Point",
+                                 "coordinates": [
+                                     51.690599, 5.3064146
+                                 ]
+                             }
                          }
                      ]
                  },
@@ -96,7 +131,7 @@
                          "geometry":{
                              "type": "Point",
                              "coordinates": [
-                                 51.690599, 5.3064146
+
                              ]
                          }
                      }
@@ -136,6 +171,12 @@
                      },
                      {
                          "kind":"personeel",
+                         "day":"5",
+                         "evening":"7",
+                         "night":"0"
+                     },
+                     {
+                         "kind":"piepeltjes",
                          "day":"5",
                          "evening":"7",
                          "night":"0"
