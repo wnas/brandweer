@@ -43,12 +43,16 @@ doMaps();
         var buildingTemplate = Handlebars.compile(buildings);
 
 
-        $.getJSON('js/json/dummy.js',function(data){
-            var res = data.data;
-            console.log(res);
-            $('#contact').prepend(contactTemplate(data.data));
-            $('#buildings').append(buildingTemplate(res))
-        });
+        var getData = function(){
+            $.getJSON('js/json/dummy.js',function(data){
+                var res = data.data;
+                return res;
+                // console.log(res);
+                $('#contact').prepend(contactTemplate(data.data));
+                $('#buildings').append(buildingTemplate(res))
+            });
+        };
+        console.log(getData());
 
 
     }, doMaps = function () {
@@ -63,13 +67,18 @@ doMaps();
         map.addLayer(cloudmade);
 
         var marker = L.marker(coords).addTo(map);
-
         marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
+        var popup = L.popup();
+
+
         function onMapClick(e) {
+            var coords = L.map.setLatLng(e.latlng);
             popup
                 .setLatLng(e.latlng)
                 .setContent("You clicked the map at " + e.latlng.toString())
                 .openOn(map);
+            console.log(coords);
+//            L.marker()
         }
 
         map.on('click', onMapClick);
