@@ -5,9 +5,10 @@ var brandweer = function () {
     }, init = function () {
 
         populate();
+           doMaps();
+   //   navigate();
+        getLiveData();
 
-      //  testing();
-doMaps();
     }, render = function(tmpl_name, tmpl_data){
 
         if ( !render.tmpl_cache ) {
@@ -33,6 +34,20 @@ doMaps();
 
         return render.tmpl_cache[tmpl_name](tmpl_data);
 
+    },  navigate = function(){
+        $('button[type=submit]').click(function () {
+            var $activeFieldset = $('fieldset.active'),
+                $nextFieldset = $activeFieldset.next('fieldset');
+
+            $activeFieldset.toggleClass('active done').next('fieldset').addClass('active');
+
+            if( $activeFieldset.data('map')){
+                console.log('maps')
+                doMaps();
+            }
+
+
+        });
     }, populate = function () {
 
         var contact = render('contact', {});
@@ -46,13 +61,14 @@ doMaps();
         var getData = function(){
             $.getJSON('js/json/dummy.js',function(data){
                 var res = data.data;
-                return res;
-                // console.log(res);
+//                return res;
+                console.log(res);
                 $('#contact').prepend(contactTemplate(data.data));
                 $('#buildings').append(buildingTemplate(res))
             });
         };
-        console.log(getData());
+        getData();
+        //console.log(getData());
 
 
     }, doMaps = function () {
@@ -68,32 +84,49 @@ doMaps();
 
         var marker = L.marker(coords).addTo(map);
         marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
+
         var popup = L.popup();
 
 
         function onMapClick(e) {
-            var coords = L.map.setLatLng(e.latlng);
-            popup
-                .setLatLng(e.latlng)
-                .setContent("You clicked the map at " + e.latlng.toString())
-                .openOn(map);
-            console.log(coords);
+            showLayer(e);
 //            L.marker()
         }
 
         map.on('click', onMapClick);
 
+    },   showLayer = function(e){
+        console.log('foo');
+    },  multipleSelects = function(){
+        function populatetitle() {
+            var firstSelect = $("#creator");
+            var secondSelect = $("#title");
+            var valuesForSecondSelect = values[firstSelect.val()]; //get values based on 1st selection box
+            secondSelect.empty(); // remove old options
+            $.each(valuesForSecondSelect, function(key, value) {
+                //loop through all values for 2nd box and add them
+                secondSelect.append($("<option></option>")
+                    .attr("value", value).text(key));
+            });
+        }
+
+        var origin = $('.multiple-select'),
+            firstSelect = $('.multiple-select-origin');
+
+        origin.each(function(){
+
+        })
+
     }, testing = function () {
 
 
-        $('button[type=submit]').click(function () {
-            $('fieldset').hide();
-            var $nextFieldset = $(this).closest('fieldset').next(),
-                $kaart = $('kaart');
-            $nextFieldset.show();
 
-                doMaps();
+    },  getLiveData = function(){
+        console.log('get live data')
 
+        $( "body" ).on( "click", ".f-button-primary", function(e) {
+            var f = $('fieldset.active');
+            console.log(f);
         });
     };
 

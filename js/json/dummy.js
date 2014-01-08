@@ -9,17 +9,17 @@
 
             },
             {
-                "name":"lastname",
+                "name":"surname",
                 "type":"text",
                 "value": "Hoeve",
                 "required":"f-required"
             },
-        {
-            "name":"bedrijfsnaam",
-            "type":"text",
-            "value": "Geweldig bedrijf",
-            "required":"f-required"
-        },
+            {
+                "name":"bedrijfsnaam",
+                "type":"text",
+                "value": "Geweldig bedrijf",
+                "required":"f-required"
+            },
             {
                 "name":"street",
                 "type":"text",
@@ -59,6 +59,66 @@
                 "required":""
             }
         ],
+        "contactPersonen":[
+            [
+               {
+                    "name":"firstname",
+                    "type":"text",
+                    "value": "emiel",
+                    "required":"f-required"
+
+                },
+                {
+                    "name":"surname",
+                    "type":"text",
+                    "value": "Hoeve",
+                    "required":"f-required"
+                },
+                {
+                    "name":"telephone",
+                    "type":"tel",
+                    "value":"",
+                    "required":"f-required"
+
+                },
+                {
+                        "name":"email",
+                        "type":"email",
+                        "value":"e@ma.il",
+                        "required":""
+
+                }
+            ],
+            [
+                {
+                    "name":"firstname",
+                    "type":"text",
+                    "value": "emiel",
+                    "required":"f-required"
+
+                },
+                {
+                    "name":"surname",
+                    "type":"text",
+                    "value": "Hoeve",
+                    "required":"f-required"
+                },
+                {
+                    "name":"telephone",
+                    "type":"tel",
+                    "value":"",
+                    "required":"f-required"
+
+                },
+                {
+                    "name":"email",
+                    "type":"email",
+                    "value":"e@ma.il",
+                    "required":""
+
+                }
+            ]
+        ],
         "foo":[
             {"text":"hallo"},
             {"text":"daar"}
@@ -87,7 +147,38 @@
                     }
 
                 ],
-                "function":"functions",
+                "functions":[
+                    {
+                        "name":"a",
+                        "function":"functionA",
+                        "subfunction":
+                            {
+                                "ByeBye":"Bye",
+                                "text":"value",
+                                "value":"Bye2"
+                            }
+                    },
+                    {
+                        "name":"b",
+                        "function":"functionB",
+                        "subfunction":
+                        {
+                            "ByeBye":"Byddde",
+                            "text":"valddddue",
+                            "value":"Byddde2"
+                        }
+                    },
+                    {
+                        "name":"c",
+                        "function":"functionC",
+                        "subfunction":
+                        {
+                            "ByeBye":"Byppppppe",
+                            "text":"valppppppppue",
+                            "value":"Byppppppppe2"
+                        }
+                    }
+                ],
                 "subfunction": "subfunction",
                 "gas":{
                     "places": [

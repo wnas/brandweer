@@ -70,36 +70,18 @@ http://handlebarsjs.com/
         <p>Ingelogd als : <span>Wilfred Nas</span></p>
         <section>
 			<form action="#" class="f-form">
-				<fieldset id="contact">
+				<fieldset id="contact" class="active">
 <!-- html will be injected with handlebars... templates go on top of html page.. -->
 
 
 				</fieldset>
-
-                <fieldset id="buildings">
-                    <h2>gebouwen</h2>
-
-
-                </fieldset>
-				<fieldset id="kaart">
+                <fieldset id="buildings"></fieldset>
+				<fieldset id="kaart" data-map>
 					<h2>kaart</h2>
                     <div class="f-container">
                         <p>Is het juiste pand geselecteerd, druk dan op bevestig en ga door. Mochten er andere panden bij uw bedrijf horen, selecteer ze op de kaart.</p>
                     </div>
 					<div id="map" class="map">kaart</div>
-					<div class="f-container">
-						<span>Zijn de juiste panden geselecteerd?</span>
-
-						<label class="f-radio-label" for="j">
-							<input class="f-radio" type="radio" name="correctpand" id="j">
-								<span class="f-inner-label">yes</span>
-                        </label>
-						<label class="f-radio-label" for="n">
-                            <input class="f-radio" type="radio" name="correctpand" id="n">
-                            <span class="f-inner-label">no</span>
-                        </label>
-					</div>
-
                 </fieldset>
                 <fieldset>
 					<div class="f-container">

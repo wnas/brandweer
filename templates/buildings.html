@@ -1,6 +1,38 @@
 {{#buildings}}
+    <div class="entrances">
+        {{#entrance}}
+            <h2>Ingangen</h2>
+            <h3>{{type}}</h3>
+            <div class="map" data-lat="{{geometry.coordinates}}">
+                {{geometry.coordinates}}
+            </div>
+        {{/entrance}}
+    </div>
+    <div class="functions multiple-select">
+        <div class="f-container">
+            <label class="f-label">origin</label>
+            <select class="f-select multiple-select-origin" data-source="">
+                {{#functions}}
+                <option value="{{function}}">
+                    {{name}}
+                </option>
+                {{/functions}}
+            </select>
+        </div>
 
-    {{#entrance}}
+    </div>
 
-    {{/entrance}}
 {{/buildings}}
+
+        <!--
+
+                        {
+                        "type":"main",
+                        "geometry":{
+                            "type": "Point",
+                            "coordinates": [
+                                51.690599, 5.3064146
+                            ]
+                        }
+                    }
+                            -->
