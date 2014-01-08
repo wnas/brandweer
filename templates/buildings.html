@@ -19,6 +19,18 @@
                 {{/functions}}
             </select>
         </div>
+        <div class="b-hidden">
+            <label class="f-label">Sub functions</label>
+            <select class="f-select multiple-select-target">
+                {{#functions}}
+                    {{#subfunction}}
+                        <option value="{{value}}">
+                            {{name}}
+                        </option>
+                    {{/subfunction}}
+                {{/functions}}
+            </select>
+        </div>
 
     </div>
 

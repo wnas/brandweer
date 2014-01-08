@@ -152,31 +152,46 @@
                         "name":"a",
                         "function":"functionA",
                         "subfunction":
-                            {
-                                "ByeBye":"Bye",
-                                "text":"value",
-                                "value":"Bye2"
-                            }
+                            [
+                                {
+                                    "name":"foo",
+                                    "value":"bar"
+                                },
+                                {
+                                    "name":"foo2",
+                                    "value":"bar2"
+                                }
+                            ]
                     },
                     {
                         "name":"b",
                         "function":"functionB",
-                        "subfunction":
-                        {
-                            "ByeBye":"Byddde",
-                            "text":"valddddue",
-                            "value":"Byddde2"
-                        }
+                        "subfunction": [
+                            {
+                                "name":"foo3",
+                                "value":"bar3"
+                            },
+                            {
+                                "name":"foo4",
+                                "value":"bar4"
+                            }
+                        ]
+
                     },
                     {
                         "name":"c",
                         "function":"functionC",
-                        "subfunction":
-                        {
-                            "ByeBye":"Byppppppe",
-                            "text":"valppppppppue",
-                            "value":"Byppppppppe2"
-                        }
+                        "subfunction":[
+                            {
+                                "name":"foo5",
+                                "value":"bar5"
+                            },
+                            {
+                                "name":"foo6",
+                                "value":"bar6"
+                            }
+                        ]
+
                     }
                 ],
                 "subfunction": "subfunction",
