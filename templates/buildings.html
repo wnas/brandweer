@@ -23,11 +23,13 @@
             <label class="f-label">Sub functions</label>
             <select class="f-select multiple-select-target">
                 {{#functions}}
-                    {{#subfunction}}
-                        <option value="{{value}}">
-                            {{name}}
-                        </option>
-                    {{/subfunction}}
+                    <optgroup label="{{name}}" id="{{function}}">
+                        {{#subfunction}}
+                            <option value="{{value}}">
+                                {{name}}
+                            </option>
+                        {{/subfunction}}
+                    </optgroup>
                 {{/functions}}
             </select>
         </div>

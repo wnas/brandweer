@@ -114,8 +114,12 @@ var brandweer = function () {
             var thiz = $(this),
                 firstSelect = thiz.find('.multiple-select-origin'),
                 secondSelect = thiz.find('.multiple-select-target'),
-                valuesForSecondSelect= [];
-            secondSelect.find('option').each(function(){
+                valuesForSecondSelect= [],
+                firstSelectedOption = firstSelect.val();
+
+            console.log(secondSelect.find('optgroup'));
+
+            secondSelect.find('optgroup[data-group='+firstSelectedOption+'] option').each(function(){
                 console.log(this.value);
                 console.log(this.innerText);
                 valuesForSecondSelect.push({"value":this.value,"name":this.innerText});
