@@ -58,17 +58,17 @@ var brandweer = function () {
         var buildingTemplate = Handlebars.compile(buildings);
 
 
-        var getData = function(){
             $.getJSON('js/json/dummy.js',function(data){
                 var res = data.data;
 //                return res;
                 console.log(res);
                 $('#contact').prepend(contactTemplate(data.data));
-                $('#buildings').append(buildingTemplate(res))
+                $('#buildings').append(buildingTemplate(res));
+
+                multipleSelects();
             });
-        };
-        getData();
         //console.log(getData());
+
 
 
     }, doMaps = function () {
@@ -98,24 +98,40 @@ var brandweer = function () {
     },   showLayer = function(e){
         console.log('foo');
     },  multipleSelects = function(){
-        function populatetitle() {
-            var firstSelect = $("#creator");
-            var secondSelect = $("#title");
-            var valuesForSecondSelect = values[firstSelect.val()]; //get values based on 1st selection box
-            secondSelect.empty(); // remove old options
-            $.each(valuesForSecondSelect, function(key, value) {
-                //loop through all values for 2nd box and add them
-                secondSelect.append($("<option></option>")
-                    .attr("value", value).text(key));
+//        function populatetitle() {
+//            var firstSelect = $("#creator");
+//            var secondSelect = $("#title");
+//            var valuesForSecondSelect = values[firstSelect.val()]; //get values based on 1st selection box
+//            secondSelect.empty(); // remove old options
+//            $.each(valuesForSecondSelect, function(key, value) {
+//                //loop through all values for 2nd box and add them
+//                secondSelect.append($("<option></option>")
+//                    .attr("value", value).text(key));
+//            });
+//        }
+
+        $('.multiple-select').each(function(){
+            var thiz = $(this),
+                firstSelect = thiz.find('.multiple-select-origin'),
+                secondSelect = thiz.find('.multiple-select-target'),
+                valuesForSecondSelect= [];
+            secondSelect.find('option').each(function(){
+                console.log(this.value);
+                console.log(this.innerText);
+                valuesForSecondSelect.push({"value":this.value,"name":this.innerText});
             });
-        }
 
-        var origin = $('.multiple-select'),
-            firstSelect = $('.multiple-select-origin');
+           // secondSelect.empty();
+//            $.each(valuesForSecondSelect, function(key, value) {
+//                //loop through all values for 2nd box and add them
+//                secondSelect.append($("<option></option>")
+//                    .attr("value", value).text(key));
+//            });
 
-        origin.each(function(){
+            console.log(valuesForSecondSelect);
+         //   secondSelect.empty();
 
-        })
+        });
 
     }, testing = function () {
 
