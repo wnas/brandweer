@@ -117,23 +117,23 @@ var brandweer = function () {
                 valuesForSecondSelect= [],
                 firstSelectedOption = firstSelect.val();
 
-            console.log(secondSelect.find('optgroup'));
 
-            secondSelect.find('optgroup[data-group='+firstSelectedOption+'] option').each(function(){
-                console.log(this.value);
-                console.log(this.innerText);
+
+            secondSelect.find('optgroup[id='+firstSelectedOption+'] option').each(function(){
+
                 valuesForSecondSelect.push({"value":this.value,"name":this.innerText});
+
             });
 
-           // secondSelect.empty();
-//            $.each(valuesForSecondSelect, function(key, value) {
-//                //loop through all values for 2nd box and add them
-//                secondSelect.append($("<option></option>")
-//                    .attr("value", value).text(key));
-//            });
+            secondSelect.empty();
 
-            console.log(valuesForSecondSelect);
-         //   secondSelect.empty();
+            $.each(valuesForSecondSelect, function(index,value) {
+            //    console.log(valuesForSecondSelect.value);
+            //    console.log('foo');
+                //loop through all values for 2nd box and add them
+                secondSelect.append($("<option></option>")
+                    .attr("value", value.value).text(value.name));
+            });
 
         });
 
