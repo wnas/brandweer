@@ -1,13 +1,18 @@
 brandweer
 =========
 
-Applicatie waarmee bedrijven bereikbaarheids- en veiligheidsinformatie beschikbaar kunnen maken voor de brandweer.
+app voor maps en brandweer
 
-auteurs:
+authors
 
-* Wilfred Nas @wnas
-* Gerben Hoeve @dadesigndoctorg
-* Milo van der Linden @miblon
+wilfred nas
+@wnas
+
+gerben hoeve
+@dadesigndoctorg
+
+milo van der linden
+@milovanderlinden
 
 Testen
 =========
@@ -20,4 +25,4 @@ Start daarna de applicatie met
 ```
   node server.js
 ```
-Ga vervolgens met de browser naar <http://localhost:3000>
+Ga vervolgens met de browser naar [http://localhost:3000]
