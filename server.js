@@ -62,7 +62,9 @@ i18n.registerAppHelper(app);
 
 app.get('/', routes.index);
 app.get('/hb.html', routes.hb);
-//app.get('/campaign', routes.campaign);
+app.post('/v', routes.validate_POST);
+app.get('/v/:token', routes.validate_GET);
+
 
 // Create an HTTP service.
 http.createServer(app).listen(app.get('port'), function() {
