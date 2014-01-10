@@ -1,0 +1,95 @@
+extends layout
+block content
+  header#header
+    div.container
+    nav
+      ul.top-navigation
+        li.top-navigation-item.done 
+          a(href='#contact')
+            span 1
+        li.top-navigation-item.active 
+          a(href='')
+            span 2
+        - for(var i=3; i<17; i++)
+          li.top-navigation-item
+            a
+              span #{i}
+  main#main
+    h1= t('app.welcomeText')
+    p= t('app.loggedinAs')
+      | &nbsp
+      span Wilfred Nas
+    section
+      form.f-form(action='#')
+
+        fieldset#contact
+          h2= t('app.personDetails')
+          div.f-container
+            label.f-label(for="firstname")= t('app.firstName')
+            input#firstname.f-input.f-text.b-name(type='text', value='')
+          div.f-container
+            label.f-label(for="surname")= t('app.surName')
+            input#surname.f-input.f-text.b-name(type='text', value='')
+          div.f-container
+            label.f-label(for="company")= t('app.company')
+            input#company.f-input.f-text.b-company(type='text', value='', readonly)
+          fieldset#address
+            div.f-container
+              label.f-label(for="street")= t('app.street')
+              input#street.f-input.f-text.b-street(type='text', value='')
+            div.f-container
+              label.f-label(for="number")= t('app.houseNumber')
+              input#number.f-input.f-text.b-housenumber(type='text', value='')
+            div.f-container
+              label.f-label(for="addition")= t('app.addition')
+              input#addition.f-input.f-text.b-addition(type='text', value='')
+            div.f-container
+              label.f-label(for="postalcode")= t('app.postalcode')
+              input#postalcode.f-input.f-text.b-postalcode(type='text', value='')
+            div.f-container
+              label.f-label(for="municipality")= t('app.place')
+              input#municipality.f-input.f-text.b-municipality(type='text', value='')   
+          div.f-container
+            label.f-label(for="email")= t('app.email')
+            input#email.f-input.f-email(type='text', value='')
+          div.f-container
+            label.f-label(for="telephone")= t('app.telephone')
+            input#telephone.f-input.f-telephone(type='text', value='') 
+          nav
+            button.f-button.f-button-primary(type='submit')
+              span= t('app.next')
+        fieldset#kaart
+          h2= t('app.map')
+          div#map.map= t('app.map')
+          div.f-container
+            span= t('app.correctBuildings')
+            label.f-radio-label(for='j')
+              input#j.f-radio(type='radio', name='correctpand')
+              span.f-inner-label= t('app.yes')
+            label.f-radio-label(for='n')
+              input#n.f-radio(type='radio', name='correctpand')
+              span.f-inner-label= t('app.no')
+          div.f-container
+            h3= t('app.emergencyContact')
+            div.f-container
+              label.f-label(for='naam1')= t('app.name')
+              input#naam1.f-input.f-text.b-name(type='text')
+            div.f-container
+              label.f-label(for='tel1')= t('app.telephone')
+              input#tel1.f-input.f-tel(type='tel')
+            div.f-container
+              label.f-label(for='email1')= t('app.email')
+              input#email1.f-input.f-email(type='email')						
+            div.f-container
+              label.f-label(for='extra')= t('app.addEmergencyContact')
+              button#extra= t('app.add')
+          fieldset
+            h2= t('app.emergencyContactFunction')
+            div.f-container.f-select-label
+              label.f-label(for='hoofdf')= t('app.emergencyContactFunction')
+              select#hoofdf.f-select(name='h')
+                option(value='d')= t('app.select')
+            div.f-container.f-select-label
+              label.f-label(for='subf')= t('app.emergencyContactExtraFunction')
+              select#subf.f-select(name='s')
+                option(value='d')= t('app.select')

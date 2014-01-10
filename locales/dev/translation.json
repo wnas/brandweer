@@ -1,0 +1,31 @@
+{
+    "app": {
+        "title": "Brandweer",
+        "error": "Fout",
+        "loggedinAs": "U bent ingelogd als:",
+        "firstName": "Voornaam",
+        "welcomeText": "Welkom bij de brandweer",
+        "personDetails": "Uw gegevens",
+        "surName": "Achternaam",
+        "company": "Bedrijf",
+        "street": "Straat",
+        "houseNumber": "Huisnummer",
+        "addition": "Toevoeging",
+        "postalcode": "Postcode",
+        "place": "Plaats",
+        "email": "E-mail",
+        "telephone": "Telefoonnummer",
+        "next": "Volgende",
+        "map": "Kaart",
+        "correctBuildings": " Zijn de juiste panden geselecteerd?",
+        "yes": "Ja",
+        "no": "Nee",
+        "emergencyContact": "Contact bij calamiteiten",
+        "name": "Naam",
+        "addEmergencyContact": "Voeg een contactpersoon toe",
+        "add": "Voeg toe",
+        "emergencyContactFunction": "Functie",
+        "select": "Selecteer",
+        "emergencyContactExtraFunction": "Nevenfunctie"
+    }
+}

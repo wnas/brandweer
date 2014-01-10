@@ -1,0 +1,35 @@
+extends layout
+block content
+  // http://javascriptplayground.com/blog/2012/05/javascript-templating-handlebars-tutorial/
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+  script(src='http://cloud.github.com/downloads/wycats/handlebars.js/handlebars-1.0.0.beta.6.js')
+  script#ajax-comment(type='text/x-handlebars-template')
+    li
+      span.meta {{name}} on {{date}}
+      p {{comment}}
+  script#introduction(type='text/x-handlebars-template')
+    li
+      span.meta {{name}} on {{date}}
+      p {{comment}}
+  ul#yeah
+  ul#test
+  script(type='text/javascript').
+    // handlebars templating is go...
+    // get the template
+    var source = $("#ajax-comment").html();
+    // compile the template
+    var template = Handlebars.compile(source);
+    // set up the data
+    var data = {
+        name: "Jack",
+        date: "12/04/12",
+        comment: "This is a really awesome tutorial. Thanks."
+    };
+
+    // inject it...
+    $("#yeah").append(template(data));
+    var intro = $('#introduction').html()
+    var introTemplate = Handlebars.compile(intro);
+    var dummyData = $.getJSON('js/json/dummydata.js');
+    console.log(dummyData);
+    $('#test').append(introTemplate(dummyData));

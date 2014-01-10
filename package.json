@@ -1,0 +1,15 @@
+{
+    "name": "safetymapsweb",
+    "description": "safetymaps web - applicatie waarmee bedrijven veiligheidsinformatie (DBK) kunnen aanleveren aan de brandweer",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "*",
+        "i18next": "*",
+        "less-middleware": "*",
+        "jade": "*"
+    }
+}
