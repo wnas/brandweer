@@ -55,6 +55,7 @@
 }
 blockpadding,
 .f-form .f-button-bar,
+.f-form .f-button-bar:before,
 main,
 #header .container {
   padding: .5em 1em;
@@ -258,6 +259,12 @@ fieldset {
   background-color: rgba(255, 255, 255, 0.5);
   padding: 0.2rem 0.4rem;
 }
+.f-form .f-button-bar:before {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 30px;
+}
 .f-form .f-button {
   padding: 0.2rem 0.4rem;
   text-decoration: none;
@@ -288,7 +295,7 @@ main {
   z-index: 5;
 }
 #header .container {
-  background: url(img/logo.svg) no-repeat center right;
+  background: url(../img/logo.svg) no-repeat center right;
   height: 2em;
 }
 #header .container a {
@@ -333,5 +340,5 @@ main {
   z-index: 2;
 }
 fieldset {
-  outline: 1px solid yellow;
+  outline: 1px solid red;
 }
