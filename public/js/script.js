@@ -1,7 +1,7 @@
 var brandweer = function () {
     var config = {
         // foo: bar
-        "src":"js/json/dummy.js",
+        "src":"js/json/dummy.json",
         "data":{
             "dummy":{
                 "contact":{
