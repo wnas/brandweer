@@ -105,47 +105,48 @@ var brandweer = function () {
     },   showLayer = function(e){
         console.log('foo');
     },  multipleSelects = function(){
-        console.log('multipleSelects');
-
-        $('.multiple-select').each(function(i){
-            var thiz = $(this),
-                firstSelect = thiz.find('.multiple-select-origin'),
-                secondSelect = thiz.find('.multiple-select-target'),
-                valuesForSecondSelect= [],
-                firstSelectedOption = firstSelect.val(),
-                edited = secondSelect.data('edited');
-
-if(!edited){
-    config.multipleSelectClone = secondSelect.clone().data('edited','true');
-    config.multipleSelectClone.removeClass('multiple-select-target');
-    firstSelect.after(config.multipleSelectClone);
-} else {
-    console.log(' no thank you, no more of this nonsense ');
-
-}
-           //
-            console.log(i);
-
-
-            config.multipleSelectClone.find('optgroup[id='+firstSelectedOption+'] option').each(function(){
-                valuesForSecondSelect.push({"value":this.value,"name":this.innerText});
-            });
-
-
-
-            secondSelect.empty();
-
-            $.each(valuesForSecondSelect, function(index,value) {
-            //    console.log(valuesForSecondSelect.value);
-                console.log('foo');
-                //loop through all values for 2nd box and add them
-                secondSelect.append($("<option></option>")
-                    .attr("value", value.value).text(value.name));
-            });
-
-            secondSelect.data('edited','true');
-
-        });
+        console.log()
+//        console.log('multipleSelects');
+//
+//        $('.multiple-select').each(function(i){
+//            var thiz = $(this),
+//                firstSelect = thiz.find('.multiple-select-origin'),
+//                secondSelect = thiz.find('.multiple-select-target'),
+//                valuesForSecondSelect= [],
+//                firstSelectedOption = firstSelect.val(),
+//                edited = secondSelect.data('edited');
+//
+//if(!edited){
+//    config.multipleSelectClone = secondSelect.clone().data('edited','true');
+//    config.multipleSelectClone.removeClass('multiple-select-target');
+//    firstSelect.after(config.multipleSelectClone);
+//} else {
+//    console.log(' no thank you, no more of this nonsense ');
+//
+//}
+//           //
+//            console.log(i);
+//
+//
+//            config.multipleSelectClone.find('optgroup[id='+firstSelectedOption+'] option').each(function(){
+//                valuesForSecondSelect.push({"value":this.value,"name":this.innerText});
+//            });
+//
+//
+//
+//            secondSelect.empty();
+//
+//            $.each(valuesForSecondSelect, function(index,value) {
+//            //    console.log(valuesForSecondSelect.value);
+//                console.log('foo');
+//                //loop through all values for 2nd box and add them
+//                secondSelect.append($("<option></option>")
+//                    .attr("value", value.value).text(value.name));
+//            });
+//
+//            secondSelect.data('edited','true');
+//
+//        });
 
     }, testing = function () {
 
