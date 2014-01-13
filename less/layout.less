@@ -70,13 +70,23 @@ main:extend(blockpadding) {
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
+  &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    width: 30%;
+    height: 400px;
+    background: rgba(256,256,256,0.9);
+  }
 }
 
 .information:extend(blockpadding) {
   position: fixed;
   max-height: 60%;
   overflow: auto;
-  z-index: 1;
+  z-index: 2;
   top: 5em;
   right: 2%;
   width: 40%;
