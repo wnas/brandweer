@@ -1,4 +1,11 @@
-{{#contact}}
+{{#information}}
+    <div class="information">
+        <h2>{{contact.header}}</h2>
+        <div>{{{contact.body}}}</div>
+    </div>
+{{/information}}
+
+{{#personalInformation}}
     <div class="f-container {{#if required}}{{required}}{{/if}}">
         <label
                 for="contact-{{name}}"
@@ -10,4 +17,4 @@
                 placeholder="{{name}}"
                 class="f-input"/>
     </div>
-{{/contact}}
+{{/personalInformation}}

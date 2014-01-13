@@ -403,6 +403,9 @@
 
         ],
         "excercise":"yes"
+    },
+    "information":{
+        "contact":"foor"
     }
 }
 
