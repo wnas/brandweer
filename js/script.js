@@ -1,14 +1,14 @@
 var brandweer = function () {
     var config = {
         // foo: bar
-        "src":"js/json/dummy.js",
+        "src":"js/json/data.js",
         "multipleSelectClone":''
     }, init = function () {
 
         populate();
-           doMaps();
+
    //   navigate();
-        getLiveData();
+      //  getLiveData();
 
         $('body').on('change','.multiple-select-origin',function(){
             multipleSelects();
@@ -56,24 +56,21 @@ var brandweer = function () {
 
         });
     }, populate = function () {
-
+        console.log('populate');
         var contact = render('contact', {});
-        var buildings = render('buildings',{});
+       var buildings = render('buildings',{});
 
 
         var contactTemplate = Handlebars.compile(contact);
         var buildingTemplate = Handlebars.compile(buildings);
 
+        $.getJSON(config.src,function(data){
 
-            $.getJSON('js/json/dummy.js',function(data){
-                var res = data.data;
-//                return res;
-                console.log(res);
-                $('#contact').prepend(contactTemplate(data.data));
-                $('#buildings').append(buildingTemplate(res));
-
-                multipleSelects();
-            });
+           $('#contact').prepend(contactTemplate(data));
+            $('#buildings').append(buildingTemplate(data));
+            doMaps();
+            multipleSelects();
+        });
         //console.log(getData());
 
 
@@ -81,31 +78,53 @@ var brandweer = function () {
     }, doMaps = function () {
        // $('#kaart').show();
 
-        var coords = [51.690599, 5.3064146];
-        var map = L.map('map').setView(coords, 18);
-        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
-            subDomains = ['1', '2', '3', '4'],
-            cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:18});
+        $('.map').each(function(i){
+            var thiz = $(this),
+                it = thiz.data('bagid'),
+                coords = [51.690599, 5.3064146],
+                coordz = thiz.data('coords'),
+                zoom = thiz.data('zoom'),
+                its = "map-"+i;
 
-        map.addLayer(cloudmade);
+            thiz.append('<div id="'+its+'"></div>');
+console.log(coords+' '+coordz);
+            var map = L.map(its).setView(coords,zoom);
+            var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+                subDomains = ['1', '2', '3', '4'],
+                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
+
+            map.addLayer(cloudmade);
 
         var marker = L.marker(coords).addTo(map);
         marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
 
         var popup = L.popup();
-
-
-        function onMapClick(e) {
-            showLayer(e);
-//            L.marker()
-        }
-
-        map.on('click', onMapClick);
+        })
+//        var coords = [51.690599, 5.3064146];
+//        var map = L.map('map').setView(coords, 18);
+//        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+//            subDomains = ['1', '2', '3', '4'],
+//            cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:18});
+//
+//        map.addLayer(cloudmade);
+//
+//        var marker = L.marker(coords).addTo(map);
+//        marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
+//
+//        var popup = L.popup();
+//
+//
+//        function onMapClick(e) {
+//            showLayer(e);
+////            L.marker()
+//        }
+//
+//        map.on('click', onMapClick);
 
     },   showLayer = function(e){
         console.log('foo');
     },  multipleSelects = function(){
-        console.log()
+        //console.log('gjoo')
 //        console.log('multipleSelects');
 //
 //        $('.multiple-select').each(function(i){
