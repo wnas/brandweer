@@ -34,14 +34,30 @@ fieldset {
   position: relative;
 }
 .b-map-overlay {
-  position: absolute;
+  // position: absolute;
 
-  right: 0;
-  bottom: 0;
   height: 400px; // @mapHeight
-  left: 40%;
+  margin-left: 20%;
   padding: @padding;
 
-  outline: 1px solid red;
-  background-color: rgba(255,255,255,.8);
+  //outline: 1px solid red;
+  background-color: rgba(106,145,136,.8);
+  
+  &:before {
+    content:'';
+    display: block;
+    width: 0px;
+    height: 0px;
+    margin: 4em 0 0 -26px;
+    
+    border-bottom: 20px solid transparent;
+    border-top: 20px solid transparent;
+    border-right: 20px solid rgba(106,145,136,.8);
+    
+    
+  }
 }
+
+
+
+
