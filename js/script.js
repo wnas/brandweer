@@ -48,6 +48,7 @@ var brandweer = function () {
 
         if ( ! render.tmpl_cache[tmpl_name] ) {
             var tmpl_dir = '/templates';
+            // gerbens eigen regel hierboven...
             var tmpl_url = tmpl_dir + '/' + tmpl_name + '.html';
 
             var tmpl_string;

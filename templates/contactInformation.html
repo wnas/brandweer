@@ -1,4 +1,9 @@
-
+{{#information}}
+<div class="information">
+    <h2>{{contactInformation.header}}<button class=close>close</button></h2>
+    <div>{{{contactInformation.body}}}</div>
+</div>
+{{/information}}
 {{#contactInformation}}
     {{#each this}}
         <div class="f-container {{#if required}}{{required}}{{/if}}">

@@ -5,7 +5,6 @@
                 "name":"firstname",
                 "type":"text",
                 "value": "emiel",
-                "placeholder":"Voornaam",
                 "required":"f-required"
 
             },
@@ -13,35 +12,30 @@
                 "name":"surname",
                 "type":"text",
                 "value": "Hoeve",
-                "placeholder":"Achternaam",
                 "required":"f-required"
             },
             {
                 "name":"bedrijfsnaam",
                 "type":"text",
                 "value": "Geweldig bedrijf",
-                "placeholder":"Bedrijfsnaam",
                 "required":"f-required"
             },
             {
                 "name":"street",
                 "type":"text",
                 "value":"straatnaam",
-                "placeholder":"Straatnaam",
                 "required":""
             },
             {
                 "name":"number",
                 "type":"number",
                 "value":"2",
-                "placeholder":"Huisnummer",
                 "required":"f-required"
             },
             {
                 "name":"huisnummer toevoeging",
                 "type":"text",
                 "value":"",
-                "placeholder":"Toevoeging",
                 "required":""
 
             },
@@ -49,14 +43,12 @@
                 "name":"postcode",
                 "type":"text",
                 "value":"1245 ab",
-                "placeholder":"Postcode ( 1234 ab )",
                 "required":"f-required"
             },
             {
                 "name":"email",
                 "type":"email",
                 "value":"e@ma.il",
-                "placeholder":"uw email adres",
                 "required":""
 
             },
@@ -64,7 +56,6 @@
                 "name":"telephone",
                 "type":"tel",
                 "value":"06-12345678",
-                "placeholder":"06 12345678",
                 "required":""
             }
 
@@ -80,35 +71,30 @@
         }
     ],
     "contactInformation":[
-       [
+        [
             {
                 "name":"firstname",
                 "type":"text",
-                "value": "",
-                "placeholder":"Voornaam",
+                "value": "emiel",
                 "required":"f-required"
             },
             {
                 "name":"surname",
                 "type":"text",
-                "value": "",
-
-                "placeholder":"Achternaam",
+                "value": "Hoeve",
                 "required":"f-required"
             },
             {
                 "name":"email",
                 "type":"email",
-                "value":"",
-                "placeholder":"jan@provider.nl",
+                "value":"e@ma.il",
                 "required":""
 
             },
             {
                 "name":"telephone",
                 "type":"tel",
-                "value":"",
-                "placeholder":"06 12345678",
+                "value":"06-12345678",
                 "required":""
             }
         ]
@@ -236,15 +222,12 @@
 
         }
     ],
-    "information":{
-        "contact": {
-            "header":"header",
-            "body":"bodytest"
-        },
-        "contactInformation": {
-            "header":"header",
-            "body":"bodytest"
-        }
+    "information":[
+    {"contact":{
+        "header":"header",
+        "body":"<p>Ennui Brooklyn esse single-origin coffee. Ea dreamcatcher butcher stumptown. Bespoke occaecat stumptown blog single-origin coffee, forage do Pitchfork you probably haven't heard of them cred. Pork belly occupy aliqua tote bag, ethical master cleanse DIY velit locavore. Odio reprehenderit elit excepteur, Williamsburg pop-up velit beard Marfa ethnic Tumblr wayfarers. Shabby chic squid cornhole, assumenda hoodie reprehenderit anim +1 roof party disrupt Pitchfork seitan do. Minim pickled Terry Richardson Truffaut kale chips.</p><p>Vero butcher kogi wolf, Austin cray Helvetica pickled PBR Etsy Portland leggings banjo. Commodo Echo Park Marfa mumblecore, lomo retro jean shorts Shoreditch hoodie Pitchfork. 3 wolf moon enim chambray direct trade. Nulla raw denim fugiat, tousled mixtape aliqua try-hard cliche sartorial craft beer. Disrupt pariatur quinoa, deep v roof party incididunt aliquip hoodie bicycle rights vero. Forage farm-to-table Blue Bottle, actually narwhal PBR paleo you probably haven't heard of them YOLO master cleanse tofu occaecat. Duis pickled accusamus, irony mollit cred actually.</p>"
     }
+    }
+]
 
 }

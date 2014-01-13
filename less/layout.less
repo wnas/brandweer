@@ -5,6 +5,7 @@ main:extend(blockpadding) {
 
   display: block;
   margin-top: 4em;
+  padding: 0;
 }
 
 #header {
@@ -62,23 +63,54 @@ main:extend(blockpadding) {
 }
 
 .map {
-  @media only screen and(min-width:768px) {
-    &>div{
-      height:400px;
-    }
-    height: 400px;
-
-
+  &>div{
+    height: @mapHeight;
   }
-@media only screen and(max-width:768px) {
-  &>div {
-    height: 100%;
-    outline: 1px solid red;
-  }
-  height: 400px;
-}
+  height: @mapHeight;
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
 }
+
+.information:extend(blockpadding) {
+  position: fixed;
+  max-height: 60%;
+  overflow: auto;
+  z-index: 1;
+  top: 5em;
+  right: 2%;
+  width: 40%;
+  background: @information-color;
+  border: 3px solid darken(@information-color,10%);
+  border-radius: 10px;
+  box-shadow: 3px 3px 6px rgba(0,0,0,.3);
+  
+  & h2 {
+    margin-top:0.2em;
+  }
+  & p {
+  padding-bottom: 2em;
+  }
+  & button {
+    float:right;
+    right: 5px;
+    top: 10px;
+  }
+}
+
+button.close {
+  width: 20px;
+  height: 20px;
+  background: #ff0000;
+  color: #ff0000;
+  border: none;
+  border-radius: 30px;
+  background: url(../img/close-button.svg) no-repeat center right;
+  text-indent: -111111px;
+  box-shadow: 2px 2px 4px rgba(0,0,0,.4);
+}
+
+
+
+
 
