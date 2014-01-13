@@ -1,40 +1,43 @@
 {{#buildings}}
-    <div class="entrances">
+    <div class="entrances b-question">
         {{#entrance}}
             <h2>Ingangen</h2>
             <h3>{{type}}</h3>
             <div class="map" data-lat="{{geometry.coordinates}}">
                 {{geometry.coordinates}}
+
             </div>
+
         {{/entrance}}
-    </div>
-    <div class="functions multiple-select">
-        <div class="f-container">
-            <label class="f-label">origin</label>
-            <select class="f-select multiple-select-origin" data-source="">
-                {{#functions}}
-                <option value="{{function}}">
-                    {{name}}
-                </option>
-                {{/functions}}
-            </select>
-        </div>
-        <div class="b-hidden">
-            <label class="f-label">Sub functions</label>
-            <select class="f-select multiple-select-target">
-                {{#functions}}
+        <div class="b-map-overlay functions multiple-select">
+            <div class="f-container">
+                <label class="f-label">origin</label>
+                <select class="f-select multiple-select-origin" data-source="">
+                    {{#functions}}
+                    <option value="{{function}}">
+                        {{name}}
+                    </option>
+                    {{/functions}}
+                </select>
+            </div>
+            <div class="f-container">
+                <label class="f-label">Sub functions</label>
+                <select class="f-select multiple-select-target" data-edited="false">
+                    {{#functions}}
                     <optgroup label="{{name}}" id="{{function}}">
                         {{#subfunction}}
-                            <option value="{{value}}">
-                                {{name}}
-                            </option>
+                        <option value="{{value}}">
+                            {{name}}
+                        </option>
                         {{/subfunction}}
                     </optgroup>
-                {{/functions}}
-            </select>
+                    {{/functions}}
+                </select>
+            </div>
         </div>
 
     </div>
+
 
 {{/buildings}}
 

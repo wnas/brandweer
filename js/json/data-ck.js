@@ -1,0 +1,58 @@
+{
+    "personalInformation":[
+        {
+            "firstname":{
+                "value":"voornaam",
+                "type":"text",
+                "required":"true"
+            },
+            "surname":{
+                "value":"achternaam",
+                "type":"text",
+                "required":"true"
+            },
+            "companyname":{
+                "value":"bedrijfsnaam",
+                "type":"text",
+                "required":"true"
+            }
+        }
+    ],
+    "buildings":[
+        {
+            "id":"bagId",
+            "geometry":{
+                "type":"polygon",
+                "coordinates":[
+                    [51.509, -0.08],
+                    [51.503, -0.06],
+                    [51.51, -0.047]
+                ]
+            }
+        }
+    ],
+    "contactInformation":[
+        {
+            "firstname":{
+                "value":"voornaam",
+                "type":"text",
+                "required":"true"
+            },
+            "surname":{
+                "value":"achternaam",
+                "type":"text",
+                "required":"true"
+            },
+            "phoneNumber":{
+                "value":"06124356789",
+                "type":"tel",
+                "required":"true"
+            },
+            "email":{
+                "value":"e@ma.il",
+                "type":"email",
+                "required":"true"
+            }
+        }
+    ]
+}
