@@ -69,12 +69,20 @@ var brandweer = function () {
            $('#contact').prepend(contactTemplate(data));
             $('#buildings').append(buildingTemplate(data));
             doMaps();
+            doInformation();
             multipleSelects();
         });
         //console.log(getData());
 
 
 
+    },  doInformation = function(){
+        $('.information').each(function(){
+            var thiz = $(this);
+            $('.close').click(function(){
+                thiz.hide();
+            })
+        })
     }, doMaps = function () {
        // $('#kaart').show();
 
