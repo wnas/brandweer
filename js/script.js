@@ -5,7 +5,31 @@ var brandweer = function () {
         "multipleSelectClone":''
     }, init = function () {
 
-        populate();
+        var request = $.ajax({
+            url: config.src,
+            type: "GET",
+            data: { id : 'yay' },
+            dataType: "json"
+        });
+
+        request.done(function( msg ) {
+            console.log(msg);
+        //    popTmpl('contactInformation',msg);
+            populate(msg)
+        });
+
+        request.fail(function( jqXHR, textStatus ) {
+            alert( "Request failed: " + textStatus );
+        });
+        $.getJSON(config.src,function(data){
+            var dat = data;
+         //   console.log(dat)
+           return {dat:dat}
+        });
+
+
+       // console.log(dat);
+//        populate();
 
    //   navigate();
       //  getLiveData();
@@ -55,33 +79,36 @@ var brandweer = function () {
 
 
         });
-    }, populate = function () {
-        console.log('populate');
+    }, populate = function (msg) {
         var contact = render('contact', {});
-       var buildings = render('buildings',{});
+        var buildings = render('buildings',{});
+        var contactInformation = render('contactInformation',{});
 
 
         var contactTemplate = Handlebars.compile(contact);
         var buildingTemplate = Handlebars.compile(buildings);
+        var contactInformationTemplate = Handlebars.compile(contactInformation);
 
-        $.getJSON(config.src,function(data){
+       $('#contact').prepend(contactTemplate(msg));
+        $('#buildings').append(buildingTemplate(msg));
+        $('#contactInformation').append(contactInformationTemplate(msg));
 
-           $('#contact').prepend(contactTemplate(data));
-            $('#buildings').append(buildingTemplate(data));
-            doMaps();
-            doInformation();
-            multipleSelects();
-        });
-        //console.log(getData());
+        doMaps();
 
+    }, popTmpl = function(arg,msg){
 
+        var src = render( arg , {}),
+            tmp = Handlebars.compile(arg);
+
+        console.log(msg);
+        $('#'+arg).append(tmp(msg));
 
     },  doInformation = function(){
         $('.information').each(function(){
             var thiz = $(this);
             $('.close').click(function(){
-                thiz.hide();
-            })
+                thiz.hide(slow);
+            });
         })
     }, doMaps = function () {
        // $('#kaart').show();
@@ -95,7 +122,7 @@ var brandweer = function () {
                 its = "map-"+i;
 
             thiz.append('<div id="'+its+'"></div>');
-console.log(coords+' '+coordz);
+//console.log(coords+' '+coordz);
             var map = L.map(its).setView(coords,zoom);
             var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
@@ -103,11 +130,12 @@ console.log(coords+' '+coordz);
 
             map.addLayer(cloudmade);
 
-        var marker = L.marker(coords).addTo(map);
-        marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
+            var marker = L.marker(coords).addTo(map);
+            marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
 
-        var popup = L.popup();
-        })
+            showLayer();
+
+        });
 //        var coords = [51.690599, 5.3064146];
 //        var map = L.map('map').setView(coords, 18);
 //        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
@@ -130,7 +158,14 @@ console.log(coords+' '+coordz);
 //        map.on('click', onMapClick);
 
     },   showLayer = function(e){
-        console.log('foo');
+        $('.map').each(function(){
+            $(this).click(function(){
+                var contactInformation = $('#contactInformation');
+                $(this).append(contactInformation).show();
+            })
+
+        })
+
     },  multipleSelects = function(){
         //console.log('gjoo')
 //        console.log('multipleSelects');

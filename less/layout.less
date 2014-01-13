@@ -62,10 +62,21 @@ main:extend(blockpadding) {
 }
 
 .map {
-  &>div{
-    height:400px;
+  @media only screen and(min-width:768px) {
+    &>div{
+      height:400px;
+    }
+    height: 400px;
+
+
+  }
+@media only screen and(max-width:768px) {
+  &>div {
+    height: 100%;
+    outline: 1px solid red;
   }
   height: 400px;
+}
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
