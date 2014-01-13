@@ -152,15 +152,7 @@ fieldset {
   z-index: 10;
   width:  100%;
   background-color: rgba(255,255,255,.5);
-  padding: @padding;
-   
-  &:before {
-   content: '';
-   display: block;
-   width: 30px;
-   height: 30px;
-    
-  }
+  padding:0;
 }
 .f-button {
   padding: @padding;
@@ -168,17 +160,74 @@ fieldset {
   background: #fff;
   cursor: pointer;
   &.f-button-primary {
-    border: 1px solid #abd7ea;
-    border-radius: .4rem;
+    border: 0;
     color: darken(#abd7ea, 30%);
-
+    color: black;
+    
+    font-family: helvetica;
     font-weight: bold;
+    font-size: 1.3em;
     float: right;
+    
+    padding: 1.2em;
+    line-height: 1.6;
+    width: 50%;
+    background: rgba(0,256,0,.4);
+    
+    &:before {
+      content:'';
+      float: right;
+      height: 20px;
+      width: 20px;
+      
+      border-left: 5px solid rgba(0,0,0,.3);
+      border-bottom: 5px solid rgba(0,0,0,.3);
+      
+      transform: rotate(225deg);
+      -webkit-transform: rotate(225deg);
+      -ms-transform: rotate(225deg);
+    }
+    &:hover {
+      background: rgba(0,256,0,.7);
+    }
+    
+ 
   }
   &.f-button-secondary {
     color: darken(@secondary-color,30%);
     border:0;
+    
+    color: darken(#abd7ea, 30%);
+    color: black;
+    
+    font-family: helvetica;
+    font-weight: bold;
+    font-size: 1.3em;
+    float: right;
+    
+    padding: 1.2em;
+    line-height: 1.6;
+    width: 50%;
+    background: rgba(256,0,0,.4);
+    
+    &:after {
+      content:'';
+      float: left;
+      height: 20px;
+      width: 20px;
+      
+      border-left: 5px solid rgba(0,0,0,.3);
+      border-bottom: 5px solid rgba(0,0,0,.3);
+      
+      transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+    }
+    
+    &:hover {
+      background: rgba(256,0,0,.7);
+    }
   }
+  
 }
-
-  }
+}
