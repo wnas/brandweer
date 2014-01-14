@@ -122,7 +122,9 @@ var brandweer = function () {
 //        })
     }, doMaps = function () {
        // $('#kaart').show();
-        var w = document.body.clientWidth;
+        var w = document.body.clientWidth,
+            h = window.innerHeight - 200;
+        console.log(h)
         $('.map').each(function(i){
             var thiz = $(this),
                 it = thiz.data('bagid'),
@@ -132,6 +134,7 @@ var brandweer = function () {
                 its = "map-"+ i;
 
             thiz.width(w);
+            thiz.height(h);
 
 
             thiz.append('<div id="'+its+'"></div>');
@@ -145,6 +148,7 @@ var brandweer = function () {
             if (w <= 768){
                 // if we are on a small screen, disable zoom...
                 map.scrollWheelZoom.disable();
+                map.touchZoom.disable();
             }
 
             map.addLayer(cloudmade);

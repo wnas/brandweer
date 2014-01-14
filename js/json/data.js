@@ -74,8 +74,7 @@
             "id":"bagId",
             "geometry":{
                 "type":"point",
-                "coordinates":[51.690599, 5.3064146],
-                "zoom":"18"
+                "coordinates":[51.690599, 5.3064146]
             }
         }
     ],
@@ -148,7 +147,7 @@
     ],
     "entrances":[
         {
-            "building":"barId",
+            "building":"bagId",
             "header":"mainEntrance",
             "geometry":{
                 "type": "Point",
@@ -163,7 +162,6 @@
         {
             "building":"bagId",
             "header":"sleutelbuis",
-            "order":"3",
             "geometry":{
                 "type": "Point",
                 "coordinates": [

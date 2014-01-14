@@ -64,23 +64,13 @@ main:extend(blockpadding) {
 
 .map {
   &>div{
-    height: @mapHeight;
-    width: @mapWidth;
+    height: 100%;
   }
   height: @mapHeight;
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
-  &:before {
-    content: '';
-    display: block;
-    position: absolute;
-    z-index: 1;
-    right: 0;
-    width: 30%;
-    height: 400px;
-    background: rgba(256,256,256,0.9);
-  }
+
 }
 
 .information:extend(blockpadding) {
