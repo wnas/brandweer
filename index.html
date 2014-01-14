@@ -1,168 +1,164 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-    <title>brandweer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--[if lt IE 9]>
-        <script src="js/vendors/html5shiv.js"></script>
-    <![endif]-->
+    <head>
+        <title>brandweer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!--[if lt IE 9]>
+            <script src="js/vendors/html5shiv.js"></script>
+        <![endif]-->
 
-    <!-- jquery and handlebars-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="js/vendors/underscore/underscore.js"></script>
-    <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
+        <!-- jquery and handlebars-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="js/vendors/underscore/underscore.js"></script>
+        <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
 
-    <!--geo shizzle -->
-    <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
-    <script src="js/leaflet-0.7.1/leaflet.js"></script>
+        <!--geo shizzle -->
+        <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
+        <link  rel="stylesheet" href="css/style.css" />
 
-    <link  rel="stylesheet" href="css/style.css" />
+        <!--[if lt IE 8]>
+        <link  rel="stylesheet" href="css/ie7.css" />
+        <![endif]-->
 
-    <!--[if lt IE 8]>
-    <link  rel="stylesheet" href="css/ie7.css" />
-    <![endif]-->
+    </head>
+    <body>
 
-</head>
-<body>
+        <!--
+        http://handlebarsjs.com/
+        -->
 
-<!--
-http://handlebarsjs.com/
--->
+        <!--<script id="contact-tmpl" type="text/x-handlebars-template">-->
+        <!---->
+        <!--</script>-->
 
-<!--<script id="contact-tmpl" type="text/x-handlebars-template">-->
-    <!---->
-<!--</script>-->
+        <script id="building-tmpl" type="text/x-handlebars-template">
+            {{#each building}}
 
-<script id="building-tmpl" type="text/x-handlebars-template">
-    {{#each building}}
+            {{/each}}
+        </script>
 
-    {{/each}}
-</script>
+        <header id="header">
+            <span id="light"></span>
+            <div class="container">
+                <a href="bb.html">babkcon</a>
+            </div>
+            <nav>
+                <ul class="top-navigation">
+                    <li class="top-navigation-item done"><a href="#contact"><span>1</span></a></li>
+                    <li class="top-navigation-item active"><a href=""><span>2</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>3</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>4</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>5</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>6</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>7</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>8</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>9</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>10</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>11</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>12</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>13</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>14</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>15</span></a></li>
+                    <li class="top-navigation-item"><a href=""><span>16</span></a></li>
+                </ul>
+            </nav>
+        </header>
 
-	<header id="header">
-        <span id="light"></span>
-		<div class="container">
-            <a href="bb.html">babkcon</a>
-		</div>
-        <nav>
-            <ul class="top-navigation">
-                <li class="top-navigation-item done"><a href="#contact"><span>1</span></a></li>
-                <li class="top-navigation-item active"><a href=""><span>2</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>3</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>4</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>5</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>6</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>7</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>8</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>9</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>10</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>11</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>12</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>13</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>14</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>15</span></a></li>
-                <li class="top-navigation-item"><a href=""><span>16</span></a></li>
-            </ul>
-        </nav>
-	</header>
-
-	<main id="main">
-		<h1>Brandweer</h1>
+    <main id="main">
+        <h1>Brandweer</h1>
         <p>Ingelogd als : <span>Wilfred Nas</span></p>
         <section>
-			<form action="#" class="f-form">
-				<fieldset id="contact" class="active">
-<!-- html will be injected with handlebars... templates go on top of html page.. -->
+            <form action="#" class="f-form">
+                <fieldset id="contact" class="active">
+                    <!-- html will be injected with handlebars... templates go on top of html page.. -->
 
-				</fieldset>
+                </fieldset>
                 <fieldset id="buildings"></fieldset>
-				<!--<fieldset id="kaart" data-map>-->
-					<!--<h2>kaart</h2>-->
-                    <!--<div class="f-container">-->
-                        <!--<p>Is het juiste pand geselecteerd, druk dan op bevestig en ga door. Mochten er andere panden bij uw bedrijf horen, selecteer ze op de kaart.</p>-->
-                    <!--</div>-->
-					<!--<div id="map" class="map">kaart</div>-->
+                <!--<fieldset id="kaart" data-map>-->
+                <!--<h2>kaart</h2>-->
+                <!--<div class="f-container">-->
+                <!--<p>Is het juiste pand geselecteerd, druk dan op bevestig en ga door. Mochten er andere panden bij uw bedrijf horen, selecteer ze op de kaart.</p>-->
+                <!--</div>-->
+                <!--<div id="map" class="map">kaart</div>-->
                 <!--</fieldset>-->
                 <fieldset id="contactInformation"></fieldset>
                 <!--<fieldset>-->
-					<!--<div class="f-container">-->
-						<!--<h3>contactpersonen bij calamiteiten</h3>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="voornaam1">Voornaam</label>-->
-							<!--<input class="f-input f-text b-name" type="text" id="voornaam1" placeholder="voornaam">-->
-						<!--</div>-->
-                        <!--<div class="f-container">-->
-                            <!--<label class="f-label" for="achternaam1">Voornaam</label>-->
-                            <!--<input class="f-input f-text b-name" type="text" id="achternaam1" placeholder="achternaam">-->
-                        <!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="tel1">telefoonnummer</label>-->
-							<!--<input class="f-input f-tel" type=tel id="tel1" placeholder="012-3456789">-->
-						<!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="email1">email</label>-->
-							<!--<input class="f-input f-email" type=email id="email1" placeholder="uw@emailadres.nl">-->
-						<!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="extra">voeg een contact persoon toe</label>-->
-							<!--<button id="extra" class="f-button f-button-primary">Voeg toe</button>-->
-						<!--</div>-->
-					<!--</div>-->
+                <!--<div class="f-container">-->
+                <!--<h3>contactpersonen bij calamiteiten</h3>-->
+                <!--<div class="f-container">-->
+                <!--<label class="f-label" for="voornaam1">Voornaam</label>-->
+                <!--<input class="f-input f-text b-name" type="text" id="voornaam1" placeholder="voornaam">-->
+                <!--</div>-->
+                <!--<div class="f-container">-->
+                <!--<label class="f-label" for="achternaam1">Voornaam</label>-->
+                <!--<input class="f-input f-text b-name" type="text" id="achternaam1" placeholder="achternaam">-->
+                <!--</div>-->
+                <!--<div class="f-container">-->
+                <!--<label class="f-label" for="tel1">telefoonnummer</label>-->
+                <!--<input class="f-input f-tel" type=tel id="tel1" placeholder="012-3456789">-->
+                <!--</div>-->
+                <!--<div class="f-container">-->
+                <!--<label class="f-label" for="email1">email</label>-->
+                <!--<input class="f-input f-email" type=email id="email1" placeholder="uw@emailadres.nl">-->
+                <!--</div>-->
+                <!--<div class="f-container">-->
+                <!--<label class="f-label" for="extra">voeg een contact persoon toe</label>-->
+                <!--<button id="extra" class="f-button f-button-primary">Voeg toe</button>-->
+                <!--</div>-->
+                <!--</div>-->
 
-				<!--</fieldset>-->
-				<!--<fieldset>-->
-					<!--<h2>functie</h2>-->
-					<!--<div class="f-container f-select-label">-->
-						<!--<label class="f-label" for="hoofdf">functie</label>-->
-						<!--<select class=f-select name="h" id="hoofdf"><option value="d">select</option></select>-->
-					<!--</div>-->
-					<!--<div class="f-container f-select-label">-->
-						<!--<label class="f-label" for="subf">sub functie</label>-->
-						<!--<select class="f-select" name="s" id="subf"><option value="d">select</option></select>-->
-					<!--</div>-->
-				<!--</fieldset>-->
-				
-				<div class="map" class="vraag-test">
-				<h2>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie*</h2>
-				
-					<div class="entrances b-questions">
-						<div class="b-map-overlay functions multiple-select">
-				            <div class="f-container">
-				                <label class="f-label">origin</label>
-				                <select class="f-select multiple-select-origin" data-source="">
-				                    <option value="Industrie">Industrie</option>
-				                    <option value="Wonen">Wonen</option>
-				                    <option value="Winkel">Winkel</option>
-				                </select>
-				            </div>
-				            <div class="f-container">
-				                <label class="f-label">Sub functions</label>
-				                <select class="f-select multiple-select-target" data-edited="false">
-				                    <option value="Chemie">Chemie</option>
-				                    <option value="Brandstof">Brandstof</option>
-				                    <option value="Opslag">Opslag</option>
-				                </select>
-				            </div>
-		        		</div>
-	        		</div>
-        		
-        		</div>
-				
-				
-				<div class="f-button-bar">
+                <!--</fieldset>-->
+                <!--<fieldset>-->
+                <!--<h2>functie</h2>-->
+                <!--<div class="f-container f-select-label">-->
+                <!--<label class="f-label" for="hoofdf">functie</label>-->
+                <!--<select class=f-select name="h" id="hoofdf"><option value="d">select</option></select>-->
+                <!--</div>-->
+                <!--<div class="f-container f-select-label">-->
+                <!--<label class="f-label" for="subf">sub functie</label>-->
+                <!--<select class="f-select" name="s" id="subf"><option value="d">select</option></select>-->
+                <!--</div>-->
+                <!--</fieldset>-->
+
+                <div id="map" class="map" class="vraag-test">
+                    <h2>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie*</h2>
+
+                    <div class="entrances b-questions">
+                        <div class="b-map-overlay functions multiple-select">
+                            <div class="f-container">
+                                <label class="f-label">origin</label>
+                                <select class="f-select multiple-select-origin" data-source="">
+                                    <option value="Industrie">Industrie</option>
+                                    <option value="Wonen">Wonen</option>
+                                    <option value="Winkel">Winkel</option>
+                                </select>
+                            </div>
+                            <div class="f-container">
+                                <label class="f-label">Sub functions</label>
+                                <select class="f-select multiple-select-target" data-edited="false">
+                                    <option value="Chemie">Chemie</option>
+                                    <option value="Brandstof">Brandstof</option>
+                                    <option value="Opslag">Opslag</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="f-button-bar">
                     <button type="submit" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
                     <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
                 </div>
-				
-			</form>
-		</section>
-	</main>
 
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/1.1.0/proj4js-compressed.js"></script>
-
-
-
-
-	<script src=js/script.js></script>
+            </form>
+        </section>
+    </main>
+    <script src="js/leaflet-0.7.1/leaflet.js"></script>
+    <!--<script src="http://cdn.leafletjs.com/leaflet-0.4/leaflet.js"></script>-->
+    <script src="js/vendors/proj4-src.js"></script>
+    <script src="js/vendors/proj4leaflet.js"></script>
+    <script src=js/script.js></script>
 </body>
 </html>
