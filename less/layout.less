@@ -6,6 +6,7 @@ main:extend(blockpadding) {
   display: block;
   margin-top: 4em;
   padding: 0;
+  height: 100%;
 }
 
 #header {
@@ -67,6 +68,8 @@ main:extend(blockpadding) {
     height: 100%;
   }
   height: @mapHeight;
+  position:absolute;
+  top:0;
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }

@@ -15,19 +15,7 @@
 </head>
 <body>
 
-<!--
-http://handlebarsjs.com/
--->
 
-<!--<script id="contact-tmpl" type="text/x-handlebars-template">-->
-    <!---->
-<!--</script>-->
-
-<script id="building-tmpl" type="text/x-handlebars-template">
-    {{#each building}}
-
-    {{/each}}
-</script>
 
 	<header id="header">
 		<div class="container">
@@ -60,56 +48,9 @@ http://handlebarsjs.com/
         <p>Ingelogd als : <span>Wilfred Nas</span></p>
         <section>
 			<form action="#" class="f-form">
-				<fieldset id="contact" class="active">
-<!-- html will be injected with handlebars... templates go on top of html page.. -->
-
-				</fieldset>
+				<fieldset id="contact"></fieldset>
                 <fieldset id="buildings"></fieldset>
-				<!--<fieldset id="kaart" data-map>-->
-					<!--<h2>kaart</h2>-->
-                    <!--<div class="f-container">-->
-                        <!--<p>Is het juiste pand geselecteerd, druk dan op bevestig en ga door. Mochten er andere panden bij uw bedrijf horen, selecteer ze op de kaart.</p>-->
-                    <!--</div>-->
-					<!--<div id="map" class="map">kaart</div>-->
-                <!--</fieldset>-->
                 <fieldset id="contactInformation"></fieldset>
-                <!--<fieldset>-->
-					<!--<div class="f-container">-->
-						<!--<h3>contactpersonen bij calamiteiten</h3>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="voornaam1">Voornaam</label>-->
-							<!--<input class="f-input f-text b-name" type="text" id="voornaam1" placeholder="voornaam">-->
-						<!--</div>-->
-                        <!--<div class="f-container">-->
-                            <!--<label class="f-label" for="achternaam1">Voornaam</label>-->
-                            <!--<input class="f-input f-text b-name" type="text" id="achternaam1" placeholder="achternaam">-->
-                        <!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="tel1">telefoonnummer</label>-->
-							<!--<input class="f-input f-tel" type=tel id="tel1" placeholder="012-3456789">-->
-						<!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="email1">email</label>-->
-							<!--<input class="f-input f-email" type=email id="email1" placeholder="uw@emailadres.nl">-->
-						<!--</div>-->
-						<!--<div class="f-container">-->
-							<!--<label class="f-label" for="extra">voeg een contact persoon toe</label>-->
-							<!--<button id="extra" class="f-button f-button-primary">Voeg toe</button>-->
-						<!--</div>-->
-					<!--</div>-->
-
-				<!--</fieldset>-->
-				<!--<fieldset>-->
-					<!--<h2>functie</h2>-->
-					<!--<div class="f-container f-select-label">-->
-						<!--<label class="f-label" for="hoofdf">functie</label>-->
-						<!--<select class=f-select name="h" id="hoofdf"><option value="d">select</option></select>-->
-					<!--</div>-->
-					<!--<div class="f-container f-select-label">-->
-						<!--<label class="f-label" for="subf">sub functie</label>-->
-						<!--<select class="f-select" name="s" id="subf"><option value="d">select</option></select>-->
-					<!--</div>-->
-				<!--</fieldset>-->
 				
 				<fieldset class="map" class="vraag-test" style="height: 400px;">
 				<h2>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie*</h2>
@@ -138,10 +79,10 @@ http://handlebarsjs.com/
         		</fieldset>
 				
 				
-				<div class="f-button-bar">
+				<nav class="f-button-bar" id="main-nav">
                     <button type="submit" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
                     <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
-                </div>
+                </nav>
 				
 			</form>
 		</section>

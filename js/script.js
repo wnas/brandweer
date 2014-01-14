@@ -2,7 +2,10 @@ var brandweer = function () {
     var config = {
         // foo: bar
         "src":"js/json/data.json",
-        "multipleSelectClone":''
+        "multipleSelectClone":'',
+        "headerHeight": $('#header').height(),
+        "navHeight": $('#main-nav').height()
+
     }, init = function () {
 
         var request = $.ajax({
@@ -21,19 +24,10 @@ var brandweer = function () {
         request.fail(function( jqXHR, textStatus ) {
             alert( "Request failed: " + textStatus );
         });
-        $.getJSON(config.src,function(data){
-            var dat = data;
-         //   console.log(dat)
-           return {dat:dat}
-        });
 
 
-        Modernizr.addTest('fileinput', function() {
-            var elem = document.createElement('input');
-            elem.type = 'file';
-            alert()
-            return !elem.disabled;
-        });
+
+
        // console.log(dat);
 //        populate();
 
@@ -129,7 +123,8 @@ var brandweer = function () {
     }, doMaps = function () {
        // $('#kaart').show();
         var w = document.body.clientWidth,
-            h = window.innerHeight - 200;
+            h = window.innerHeight - config.headerHeight - config.navHeight;
+
 
 
         var thiz = $('#map'),
@@ -140,6 +135,7 @@ var brandweer = function () {
 
        // thiz.width(w);
         thiz.height(h);
+        thiz.css('top',config.headerHeight);
 
         var map = new L.map('map').setView(coordz,zoom);
         var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
@@ -159,13 +155,13 @@ var brandweer = function () {
         showLayer();
 
     },   showLayer = function(e){
-        $('.map').each(function(){
-            $(this).click(function(){
+            $('#map').click(function(){
+                alert('boooo')
                 var contactInformation = $('#contactInformation');
                 $(this).append(contactInformation).show();
             })
 
-        })
+
 
     },  multipleSelects = function(){
         //console.log('gjoo')
