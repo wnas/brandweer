@@ -92,7 +92,6 @@
                 "name":"surname",
                 "type":"text",
                 "value": "",
-
                 "placeholder":"Achternaam",
                 "required":"f-required"
             },
@@ -102,7 +101,6 @@
                 "value":"",
                 "placeholder":"jan@provider.nl",
                 "required":""
-
             },
             {
                 "name":"telephone",
@@ -165,6 +163,7 @@
         {
             "building":"bagId",
             "header":"sleutelbuis",
+            "order":"3",
             "geometry":{
                 "type": "Point",
                 "coordinates": [

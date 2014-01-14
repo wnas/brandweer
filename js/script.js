@@ -95,6 +95,7 @@ var brandweer = function () {
         $('#contactInformation').append(contactInformationTemplate(msg));
 
         doMaps();
+        doInformation();
 
     }, popTmpl = function(arg,msg){
 
@@ -105,22 +106,33 @@ var brandweer = function () {
         $('#'+arg).append(tmp(msg));
 
     },  doInformation = function(){
-        $('.information').each(function(){
-            var thiz = $(this);
-            $('.close').click(function(){
-                thiz.hide(slow);
-            });
-        })
+        $('body').on('click','.close',function(e){
+            console.log(e.target);
+            alert('ayayay')
+            e.stopPropagation();
+            $(e.target).closest('.information').hide(slow);
+        });
+//        $('.information').each(function(){
+//            var thiz = $(this);
+//            $('.close').click(function(e){
+//                console.log('ay');
+//                e.stopPropagation()
+//                thiz.hide(slow);
+//            });
+//        })
     }, doMaps = function () {
        // $('#kaart').show();
-
+        var w = document.body.clientWidth;
         $('.map').each(function(i){
             var thiz = $(this),
                 it = thiz.data('bagid'),
                 coords = [51.690599, 5.3064146],
                 coordz = thiz.data('coords'),
                 zoom = thiz.data('zoom'),
-                its = "map-"+i;
+                its = "map-"+ i;
+
+            thiz.width(w);
+
 
             thiz.append('<div id="'+its+'"></div>');
 //console.log(coords+' '+coordz);
@@ -129,12 +141,19 @@ var brandweer = function () {
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
 
+
+            if (w <= 768){
+                // if we are on a small screen, disable zoom...
+                map.scrollWheelZoom.disable();
+            }
+
             map.addLayer(cloudmade);
 
             var marker = L.marker(coords).addTo(map);
             marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
 
             showLayer();
+
 
         });
 //        var coords = [51.690599, 5.3064146];
