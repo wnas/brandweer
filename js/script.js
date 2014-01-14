@@ -4,7 +4,17 @@ var brandweer = function () {
         "src":"js/json/data.json",
         "multipleSelectClone":'',
         "headerHeight": $('#header').height(),
-        "navHeight": $('#main-nav').height()
+        "navHeight": $('#main-nav').height(),
+        "questions":[
+            "buildings",
+            "contact",
+            "contactInformation",
+            "functions",
+            "entrances",
+            "sleutelbuis"
+        ]
+
+
 
     }, init = function () {
 
@@ -16,13 +26,15 @@ var brandweer = function () {
         });
 
         request.done(function( msg ) {
-            console.log(msg);
-        //    popTmpl('contactInformation',msg);
-            populate(msg)
+            // for-in loop
+            for (var i in config.questions) {
+                popTmpl(config.questions[i],msg);
+            }
+            doMaps();
         });
 
         request.fail(function( jqXHR, textStatus ) {
-            alert( "Request failed: " + textStatus );
+          // oh no...
         });
 
 
@@ -80,29 +92,9 @@ var brandweer = function () {
 
 
         });
-    }, populate = function (msg) {
-        var contact = render('contact', {});
-        var buildings = render('buildings',{});
-        var contactInformation = render('contactInformation',{});
-
-
-        var contactTemplate = Handlebars.compile(contact);
-        var buildingTemplate = Handlebars.compile(buildings);
-        var contactInformationTemplate = Handlebars.compile(contactInformation);
-
-     //  $('#contact').prepend(contactTemplate(msg));
-        $('#buildings').append(buildingTemplate(msg));
-     //   $('#contactInformation').append(contactInformationTemplate(msg));
-
-        doMaps();
-        doInformation();
-
     }, popTmpl = function(arg,msg){
-
-        var src = render( arg , {}),
-            tmp = Handlebars.compile(arg);
-
-        console.log(msg);
+        var src = render(arg , {}),
+            tmp = Handlebars.compile(src);
         $('#'+arg).append(tmp(msg));
 
     },  doInformation = function(){
@@ -112,14 +104,7 @@ var brandweer = function () {
             e.stopPropagation();
             $(e.target).closest('.information').hide(slow);
         });
-//        $('.information').each(function(){
-//            var thiz = $(this);
-//            $('.close').click(function(e){
-//                console.log('ay');
-//                e.stopPropagation()
-//                thiz.hide(slow);
-//            });
-//        })
+
     }, doMaps = function () {
        // $('#kaart').show();
         var w = document.body.clientWidth,
@@ -156,7 +141,7 @@ var brandweer = function () {
 
     },   showLayer = function(e){
             $('#map').click(function(){
-                alert('boooo')
+               // alert('boooo')
                 var contactInformation = $('#contactInformation');
                 $(this).append(contactInformation).show();
             })
