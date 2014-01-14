@@ -16,12 +16,14 @@ main:extend(blockpadding) {
   top: 0;
   left: 0;
   z-index: 5;
-  & .container:extend(blockpadding) {
-    background: url(../img/logo.svg) no-repeat center right;
+  & h1:extend(blockpadding) {
+
+      background: url(../img/logo.svg) no-repeat center right;
+      text-indent:-9999em;
+
+
     height: 2em;
-    a {
-      color: #fff;
-    }
+   font-size: 1em;
 
   }
 }

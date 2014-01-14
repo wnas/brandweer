@@ -7,11 +7,14 @@ var brandweer = function () {
         "navHeight": $('#main-nav').height(),
         "questions":[
             "buildings",
-            "contact",
+            "personalInformation",
             "contactInformation",
             "functions",
             "entrances",
-            "sleutelbuis"
+            "sleutelbuis",
+            "hoofdSchakelaarElektriciteit",
+            "hoofdafsluiterwater",
+            "gasflessen"
         ]
 
 
@@ -26,25 +29,17 @@ var brandweer = function () {
         });
 
         request.done(function( msg ) {
-            // for-in loop
+            // loop over each of the questions...
             for (var i in config.questions) {
                 popTmpl(config.questions[i],msg);
+                renderNavigationItem(config.questions[i],i);
             }
             doMaps();
         });
 
         request.fail(function( jqXHR, textStatus ) {
-          // oh no...
+          console.log('oops, something went wrong getting the data...');
         });
-
-
-
-
-       // console.log(dat);
-//        populate();
-
-   //   navigate();
-      //  getLiveData();
 
         $('body').on('change','.multiple-select-origin',function(){
             multipleSelects();
@@ -78,6 +73,9 @@ var brandweer = function () {
 
         return render.tmpl_cache[tmpl_name](tmpl_data);
 
+    },  renderNavigationItem = function(arg,i){
+
+        $('.top-navigation').append('<li class="top-navigation-item"><a href="#"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>')
     },  navigate = function(){
         $('button[type=submit]').click(function () {
             var $activeFieldset = $('fieldset.active'),
@@ -105,6 +103,10 @@ var brandweer = function () {
             $(e.target).closest('.information').hide(slow);
         });
 
+    },   setMapSize = function(elem,h,t){
+        elem.height(h);
+        elem.css('top',t);
+
     }, doMaps = function () {
        // $('#kaart').show();
         var w = document.body.clientWidth,
@@ -118,10 +120,14 @@ var brandweer = function () {
             coordz = thiz.data('coords'),
             zoom = thiz.data('zoom');
 
-       // thiz.width(w);
-        thiz.height(h);
-        thiz.css('top',config.headerHeight);
+//       // thiz.width(w);
+//        thiz.height(h);
+//        thiz.css('top',config.headerHeight);
+        setMapSize(thiz,h,config.headerHeight);
 
+        window.onresize = function(event){
+            setMapSize(thiz,h,config.headerHeight);
+        }
         var map = new L.map('map').setView(coordz,zoom);
         var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
             subDomains = ['1', '2', '3', '4'],
