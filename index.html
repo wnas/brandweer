@@ -3,19 +3,9 @@
 <head>
     <title>brandweer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!--[if lt IE 9]>
-        <script src="js/vendors/html5shiv.js"></script>
-    <![endif]-->
 
-    <!-- jquery and handlebars-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="js/vendors/underscore/underscore.js"></script>
-    <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
 
-    <!--geo shizzle -->
-    <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
-    <script src="js/leaflet-0.7.1/leaflet.js"></script>
-
+    <link rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
     <link  rel="stylesheet" href="css/style.css" />
 
     <!--[if lt IE 8]>
@@ -40,9 +30,8 @@ http://handlebarsjs.com/
 </script>
 
 	<header id="header">
-        <span id="light"></span>
 		<div class="container">
-            <a href="bb.html">babkcon</a>
+            <a href="bb.html"></a>
 		</div>
         <nav>
             <ul class="top-navigation">
@@ -122,7 +111,7 @@ http://handlebarsjs.com/
 					<!--</div>-->
 				<!--</fieldset>-->
 				
-				<div class="map" class="vraag-test">
+				<fieldset class="map" class="vraag-test" style="height: 400px;">
 				<h2>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie*</h2>
 				
 					<div class="entrances b-questions">
@@ -146,7 +135,7 @@ http://handlebarsjs.com/
 		        		</div>
 	        		</div>
         		
-        		</div>
+        		</fieldset>
 				
 				
 				<div class="f-button-bar">
@@ -158,6 +147,13 @@ http://handlebarsjs.com/
 		</section>
 	</main>
 
+    <!-- jquery and handlebars-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="js/vendors/underscore/underscore.js"></script>
+    <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
+
+    <!--geo shizzle -->
+    <script src="js/leaflet-0.7.1/leaflet.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/1.1.0/proj4js-compressed.js"></script>
 
 

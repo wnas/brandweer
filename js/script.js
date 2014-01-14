@@ -1,7 +1,7 @@
 var brandweer = function () {
     var config = {
         // foo: bar
-        "src":"js/json/data.js",
+        "src":"js/json/data.json",
         "multipleSelectClone":''
     }, init = function () {
 
@@ -28,6 +28,12 @@ var brandweer = function () {
         });
 
 
+        Modernizr.addTest('fileinput', function() {
+            var elem = document.createElement('input');
+            elem.type = 'file';
+            alert()
+            return !elem.disabled;
+        });
        // console.log(dat);
 //        populate();
 
@@ -90,9 +96,9 @@ var brandweer = function () {
         var buildingTemplate = Handlebars.compile(buildings);
         var contactInformationTemplate = Handlebars.compile(contactInformation);
 
-       $('#contact').prepend(contactTemplate(msg));
+     //  $('#contact').prepend(contactTemplate(msg));
         $('#buildings').append(buildingTemplate(msg));
-        $('#contactInformation').append(contactInformationTemplate(msg));
+     //   $('#contactInformation').append(contactInformationTemplate(msg));
 
         doMaps();
         doInformation();
@@ -124,62 +130,33 @@ var brandweer = function () {
        // $('#kaart').show();
         var w = document.body.clientWidth,
             h = window.innerHeight - 200;
-        console.log(h)
-        $('.map').each(function(i){
-            var thiz = $(this),
-                it = thiz.data('bagid'),
-                coords = [51.690599, 5.3064146],
-                coordz = thiz.data('coords'),
-                zoom = thiz.data('zoom'),
-                its = "map-"+ i;
-
-            thiz.width(w);
-            thiz.height(h);
 
 
-            thiz.append('<div id="'+its+'"></div>');
-//console.log(coords+' '+coordz);
-            var map = L.map(its).setView(coords,zoom);
-            var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
-                subDomains = ['1', '2', '3', '4'],
-                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
+        var thiz = $('#map'),
+            it = thiz.data('bagid'),
+        // maybe we wanna use jsonparse in the future...
+            coordz = thiz.data('coords'),
+            zoom = thiz.data('zoom');
+
+       // thiz.width(w);
+        thiz.height(h);
+
+        var map = new L.map('map').setView(coordz,zoom);
+        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+            subDomains = ['1', '2', '3', '4'],
+            cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
 
 
-            if (w <= 768){
-                // if we are on a small screen, disable zoom...
-                map.scrollWheelZoom.disable();
-                map.touchZoom.disable();
-            }
+        if (w <= 768){
+            // if we are on a small screen, disable zoom...
+            map.dragging.disable();
+            map.scrollWheelZoom.disable();
+            map.touchZoom.disable();
+        }
 
-            map.addLayer(cloudmade);
+        map.addLayer(cloudmade);
 
-            var marker = L.marker(coords).addTo(map);
-            marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
-
-            showLayer();
-
-
-        });
-//        var coords = [51.690599, 5.3064146];
-//        var map = L.map('map').setView(coords, 18);
-//        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
-//            subDomains = ['1', '2', '3', '4'],
-//            cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:18});
-//
-//        map.addLayer(cloudmade);
-//
-//        var marker = L.marker(coords).addTo(map);
-//        marker.bindPopup("<h3>Ha gerben!</h3><p>hier zitten we</p>").openPopup();
-//
-//        var popup = L.popup();
-//
-//
-//        function onMapClick(e) {
-//            showLayer(e);
-////            L.marker()
-//        }
-//
-//        map.on('click', onMapClick);
+        showLayer();
 
     },   showLayer = function(e){
         $('.map').each(function(){

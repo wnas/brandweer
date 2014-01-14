@@ -1,10 +1,12 @@
 {{#buildings}}
+        <input type="file" multiple />
     <div
         class="map"
         data-bagid="{{id}}"
         data-type="{{geometry.type}}"
-        data-coords="{{geometry.coordinates}}"
-        data-zoom="18">
+        data-coords="[{{geometry.coordinates}}]"
+        data-zoom="18"
+        id="map">
 
 
     </div>
