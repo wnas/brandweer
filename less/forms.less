@@ -150,8 +150,7 @@ fieldset {
   position: fixed;
   bottom:0;
   z-index: 10;
-  width:  100%;
-  background-color: rgba(255,255,255,.5);
+  width: 100%;
   padding:0;
 }
 .f-button {
@@ -159,74 +158,26 @@ fieldset {
   text-decoration: none;
   background: #fff;
   cursor: pointer;
-  &.f-button-primary {
-    border: 0;
-    color: darken(#abd7ea, 30%);
-    color: black;
+  border: 0;
+  border-radius: 2px;
+  color: black;
     
     font-family: helvetica;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 1.3em;
     float: right;
-    
-
     line-height: 1.6;
-    width: 50%;
-    background: rgba(0,256,0,.4);
+    width: 30%;
     
-    &:before {
-      content:'';
-      float: right;
-      height: 20px;
-      width: 20px;
-      
-      border-left: 5px solid rgba(0,0,0,.3);
-      border-bottom: 5px solid rgba(0,0,0,.3);
-      
-      transform: rotate(225deg);
-      -webkit-transform: rotate(225deg);
-      -ms-transform: rotate(225deg);
-    }
-    &:hover {
-      background: rgba(0,900,0,.7);
-    }
+    margin: 5px;
     
- 
-  }
-  &.f-button-secondary {
-    color: darken(@secondary-color,30%);
-    border:0;
-    
-    color: darken(#abd7ea, 30%);
-    color: black;
-    
-    font-family: helvetica;
-    font-weight: bold;
-    font-size: 1.3em;
-    float: right;
-
-    line-height: 1.6;
-    width: 50%;
-    background: rgba(256,0,0,.4);
-    
-    &:after {
-      content:'';
+    background: rgba(0,255,0,.4);
+    &.f-button-secondary {
+      background: rgba(255,0,0,.4);
       float: left;
-      height: 20px;
-      width: 20px;
-      
-      border-left: 5px solid rgba(0,0,0,.3);
-      border-bottom: 5px solid rgba(0,0,0,.3);
-      
-      transform: rotate(45deg);
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
     }
-    
     &:hover {
-      background: rgba(256,0,0,.7);
+      opacity:.7;
     }
   }
-  
-}
 }
