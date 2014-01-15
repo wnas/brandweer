@@ -34,19 +34,12 @@ var brandweer = function(){
             data: { name: 'Brandweer' },
             dataType: 'json',
             success: function(data){
-
-                console.log(data);
-                JSON.decycle(data);
-                console.log(data);
                 // Do some nice stuff here
                 for (var i in config.questions) {
                     popTmpl(config.questions[i],data);
                     renderNavigationItem(config.questions[i],i);
                 }
                 doMaps();
-
-
-
             },
             error: function(xhr, type){
                 alert('Y U NO WORK?')
@@ -66,7 +59,7 @@ var brandweer = function(){
         }
 
         if ( ! render.tmpl_cache[tmpl_name] ) {
-            var tmpl_dir = '/templates';
+            var tmpl_dir = '/Brandweer/templates';
             // gerbens eigen regel hierboven...
             var tmpl_url = tmpl_dir + '/' + tmpl_name + '.html';
 
@@ -93,7 +86,6 @@ var brandweer = function(){
     },  renderNavigationItem = function(arg,i){
         $('.top-navigation').append('<li class="top-navigation-item"><a href="#'+arg+'" class="navigate"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>');
         setMapSize($('#map'));
-
     },  setMapSize = function(elem){
         elem.height(window.innerHeight - config.headerHeight - config.navHeight);
         elem.css('top',config.headerHeight);
