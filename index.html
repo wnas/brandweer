@@ -15,7 +15,7 @@
 </head>
 <body>
 
-
+    <div id="status"></div>
 
 	<header id="header">
         <h1>Brandweer</h1>
@@ -37,9 +37,18 @@
 				<fieldset id="functions"></fieldset>
                 <fieldset id="entrances"></fieldset>
                 <fieldset id="sleutelbuis"></fieldset>
+                <fieldset id="gasafsluiter"></fieldset>
                 <fieldset id="hoofdSchakelaarElektriciteit"></fieldset>
 				<fieldset id="hoofdafsluiterwater"></fieldset>
 				<fieldset id="gasflessen"></fieldset>
+                <fieldset id="drogestijgleiding"></fieldset>
+                <fieldset id="rwa"></fieldset>
+                <fieldset id="verdiepingen"></fieldset>
+                <fieldset id="bvh"></fieldset>
+                <fieldset id="people"></fieldset>
+                <fieldset id="exercise"></fieldset>
+                <fieldset id="final"></fieldset>
+
 				<nav class="f-button-bar" id="main-nav">
                     <button type="submit" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
                     <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
@@ -51,7 +60,14 @@
 	</main>
 
     <!-- jquery and handlebars-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!--[if lt IE 8 ]>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <![endif]-->
+
+
+    <script src="js/vendors/zepto/zepto.min.js"></script>
+
+
     <script src="js/vendors/underscore/underscore.js"></script>
     <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
 

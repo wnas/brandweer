@@ -62,11 +62,19 @@ fieldset {
     border-bottom: 20px solid transparent;
     border-top: 20px solid transparent;
     border-right: 20px solid rgba(106,145,136,.8);
-    
-    
+
   }
 }
 
+#status {
+  height: 5px;
 
+  &.online {
+    background-color: green;
+  }
+  &.offline {
+    background-color: red;
+  }
+}
 
 

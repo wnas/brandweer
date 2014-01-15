@@ -242,6 +242,61 @@
 
         }
     ],
+    "drogestijgleiding":[
+        {
+            "building":"bagId",
+            "header":"Droge stijgleiding",
+            "body":"<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart...</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "rwa":[
+        {
+            "building":"bagId",
+            "header":"Automatische rookluiken",
+            "body":"<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "verdiepingen":[
+        {
+            "building":"bagId",
+            "header":"Verdiepingen",
+            "body":"<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+            "amount":"1"
+        }
+    ],
+    "bhv":{
+        "header":"BVH",
+        "body":"<p>Heeft u een bvh organisatie?</p>",
+        "value":"nee"
+    },
+    "people":[
+        {
+            "building":"bagId",
+            "header":"Aanwezigen",
+            "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>"
+
+        }
+    ],
+    "exercise":{
+        "header":"Brandweer oefening",
+        "body":"<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+        "value":"nee"
+    },
+    "final":{
+        "header":"Dank voor uw medewerking"
+    },
     "information":{
         "personalInformation": {
             "header":"header",
@@ -252,5 +307,4 @@
             "body":"bodytest"
         }
     }
-
 }
