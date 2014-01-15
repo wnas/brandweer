@@ -31,13 +31,11 @@ var brandweer = function(){
         $.ajax({
             type: 'GET',
             url: config.src,
-            data: { name: 'Super Volcano Lair' },
+            data: { name: 'Brandweer' },
             dataType: 'json',
             success: function(data){
                 // Do some nice stuff here
-                console.log(data);
                 for (var i in config.questions) {
-                    console.log(config.questions[i]);
                     popTmpl(config.questions[i],data);
                     renderNavigationItem(config.questions[i],i);
                 }
@@ -47,6 +45,13 @@ var brandweer = function(){
                 alert('Y U NO WORK?')
             }
         });
+
+        $('fieldset').each(function(){
+            $(this).height(window.innerHeight - config.headerHeight - config.navHeight);
+        });
+
+        doNavigation();
+
     }, render = function(tmpl_name, tmpl_data){
 
         if ( !render.tmpl_cache ) {
@@ -79,11 +84,19 @@ var brandweer = function(){
         $('#'+arg).append(tmp(msg));
 
     },  renderNavigationItem = function(arg,i){
-        $('.top-navigation').append('<li class="top-navigation-item"><a href="#"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>');
+        $('.top-navigation').append('<li class="top-navigation-item"><a href="#'+arg+'" class="navigate"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>');
         setMapSize($('#map'));
     },  setMapSize = function(elem){
-            elem.height(window.innerHeight - config.headerHeight);
-            elem.css('top',config.headerHeight);
+        elem.height(window.innerHeight - config.headerHeight - config.navHeight);
+        elem.css('top',config.headerHeight);
+
+    },doNavigation = function(){
+        $('body').on('click','.navigate',function(e){
+            var h = $(this).attr('href');
+            history.pushState(null, null, h);
+            $('fieldset').hide();
+            $(h).show();
+        });
 
     }, doMaps = function () {
         // $('#kaart').show();
