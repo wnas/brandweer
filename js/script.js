@@ -59,7 +59,7 @@ var brandweer = function(){
         }
 
         if ( ! render.tmpl_cache[tmpl_name] ) {
-            var tmpl_dir = '/templates';
+            var tmpl_dir = '/Brandweer/templates';
             // gerbens eigen regel hierboven...
             var tmpl_url = tmpl_dir + '/' + tmpl_name + '.tmpl';
 
@@ -87,7 +87,7 @@ var brandweer = function(){
         $('.top-navigation').append('<li class="top-navigation-item"><a href="#'+arg+'" class="navigate"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>');
         setMapSize($('#map'));
     },  setMapSize = function(elem){
-        elem.height(window.innerHeight - config.headerHeight - config.navHeight);
+        elem.height(window.innerHeight - config.headerHeight);
         elem.css('top',config.headerHeight);
 
     },showHideFieldsets = function(theFieldset){

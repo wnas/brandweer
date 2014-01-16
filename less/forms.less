@@ -154,28 +154,50 @@ fieldset {
   padding:0;
 }
 .f-button {
-  padding: .2em 1em;
+  padding: .7em 1em;
   text-decoration: none;
   background: #fff;
   cursor: pointer;
-  border: 0;
+  border: 1px solid rgba(0,205,0,.9);
   border-radius: 2px;
   color: black;
-  width: 50%;
+  width: 220px;
+  margin: 10px 30px;
     
     font-family: helvetica;
     font-weight: 700;
-    font-size: 1em;
+    font-size: 1.2em;
     float: right;
-    line-height: 1.6;
     
-    background: rgba(0,255,0,.4);
+    background: rgba(0,255,0,.2);
     &.f-button-secondary {
-      background: rgba(255,0,0,.4);
+      background: rgba(255,0,0,.2);
+      border: 1px solid rgba(255,0,0,.3);
       float: left;
+      &:hover {
+        background: rgba(255,0,0,.4);
+      }
     }
     &:hover {
-      opacity:.7;
+      background: rgba(0,205,0,.4);
     }
   }
 }
+@media screen and (max-width: 600px){
+.f-form .f-button {
+  font-size: 1em;
+  width: 97.5%;
+  margin: 0 5px 5px 5px;
+  float: left;
+  
+  }
+}
+
+
+
+
+
+
+
+
+
