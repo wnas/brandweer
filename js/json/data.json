@@ -285,13 +285,67 @@
         {
             "building":"bagId",
             "header":"Aanwezigen",
-            "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>"
-
+            "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
+            "occupants":[
+                [
+                    
+                    {
+                        "type":"Bewoners",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bewoners",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bewoners",
+                        "time":"Nacht",
+                        "amount":""
+                    }
+                ],
+                [
+                    {
+                        "type":"Bezoekers",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bezoekers",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bezoekers",
+                        "time":"Nacht",
+                        "amount":""
+                    }
+                ],
+                [
+                    {
+                        "type":"Personeel",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Personeel",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Personeel",
+                        "time":"Nacht",
+                        "amount":""
+                    }                
+                ]
+            ]
         }
     ],
     "exercise":{
         "header":"Brandweer oefening",
         "body":"<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+        "question":"Ik wil wel worden benaderd",
         "value":"nee"
     },
     "final":{

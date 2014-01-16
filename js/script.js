@@ -59,9 +59,9 @@ var brandweer = function(){
         }
 
         if ( ! render.tmpl_cache[tmpl_name] ) {
-            var tmpl_dir = '/Brandweer/templates';
+            var tmpl_dir = '/templates';
             // gerbens eigen regel hierboven...
-            var tmpl_url = tmpl_dir + '/' + tmpl_name + '.html';
+            var tmpl_url = tmpl_dir + '/' + tmpl_name + '.tmpl';
 
             var tmpl_string;
             $.ajax({
@@ -90,12 +90,19 @@ var brandweer = function(){
         elem.height(window.innerHeight - config.headerHeight - config.navHeight);
         elem.css('top',config.headerHeight);
 
-    },doNavigation = function(){
-        $('body').on('click','.navigate',function(e){
-            var h = $(this).attr('href');
-            history.pushState(null, null, h);
+    },showHideFieldsets = function(theFieldset){
             $('fieldset').hide();
-            $(h).show();
+            $(theFieldset).show();
+    },doNavigation = function(){
+        $('body').on('click','.navigate',function(){
+            var theFieldset = $(this).attr('href');
+
+            // http://diveintohtml5.info/history.html
+            history.pushState(null, null, theFieldset);
+        });
+
+        window.addEventListener("popstate", function() {
+            showHideFieldsets(location.hash);
         });
 
     }, doMaps = function () {
