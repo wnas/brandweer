@@ -97,20 +97,35 @@
   }
 
 }
-
+.revealInformation {
+  border: 1px solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+  position: absolute;
+  top:0;
+  right:0;
+  &:hover {
+    border-color: green;
+  }
+}
+.info .information {
+  display:block;
+}
 .information:extend(blockpadding) {
-  position: fixed;
+  position: absolute;
   max-height: 60%;
   overflow: auto;
   z-index: 2;
-  top: 5em;
-  right: 2%;
+  top: 0;
+  right: 0;
   width: 40%;
   background: @information-color;
   border: 3px solid darken(@information-color,10%);
   border-radius: 10px;
   box-shadow: 3px 3px 6px rgba(0,0,0,.4);
-  
+
+  display:none;
+
   & h2 {
     margin-top:0.2em;
     & button.close {

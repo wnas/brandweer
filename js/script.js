@@ -28,8 +28,12 @@ var brandweer = function () {
             "answers":[],
             "active":"active",
             "numberOfQuestions":15,
-            "tmpl_dir":'/Brandweer/templates',
-            "mainNavigation":$('.top-navigation')
+            "tmpl_dir":'/templates',
+            "mainNavigation":$('.top-navigation'),
+            "info":{
+                "show":".revealInformation",
+                "hide":".hideInformation"
+            }
         },
         init = function () {
 
@@ -58,8 +62,28 @@ var brandweer = function () {
 
             // set up the navigation.
             doNavigation();
+            toggleInfo();
 
-        }, render = function (tmpl_name, tmpl_data) {
+        },
+        toggleInfo = function(){
+//            $(config.info.show).each(function(){
+//                console.log('infoshow')
+//                var that = $(this),
+//                    parent = that.closest('fieldset'),
+//                    info = parent.find('information');
+//                that.click(function(){
+//                    console.log('yaya')
+//                    info.toggle();
+//                })
+//            });
+            $('body').on('click',config.info.show,function(){
+                $(this).closest('fieldset').toggleClass('info');
+            });
+            $('body').on('click',config.info.hide,function(){
+                $(this).closest('fieldset').toggleClass('info');
+            })
+        },
+        render = function (tmpl_name, tmpl_data) {
 
             if (!render.tmpl_cache) {
                 render.tmpl_cache = {};
@@ -83,16 +107,19 @@ var brandweer = function () {
 
             return render.tmpl_cache[tmpl_name](tmpl_data);
 
-        }, popTmpl = function (arg, msg) {
+        },
+        popTmpl = function (arg, msg) {
 
             var src = render(arg, {}),
                 tmp = Handlebars.compile(src);
 
             $('#' + arg).append(tmp(msg));
 
-        }, renderNavigationItem = function (arg, i) {
+        },
+        renderNavigationItem = function (arg, i) {
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
-        }, setMapSize = function () {
+        },
+        setMapSize = function () {
 
             var headerHeight = config.headerHeight + 20,
                 map = $('#map');
@@ -100,9 +127,11 @@ var brandweer = function () {
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
 
-        }, activate = function (elem) {
+        },
+        activate = function (elem) {
             elem.addClass(config.active);
-        }, deActivate = function (elem) {
+        },
+        deActivate = function (elem) {
             if (!elem) {
                 elem = $('fieldset');
             }
@@ -110,13 +139,14 @@ var brandweer = function () {
         },
         setHistory = function (x) {
             history.pushState(null, null, x)
-        }
-        , showHideFieldsets = function (theFieldset) {
+        },
+        showHideFieldsets = function (theFieldset) {
 
             deActivate();
             activate($(theFieldset));
 
-        }, doNavigation = function () {
+        },
+        doNavigation = function () {
 
             // if we click on a navigation item (event delegation like)
             $('body').on('click', '.navigate', function () {
@@ -133,7 +163,8 @@ var brandweer = function () {
                 showHideFieldsets(location.hash);
             });
 
-        }, saveAndNext = function () {
+        },
+        saveAndNext = function () {
 
             // get the active fieldset
             var activeFieldset = $('fieldset.active'),
@@ -157,7 +188,8 @@ var brandweer = function () {
             console.log(config.answers);
             return false;
 
-        }, doMaps = function () {
+        },
+        doMaps = function () {
             // $('#kaart').show();
 
             var thiz = $('#map'),
@@ -179,7 +211,8 @@ var brandweer = function () {
             map.addLayer(cloudmade);
 
             map.on('click', addCoords);
-        }, addCoords = function (e) {
+        },
+        addCoords = function (e) {
             var activeQuestion = $('.active'),
                 activeId = activeQuestion.attr('id'),
                 coords = e.latlng,
