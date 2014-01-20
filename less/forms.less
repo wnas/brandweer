@@ -8,7 +8,17 @@
 
 fieldset {
   border: 0;
+  &#personalInformation,
+  &#contactInformation {
+    background: @background-color;
+  }
+  padding-bottom: 20px;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  border: rgba(255,255,255,.9);
+  border-top: none;
 }
+
 
 .f-form {
   padding: 1rem 0;
@@ -26,6 +36,8 @@ fieldset {
     width: 100%;
     display: block;
     padding: @padding;
+    color: @theme-color;
+    margin: 0 10px;
     @media only screen and(min-width:700px) {
       display: inline-block;
       width: 40%;
@@ -41,7 +53,7 @@ fieldset {
   .f-readonly {
     color: @theme-color;
     & .f-input {
-      background-color: lighten(@theme-color, 20%);
+      background-color: lighten(@theme-color, 30%);
       font-style: italic;
     }
   }
@@ -85,13 +97,14 @@ fieldset {
 
   padding: @padding;
   border: @input-border;
-  width: 100%;
+  border-bottom: 0;
+  border-right: 0;
+  margin: 5px 10px;
   @media only screen and(min-width:700px) {
     width: 40%;
-    width: -webkit-calc(50% - 2px - @padding-total);
-    width: calc(50% - 2px - @padding-total);
+    width: -webkit-calc(50% - 4px - @padding-total);
+    width: calc(50% - 4px - @padding-total);
   }
-
 &:focus {
   outline: none;
   background-color: lighten(@secondary-color, 2%);
@@ -151,6 +164,12 @@ fieldset {
   z-index: 10;
   width: 100%;
   padding: 0;
+  
+  background: rgba(255, 255, 255, .7);
+  border: rgba(255,255,255,.9);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  
 }
 
 .f-button {
