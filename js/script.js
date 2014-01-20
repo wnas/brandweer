@@ -129,7 +129,7 @@ var brandweer = function () {
         }, saveAndNext = function () {
 
             // get the active fieldset
-            var activeFieldset = $('.active'),
+            var activeFieldset = $('fieldset.active'),
                 // and it's id
                 activeId = activeFieldset.attr('id');
 
