@@ -1,21 +1,25 @@
+<button class="revealInformation">?</button>
 {{#information}}
-<div class="information">
-    <h2>{{contactInformation.header}}<button class=close>close</button></h2>
-    <div>{{{contactInformation.body}}}</div>
-</div>
+    <div class="information">
+        <h2>{{contactInformation.header}}<button class=hideInformation>close</button></h2>
+        <div>{{{contactInformation.body}}}</div>
+    </div>
 {{/information}}
+
 {{#contactInformation}}
-    {{#each this}}
-        <div class="f-container {{#if required}}{{required}}{{/if}}">
-            <label
-                    for="contact-{{name}}"
-                    class="f-label">{{name}}</label>
-            <input
-                    type="{{type}}"
-                    id="contact-{{name}}"
-                    value="{{value}}"
-                    placeholder="{{placeholder}}"
-                    class="f-input"/>
-        </div>
-    {{/each}}
+    <div class="question">
+        {{#each this}}
+            <div class="f-container {{#if required}}{{required}}{{/if}}">
+                <label
+                        for="contact-{{name}}"
+                        class="f-label">{{name}}</label>
+                <input
+                        type="{{type}}"
+                        id="contact-{{name}}"
+                        value="{{value}}"
+                        placeholder="{{placeholder}}"
+                        class="f-input"/>
+            </div>
+        {{/each}}
+    </div>
 {{/contactInformation}}

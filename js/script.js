@@ -66,22 +66,14 @@ var brandweer = function () {
 
         },
         toggleInfo = function(){
-//            $(config.info.show).each(function(){
-//                console.log('infoshow')
-//                var that = $(this),
-//                    parent = that.closest('fieldset'),
-//                    info = parent.find('information');
-//                that.click(function(){
-//                    console.log('yaya')
-//                    info.toggle();
-//                })
-//            });
+//
             $('body').on('click',config.info.show,function(){
                 $(this).closest('fieldset').toggleClass('info');
             });
             $('body').on('click',config.info.hide,function(){
                 $(this).closest('fieldset').toggleClass('info');
             })
+
         },
         render = function (tmpl_name, tmpl_data) {
 
@@ -138,7 +130,10 @@ var brandweer = function () {
             elem.removeClass(config.active);
         },
         setHistory = function (x) {
-            history.pushState(null, null, x)
+
+                history.pushState(null, null, x);
+
+
         },
         showHideFieldsets = function (theFieldset) {
 
