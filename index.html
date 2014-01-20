@@ -33,7 +33,7 @@
 
         <section  class="f-form">
 
-				<fieldset id="personalInformation"></fieldset>
+				<fieldset id="personalInformation" class="active"></fieldset>
                 <fieldset id="contactInformation"></fieldset>
 				<fieldset id="functions"></fieldset>
                 <fieldset id="entrances"></fieldset>
@@ -70,7 +70,7 @@
         (function(){
             var fallback;
             if ('__proto__' in {}) {
-                document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
+               // document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
                 fallback = 'zepto';
             } else {
                 document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
@@ -90,9 +90,6 @@
     <script src="js/leaflet-0.7.1/leaflet.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/proj4js/1.1.0/proj4js-compressed.js"></script>
 
-
-
-    <script src="js/cycle.js"></script>
 	<script src=js/script.js></script>
 
 

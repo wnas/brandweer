@@ -92,13 +92,13 @@ var brandweer = function () {
 
         }, renderNavigationItem = function (arg, i) {
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
-            setMapSize($('#map'));
-        }, setMapSize = function (elem) {
+        }, setMapSize = function () {
 
-            var headerHeight = config.headerHeight + 20;
+            var headerHeight = config.headerHeight + 20,
+                map = $('#map');
 
-            elem.height(window.innerHeight - headerHeight);
-            elem.css('top', headerHeight);
+            map.height(window.innerHeight - headerHeight);
+            map.css('top', headerHeight);
 
         }, activate = function (elem) {
             elem.addClass(config.active);
@@ -112,12 +112,19 @@ var brandweer = function () {
             history.pushState(null, null, x)
         }
         , showHideFieldsets = function (theFieldset) {
+
             deActivate();
             activate($(theFieldset));
+
         }, doNavigation = function () {
+
+            // if we click on a navigation item (event delegation like)
             $('body').on('click', '.navigate', function () {
+
+                // we look what it points to.
                 var theFieldset = $(this).attr('href');
-                console.log(theFieldset);
+
+                // and we set our history up to re
                 // http://diveintohtml5.info/history.html
                 setHistory(theFieldset);
             });
@@ -158,10 +165,10 @@ var brandweer = function () {
                 coordz = thiz.data('coords'),
                 zoom = thiz.data('zoom');
 
-            setMapSize(thiz);
+            setMapSize();
 
             window.onresize = function (event) {
-                setMapSize(thiz);
+                setMapSize();
             }
 
             var map = new L.map('map').setView(coordz, zoom);
@@ -192,5 +199,6 @@ var brandweer = function () {
         init:init
     };
 }();
-
-brandweer.init();
+Zepto(function($){
+    brandweer.init();
+});
