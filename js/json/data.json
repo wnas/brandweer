@@ -349,7 +349,8 @@
         "value":"nee"
     },
     "final":{
-        "header":"Dank voor uw medewerking"
+        "header":"Dank voor uw medewerking",
+        "body":"<p>Hartelijk dank voor uw medewerking.</p>"
     },
     "information":{
         "personalInformation": {

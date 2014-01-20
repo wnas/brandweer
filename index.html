@@ -32,8 +32,8 @@
 
 	<main id="main">
 
-        <section>
-			<form action="#" class="f-form">
+        <section  class="f-form">
+
 				<fieldset id="personalInformation"></fieldset>
                 <fieldset id="contactInformation"></fieldset>
 				<fieldset id="functions"></fieldset>
@@ -49,13 +49,14 @@
                 <fieldset id="bvh"></fieldset>
                 <fieldset id="people"></fieldset>
                 <fieldset id="exercise"></fieldset>
-                <fieldset id="final"></fieldset>
-
+                <fieldset id="final" class="last"></fieldset>
+            <form action="#" method="post">
+                <fieldset id="data"></fieldset>
 				<nav class="f-button-bar" id="main-nav">
-                    <button type="submit" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
+                    <button type="submit" id="confirm" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
                     <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
                 </nav>
-                <div id="buildings" style="outline:5px dotted pink"></div>
+                <div id="buildings"></div>
 			</form>
 		</section>
 		
@@ -67,17 +68,19 @@
     </footer>
 
     <script>
-        if( '__proto__' in {} ) {
-            selfHosted = 'zepto';
-        } else {
-            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"><\/script>');
-            selfHosted = 'jquery';
-        }
+        (function(){
+            var fallback;
+            if ('__proto__' in {}) {
+                document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
+                fallback = 'zepto';
+            } else {
+                document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+                fallback = 'jquery';
+            }
+            window.$ || document.write('<script src="js/vendors/zepto/' + fallback + '.js"><\/script>');
+        }());
     </script>
-    <script>
-        window.$ || document.write('<script src="js/vendors/zepto/' + selfHosted + '.js"><\/script>');
-        delete selfHosted;
-    </script>
+
 
     <script src="js/vendors/history.js"></script>
 

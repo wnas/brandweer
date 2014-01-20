@@ -56,9 +56,12 @@ main:extend(blockpadding) {
   width: calc(6.25% - .3em - 2px);
   background-color: lighten(@logo-color,30%);
   border-right: 1px solid lighten(@logo-color,25%);
-  a {
+  .navigate {
     color: @logo-color;
     font-size: .8em;
+    &.active {
+      outline: 1px solid #fff
+    }
   }
   &.done {
     background-color: @primary-color;
