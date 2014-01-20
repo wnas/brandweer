@@ -1,14 +1,13 @@
+<button class="revealInformation">?</button>
 {{#information}}
     <div class="information">
-        <h2>{{personalInformation.header}}<button class="close">close</button></h2>
+        <h2>{{personalInformation.header}}<button class="hideInformation">close</button></h2>
         <div>{{{personalInformation.body}}}</div>
     </div>
 {{/information}}
-
-<h2>Controleer en corrigeer uw gegevens waar nodig.</h2>
-
+<h2>hedaer tekstek</h2>
 {{#personalInformation}}
-    <div class="f-container {{#if required}}{{required}}{{/if}}">dis
+    <div class="f-container {{#if required}}{{required}}{{/if}}">
         <label
                 for="contact-{{name}}"
                 class="f-label">{{name}}</label>

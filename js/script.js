@@ -28,8 +28,12 @@ var brandweer = function () {
             "answers":[],
             "active":"active",
             "numberOfQuestions":15,
-            "tmpl_dir":'/Brandweer/templates',
-            "mainNavigation":$('.top-navigation')
+            "tmpl_dir":'/templates',
+            "mainNavigation":$('.top-navigation'),
+            "info":{
+                "show":".revealInformation",
+                "hide":".hideInformation"
+            }
         },
         init = function () {
 
@@ -58,8 +62,28 @@ var brandweer = function () {
 
             // set up the navigation.
             doNavigation();
+            toggleInfo();
 
-        }, render = function (tmpl_name, tmpl_data) {
+        },
+        toggleInfo = function(){
+//            $(config.info.show).each(function(){
+//                console.log('infoshow')
+//                var that = $(this),
+//                    parent = that.closest('fieldset'),
+//                    info = parent.find('information');
+//                that.click(function(){
+//                    console.log('yaya')
+//                    info.toggle();
+//                })
+//            });
+            $('body').on('click',config.info.show,function(){
+                $(this).closest('fieldset').toggleClass('info');
+            });
+            $('body').on('click',config.info.hide,function(){
+                $(this).closest('fieldset').toggleClass('info');
+            })
+        },
+        render = function (tmpl_name, tmpl_data) {
 
             if (!render.tmpl_cache) {
                 render.tmpl_cache = {};
@@ -83,26 +107,31 @@ var brandweer = function () {
 
             return render.tmpl_cache[tmpl_name](tmpl_data);
 
-        }, popTmpl = function (arg, msg) {
+        },
+        popTmpl = function (arg, msg) {
 
             var src = render(arg, {}),
                 tmp = Handlebars.compile(src);
 
             $('#' + arg).append(tmp(msg));
 
-        }, renderNavigationItem = function (arg, i) {
+        },
+        renderNavigationItem = function (arg, i) {
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
-            setMapSize($('#map'));
-        }, setMapSize = function (elem) {
+        },
+        setMapSize = function () {
 
-            var headerHeight = config.headerHeight + 20;
+            var headerHeight = config.headerHeight + 20,
+                map = $('#map');
 
-            elem.height(window.innerHeight - headerHeight);
-            elem.css('top', headerHeight);
+            map.height(window.innerHeight - headerHeight);
+            map.css('top', headerHeight);
 
-        }, activate = function (elem) {
+        },
+        activate = function (elem) {
             elem.addClass(config.active);
-        }, deActivate = function (elem) {
+        },
+        deActivate = function (elem) {
             if (!elem) {
                 elem = $('fieldset');
             }
@@ -110,14 +139,22 @@ var brandweer = function () {
         },
         setHistory = function (x) {
             history.pushState(null, null, x)
-        }
-        , showHideFieldsets = function (theFieldset) {
+        },
+        showHideFieldsets = function (theFieldset) {
+
             deActivate();
             activate($(theFieldset));
-        }, doNavigation = function () {
+
+        },
+        doNavigation = function () {
+
+            // if we click on a navigation item (event delegation like)
             $('body').on('click', '.navigate', function () {
+
+                // we look what it points to.
                 var theFieldset = $(this).attr('href');
-                console.log(theFieldset);
+
+                // and we set our history up to re
                 // http://diveintohtml5.info/history.html
                 setHistory(theFieldset);
             });
@@ -126,7 +163,8 @@ var brandweer = function () {
                 showHideFieldsets(location.hash);
             });
 
-        }, saveAndNext = function () {
+        },
+        saveAndNext = function () {
 
             // get the active fieldset
             var activeFieldset = $('fieldset.active'),
@@ -150,7 +188,8 @@ var brandweer = function () {
             console.log(config.answers);
             return false;
 
-        }, doMaps = function () {
+        },
+        doMaps = function () {
             // $('#kaart').show();
 
             var thiz = $('#map'),
@@ -158,10 +197,10 @@ var brandweer = function () {
                 coordz = thiz.data('coords'),
                 zoom = thiz.data('zoom');
 
-            setMapSize(thiz);
+            setMapSize();
 
             window.onresize = function (event) {
-                setMapSize(thiz);
+                setMapSize();
             }
 
             var map = new L.map('map').setView(coordz, zoom);
@@ -172,7 +211,8 @@ var brandweer = function () {
             map.addLayer(cloudmade);
 
             map.on('click', addCoords);
-        }, addCoords = function (e) {
+        },
+        addCoords = function (e) {
             var activeQuestion = $('.active'),
                 activeId = activeQuestion.attr('id'),
                 coords = e.latlng,
@@ -192,5 +232,6 @@ var brandweer = function () {
         init:init
     };
 }();
-
-brandweer.init();
+Zepto(function($){
+    brandweer.init();
+});
