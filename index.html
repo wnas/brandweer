@@ -29,7 +29,7 @@
 	</header>
 
 	<main id="main">
-        <p>Ingelogd als : <span>Wilfred Nas</span></p>
+        <p>Ingelogd als : <span>Wilfred Nas</span> jonge</p>
 
         <section>
 			<form action="#" class="f-form">
@@ -54,25 +54,31 @@
                     <button type="submit" class="f-button f-button-primary"><span>Bevestig selectie</span></button>
                     <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
                 </nav>
-				
+                <div id="buildings" style="outline:5px dotted pink"></div>
 			</form>
 		</section>
 		
-        <div id="buildings"></div>
+
 	</main>
 	
 	<footer>
 	<a href="#" class="next">NEXT!-->></a>
     </footer>
-    
-    <!-- jquery and handlebars-->
-        <!--[if lt IE 10 ]>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <![endif]-->
 
+    <script>
+        if( '__proto__' in {} ) {
+            selfHosted = 'zepto';
+        } else {
+            document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"><\/script>');
+            selfHosted = 'jquery';
+        }
+    </script>
+    <script>
+        window.$ || document.write('<script src="js/vendors/zepto/' + selfHosted + '.js"><\/script>');
+        delete selfHosted;
+    </script>
 
-    <script src="js/vendors/zepto/zepto.min.js"></script>
-
+    <script src="js/vendors/history.js"></script>
 
     <script src="js/vendors/underscore/underscore.js"></script>
     <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>

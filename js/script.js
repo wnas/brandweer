@@ -37,7 +37,10 @@ var brandweer = function(){
                 // Do some nice stuff here
                 for (var i in config.questions) {
                     popTmpl(config.questions[i],data);
-                    renderNavigationItem(config.questions[i],i);
+                    if( i > 0 && i < 16){
+                        renderNavigationItem(config.questions[i],i);
+                    }
+
                 }
                 doMaps();
             },
@@ -59,7 +62,7 @@ var brandweer = function(){
         }
 
         if ( ! render.tmpl_cache[tmpl_name] ) {
-            var tmpl_dir = '/Brandweer/templates';
+            var tmpl_dir = '/templates';
             // gerbens eigen regel hierboven...
             var tmpl_url = tmpl_dir + '/' + tmpl_name + '.tmpl';
 
@@ -84,11 +87,13 @@ var brandweer = function(){
         $('#'+arg).append(tmp(msg));
 
     },  renderNavigationItem = function(arg,i){
-        $('.top-navigation').append('<li class="top-navigation-item"><a href="#'+arg+'" class="navigate"><abbr title="'+arg+'">'+((i*1)+1)+'</abbr></a></li>');
+        $('.top-navigation').append('<li class="top-navigation-item"><a href="#'+arg+'" class="navigate"><abbr title="'+arg+'">'+i+'</abbr></a></li>');
         setMapSize($('#map'));
     },  setMapSize = function(elem){
-        elem.height(window.innerHeight - config.headerHeight);
-        elem.css('top',config.headerHeight);
+          console.log(config.headerHeight);
+            var headerHeight = config.headerHeight + 20;
+        elem.height(window.innerHeight - headerHeight);
+        elem.css('top',headerHeight);
 
     },showHideFieldsets = function(theFieldset){
             $('fieldset').hide();
