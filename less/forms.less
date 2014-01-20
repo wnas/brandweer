@@ -13,8 +13,7 @@ fieldset {
     background: @background-color;
   }
   padding-bottom: 20px;
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px;
+  border-radius: 2px;
   border: rgba(255,255,255,.9);
   border-top: none;
 }
@@ -166,7 +165,7 @@ fieldset {
 }
 
 .f-button {
-  padding: .7em 1em;
+  padding: .6em 1em;
   text-decoration: none;
   background: #fff;
   cursor: pointer;
@@ -197,20 +196,25 @@ fieldset {
 
   }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 580px) {
+  .f-button-bar {
+    
+  }
   .f-form .f-button-secondary {
-    width:  30px;
+    width:  16%;
     float: left;
     content : '<';
+    margin: 2% 0 2% 2%;
   }
   .f-form .f-button-primary {
-    width:  80%;
-    float: right;
+    width:  78%;
+    margin-right: 30px;
+    margin: 2% 2% 2% 0;
   }
   .f-form .f-button {
     font-size: 1em;
 //    width: 97.5%;
-    margin: 0 5px 5px 5px;
+    
 
 
   }
