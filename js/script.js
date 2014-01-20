@@ -28,7 +28,7 @@ var brandweer = function () {
             "answers":[],
             "active":"active",
             "numberOfQuestions":15,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
