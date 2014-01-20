@@ -20,11 +20,10 @@
 
 fieldset {
  display: none;
-  background-color: rgba(255,255,255,.4);
+  background-color: rgba(255,255,255,.8);
   &:nth-child(odd) {
     background-color: rgba(255,255,255,.2);
   }
-  &:first-child,
   &.active {
     display:block;
     position: absolute;
@@ -39,7 +38,7 @@ fieldset {
   z-index:-1;
   left:0;
 }
-.f-form {
+fieldset{
   z-index: 2;
   position: relative;
 }
