@@ -92,10 +92,14 @@ fieldset{
     background-color: red;
   }
 }
-.navigate:active {
+.navigate:active, .navigate:second-child {
   color:blue;
 }
 .navigate:visited {
-  color:green;
+  color:lighten(@logo-color,20%);
 }
+.navigate:hover {
+  color:darken(@logo-color,10%);
+}
+
 
