@@ -65,6 +65,14 @@ var brandweer = function () {
             doNavigation();
             toggleInfo();
 
+            $('fieldset').each(function(){
+                $(this).prepend('<button class="hideFieldset">hide</button>');
+
+            });
+            $('body').on('click','.hideFieldset',function(){
+                $(this).parent().toggleClass('hideMe');
+            })
+
 
         },
         toggleInfo = function(){
@@ -227,11 +235,11 @@ var brandweer = function () {
 
                 var RedIcon = L.Icon.Default.extend({
                     options: {
-                        iconUrl: 'img/'+activeId+'.png'
+                        iconUrl: 'img/'+activeId+'.png' || ''
                     }
                 });
                 var redIcon = new RedIcon();
-
+              //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
                 var marker = new L.marker(e.latlng,{draggable:'true',title:activeId,icon: redIcon});
                 console.log(marker);
                 map.addLayer(marker);
@@ -268,7 +276,7 @@ var brandweer = function () {
                     break;
                 case "personalInformation":
                 case "contactInformation":
-                    activeId.find('.f-input').each(function(){
+                    $('#'+activeId).find('.f-input').each(function(){
                         set.id = $(this).attr('id');
                         set.value = $(this).val();
                         answer.push(set)
@@ -280,7 +288,8 @@ var brandweer = function () {
             }
             answer.id = activeId;
             config.answers.push(answer);
-            $('#'+activeId).append('<p>Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
+            $('.confirmation').remove();
+            $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
            // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
             console.log(config.answers);
             activeId = '';
