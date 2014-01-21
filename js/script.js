@@ -205,6 +205,8 @@ var brandweer = function () {
 
             map.addLayer(cloudmade);
 
+            L.control.layers(null, null, {position: 'topright'});
+
             map.on('click', addCoords);
         },
         addCoords = function (e) {
