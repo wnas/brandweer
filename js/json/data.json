@@ -72,6 +72,8 @@
     "buildings":[
         {
             "id":"bagId",
+            "header":"Naam van de app",
+            "body":"<p>Vul uw gegevens zo goed mogelijk in. Mocht je vragen hebben dan stel deze per telefoon / email.</p>",
             "geometry":{
                 "type":"point",
                 "coordinates":[51.690599, 5.3064146]
@@ -178,7 +180,7 @@
     "gasafsluiter":[
         {
             "building":"bagId",
-            "header":"gasafsluiter",
+            "header":"Gasafsluiter",
             "body":"<p>waar zit de gas afsluiter?</p>",
             "geometry":{
                 "type": "Point",
@@ -205,7 +207,7 @@
         {
             "building":"bagId",
             "header":"Hoofdafsluiter water",
-            "body":"jj",
+            "body":"<p>Geef op de kaart aan waar de hoofdafsluiter zit.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [

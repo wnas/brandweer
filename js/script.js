@@ -1,5 +1,6 @@
 var brandweer = function () {
     "use strict";
+    /*jshint devel:true */
     var config = {
             // foo: bar
             "src":"js/json/data.json",
@@ -28,7 +29,7 @@ var brandweer = function () {
             "answers":[],
             "active":"active",
             "numberOfQuestions":15,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -63,6 +64,7 @@ var brandweer = function () {
             // set up the navigation.
             doNavigation();
             toggleInfo();
+
 
         },
         toggleInfo = function(){
@@ -148,23 +150,34 @@ var brandweer = function () {
 
                 // we look what it points to.
                 var theFieldset = $(this).attr('href');
-
+                deActivate($('.navigate'));
+                activate($(this));
                 // and we set our history up to re
                 // http://diveintohtml5.info/history.html
                 setHistory(theFieldset);
+                addData();
             });
             $('#confirm').click(saveAndNext);
+
             window.addEventListener("popstate", function () {
-                showHideFieldsets(location.hash);
+                var loc = location.hash;
+                showHideFieldsets(loc);
+                activate($('.navigate[href="'+loc+'"]'));
             });
 
         },
         saveAndNext = function () {
 
+            console.log('saveAndNext');
             // get the active fieldset
+            event.preventDefault();
             var activeFieldset = $('fieldset.active'),
                 // and it's id
                 activeId = activeFieldset.attr('id');
+    console.log(activeId);
+            if ( !activeId ){
+                activeId = "buildings";
+            }
 
             // put it into history
             setHistory('#'+activeId);
@@ -172,7 +185,7 @@ var brandweer = function () {
             // reset the top navigation
             deActivate($('.navigate').removeClass('active'));
             // and activate the currenct one.
-            activate($('.navigate[href="#' + activeId + '"]'));
+            $('.navigate').attr('href','#'+activeId).addClass('done');
 
             // hide all fieldsets
             deActivate();
@@ -180,6 +193,7 @@ var brandweer = function () {
             activate(activeFieldset.next('fieldset').not('.last'));
 
             // show the data we are about to send...
+            addData();
             console.log(config.answers);
             return false;
 
@@ -203,25 +217,71 @@ var brandweer = function () {
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
 
+
             map.addLayer(cloudmade);
 
-            L.control.layers(null, null, {position: 'topright'});
 
-            map.on('click', addCoords);
+            map.on('click', function(e){
+                var activeQuestion = $('fieldset.active'),
+                    activeId = activeQuestion.attr('id');
+
+                var RedIcon = L.Icon.Default.extend({
+                    options: {
+                        iconUrl: 'img/'+activeId+'.png'
+                    }
+                });
+                var redIcon = new RedIcon();
+
+                var marker = new L.marker(e.latlng,{draggable:'true',title:activeId,icon: redIcon});
+                console.log(marker);
+                map.addLayer(marker);
+                addData(e);
+            });
+            return map;
         },
-        addCoords = function (e) {
-            var activeQuestion = $('.active'),
-                activeId = activeQuestion.attr('id'),
-                coords = e.latlng,
-                answer = {};
+        addData = function (e) {
 
+
+//            $('#map').addLayer(marker);
+            var activeQuestion = $('fieldset.active'),
+                activeId = activeQuestion.attr('id');
+
+            var answer = [],
+                set = {};
+
+            if (e){
+                var coords = e.latlng;
+            } else {
+                coords = [];
+            }
+            switch (activeId) {
+                case "buildings":
+                    console.log('buildings');
+                case "entrances":
+                case "sleutelbuis":
+                case "gasafsluiter":
+                case "hoofdSchakelaarElektriciteit":
+                case "hoofdafsluiterwater":
+                case "drogestijgleiding":
+                    console.log('only place...');
+                    answer.coords = coords;
+                    break;
+                case "personalInformation":
+                case "contactInformation":
+                    activeId.find('.f-input').each(function(){
+                        set.id = $(this).attr('id');
+                        set.value = $(this).val();
+                        answer.push(set)
+                    });
+                default:
+
+                    console.log('fall to the default');
+                    break;
+            }
             answer.id = activeId;
-            answer.coords = coords;
-
             config.answers.push(answer);
-            //console.log(activeQuestion);
-            //   data.push({activeId:coords});
-            $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
+            $('#'+activeId).append('<p>Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
+           // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
             console.log(config.answers);
             activeId = '';
         };

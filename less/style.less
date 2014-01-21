@@ -15,6 +15,7 @@
 @import "reset.less";
 @import "typography.less";
 @import "forms.less";
+@import "navigate.less";
 
 @import "layout.less";
 
@@ -36,6 +37,9 @@ fieldset {
 
     min-height: 200px;
 
+  }
+  p {
+    margin: 5px 10px;
   }
 }
 .map {
@@ -92,14 +96,6 @@ fieldset{
     background-color: red;
   }
 }
-.navigate:active, .navigate:second-child {
-  color:blue;
-}
-.navigate:visited {
-  color:lighten(@logo-color,20%);
-}
-.navigate:hover {
-  color:darken(@logo-color,10%);
-}
+
 
 
