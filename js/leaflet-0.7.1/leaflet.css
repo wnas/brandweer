@@ -99,7 +99,7 @@
 	bottom: 0;
 	}
 .leaflet-left {
-	left: 0;
+	right: 10px;
 	}
 .leaflet-control {
 	float: left;

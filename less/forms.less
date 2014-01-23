@@ -8,10 +8,24 @@
 
 fieldset {
   border: 0;
+  &#personalInformation,
+  &#contactInformation,
+  &#verdiepingen {
+    background: @background-color;
+  }
+  padding-bottom: 20px;
+  border-radius: 2px;
+  border: rgba(255,255,255,.9);
+  border-top: none;
+  & h2 {
+    padding: 0 4.5%;
+  }
 }
 
 .f-form {
   padding: 1rem 0;
+  position:absolute;
+
   .f-legend {
     display: block;
     font-size: 1.5rem;
@@ -23,15 +37,13 @@ fieldset {
     position: relative;
   }
   .f-label {
-    width: 100%;
+    width: 90%;
+
     display: block;
     padding: @padding;
-    @media only screen and(min-width:700px) {
-      display: inline-block;
-      width: 40%;
-      width: -webkit-calc(50% - @padding-total);
-      width: calc(50% - @padding-total);
-    }
+    color: @theme-color;
+    margin: 0 4.5%;
+
   }
   .f-required .f-label {
     &::after {
@@ -41,7 +53,7 @@ fieldset {
   .f-readonly {
     color: @theme-color;
     & .f-input {
-      background-color: lighten(@theme-color, 20%);
+      background-color: lighten(@theme-color, 30%);
       font-style: italic;
     }
   }
@@ -82,33 +94,28 @@ fieldset {
 
 .f-input,
 .f-select {
-
+  width: 90%;
   padding: @padding;
   border: @input-border;
-  width: 100%;
-  @media only screen and(min-width:700px) {
-    width: 40%;
-    width: -webkit-calc(50% - 2px - @padding-total);
-    width: calc(50% - 2px - @padding-total);
-  }
+  border-bottom: 0;
+  border-right: 0;
+  margin: 5px 4.5%;
 
-&:focus {
-  outline: none;
-  background-color: lighten(@secondary-color, 2%);
-}
+    &:focus {
+      outline: none;
+      background-color: lighten(@secondary-color, 2%);
+    }
 
-&:disabled {
-  border-color: #ccc;
-  color: #ccc;
-}
+    &:disabled {
+      border-color: #ccc;
+      color: #ccc;
+    }
 
-&:readonly {
-  border-width: 0 0 1px;
-}
+    &:readonly {
+      border-width: 0 0 1px;
+    }
 
   }
-
-
 
 .f-day-select {
   width: 25%;
@@ -146,88 +153,88 @@ fieldset {
 .f-radio-label .f-inner-label::before {
   border-radius: 1em;
 }
+
 .f-button-bar:extend(blockpadding) {
   position: fixed;
-  bottom:0;
+  bottom: 0;
   z-index: 10;
-  width:  100%;
-  background-color: rgba(255,255,255,.5);
-  padding:0;
+  width: 100%;
+  padding: 0;
+  
+  background: rgba(255, 255, 255, .7);
+  border: rgba(255,255,255,.9);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  
 }
+
 .f-button {
-  padding: @padding;
+  padding: .6em 1em;
   text-decoration: none;
   background: #fff;
   cursor: pointer;
-  &.f-button-primary {
-    border: 0;
-    color: darken(#abd7ea, 30%);
-    color: black;
-    
-    font-family: helvetica;
-    font-weight: bold;
-    font-size: 1.3em;
-    float: right;
-    
-    padding: 1.2em;
-    line-height: 1.6;
-    width: 50%;
-    background: rgba(0,256,0,.4);
-    
-    &:before {
-      content:'';
-      float: right;
-      height: 20px;
-      width: 20px;
-      
-      border-left: 5px solid rgba(0,0,0,.3);
-      border-bottom: 5px solid rgba(0,0,0,.3);
-      
-      transform: rotate(225deg);
-      -webkit-transform: rotate(225deg);
-      -ms-transform: rotate(225deg);
-    }
-    &:hover {
-      background: rgba(0,256,0,.7);
-    }
-    
- 
-  }
+  border: 1px solid rgba(0, 205, 0, .9);
+  border-radius: 2px;
+  color: black;
+  width: 220px;
+  margin: 10px 30px;
+
+  font-family: helvetica;
+  font-weight: 700;
+  font-size: 1em;
+  float: right;
+
+  background: rgba(0, 255, 0, .2);
   &.f-button-secondary {
-    color: darken(@secondary-color,30%);
-    border:0;
-    
-    color: darken(#abd7ea, 30%);
-    color: black;
-    
-    font-family: helvetica;
-    font-weight: bold;
-    font-size: 1.3em;
-    float: right;
-    
-    padding: 1.2em;
-    line-height: 1.6;
-    width: 50%;
-    background: rgba(256,0,0,.4);
-    
-    &:after {
-      content:'';
-      float: left;
-      height: 20px;
-      width: 20px;
-      
-      border-left: 5px solid rgba(0,0,0,.3);
-      border-bottom: 5px solid rgba(0,0,0,.3);
-      
-      transform: rotate(45deg);
-      -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-    }
-    
+    background: rgba(255, 0, 0, .2);
+    border: 1px solid rgba(255, 0, 0, .3);
+    float: left;
     &:hover {
-      background: rgba(256,0,0,.7);
+      background: rgba(255, 0, 0, .4);
     }
   }
-  
+  &:hover {
+    background: rgba(0, 205, 0, .4);
+  }
 }
+
+  }
+
+@media screen and (max-width: 580px) {
+  .f-button-bar {
+    
+  }
+  .f-form .f-button-secondary {
+    width:  16%;
+    float: left;
+    margin: 10px 0 10px 2%;
+    & span {
+      display: none;
+      text-indent: -11111px;
+    }
+    &:after {
+    content: "X";
+    color: #000;
+    }
+  }
+  .f-form .f-button-primary {
+    width:  78%;
+    margin-right: 30px;
+    margin: 10px 2% 10px 0;
+  }
+  .f-form .f-button {
+    font-size: 1em;
+//    width: 97.5%;
+    
+
+
+  }
 }
+
+
+
+
+
+
+
+

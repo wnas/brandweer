@@ -1,0 +1,23 @@
+{{#people}}
+	{{building}}
+	<h2>{{header}}</h2>
+    {{{body}}}
+    {{#occupants}}
+    	<div class="occupants">
+    		<label for="occupant-{{@index}}"><input type="radio" id="occupant-{{@index}}" name="occupants">{{this.this.type}}</label>
+	    	{{#each this}}
+	    	{{@key}}
+	    		<div class="f-container">
+		    		<label class="f-label">{{type}} ({{time}})</label>
+		    		<input 
+		    			class="f-input" 
+		    			type="number" 
+		    			value="{{amount}}"
+		    			placeholder=0
+		    			id="{{time}}-{{type}}">
+	    		</div>
+	    	{{/each}}
+    	</div>
+    {{/occupants}}
+    
+{{/people}}
