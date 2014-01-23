@@ -39,7 +39,7 @@ var brandweer = function() {
             "hoofdafsluiterwater": "Tb2.022",
             "gasflessen": "Tw2.001",
             "drogestijgleiding": "Tb1.007",
-            "rwa": "Td01"
+            "rwa": "Tb2.005"
         },
         "answers": [],
         "active": "active",
@@ -228,8 +228,43 @@ var brandweer = function() {
                 Proj4js.transform(proj, Proj4js.WGS84, test);
                 result.push([test.y, test.x]);
             };
-            var polygon = L.polygon(result).addTo(map);  
+            var polygon = L.polygon(result);
+            polygon.setStyle({
+                weight: 5,
+				color: '#ff0000',
+				dashArray: '',
+				fillOpacity: 0.1
+            });
+            polygon.addTo(map);
+            polygon.on({
+				mouseover: highlightFeature,
+                mouseout: resetHighlight
+				//click: zoomToFeature
+            });
         });
+    },
+    resetHighlight =function(e) {
+			var layer = e.target;
+            layer.setStyle({
+                weight: 2,
+				color: '#ff0000',
+				dashArray: '',
+				fillOpacity: 0.1
+            });
+        },
+    highlightFeature = function(e) {
+			var layer = e.target;
+
+			layer.setStyle({
+				weight: 5,
+				color: '#0dff22',
+				dashArray: '',
+				fillOpacity: 0.7
+			});
+
+			if (!L.Browser.ie && !L.Browser.opera) {
+				layer.bringToFront();
+			}
     },
     doMaps = function(data) {
 
@@ -244,14 +279,35 @@ var brandweer = function() {
             setMapSize();
         };
 
-        var map = new L.map('map').setView(coordz, 18);
+        var map = new L.map('map',{minZoom: 16, maxZoom:22}).setView(coordz, 19);
         config.map = map;
+
+        var lcms = L.tileLayer.wms("http://www.mapcache.org/wms/lcms?", {
+            minZoom: 18, 
+            maxZoom:22,
+            layers: 'default',
+            format: 'image/png',
+            transparent: true,
+            attribution: ""
+        });
+        map.addLayer(lcms);
         var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
-                subDomains = ['1', '2', '3', '4'],
-                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains: subDomains});
-
-
+        subDomains = ['1', '2', '3', '4'],
+        cloudmade = new L.TileLayer(cloudmadeUrl, {
+            subdomains: subDomains,
+            minZoom: 16, 
+            maxZoom:18,
+        });
         map.addLayer(cloudmade);
+//        var gbkn = L.tileLayer.wms("http://view.safetymaps.nl/map/mapserv?MAP=/home/mapserver/doiv.map", {
+//            minZoom: 16, 
+//            maxZoom:22,
+//            layers: 'gbkn_topografie,gbkn_panden',
+//            format: 'image/png',
+//            transparent: true,
+//            attribution: ""
+//        });
+//        map.addLayer(gbkn);
         $.ajax({
             type: 'GET',
             url: 'js/json/bag.json',
@@ -281,7 +337,9 @@ var brandweer = function() {
                 });
             }
         });
-
+        map.on('zoomend', function(e) {
+            console.log(config.map.getZoom());
+        });
         map.on('click', function(e) {
             var activeQuestion = $('fieldset.active'),
                     activeId = activeQuestion.attr('id');
