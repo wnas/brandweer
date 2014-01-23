@@ -1,332 +1,492 @@
-var brandweer = function () {
+Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' + 
+                '+ellps=bessel +units=m ' + 
+                '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
+var brandweer = function() {
     "use strict";
     /*jshint devel:true */
     var config = {
-            // foo: bar
-            "src":"js/json/data.json",
-            "multipleSelectClone":'',
-            "headerHeight":$('#header').height(),
-            "navHeight":$('#main-nav').height(),
-            "questions":[
-                "intro",
-                "buildings",
-                "personalInformation",
-                "contactInformation",
-                "functions",
-                "entrances",
-                "sleutelbuis",
-                "gasafsluiter",
-                "hoofdSchakelaarElektriciteit",
-                "hoofdafsluiterwater",
-                "gasflessen",
-                "drogestijgleiding",
-                "rwa",
-                "verdiepingen",
-                "bvh",
-                "people",
-                "exercise",
-                "final"
-            ],
-            "answers":[],
-            "active":"active",
-            "numberOfQuestions":16,
-            "tmpl_dir":'/templates',
-            "mainNavigation":$('.top-navigation'),
-            "info":{
-                "show":".revealInformation",
-                "hide":".hideInformation"
-            }
+        // foo: bar
+        "src": "js/json/data.json",
+        "multipleSelectClone": '',
+        "headerHeight": $('#header').height(),
+        "navHeight": $('#main-nav').height(),
+        "questions": [
+            "intro",
+            "buildings",
+            "personalInformation",
+            "contactInformation",
+            "functions",
+            "entrances",
+            "sleutelbuis",
+            "gasafsluiter",
+            "hoofdSchakelaarElektriciteit",
+            "hoofdafsluiterwater",
+            "gasflessen",
+            "drogestijgleiding",
+            "rwa",
+            "verdiepingen",
+            "bvh",
+            "people",
+            "exercise",
+            "final"
+        ],
+        "markers": {
+            "entrances": "Tb1.001",
+            "sleutelbuis": "Tb1.003",
+            "gasafsluiter": "Tb2.021",
+            "hoofdSchakelaarElektriciteit": "Tb2.003",
+            "hoofdafsluiterwater": "Tb2.022",
+            "gasflessen": "Tw2.001",
+            "drogestijgleiding": "Tb1.007",
+            "rwa": "Td01"
         },
-        init = function () {
+        "answers": [],
+        "active": "active",
+        "numberOfQuestions": 16,
+        "tmpl_dir": '/templates',
+        "mainNavigation": $('.top-navigation'),
+        "info": {
+            "show": ".revealInformation",
+            "hide": ".hideInformation"
+        }
+    },
+    init = function() {
 
-            $.ajax({
-                type:'GET',
-                url:config.src,
-                data:{ name:'Brandweer' },
-                dataType:'json',
-                success:function (data) {
-                    // draw me a map
-                    doMaps(data);
-                    // Do some nice stuff here
-                    for (var i in config.questions) {
-                        // create the various templates
-                        popTmpl(config.questions[i], data);
-                        if (i > 0 && i <= config.numberOfQuestions) {
-                            // create the top navigation links
-                            renderNavigationItem(config.questions[i], i);
-                        }
-
-
+        $.ajax({
+            type: 'GET',
+            url: config.src,
+            data: {name: 'Brandweer'},
+            dataType: 'json',
+            success: function(data) {
+                // draw me a map
+                doMaps(data);
+                // Do some nice stuff here
+                for (var i in config.questions) {
+                    // create the various templates
+                    popTmpl(config.questions[i], data);
+                    if (i > 0 && i <= config.numberOfQuestions) {
+                        // create the top navigation links
+                        renderNavigationItem(config.questions[i], i);
                     }
-                    console.log(config.questions[0]);
-                   // activate($('#'+config.questions[0]+' fieldset'));
 
 
-                },
-                error:function (xhr, type) {
-                    console.log('oops.');
+                }
+                console.log(config.questions[0]);
+                // activate($('#'+config.questions[0]+' fieldset'));
+
+
+            },
+            error: function(xhr, type) {
+                console.log('oops.');
+            }
+        });
+
+        // set up the navigation.
+        doNavigation();
+        toggleInfo();
+
+        $('fieldset').each(function() {
+            $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
+
+        });
+        $('body').on('click', '.hideFieldset', function() {
+            $(this).parent().toggleClass('hideMe');
+        });
+
+
+    },
+            toggleInfo = function() {
+
+        $('body').on('click', config.info.show, function() {
+            $(this).closest('fieldset').toggleClass('info');
+        });
+        $('body').on('click', config.info.hide, function() {
+            $(this).closest('fieldset').toggleClass('info');
+        });
+
+    },
+            render = function(tmpl_name, tmpl_data) {
+
+        if (!render.tmpl_cache) {
+            render.tmpl_cache = {};
+        }
+
+        if (!render.tmpl_cache[tmpl_name]) {
+            var tmpl_url = config.tmpl_dir + '/' + tmpl_name + '.tmpl';
+
+            var tmpl_string;
+            $.ajax({
+                url: tmpl_url,
+                method: 'GET',
+                async: false,
+                success: function(data) {
+                    tmpl_string = data;
                 }
             });
 
-            // set up the navigation.
-            doNavigation();
-            toggleInfo();
+            render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
+        }
 
-            $('fieldset').each(function(){
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
+        return render.tmpl_cache[tmpl_name](tmpl_data);
 
-            });
-            $('body').on('click','.hideFieldset',function(){
-                $(this).parent().toggleClass('hideMe');
-            });
+    },
+            popTmpl = function(arg, msg) {
 
-
-        },
-        toggleInfo = function(){
-
-            $('body').on('click',config.info.show,function(){
-                $(this).closest('fieldset').toggleClass('info');
-            });
-            $('body').on('click',config.info.hide,function(){
-                $(this).closest('fieldset').toggleClass('info');
-            });
-
-        },
-        render = function (tmpl_name, tmpl_data) {
-
-            if (!render.tmpl_cache) {
-                render.tmpl_cache = {};
-            }
-
-            if (!render.tmpl_cache[tmpl_name]) {
-                var tmpl_url = config.tmpl_dir + '/' + tmpl_name + '.tmpl';
-
-                var tmpl_string;
-                $.ajax({
-                    url:tmpl_url,
-                    method:'GET',
-                    async:false,
-                    success:function (data) {
-                        tmpl_string = data;
-                    }
-                });
-
-                render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
-            }
-
-            return render.tmpl_cache[tmpl_name](tmpl_data);
-
-        },
-        popTmpl = function (arg, msg) {
-
-            var src = render(arg, {}),
+        var src = render(arg, {}),
                 tmp = Handlebars.compile(src);
 
-            $('#' + arg).append(tmp(msg));
+        $('#' + arg).append(tmp(msg));
 
-        },
-        renderNavigationItem = function (arg, i) {
-            config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
-        },
-        setMapSize = function () {
+    },
+            renderNavigationItem = function(arg, i) {
+        config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
+    },
+            setMapSize = function() {
 
-            var headerHeight = config.headerHeight,
+        var headerHeight = config.headerHeight,
                 map = $('#map, .f-form');
 
-            map.height(window.innerHeight - headerHeight);
-           map.css('top', headerHeight);
+        map.height(window.innerHeight - headerHeight);
+        map.css('top', headerHeight);
 
-        },
-        activate = function (elem) {
-            elem.addClass(config.active);
-        },
-        deActivate = function (elem) {
-            if (!elem) {
-                elem = $('fieldset');
+    },
+            activate = function(elem) {
+        elem.addClass(config.active);
+    },
+            deActivate = function(elem) {
+        if (!elem) {
+            elem = $('fieldset');
+        }
+        elem.removeClass(config.active);
+    },
+            setHistory = function(x) {
+
+        history.pushState(null, null, x);
+
+
+    },
+            showHideFieldsets = function(theFieldset) {
+
+        deActivate();
+        activate($(theFieldset));
+
+    },
+            doNavigation = function() {
+
+        // if we click on a navigation item (event delegation like)
+        $('body').on('click', '.navigate', function() {
+
+            // we look what it points to.
+            var theFieldset = $(this).attr('href');
+            deActivate($('.navigate'));
+            activate($(this));
+            // and we set our history up to re
+            // http://diveintohtml5.info/history.html
+            setHistory(theFieldset);
+            addData();
+        });
+        $('#confirm').click(saveAndNext);
+
+        window.addEventListener("popstate", function() {
+            var loc = location.hash;
+            if (!loc) {
+                loc = '#intro';
             }
-            elem.removeClass(config.active);
-        },
-        setHistory = function (x) {
+            showHideFieldsets(loc);
+            activate($('.navigate[href="' + loc + '"]'));
+        });
 
-                history.pushState(null, null, x);
+    },
+            saveAndNext = function(event) {
 
-
-        },
-        showHideFieldsets = function (theFieldset) {
-
-            deActivate();
-            activate($(theFieldset));
-
-        },
-        doNavigation = function () {
-
-            // if we click on a navigation item (event delegation like)
-            $('body').on('click', '.navigate', function () {
-
-                // we look what it points to.
-                var theFieldset = $(this).attr('href');
-                deActivate($('.navigate'));
-                activate($(this));
-                // and we set our history up to re
-                // http://diveintohtml5.info/history.html
-                setHistory(theFieldset);
-                addData();
-            });
-            $('#confirm').click(saveAndNext);
-
-            window.addEventListener("popstate", function () {
-                var loc = location.hash;
-                if (!loc ){
-                    loc = '#intro';
-                }
-                showHideFieldsets(loc);
-                activate($('.navigate[href="'+loc+'"]'));
-            });
-
-        },
-        saveAndNext = function () {
-
-            console.log('saveAndNext');
-            // get the active fieldset
-            event.preventDefault();
-            var activeFieldset = $('fieldset.active'),
+        console.log('saveAndNext');
+        // get the active fieldset
+        event.preventDefault();
+        var activeFieldset = $('fieldset.active'),
                 // and it's id
                 activeId = activeFieldset.attr('id');
 
-            if ( !activeId ){
-                activeId = "buildings";
-            }
+        if (!activeId) {
+            activeId = "buildings";
+        }
 
-            // put it into history
-            setHistory('#'+activeId);
+        // put it into history
+        setHistory('#' + activeId);
 
-            // reset the top navigation
-            deActivate($('.navigate').removeClass('active'));
-            // and activate the currenct one.
-            $('.navigate').attr('href','#'+activeId).addClass('done');
+        // reset the top navigation
+        deActivate($('.navigate').removeClass('active'));
+        // and activate the currenct one.
+        $('.navigate').attr('href', '#' + activeId).addClass('done');
 
-            // hide all fieldsets
-            deActivate();
-            // and show the current one...
-            activate(activeFieldset.next('fieldset').not('.last'));
+        // hide all fieldsets
+        deActivate();
+        // and show the current one...
+        activate(activeFieldset.next('fieldset').not('.last'));
 
-            // show the data we are about to send...
-            addData();
-            console.log(config.answers);
-            return false;
+        // show the data we are about to send...
+        addData();
+        console.log(config.answers);
+        return false;
 
-        },
-        doMaps = function (data) {
+    },
+            doMaps = function(data) {
 
-             var thiz = $('#map'),
+        var thiz = $('#map'),
                 it = data.buildings[0].id,
                 coordz = data.buildings[0].geometry.coordinates,
                 zoom = data.buildings[0].zoom;
 
+        setMapSize();
+
+        window.onresize = function(event) {
             setMapSize();
+        };
 
-            window.onresize = function (event) {
-                setMapSize();
-            };
-
-            var map = new L.map('map').setView(coordz, 18);
-            var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+        var map = new L.map('map').setView(coordz, 18);
+        var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
-                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains});
+                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains: subDomains});
 
 
-            map.addLayer(cloudmade);
+        map.addLayer(cloudmade);
 
-
-            map.on('click', function(e){
-                var activeQuestion = $('fieldset.active'),
+        //Test met een gebouwvlak
+        var gebouw = [
+            [
+                149306.364,
+                411326.077
+            ],
+            [
+                149301.137,
+                411330.549
+            ],
+            [
+                149301.198,
+                411330.622
+            ],
+            [
+                149296.134,
+                411334.96
+            ],
+            [
+                149295.5,
+                411334.22
+            ],
+            [
+                149290.052,
+                411327.867
+            ],
+            [
+                149290.553,
+                411327.437
+            ],
+            [
+                149286.26,
+                411322.416
+            ],
+            [
+                149284.472,
+                411320.325
+            ],
+            [
+                149283.965,
+                411320.752
+            ],
+            [
+                149278.127,
+                411313.926
+            ],
+            [
+                149277.899,
+                411313.66
+            ],
+            [
+                149277.983,
+                411313.588
+            ],
+            [
+                149282.969,
+                411309.327
+            ],
+            [
+                149285.987,
+                411312.883
+            ],
+            [
+                149288.111,
+                411311.066
+            ],
+            [
+                149286.781,
+                411309.506
+            ],
+            [
+                149286.831,
+                411308.8
+            ],
+            [
+                149288.437,
+                411307.425
+            ],
+            [
+                149289.138,
+                411307.471
+            ],
+            [
+                149290.477,
+                411309.037
+            ],
+            [
+                149292.599,
+                411307.224
+            ],
+            [
+                149289.547,
+                411303.681
+            ],
+            [
+                149294.621,
+                411299.345
+            ],
+            [
+                149299.028,
+                411304.492
+            ],
+            [
+                149300.691,
+                411306.435
+            ],
+            [
+                149299.68,
+                411307.303
+            ],
+            [
+                149305.782,
+                411314.433
+            ],
+            [
+                149306.792,
+                411313.557
+            ],
+            [
+                149312.867,
+                411320.656
+            ],
+            [
+                149307.8,
+                411324.989
+            ],
+            [
+                149307.735,
+                411324.905
+            ],
+            [
+                149306.364,
+                411326.077
+            ]
+        ];
+        var proj = new Proj4js.Proj("EPSG:28992");
+        var result = [];
+        
+        for (var i = 0, max = gebouw.length; i < max; i++) {
+            var test = {x: gebouw[i][0], y: gebouw[i][1]};
+            //console.log(test);
+            Proj4js.transform(proj, Proj4js.WGS84, test);
+            //console.log(test);
+            result.push([test.y, test.x]);
+        }; 
+        //console.log(result);
+        var polygon = L.polygon(result).addTo(map);
+        console.log(polygon.toGeoJSON());
+        map.on('click', function(e) {
+            var activeQuestion = $('fieldset.active'),
                     activeId = activeQuestion.attr('id');
 
-                var custom = 'img/'+activeId+'.png';
+            var custom = 'img/nen1414/' + config.markers[activeId] + '.png';
 
-                var nImg = document.createElement('img');
+            var nImg = document.createElement('img');
 
-                nImg.onload = function() {
+            nImg.onload = function() {
 
-                };
-                nImg.onerror = function() {
-                    // image did not load
-                    custom = 'img/marker-icon.png';
-                };
+            };
+            nImg.onerror = function() {
+                // image did not load
+                custom = 'img/marker-icon.png';
+            };
 
-                nImg.src = custom;
-                var RedIcon = L.Icon.Default.extend({
-                    options: {
-
-                        iconUrl: custom
-                    }
-                });
-                var redIcon = new RedIcon();
-              //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-                var marker = new L.marker(e.latlng,{draggable:'true',title:activeId,icon: redIcon});
-                console.log(marker);
-                map.addLayer(marker);
-                addData(e);
+            nImg.src = custom;
+            var RedIcon = L.Icon.Default.extend({
+                options: {
+                    iconUrl: custom,
+                    iconSize: [32, 32]
+                }
             });
-            return map;
-        },
-        addData = function (e) {
-console.log('addData');
-            var activeQuestion = $('fieldset.active'),
+            var redIcon = new RedIcon();
+            //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
+            var marker = new L.marker(e.latlng, {draggable: 'true', title: activeId, icon: redIcon});
+            console.log(marker);
+            map.addLayer(marker);
+            addData(e);
+        });
+        return map;
+    },
+            addData = function(e) {
+        console.log('addData');
+        var activeQuestion = $('fieldset.active'),
                 activeId = activeQuestion.attr('id');
 
 
-            var answer = [];
+        var answer = [];
 
 
-            if (e){
-                var coords = e.latlng;
-            } else {
-                coords = [];
-            }
-            switch (activeId) {
-                case "buildings":
-                    console.log('buildings');
-                case "entrances":
-                case "sleutelbuis":
-                case "gasafsluiter":
-                case "hoofdSchakelaarElektriciteit":
-                case "hoofdafsluiterwater":
-                case "drogestijgleiding":
-                    console.log('only place...');
-                    answer.coords = coords;
-                    $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>');
+        if (e) {
+            var coords = e.latlng;
+        } else {
+            coords = [];
+        }
+        switch (activeId) {
+            case "buildings":
+                console.log('buildings');
+            case "entrances":
+            case "sleutelbuis":
+            case "gasafsluiter":
+            case "hoofdSchakelaarElektriciteit":
+            case "hoofdafsluiterwater":
+            case "drogestijgleiding":
+                console.log('only place...');
+                answer.coords = coords;
+                $('#' + activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw ' + activeId + '? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>');
 
-                    break;
-                case "personalInformation":
-                case "contactInformation":
+                break;
+            case "personalInformation":
+            case "contactInformation":
 
-                    $('#'+activeId+' .f-input').each(function(){
-                        var set = {};
+                $('#' + activeId + ' .f-input').each(function() {
+                    var set = {};
 //                        console.log($(this));
-                        set.id = $(this).attr('id');
-                        set.value = $(this).val();
-                        console.log(set.id);
-                        answer.push(set);
-                    });
-                case "intro":
-                    break;
-                default:
+                    set.id = $(this).attr('id');
+                    set.value = $(this).val();
+                    console.log(set.id);
+                    answer.push(set);
+                });
+            case "intro":
+                break;
+            default:
 
-                    console.log('fall to the default');
-                    break;
-            }
-            answer.id = activeId;
-            config.answers.push(answer);
-            $('.confirmation').remove();
-           // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
-            console.log(config.answers);
-            activeId = '';
-        };
+                console.log('fall to the default');
+                break;
+        }
+        answer.id = activeId;
+        config.answers.push(answer);
+        $('.confirmation').remove();
+        // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
+        console.log(config.answers);
+        activeId = '';
+    };
     return {
         init: init
     };
 }();
-Zepto(function($){
+Zepto(function($) {
     brandweer.init();
 });
