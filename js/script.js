@@ -1,11 +1,12 @@
-Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' + 
-                '+ellps=bessel +units=m ' + 
-                '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
+Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' +
+        '+ellps=bessel +units=m ' +
+        '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
 var brandweer = function() {
     "use strict";
     /*jshint devel:true */
     var config = {
         // foo: bar
+        "map": null,
         "src": "js/json/data.json",
         "multipleSelectClone": '',
         "headerHeight": $('#header').height(),
@@ -95,17 +96,15 @@ var brandweer = function() {
 
 
     },
-            toggleInfo = function() {
-
+    toggleInfo = function() {
         $('body').on('click', config.info.show, function() {
             $(this).closest('fieldset').toggleClass('info');
         });
         $('body').on('click', config.info.hide, function() {
             $(this).closest('fieldset').toggleClass('info');
         });
-
     },
-            render = function(tmpl_name, tmpl_data) {
+    render = function(tmpl_name, tmpl_data) {
 
         if (!render.tmpl_cache) {
             render.tmpl_cache = {};
@@ -130,7 +129,7 @@ var brandweer = function() {
         return render.tmpl_cache[tmpl_name](tmpl_data);
 
     },
-            popTmpl = function(arg, msg) {
+    popTmpl = function(arg, msg) {
 
         var src = render(arg, {}),
                 tmp = Handlebars.compile(src);
@@ -138,10 +137,10 @@ var brandweer = function() {
         $('#' + arg).append(tmp(msg));
 
     },
-            renderNavigationItem = function(arg, i) {
+    renderNavigationItem = function(arg, i) {
         config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
     },
-            setMapSize = function() {
+    setMapSize = function() {
 
         var headerHeight = config.headerHeight,
                 map = $('#map, .f-form');
@@ -150,32 +149,25 @@ var brandweer = function() {
         map.css('top', headerHeight);
 
     },
-            activate = function(elem) {
+    activate = function(elem) {
         elem.addClass(config.active);
     },
-            deActivate = function(elem) {
+    deActivate = function(elem) {
         if (!elem) {
             elem = $('fieldset');
         }
         elem.removeClass(config.active);
     },
-            setHistory = function(x) {
-
+    setHistory = function(x) {
         history.pushState(null, null, x);
-
-
     },
-            showHideFieldsets = function(theFieldset) {
-
+    showHideFieldsets = function(theFieldset) {
         deActivate();
         activate($(theFieldset));
-
     },
-            doNavigation = function() {
-
+    doNavigation = function() {
         // if we click on a navigation item (event delegation like)
         $('body').on('click', '.navigate', function() {
-
             // we look what it points to.
             var theFieldset = $(this).attr('href');
             deActivate($('.navigate'));
@@ -186,7 +178,6 @@ var brandweer = function() {
             addData();
         });
         $('#confirm').click(saveAndNext);
-
         window.addEventListener("popstate", function() {
             var loc = location.hash;
             if (!loc) {
@@ -195,10 +186,8 @@ var brandweer = function() {
             showHideFieldsets(loc);
             activate($('.navigate[href="' + loc + '"]'));
         });
-
     },
-            saveAndNext = function(event) {
-
+    saveAndNext = function(event) {
         console.log('saveAndNext');
         // get the active fieldset
         event.preventDefault();
@@ -229,7 +218,20 @@ var brandweer = function() {
         return false;
 
     },
-            doMaps = function(data) {
+    addBuilding = function(multipolygon){
+        var map = config.map;
+        var proj = new Proj4js.Proj("EPSG:28992");
+        $.each(multipolygon[0], function(index, gebouw) {
+            var result = [];
+            for (var i = 0, max = gebouw.length; i < max; i++) {
+                var test = {x: gebouw[i][0], y: gebouw[i][1]};
+                Proj4js.transform(proj, Proj4js.WGS84, test);
+                result.push([test.y, test.x]);
+            };
+            var polygon = L.polygon(result).addTo(map);  
+        });
+    },
+    doMaps = function(data) {
 
         var thiz = $('#map'),
                 it = data.buildings[0].id,
@@ -243,161 +245,43 @@ var brandweer = function() {
         };
 
         var map = new L.map('map').setView(coordz, 18);
+        config.map = map;
         var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains: subDomains});
 
 
         map.addLayer(cloudmade);
+        $.ajax({
+            type: 'GET',
+            url: 'js/json/bag.json',
+            dataType: 'json',
+            success: function(data) {
+                $.each(data.features, function(index, item) {
+                    switch (item.geometry.type) {
+                        case "Point":
+                            break;
+                        case "Polygon":
+                            break;
+                        case "MultiPolygon":
+                            addBuilding(item.geometry.coordinates);
+                            break;
+                    }
+                    if(item.properties.pandgeometrie){
+                        switch (item.properties.pandgeometrie.type) {
+                            case "Point":
+                                break;
+                            case "Polygon":
+                                break;
+                            case "MultiPolygon":
+                                addBuilding(item.properties.pandgeometrie.coordinates);
+                                break;
+                        }
+                    }
+                });
+            }
+        });
 
-        //Test met een gebouwvlak
-        var gebouw = [
-            [
-                149306.364,
-                411326.077
-            ],
-            [
-                149301.137,
-                411330.549
-            ],
-            [
-                149301.198,
-                411330.622
-            ],
-            [
-                149296.134,
-                411334.96
-            ],
-            [
-                149295.5,
-                411334.22
-            ],
-            [
-                149290.052,
-                411327.867
-            ],
-            [
-                149290.553,
-                411327.437
-            ],
-            [
-                149286.26,
-                411322.416
-            ],
-            [
-                149284.472,
-                411320.325
-            ],
-            [
-                149283.965,
-                411320.752
-            ],
-            [
-                149278.127,
-                411313.926
-            ],
-            [
-                149277.899,
-                411313.66
-            ],
-            [
-                149277.983,
-                411313.588
-            ],
-            [
-                149282.969,
-                411309.327
-            ],
-            [
-                149285.987,
-                411312.883
-            ],
-            [
-                149288.111,
-                411311.066
-            ],
-            [
-                149286.781,
-                411309.506
-            ],
-            [
-                149286.831,
-                411308.8
-            ],
-            [
-                149288.437,
-                411307.425
-            ],
-            [
-                149289.138,
-                411307.471
-            ],
-            [
-                149290.477,
-                411309.037
-            ],
-            [
-                149292.599,
-                411307.224
-            ],
-            [
-                149289.547,
-                411303.681
-            ],
-            [
-                149294.621,
-                411299.345
-            ],
-            [
-                149299.028,
-                411304.492
-            ],
-            [
-                149300.691,
-                411306.435
-            ],
-            [
-                149299.68,
-                411307.303
-            ],
-            [
-                149305.782,
-                411314.433
-            ],
-            [
-                149306.792,
-                411313.557
-            ],
-            [
-                149312.867,
-                411320.656
-            ],
-            [
-                149307.8,
-                411324.989
-            ],
-            [
-                149307.735,
-                411324.905
-            ],
-            [
-                149306.364,
-                411326.077
-            ]
-        ];
-        var proj = new Proj4js.Proj("EPSG:28992");
-        var result = [];
-        
-        for (var i = 0, max = gebouw.length; i < max; i++) {
-            var test = {x: gebouw[i][0], y: gebouw[i][1]};
-            //console.log(test);
-            Proj4js.transform(proj, Proj4js.WGS84, test);
-            //console.log(test);
-            result.push([test.y, test.x]);
-        }; 
-        //console.log(result);
-        var polygon = L.polygon(result).addTo(map);
-        console.log(polygon.toGeoJSON());
         map.on('click', function(e) {
             var activeQuestion = $('fieldset.active'),
                     activeId = activeQuestion.attr('id');
