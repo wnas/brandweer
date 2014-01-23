@@ -184,7 +184,7 @@ var brandweer = function () {
             });
 
         },
-        saveAndNext = function () {
+        saveAndNext = function (event) {
 
             console.log('saveAndNext');
             // get the active fieldset
@@ -213,7 +213,7 @@ var brandweer = function () {
             // show the data we are about to send...
             addData();
             console.log(config.answers);
-            return false;
+          //  return false;
 
         },
         doMaps = function (data) {
