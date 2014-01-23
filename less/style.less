@@ -6,21 +6,100 @@
 		@wnas
 		gerben hoeve
 		@dadesigndoctorG
- */ 
+ */
+
+// import styles for maps
 @import "colors.less";
 @import "vars.less";
 @import "mixins.less";
 @import "reset.less";
 @import "typography.less";
 @import "forms.less";
+@import "navigate.less";
 
 @import "layout.less";
 
-
 fieldset {
-//  display: none;
-//  &.active{
-//    display: block;
-//  }
-  outline: 1px solid red;
+ display: none;
+  background-color: rgba(255,255,255,.8);
+
+  &.active {
+    display:block;
+    position: absolute;
+
+    left:10px;
+    top: 10px;
+    z-index: 2;
+
+    width:50%;
+    min-width: 300px;
+    max-width: 600px;
+
+    min-height: 200px;
+
+  }
+
+  &.hideMe {
+    height: 10px;
+    min-height: 10px;
+    overflow: hidden;
+  }
+  p {
+    margin: 5px 10px;
+  }
 }
+#map {
+  background-color: #ccc;
+  width: 100%;
+  z-index:-1;
+  left:0;
+}
+fieldset{
+
+  .question {
+
+  }
+}
+
+
+
+.b-question {
+  position: relative;
+}
+.b-map-overlay {
+  // position: absolute;
+
+//  height: @mapHeight;
+//  margin-left: 20%;
+//  padding: @padding;
+//
+//  //outline: 1px solid red;
+//  background-color: rgba(106,145,136,.8);
+//
+//  &:before {
+//    content:'';
+//    display: block;
+//    width: 0px;
+//    height: 0px;
+//    margin: 4em 0 0 -26px;
+//
+//    border-bottom: 20px solid transparent;
+//    border-top: 20px solid transparent;
+//    border-right: 20px solid rgba(106,145,136,.8);
+//
+//  }
+}
+
+#status {
+  height: 5px;
+
+  &.online {
+    background-color: green;
+  }
+  &.offline {
+    background-color: red;
+  }
+}
+
+
+

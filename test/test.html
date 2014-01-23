@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="nl">
+    <head>
+        <link  rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
+    </head>
+    <body>
+    <div id="map" class="map" style="height:300px;width:300px"></div>
+    <script src="js/leaflet-0.7.1/leaflet-src.js"></script>
+    <script src="js/vendors/proj4-src.js"></script>
+    <script src="js/vendors/proj4leaflet.js"></script>
+    <script>
+        var crs = new L.Proj.CRS.TMS('EPSG:28992',
+                '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' +
+                '+ellps=bessel +units=m ' +
+                '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs',
+                [-285401.92, 22598.08, 595401.92, 903401.92],
+                {
+                    origin: [-285401.92, 22598.08],
+                    //transformation: new L.Transformation(1, 285401.920, -1, 903401.920),
+                    resolutions: [3440.640, 1720.320, 860.160, 430.080, 215.040, 107.520, 53.760, 26.880, 13.440, 6.720, 3.360, 1.680, 0.840, 0.420]
+                }
+        );
+        var map = L.map('map', {
+            crs: crs,
+            continuousWorld: true,
+            worldCopyJump: false,
+            zoomControl: true
+        });
+
+        new L.TileLayer('http://www.openbasiskaart.nl/mapcache/tms/1.0.0/osm@rd/{z}/{x}/{y}.png', {
+            continuousWorld: true,
+            maxZoom: 14,
+            minZoom: 3,
+            tms: true
+        }).addTo(map);
+
+        map.setView([51.690599, 5.3064146], 12);
+        coords = [51.690599, 5.3064146];
+        var marker = L.marker(coords).addTo(map);
+        marker.bindPopup("<h3>Foute marker:</h3><p>Burgemeester Loeffplein 70 B-C,<br/>het oude ziekenhuis ligt niet hier.</p>").openPopup();
+        showLayer();
+        
+    </script>
+</body>
+</html>

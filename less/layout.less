@@ -1,10 +1,14 @@
 // less for layout
 
 
-main:extend(blockpadding) {
+#main:extend(blockpadding) {
 
   display: block;
   margin-top: 4em;
+  padding: 0;
+  height: 100%;
+  position: relative;
+  z-index:10;
 }
 
 #header {
@@ -14,57 +18,130 @@ main:extend(blockpadding) {
   top: 0;
   left: 0;
   z-index: 5;
-  & .container:extend(blockpadding) {
-    background: url(../img/logo.svg) no-repeat center right;
+  & h1:extend(blockpadding) {
+
+      background: url(../img/logo.svg) no-repeat center right;
+      text-indent:-9999em;
+
+
     height: 2em;
-    a {
-      color: #fff;
-    }
+   font-size: 1em;
 
   }
 }
-
-.top-navigation {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  border-bottom: 1px solid @primary-color
-}
-
-.top-navigation-item {
-
-  display: table-cell;
-  border: 1px solid rgba(255,255,255,.3);
-  border-bottom: 0;
-  padding: .15em;
-  text-align: center;
-  width:  3.4%;
-  width: calc(6.25% - .3em - 2px);
-
-  a {
+.login:extend(blockpadding) {
+  & p {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  margin: 0px;
+  top: 20px;
+  color: @tertiary-color;
+  font-size: 0.8em;
+  & span {
     color: #fff;
-
-    font-size: .8em;
   }
-  &.done {
-    background-color: #fff;
-
-    a {
-      color: @primary-color;
-    }
-  }
-  &.active {
-    font-size: 1.1em;
-    margin-top: -.2em;
-    border-color:@primary-color;
-    font-weight: bold;
   }
 }
 
-.map {
-  height: 400px;
+
+
+
+
+
+#map {
+  &>div{
+    height: 100%;
+  }
+  height: @mapHeight;
+  position:fixed;
+  top:0;
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
+
 }
+.revealInformation {
+  border: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  background-color: #fff;
+  position: absolute;
+  top:0;
+  right:-28px;
+  display: block;
+  width: 30px;
+  height:30px;
+  font-family: Helvetica;
+  font-size: 1.5em;
+  font-weight: 700;
+  color: lighten(@tertiary-color,60%);
+  cursor: pointer;
+  &:hover {
+    color: @tertiary-color;
+  }
+}
+.info .information {
+  display:block;
+}
+.information:extend(blockpadding) {
+  position: absolute;
+  max-height: 60%;
+  overflow: auto;
+  z-index: 2;
+  padding: 0;
+  top: 0px;
+  left: 100%;
+  width: 70%;
+  background: lighten(@tertiary-color,85%);
+  border: 1px solid lighten(@tertiary-color,70%);
+  border-radius: 2px;
+  box-shadow: 3px 3px 6px rgba(0,0,0,.4);
+
+  display:none;
+
+  & h2 {
+    margin: 0.2em 0 0 0;
+    padding: 0 .2em 0 .5em;
+    font-size:1em;
+    line-height: 2em;
+  }
+  & div {
+  padding: .65em;
+  font-size: 0.8em;
+  }
+  & button {
+    float:right;
+    right: 0px;
+    top: 5px;
+    width: 20px;
+      height: 20px;
+      background: #ff0000;
+      color: #ff0000;
+      border: none;
+      border-radius: 30px;
+      background: url(../img/close-button.svg) no-repeat center right;
+      text-indent: -111111px;
+      box-shadow: 2px 2px 4px rgba(0,0,0,.4);
+      cursor: pointer;
+  }
+}
+
+a.next {
+  display: block;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin:auto;
+  margin-bottom: -200px;
+  
+  border-radius: 45px;
+  background-color: #555;
+  text-indent: -11111px;
+  &:hover {
+    background-color: @logo-color;
+  }
+}
+
+
 
