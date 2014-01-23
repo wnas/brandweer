@@ -5,17 +5,27 @@
         <div>{{{personalInformation.body}}}</div>
     </div>
 {{/information}}
-<h2>hedaer tekstek</h2>
+
 {{#personalInformation}}
-    <div class="f-container {{#if required}}{{required}}{{/if}}">
-        <label
-                for="contact-{{name}}"
-                class="f-label">{{name}}</label>
-        <input
-                type="{{type}}"
-                id="contact-{{name}}"
-                value="{{value}}"
-                placeholder="{{placeholder}}"
-                class="f-input"/>
+    <div class="copy">
+        <h2>{{copy.header}}</h2>
+        <div>{{{copy.body}}}</div>
     </div>
+
+    <div class="fields">
+        {{#fields}}
+            <div class="f-container {{#if required}}{{required}}{{/if}}">
+                <label
+                        for="contact-{{name}}"
+                        class="f-label">{{name}}</label>
+                <input
+                        type="{{type}}"
+                        id="contact-{{name}}"
+                        value="{{value}}"
+                        placeholder="{{placeholder}}"
+                        class="f-input"/>
+            </div>
+        {{/fields}}
+    </div>
+
 {{/personalInformation}}

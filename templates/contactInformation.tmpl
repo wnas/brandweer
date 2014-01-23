@@ -7,8 +7,13 @@
 {{/information}}
 
 {{#contactInformation}}
-    <div class="question">
-        {{#each this}}
+    <div class="copy">
+            <h2>{{copy.header}}</h2>
+            <div>{{{copy.body}}}</div>
+        </div>
+        {{field.name}}
+    <div class="fields">
+        {{#fields}}
             <div class="f-container {{#if required}}{{required}}{{/if}}">
                 <label
                         for="contact-{{name}}"
@@ -20,6 +25,6 @@
                         placeholder="{{placeholder}}"
                         class="f-input"/>
             </div>
-        {{/each}}
+        {{/fields}}
     </div>
 {{/contactInformation}}

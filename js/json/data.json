@@ -1,7 +1,11 @@
 {
     "personalInformation":[
-
-            {
+        {"copy":{
+                "header":"Persoonlijke informatie",
+                "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
+            }
+        },
+        {"fields":[{
                 "name":"firstname",
                 "type":"text",
                 "value": "emiel",
@@ -66,7 +70,8 @@
                 "value":"06-12345678",
                 "placeholder":"06 12345678",
                 "required":""
-            }
+            }]}
+
 
     ],
     "intro":{
@@ -85,36 +90,45 @@
         }
     ],
     "contactInformation":[
-       [
-            {
-                "name":"firstname",
-                "type":"text",
-                "value": "",
-                "placeholder":"Voornaam",
-                "required":"f-required"
+        {
+            "copy":{
+                "header":"Contact informatie",
+                "body":"<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>"
+                }
             },
-            {
-                "name":"surname",
-                "type":"text",
-                "value": "",
-                "placeholder":"Achternaam",
-                "required":"f-required"
-            },
-            {
-                "name":"email",
-                "type":"email",
-                "value":"",
-                "placeholder":"jan@provider.nl",
-                "required":""
-            },
-            {
-                "name":"telephone",
-                "type":"tel",
-                "value":"",
-                "placeholder":"06 12345678",
-                "required":""
-            }
-        ]
+            {"fields":[
+                [
+                    {
+                        "name":"firstname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Voornaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"surname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Achternaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"email",
+                        "type":"email",
+                        "value":"",
+                        "placeholder":"jan@provider.nl",
+                        "required":""
+                    },
+                    {
+                        "name":"telephone",
+                        "type":"tel",
+                        "value":"",
+                        "placeholder":"06 12345678",
+                        "required":""
+                    }
+                ]
+            ]
+        }
     ],
     "functions":[
         {
@@ -283,8 +297,7 @@
         }
     ],
     "bhv":{
-        "header":"BVH",
-        "body":"<p>Heeft u een bvh organisatie?</p>",
+        "header":"BHV",
         "value":"nee"
     },
     "people":[
