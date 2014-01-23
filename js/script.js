@@ -8,6 +8,7 @@ var brandweer = function () {
             "headerHeight":$('#header').height(),
             "navHeight":$('#main-nav').height(),
             "questions":[
+                "intro",
                 "buildings",
                 "personalInformation",
                 "contactInformation",
@@ -28,7 +29,7 @@ var brandweer = function () {
             ],
             "answers":[],
             "active":"active",
-            "numberOfQuestions":15,
+            "numberOfQuestions":16,
             "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
@@ -44,6 +45,8 @@ var brandweer = function () {
                 data:{ name:'Brandweer' },
                 dataType:'json',
                 success:function (data) {
+                    // draw me a map
+                    doMaps(data);
                     // Do some nice stuff here
                     for (var i in config.questions) {
                         // create the various templates
@@ -53,8 +56,12 @@ var brandweer = function () {
                             renderNavigationItem(config.questions[i], i);
                         }
 
+
                     }
-                    doMaps();
+                    console.log(config.questions[0]);
+                   // activate($('#'+config.questions[0]+' fieldset'));
+
+
                 },
                 error:function (xhr, type) {
                     console.log('oops.')
@@ -66,7 +73,7 @@ var brandweer = function () {
             toggleInfo();
 
             $('fieldset').each(function(){
-                $(this).prepend('<button class="hideFieldset">hide</button>');
+                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
 
             });
             $('body').on('click','.hideFieldset',function(){
@@ -76,7 +83,7 @@ var brandweer = function () {
 
         },
         toggleInfo = function(){
-//
+
             $('body').on('click',config.info.show,function(){
                 $(this).closest('fieldset').toggleClass('info');
             });
@@ -123,11 +130,11 @@ var brandweer = function () {
         },
         setMapSize = function () {
 
-            var headerHeight = config.headerHeight + 20,
-                map = $('#map');
+            var headerHeight = config.headerHeight,
+                map = $('#map, .f-form');
 
             map.height(window.innerHeight - headerHeight);
-            map.css('top', headerHeight);
+           map.css('top', headerHeight);
 
         },
         activate = function (elem) {
@@ -169,6 +176,9 @@ var brandweer = function () {
 
             window.addEventListener("popstate", function () {
                 var loc = location.hash;
+                if (!loc ){
+                    loc = '#intro';
+                }
                 showHideFieldsets(loc);
                 activate($('.navigate[href="'+loc+'"]'));
             });
@@ -182,7 +192,7 @@ var brandweer = function () {
             var activeFieldset = $('fieldset.active'),
                 // and it's id
                 activeId = activeFieldset.attr('id');
-    console.log(activeId);
+
             if ( !activeId ){
                 activeId = "buildings";
             }
@@ -206,13 +216,12 @@ var brandweer = function () {
             return false;
 
         },
-        doMaps = function () {
-            // $('#kaart').show();
+        doMaps = function (data) {
 
-            var thiz = $('#map'),
-                it = thiz.data('bagid'),
-                coordz = thiz.data('coords'),
-                zoom = thiz.data('zoom');
+             var thiz = $('#map'),
+                it = data.buildings[0].id,
+                coordz = data.buildings[0].geometry.coordinates,
+                zoom = data.buildings[0].zoom;
 
             setMapSize();
 
@@ -220,10 +229,10 @@ var brandweer = function () {
                 setMapSize();
             }
 
-            var map = new L.map('map').setView(coordz, zoom);
+            var map = new L.map('map').setView(coordz, 18);
             var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
-                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains, maxZoom:zoom});
+                cloudmade = new L.TileLayer(cloudmadeUrl, {subdomains:subDomains});
 
 
             map.addLayer(cloudmade);
@@ -233,9 +242,23 @@ var brandweer = function () {
                 var activeQuestion = $('fieldset.active'),
                     activeId = activeQuestion.attr('id');
 
+                var custom = 'img/'+activeId+'.png';
+
+                var nImg = document.createElement('img');
+
+                nImg.onload = function() {
+
+                }
+                nImg.onerror = function() {
+                    // image did not load
+                    custom = 'img/marker-icon.png';
+                }
+
+                nImg.src = custom;
                 var RedIcon = L.Icon.Default.extend({
                     options: {
-                        iconUrl: 'img/'+activeId+'.png' || ''
+
+                        iconUrl: custom
                     }
                 });
                 var redIcon = new RedIcon();
@@ -248,14 +271,13 @@ var brandweer = function () {
             return map;
         },
         addData = function (e) {
-
-
-//            $('#map').addLayer(marker);
+console.log('addData');
             var activeQuestion = $('fieldset.active'),
                 activeId = activeQuestion.attr('id');
 
-            var answer = [],
-                set = {};
+
+            var answer = [];
+
 
             if (e){
                 var coords = e.latlng;
@@ -273,14 +295,22 @@ var brandweer = function () {
                 case "drogestijgleiding":
                     console.log('only place...');
                     answer.coords = coords;
+                    $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
+
                     break;
                 case "personalInformation":
                 case "contactInformation":
-                    $('#'+activeId).find('.f-input').each(function(){
+
+                    $('#'+activeId+' .f-input').each(function(){
+                        var set = {};
+//                        console.log($(this));
                         set.id = $(this).attr('id');
                         set.value = $(this).val();
-                        answer.push(set)
-                    });
+                        console.log(set.id);
+                        answer.push(set);
+                    })
+                case "intro":
+                    break;
                 default:
 
                     console.log('fall to the default');
@@ -289,7 +319,6 @@ var brandweer = function () {
             answer.id = activeId;
             config.answers.push(answer);
             $('.confirmation').remove();
-            $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
            // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
             console.log(config.answers);
             activeId = '';

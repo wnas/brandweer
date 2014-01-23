@@ -1,15 +1,7 @@
 {{#buildings}}
-    <fieldset class="">
     <h2>{{header}}</h2>
-    {{{body}}}
-    </fieldset>
-    <div
-        class="map"
-        data-bagid="{{id}}"
-        data-type="{{geometry.type}}"
-        data-coords="[{{geometry.coordinates}}]"
-        data-zoom="18"
-        id="map">
+    <div class="body">
+        {{{body}}}
     </div>
 {{/buildings}}
 

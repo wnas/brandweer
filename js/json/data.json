@@ -69,11 +69,15 @@
             }
 
     ],
+    "intro":{
+        "header":"SafetyMaps Web",
+        "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
+    },
     "buildings":[
         {
             "id":"bagId",
-            "header":"Naam van de app",
-            "body":"<p>Vul uw gegevens zo goed mogelijk in. Mocht je vragen hebben dan stel deze per telefoon / email.</p>",
+            "header":"Gebouwen",
+            "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
             "geometry":{
                 "type":"point",
                 "coordinates":[51.690599, 5.3064146]
