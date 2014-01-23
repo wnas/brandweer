@@ -346,7 +346,8 @@
     ],
     "bhv":{
         "header":"BHV",
-        "value":"nee"
+        "label":"Heeft u een BHV-organisatie?",
+        "value":""
     },
     "people":[
         {

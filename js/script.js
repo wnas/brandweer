@@ -284,7 +284,9 @@ console.log('addData');
             }
             switch (activeId) {
                 case "buildings":
-                    console.log('buildings');
+                case "intro":
+                    break;
+
                 case "entrances":
                 case "sleutelbuis":
                 case "gasafsluiter":
@@ -293,12 +295,14 @@ console.log('addData');
                 case "drogestijgleiding":
                     console.log('only place...');
                     answer.coords = coords;
-                    $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
+                    //$('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
 
                     break;
+
                 case "personalInformation":
                 case "contactInformation":
 
+                    // deactivate map
                     $('#'+activeId+' .f-input').each(function(){
                         var set = {};
 //                        console.log($(this));
@@ -307,8 +311,10 @@ console.log('addData');
                         console.log(set.id);
                         answer.push(set);
                     })
-                case "intro":
-                    break;
+
+                case "gasflessen":
+                    // take coords
+                    // add an amount.
                 default:
 
                     console.log('fall to the default');
@@ -317,7 +323,6 @@ console.log('addData');
             answer.id = activeId;
             config.answers.push(answer);
             $('.confirmation').remove();
-           // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
             console.log(config.answers);
             activeId = '';
         };
