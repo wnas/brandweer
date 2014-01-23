@@ -38,7 +38,7 @@ var brandweer = function () {
             }
         },
         init = function () {
-
+            console.log('init');
             $.ajax({
                 type:'GET',
                 url:config.src,
@@ -58,13 +58,12 @@ var brandweer = function () {
 
 
                     }
-                    console.log(config.questions[0]);
                    // activate($('#'+config.questions[0]+' fieldset'));
 
 
                 },
                 error:function (xhr, type) {
-                    console.log('oops.')
+                    console.log('oops.');
                 }
             });
 
@@ -72,10 +71,7 @@ var brandweer = function () {
             doNavigation();
             toggleInfo();
 
-            $('fieldset').each(function(){
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
 
-            });
             $('body').on('click','.hideFieldset',function(){
                 $(this).parent().toggleClass('hideMe');
             })
@@ -147,24 +143,25 @@ var brandweer = function () {
             elem.removeClass(config.active);
         },
         setHistory = function (x) {
-
-                history.pushState(null, null, x);
-
-
+            console.info('setHistory');
+            console.info(x);
+            history.pushState(null, null, x);
         },
         showHideFieldsets = function (theFieldset) {
-
+            console.info('showHideFieldsets');
+            console.info(theFieldset);
             deActivate();
             activate($(theFieldset));
 
         },
         doNavigation = function () {
-
+            console.log('do navigation');
             // if we click on a navigation item (event delegation like)
             $('body').on('click', '.navigate', function () {
 
                 // we look what it points to.
                 var theFieldset = $(this).attr('href');
+
                 deActivate($('.navigate'));
                 activate($(this));
                 // and we set our history up to re
@@ -175,6 +172,7 @@ var brandweer = function () {
             $('#confirm').click(saveAndNext);
 
             window.addEventListener("popstate", function () {
+                console.info('popstate');
                 var loc = location.hash;
                 if (!loc ){
                     loc = '#intro';
