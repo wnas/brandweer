@@ -143,7 +143,7 @@ var brandweer = function() {
     setMapSize = function() {
 
         var headerHeight = config.headerHeight,
-                map = $('#map, .f-form');
+                map = $('#map, .f-form, #mask');
 
         map.height(window.innerHeight - headerHeight);
         map.css('top', headerHeight);
