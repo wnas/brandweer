@@ -38,7 +38,7 @@ var brandweer = function () {
             }
         },
         init = function () {
-
+            console.log('init');
             $.ajax({
                 type:'GET',
                 url:config.src,
@@ -58,13 +58,12 @@ var brandweer = function () {
 
 
                     }
-                    console.log(config.questions[0]);
                    // activate($('#'+config.questions[0]+' fieldset'));
 
 
                 },
                 error:function (xhr, type) {
-                    console.log('oops.')
+                    console.log('oops.');
                 }
             });
 
@@ -72,10 +71,7 @@ var brandweer = function () {
             doNavigation();
             toggleInfo();
 
-            $('fieldset').each(function(){
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
 
-            });
             $('body').on('click','.hideFieldset',function(){
                 $(this).parent().toggleClass('hideMe');
             })
@@ -147,24 +143,25 @@ var brandweer = function () {
             elem.removeClass(config.active);
         },
         setHistory = function (x) {
-
-                history.pushState(null, null, x);
-
-
+            console.info('setHistory');
+            console.info(x);
+            history.pushState(null, null, x);
         },
         showHideFieldsets = function (theFieldset) {
-
+            console.info('showHideFieldsets');
+            console.info(theFieldset);
             deActivate();
             activate($(theFieldset));
 
         },
         doNavigation = function () {
-
+            console.log('do navigation');
             // if we click on a navigation item (event delegation like)
             $('body').on('click', '.navigate', function () {
 
                 // we look what it points to.
                 var theFieldset = $(this).attr('href');
+
                 deActivate($('.navigate'));
                 activate($(this));
                 // and we set our history up to re
@@ -175,6 +172,7 @@ var brandweer = function () {
             $('#confirm').click(saveAndNext);
 
             window.addEventListener("popstate", function () {
+                console.info('popstate');
                 var loc = location.hash;
                 if (!loc ){
                     loc = '#intro';
@@ -184,7 +182,7 @@ var brandweer = function () {
             });
 
         },
-        saveAndNext = function () {
+        saveAndNext = function (event) {
 
             console.log('saveAndNext');
             // get the active fieldset
@@ -213,7 +211,7 @@ var brandweer = function () {
             // show the data we are about to send...
             addData();
             console.log(config.answers);
-            return false;
+          //  return false;
 
         },
         doMaps = function (data) {
@@ -286,7 +284,9 @@ console.log('addData');
             }
             switch (activeId) {
                 case "buildings":
-                    console.log('buildings');
+                case "intro":
+                    break;
+
                 case "entrances":
                 case "sleutelbuis":
                 case "gasafsluiter":
@@ -295,12 +295,14 @@ console.log('addData');
                 case "drogestijgleiding":
                     console.log('only place...');
                     answer.coords = coords;
-                    $('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
+                    //$('#'+activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw '+activeId+'? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>')
 
                     break;
+
                 case "personalInformation":
                 case "contactInformation":
 
+                    // deactivate map
                     $('#'+activeId+' .f-input').each(function(){
                         var set = {};
 //                        console.log($(this));
@@ -309,8 +311,10 @@ console.log('addData');
                         console.log(set.id);
                         answer.push(set);
                     })
-                case "intro":
-                    break;
+
+                case "gasflessen":
+                    // take coords
+                    // add an amount.
                 default:
 
                     console.log('fall to the default');
@@ -319,7 +323,6 @@ console.log('addData');
             answer.id = activeId;
             config.answers.push(answer);
             $('.confirmation').remove();
-           // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
             console.log(config.answers);
             activeId = '';
         };

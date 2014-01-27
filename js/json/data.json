@@ -1,7 +1,11 @@
 {
     "personalInformation":[
-
-            {
+        {"copy":{
+                "header":"Persoonlijke informatie",
+                "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
+            }
+        },
+        {"fields":[{
                 "name":"firstname",
                 "type":"text",
                 "value": "emiel",
@@ -66,7 +70,8 @@
                 "value":"06-12345678",
                 "placeholder":"06 12345678",
                 "required":""
-            }
+            }]}
+
 
     ],
     "intro":{
@@ -85,38 +90,53 @@
         }
     ],
     "contactInformation":[
-       [
-            {
-                "name":"firstname",
-                "type":"text",
-                "value": "",
-                "placeholder":"Voornaam",
-                "required":"f-required"
+        {
+            "copy":{
+                "header":"Contact informatie",
+                "body":"<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>"
+                }
             },
-            {
-                "name":"surname",
-                "type":"text",
-                "value": "",
-                "placeholder":"Achternaam",
-                "required":"f-required"
-            },
-            {
-                "name":"email",
-                "type":"email",
-                "value":"",
-                "placeholder":"jan@provider.nl",
-                "required":""
-            },
-            {
-                "name":"telephone",
-                "type":"tel",
-                "value":"",
-                "placeholder":"06 12345678",
-                "required":""
-            }
-        ]
+            {"fields":[
+                [
+                    {
+                        "name":"firstname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Voornaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"surname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Achternaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"email",
+                        "type":"email",
+                        "value":"",
+                        "placeholder":"jan@provider.nl",
+                        "required":""
+                    },
+                    {
+                        "name":"telephone",
+                        "type":"tel",
+                        "value":"",
+                        "placeholder":"06 12345678",
+                        "required":""
+                    }
+                ]
+            ]
+        }
     ],
     "functions":[
+        {
+            "copy":{
+                "header":"Functie",
+                "body":"<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>"
+            }
+        },
         {
             "building":"bagId",
             "functions":[
@@ -155,7 +175,7 @@
         {
             "building":"bagId",
             "header":"Hoofdingang",
-            "body":"<p>geef aub aan waar uw hoofdingang zich bevind.</p>",
+            "body":"<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -172,7 +192,7 @@
         {
             "building":"bagId",
             "header":"sleutelbuis",
-            "body":"<p>sleutelbuis?</p>",
+            "body":"<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -185,7 +205,7 @@
         {
             "building":"bagId",
             "header":"Gasafsluiter",
-            "body":"<p>waar zit de gas afsluiter?</p>",
+            "body":"<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -198,7 +218,7 @@
         {
             "building":"bagId",
             "header":"Hoofdschakelaar electriciteit",
-            "body":"<p>Waar zit die hoofdschakelaar</p>",
+            "body":"<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -211,7 +231,7 @@
         {
             "building":"bagId",
             "header":"Hoofdafsluiter water",
-            "body":"<p>Geef op de kaart aan waar de hoofdafsluiter zit.</p>",
+            "body":"<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -222,30 +242,72 @@
     ],
     "gasflessen":[
         {
-           "building":"bagId",
-            "header":"gasflessen",
-            "body":"Waar staan uw gasflessen...",
-            "geometry":{
-                "type": "Point",
-                "coordinates": [
-                    51.690599, 5.3064146
-                ]
-            },
-            "amount":"4"
-
+            "copy":{
+                "header":"gasflessen",
+                "body":"<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>"
+            }
         },
         {
-            "building":"bagId",
-            "header":"gasflessen",
-            "body":"Waar staan uw gasflessen...",
-            "geometry":{
-                "type": "Point",
-                "coordinates": [
-                    51.690569, 5.3064146
-                ]
-            },
-            "amount":"2"
+            "items":
+            [
+                {
+                   "building":"bagId",
+                   "geometry":{
+                        "type": "Point",
+                        "coordinates": [
+                            51.690599, 5.3064146
+                        ]
+                    },
+                    "amount":"4"
 
+                },
+                {
+                    "building":"bagId",
+                    "geometry":{
+                        "type": "Point",
+                        "coordinates": [
+                            51.690569, 5.3064146
+                        ]
+                    },
+                    "amount":"2"
+
+                }
+            ]
+        }
+    ],
+    "gevaarlijkestoffen":[
+        {
+            "copy":{
+                "header":"Gevaarlijke stoffen",
+                "body":"<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie. </p>"
+            }
+        },
+        {
+            "items":
+                    [
+                        {
+                            "building":"bagId",
+                            "geometry":{
+                                "type": "Point",
+                                "coordinates": [
+                                    51.690599, 5.3064146
+                                ]
+                            },
+                            "amount":"4"
+
+                        },
+                        {
+                            "building":"bagId",
+                            "geometry":{
+                                "type": "Point",
+                                "coordinates": [
+                                    51.690569, 5.3064146
+                                ]
+                            },
+                            "amount":"2"
+
+                        }
+                    ]
         }
     ],
     "drogestijgleiding":[
@@ -283,9 +345,9 @@
         }
     ],
     "bhv":{
-        "header":"BVH",
-        "body":"<p>Heeft u een bvh organisatie?</p>",
-        "value":"nee"
+        "header":"BHV",
+        "label":"Heeft u een BHV-organisatie?",
+        "value":""
     },
     "people":[
         {
@@ -366,6 +428,9 @@
         "contactInformation": {
             "header":"header",
             "body":"bodytest"
+        },
+        "rwa":{
+            "header":""
         }
     }
 }
