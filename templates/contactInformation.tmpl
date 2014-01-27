@@ -1,0 +1,30 @@
+<button class="revealInformation">?</button>
+{{#information}}
+    <div class="information">
+        <h2>{{contactInformation.header}}<button class=hideInformation>close</button></h2>
+        <div>{{{contactInformation.body}}}</div>
+    </div>
+{{/information}}
+
+{{#contactInformation}}
+    <div class="copy">
+            <h2>{{copy.header}}</h2>
+            <div>{{{copy.body}}}</div>
+        </div>
+        {{field.name}}
+    <div class="fields">
+        {{#fields}}
+            <div class="f-container {{#if required}}{{required}}{{/if}}">
+                <label
+                        for="contact-{{name}}"
+                        class="f-label">{{name}}</label>
+                <input
+                        type="{{type}}"
+                        id="contact-{{name}}"
+                        value="{{value}}"
+                        placeholder="{{placeholder}}"
+                        class="f-input"/>
+            </div>
+        {{/fields}}
+    </div>
+{{/contactInformation}}

@@ -194,7 +194,6 @@
 
                     }
                 ],
-                "subfunction": "subfunction",
                 "gas":{
                     "places": [
                         {
@@ -320,8 +319,53 @@
                     ]
 
                 },
-                "function":"functionb",
-                "subfunction": "subfunctionb",
+                "functions":[
+                    {
+                        "name":"andere ingang of gebouw...",
+                        "function":"functionA",
+                        "subfunction":
+                            [
+                                {
+                                    "name":"foo",
+                                    "value":"bar"
+                                },
+                                {
+                                    "name":"foo2",
+                                    "value":"bar2"
+                                }
+                            ]
+                    },
+                    {
+                        "name":"b",
+                        "function":"functionB",
+                        "subfunction": [
+                            {
+                                "name":"foo3",
+                                "value":"bar3"
+                            },
+                            {
+                                "name":"foo4",
+                                "value":"bar4"
+                            }
+                        ]
+
+                    },
+                    {
+                        "name":"c",
+                        "function":"functionC",
+                        "subfunction":[
+                            {
+                                "name":"foo5",
+                                "value":"bar5"
+                            },
+                            {
+                                "name":"foo6",
+                                "value":"bar6"
+                            }
+                        ]
+
+                    }
+                ],
                 "gas":{
                     "places": [
                         {
@@ -359,6 +403,9 @@
 
         ],
         "excercise":"yes"
+    },
+    "information":{
+        "contact":"foor"
     }
 }
 

@@ -55,8 +55,22 @@
 blockpadding {
   padding: .5em 1em;
   margin: 0 auto;
-  max-width: 40em;
+  max-width: 64em;
 }
 .b-hide {
   display: none;
+}
+
+.calcWidth(a,b){
+  /* Firefox */
+  width: -moz-calc(75% - 100px);
+
+  /* WebKit */
+  width: -webkit-calc(75% - 100px);
+
+  /* Opera */
+  width: -o-calc(75% - 100px);
+
+  /* Standard */
+  width: calc(75% - 100px);
 }

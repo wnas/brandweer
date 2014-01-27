@@ -1,0 +1,384 @@
+{
+    "personalInformation":[
+        {"copy":{
+                "header":"Persoonlijke informatie",
+                "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
+            }
+        },
+        {"fields":[{
+                "name":"firstname",
+                "type":"text",
+                "value": "emiel",
+                "placeholder":"Voornaam",
+                "required":"f-required"
+
+            },
+            {
+                "name":"surname",
+                "type":"text",
+                "value": "Hoeve",
+                "placeholder":"Achternaam",
+                "required":"f-required"
+            },
+            {
+                "name":"bedrijfsnaam",
+                "type":"text",
+                "value": "Geweldig bedrijf",
+                "placeholder":"Bedrijfsnaam",
+                "required":"f-required"
+            },
+            {
+                "name":"street",
+                "type":"text",
+                "value":"straatnaam",
+                "placeholder":"Straatnaam",
+                "required":""
+            },
+            {
+                "name":"number",
+                "type":"number",
+                "value":"2",
+                "placeholder":"Huisnummer",
+                "required":"f-required"
+            },
+            {
+                "name":"huisnummer toevoeging",
+                "type":"text",
+                "value":"",
+                "placeholder":"Toevoeging",
+                "required":""
+
+            },
+            {
+                "name":"postcode",
+                "type":"text",
+                "value":"1245 ab",
+                "placeholder":"Postcode ( 1234 ab )",
+                "required":"f-required"
+            },
+            {
+                "name":"email",
+                "type":"email",
+                "value":"e@ma.il",
+                "placeholder":"uw email adres",
+                "required":""
+
+            },
+            {
+                "name":"telephone",
+                "type":"tel",
+                "value":"06-12345678",
+                "placeholder":"06 12345678",
+                "required":""
+            }]}
+
+
+    ],
+    "intro":{
+        "header":"SafetyMaps Web",
+        "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
+    },
+    "buildings":[
+        {
+            "id":"bagId",
+            "header":"Gebouwen",
+            "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
+            "geometry":{
+                "type":"point",
+                "coordinates":[51.690599, 5.3064146]
+            }
+        }
+    ],
+    "contactInformation":[
+        {
+            "copy":{
+                "header":"Contact informatie",
+                "body":"<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>"
+                }
+            },
+            {"fields":[
+                [
+                    {
+                        "name":"firstname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Voornaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"surname",
+                        "type":"text",
+                        "value": "",
+                        "placeholder":"Achternaam",
+                        "required":"f-required"
+                    },
+                    {
+                        "name":"email",
+                        "type":"email",
+                        "value":"",
+                        "placeholder":"jan@provider.nl",
+                        "required":""
+                    },
+                    {
+                        "name":"telephone",
+                        "type":"tel",
+                        "value":"",
+                        "placeholder":"06 12345678",
+                        "required":""
+                    }
+                ]
+            ]
+        }
+    ],
+    "functions":[
+        {
+            "building":"bagId",
+            "functions":[
+                {
+                    "name":"wonen",
+                    "value":"w",
+                    "subFunction":[
+                        {
+                            "name":"permanente bewoning",
+                            "value":"pb"
+                        },
+                        {
+                            "name":"vakantie woning",
+                            "value":"vw"
+                        }
+                    ]
+                },
+                {
+                    "name":"horeca",
+                    "value":"h",
+                    "subFunction":[
+                        {
+                            "name":"kroeg",
+                            "value":"k"
+                        },
+                        {
+                            "name":"restaurant",
+                            "value":"r"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "entrances":[
+        {
+            "building":"bagId",
+            "header":"Hoofdingang",
+            "body":"<p>geef aub aan waar uw hoofdingang zich bevind.</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            },
+            "amount":"5",
+            "photos":[
+
+            ]
+        }
+    ],
+    "sleutelbuis":[
+        {
+            "building":"bagId",
+            "header":"sleutelbuis",
+            "body":"<p>sleutelbuis?</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "gasafsluiter":[
+        {
+            "building":"bagId",
+            "header":"Gasafsluiter",
+            "body":"<p>waar zit de gas afsluiter?</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "hoofdSchakelaarElektriciteit":[
+        {
+            "building":"bagId",
+            "header":"Hoofdschakelaar electriciteit",
+            "body":"<p>Waar zit die hoofdschakelaar</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "hoofdafsluiterwater":[
+        {
+            "building":"bagId",
+            "header":"Hoofdafsluiter water",
+            "body":"<p>Geef op de kaart aan waar de hoofdafsluiter zit.</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "gasflessen":[
+        {
+           "building":"bagId",
+            "header":"gasflessen",
+            "body":"Waar staan uw gasflessen...",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            },
+            "amount":"4"
+
+        },
+        {
+            "building":"bagId",
+            "header":"gasflessen",
+            "body":"Waar staan uw gasflessen...",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690569, 5.3064146
+                ]
+            },
+            "amount":"2"
+
+        }
+    ],
+    "drogestijgleiding":[
+        {
+            "building":"bagId",
+            "header":"Droge stijgleiding",
+            "body":"<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart...</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "rwa":[
+        {
+            "building":"bagId",
+            "header":"Automatische rookluiken",
+            "body":"<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
+            "geometry":{
+                "type": "Point",
+                "coordinates": [
+                    51.690599, 5.3064146
+                ]
+            }
+        }
+    ],
+    "verdiepingen":[
+        {
+            "building":"bagId",
+            "header":"Verdiepingen",
+            "body":"<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+            "amount":"1"
+        }
+    ],
+    "bhv":{
+        "header":"BHV",
+        "value":"nee"
+    },
+    "people":[
+        {
+            "building":"bagId",
+            "header":"Aanwezigen",
+            "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
+            "occupants":[
+                [
+                    
+                    {
+                        "type":"Bewoners",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bewoners",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bewoners",
+                        "time":"Nacht",
+                        "amount":""
+                    }
+                ],
+                [
+                    {
+                        "type":"Bezoekers",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bezoekers",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Bezoekers",
+                        "time":"Nacht",
+                        "amount":""
+                    }
+                ],
+                [
+                    {
+                        "type":"Personeel",
+                        "time":"Overdag",
+                        "amount":""
+                    },
+                    {
+                        "type":"Personeel",
+                        "time":"Avond",
+                        "amount":""
+                    },
+                    {
+                        "type":"Personeel",
+                        "time":"Nacht",
+                        "amount":""
+                    }                
+                ]
+            ]
+        }
+    ],
+    "exercise":{
+        "header":"Brandweer oefening",
+        "body":"<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+        "question":"Ik wil wel worden benaderd",
+        "value":"nee"
+    },
+    "final":{
+        "header":"Dank voor uw medewerking",
+        "body":"<p>Hartelijk dank voor uw medewerking.</p>"
+    },
+    "information":{
+        "personalInformation": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "contactInformation": {
+            "header":"header",
+            "body":"bodytest"
+        }
+    }
+}
