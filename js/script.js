@@ -4,7 +4,7 @@ Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
 var brandweer = function () {
-    var $ = Zepto || jQuery;
+    //var $ = Zepto || jQuery;
 
     "use strict";
     /*jshint devel:true */
@@ -58,7 +58,6 @@ var brandweer = function () {
             }
         },
         init = function () {
-
             setMapSize();
 
             $.ajax({
@@ -68,6 +67,7 @@ var brandweer = function () {
                 dataType:'json',
                 success:function (data) {
                     // draw me a map
+
                     doMaps(data);
                     // Do some nice stuff here
                     for (var i in config.questions) {
@@ -146,13 +146,15 @@ var brandweer = function () {
 
         },
         renderNavigationItem = function (arg, i) {
+
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
+
         },
     // helpers shizzle
         setMapSize = function () {
 
             var headerHeight = config.headerHeight,
-                map = $('#map, #mask, #questions');
+                map = $('#map, #mask');
 
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
@@ -167,67 +169,81 @@ var brandweer = function () {
             }
             elem.removeClass(config.css.active);
         },
-        setHistory = function (x) {
-            history.pushState(null, null, x);
+
+        // history
+        getHistory = function(){
+            if (window.history && window.history.pushState) {
+                window.addEventListener("popstate", function () {
+                    var loc = location.hash;
+                    if (!loc) {
+                        loc = '#intro';
+                    }
+                    setTimeout(0, showHideFieldsets(loc));
+                });
+            }
         },
+        setHistory = function (x) {
+            if (window.history && window.history.pushState) {
+                history.pushState(null, null, x);
+            }
+
+        },
+
+        contactInformation = function(){
+            $('.fields').empty().remove();
+            $('body').on('click','#addContact',function(e){
+                e.preventDefault();
+                var ci = $('<div class="ci"><button class="eraseCI">x</button></div>');
+                var fields = $(this).parent().find('.f-container');
+                fields.each(function(){
+                    var v = $(this).find('.f-input').val(),
+                        l = $(this).find('label').text(),
+                        par = $('<p>'+l+'<strong>'+v+'</strong></p>');
+                    ci.append(par);
+                    $(this).find('.f-input').val('');
+                });
+
+                $(this).parent().after(ci);
+            });
+
+            $('body').on('click','.eraseCI',function(){
+                $(this).parent().remove();
+            })
+
+
+        },
+
+        validateFields = function(e){
+            e.preventDefault()
+            alert('test')
+        },
+
         showHideFieldsets = function (elem) {
             // check to see if we need access to the map.
-            /*
-             "intro",
-             "buildings",
-             "personalInformation",
-             "contactInformation",
-             "functions",
-             "entrances",
-             "sleutelbuis",
-             "gasafsluiter",
-             "hoofdSchakelaarElektriciteit",
-             "hoofdafsluiterwater",
-             "gasflessen",
-             "drogestijgleiding",
-             "rwa",
-             "verdiepingen",
-             "bhv",
-             "people",
-             "exercise",
-             "final"
 
-             */
-            if(elem.charAt( 0 ) !== '#'){
+            if (elem.charAt(0) !== '#') {
                 // if it has no #, add one.
-                elem = '#'+elem;
+                elem = '#' + elem;
             }
             var q = config.questions[getCurrentQuestion(elem.substring(1))];
-           switch(q){
-               case 'gasafsluiter':
-               case 'contactInformation':
-               case "contactInformation":
-               case "functions":
-               case "entrances":
-               case "sleutelbuis":
-               case "gasafsluiter":
-               case "hoofdSchakelaarElektriciteit":
-               case "hoofdafsluiterwater":
-               case "gasflessen":
-               case "drogestijgleiding":
-               case "rwa":
-               case "verdiepingen":
-                   $('#mask').hide();
-                   break;
+            switch (q) {
+                case 'bhv':
+                case 'intro':
+                case 'personalInformation':
+                case 'exercise':
+                case 'final':
 
-               case 'bhv':
-               case 'intro':
-               case 'personalInformation':
-               case 'exercise':
-               case 'final':
+                    $('#mask').show();
+                    break;
 
-                   $('#mask').show();
-                   break;
+                case 'contactInformation':
+                    contactInformation(q)
+                    break;
+                default:
+                    $('#mask').hide();
+                    break;
 
-               default:
-                   break;
-
-           }
+            }
             // make sure it has a #
 
 
@@ -239,7 +255,7 @@ var brandweer = function () {
             // reset the navigation classes
             deActivate($('.navigate'));
             // and activate the correct one...
-            activate( $('.navigate[href="'+elem+'"]'));
+            activate($('.navigate[href="' + elem + '"]'));
 
             // push the element into the history stack.
             setHistory(elem);
@@ -251,8 +267,6 @@ var brandweer = function () {
         },
         navigate = function (e) {
             e.preventDefault();
-
-
 
             switch (this.className.split(' ')[0]) {
                 case "navigate":
@@ -269,23 +283,22 @@ var brandweer = function () {
 
         },
 
-        topNavigation = function(elem){
-
+        topNavigation = function (elem) {
             var loc = elem.href.split('#')[1];
             showHideFieldsets(loc);
         },
 
-        bottomNavigation = function(elem){
+        bottomNavigation = function (elem) {
             var i = getCurrentQuestion(getActiveFieldset());
-            switch(elem.id){
+            switch (elem.id) {
                 case "confirm":
                     // get the data
-                    showHideFieldsets(config.questions[i+1]);
+                    showHideFieldsets(config.questions[i + 1]);
                     break;
 
                 case "prev":
-                    if( i > 0){
-                        showHideFieldsets(config.questions[i-1]);
+                    if (i > 0) {
+                        showHideFieldsets(config.questions[i - 1]);
                     }
                     break;
 
@@ -296,8 +309,7 @@ var brandweer = function () {
         },
 
 
-
-        getCurrentQuestion = function(elem){
+        getCurrentQuestion = function (elem) {
             var q = config.questions,
                 ql = q.length,
                 i;
@@ -306,39 +318,15 @@ var brandweer = function () {
                     return i;
                 }
             }
-            return null;
+            return 'intro';
         },
 
         doNavigation = function () {
-//            // if we click on a navigation item (event delegation like)
-//            $('body').on('click', '.navigate', function(e) {
-//                console.log(e);
-//                // we look what it points to.
-//                var theFieldset = $(this).attr('href');
-//
-//                // reset state
-//                deActivate($('.navigate'));
-//                // show where we are...
-//                activate($(this));
-//
-//                // and we set our history up to re
-//                // http://diveintohtml5.info/history.html
-//                setHistory(theFieldset);
-//                addData();
-//            });
-//            $('#confirm').click(saveAndNext);
-            window.addEventListener("popstate", function() {
-                var loc = location.hash;
-                if (!loc) {
-                    loc = '#intro';
-                }
-                console.log('loc');
-                setTimeout(0,showHideFieldsets(loc));
-            });
-            var buttons = $('.navigate, .f-button');
 
+            getHistory();
 
-            $('body').on('click', '.navigate, .f-button', navigate);
+            var triggers = $('.navigate, .f-button');
+            $('body').on('click', triggers, navigate);
 
 
         },
@@ -390,9 +378,10 @@ var brandweer = function () {
                 polygon.addTo(map);
                 polygon.on({
                     mouseover:highlightFeature,
-                    mouseout:resetHighlight
-                    //click: zoomToFeature
+                    mouseout:resetHighlight,
+                    click: select
                 });
+
             });
         },
         resetHighlight = function (e) {
@@ -418,12 +407,18 @@ var brandweer = function () {
                 layer.bringToFront();
             }
         },
+        select = function(e){
+            var layer = e.target;
+            console.log(layer);
+
+        },
+
         doMaps = function (data) {
+
 
             var thiz = $('#map'),
                 it = data.buildings[0].id,
                 coordz = data.buildings[0].geometry.coordinates;
-
 
 
             window.onresize = function (event) {
@@ -472,6 +467,8 @@ var brandweer = function () {
                                 break;
                             case "MultiPolygon":
                                 addBuilding(item.geometry.coordinates);
+
+                              //  console.log(item.id);
                                 break;
                         }
                         if (item.properties.pandgeometrie) {
@@ -485,46 +482,48 @@ var brandweer = function () {
                                     break;
                             }
                         }
+                       // $('#questions').append('<span class="building" id="'+item.id+'">gebouw</span> ');
                     });
                 }
             });
+
             map.on('zoomend', function (e) {
-                console.log(config.map.getZoom());
+              //  console.log(config.map.getZoom());
             });
-            map.on('click', function (e) {
-                var activeQuestion = $('fieldset.active'),
-                    activeId = activeQuestion.attr('id');
-
-                var custom = 'img/nen1414/' + config.markers[activeId] + '.png';
-
-                var nImg = document.createElement('img');
-
-                nImg.onload = function () {
-
-                };
-                nImg.onerror = function () {
-                    // image did not load
-                    custom = 'img/marker-icon.png';
-                };
-
-                nImg.src = custom;
-                var RedIcon = L.Icon.Default.extend({
-                    options:{
-                        iconUrl:custom,
-                        iconSize:[32, 32]
-                    }
-                });
-                var redIcon = new RedIcon();
-                //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-                var marker = new L.marker(e.latlng, {draggable:'true', title:activeId, icon:redIcon});
-                console.log(marker);
-                map.addLayer(marker);
-                addData(e);
-            });
+//            map.on('click', function (e) {
+//                var activeQuestion = $('fieldset.active'),
+//                    activeId = activeQuestion.attr('id');
+//
+//                var custom = 'img/nen1414/' + config.markers[activeId] + '.png';
+//
+//                var nImg = document.createElement('img');
+//
+//                nImg.onload = function () {
+//
+//                };
+//                nImg.onerror = function () {
+//                    // image did not load
+//                    custom = 'img/marker-icon.png';
+//                };
+//
+//                nImg.src = custom;
+//                var RedIcon = L.Icon.Default.extend({
+//                    options:{
+//                        iconUrl:custom,
+//                        iconSize:[32, 32]
+//                    }
+//                });
+//                var redIcon = new RedIcon();
+//                //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
+//                var marker = new L.marker(e.latlng, {draggable:'true', title:activeId, icon:redIcon});
+//                console.log(marker);
+//                map.addLayer(marker);
+//                addData(e);
+//            });
             return map;
         },
         addData = function (e) {
-            console.log('addData');
+
             var activeQuestion = $('fieldset.active'),
                 activeId = activeQuestion.attr('id');
 
@@ -580,6 +579,5 @@ var brandweer = function () {
         init:init
     };
 }();
-Zepto(function ($) {
-    brandweer.init();
-});
+brandweer.init();
+
