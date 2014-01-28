@@ -9,6 +9,8 @@
         <!--[if lt IE 8]>
             <link  rel="stylesheet" href="css/ie7.css" />
         <![endif]-->
+
+
     </head>
     <body>
         <div id="status"></div>
@@ -22,30 +24,32 @@
         <div id="mask"></div>
         <div id="map"></div>
         <main id="main">
-            <div  class="f-form">
-                <fieldset id="intro"></fieldset>
-                <fieldset id="buildings"></fieldset>
-                <fieldset id="personalInformation" class="active"></fieldset>
-                <fieldset id="contactInformation"></fieldset>
-                <fieldset id="functions"></fieldset>
-                <fieldset id="entrances"></fieldset>
-                <fieldset id="sleutelbuis"></fieldset>
-                <fieldset id="gasafsluiter"></fieldset>
-                <fieldset id="hoofdSchakelaarElektriciteit"></fieldset>
-                <fieldset id="hoofdafsluiterwater"></fieldset>
-                <fieldset id="gasflessen"></fieldset>
-                <fieldset id="drogestijgleiding"></fieldset>
-                <fieldset id="rwa"></fieldset>
-                <fieldset id="verdiepingen"></fieldset>
-                <fieldset id="bvh"></fieldset>
-                <fieldset id="people"></fieldset>
-                <fieldset id="exercise"></fieldset>
-                <fieldset id="final" class="last"></fieldset>
+            <div class="f-form">
+                <div id="questions">
+                    <fieldset id="intro" class="first"></fieldset>
+                    <fieldset id="buildings"></fieldset>
+                    <fieldset id="personalInformation"></fieldset>
+                    <fieldset id="contactInformation"></fieldset>
+                    <fieldset id="functions"></fieldset>
+                    <fieldset id="entrances"></fieldset>
+                    <fieldset id="sleutelbuis"></fieldset>
+                    <fieldset id="gasafsluiter"></fieldset>
+                    <fieldset id="hoofdSchakelaarElektriciteit"></fieldset>
+                    <fieldset id="hoofdafsluiterwater"></fieldset>
+                    <fieldset id="gasflessen"></fieldset>
+                    <fieldset id="drogestijgleiding"></fieldset>
+                    <fieldset id="rwa"></fieldset>
+                    <fieldset id="verdiepingen"></fieldset>
+                    <fieldset id="bvh"></fieldset>
+                    <fieldset id="people"></fieldset>
+                    <fieldset id="exercise"></fieldset>
+                    <fieldset id="final" class="last"></fieldset>
+                </div>
                 <form action="#" method="post">
                     <fieldset id="data"></fieldset>
                     <nav class="f-button-bar" id="main-nav">
                         <button type="submit" id="confirm" class="f-button f-button-primary"><span>Volgende vraag</span></button>
-                        <button type="reset" class="f-button f-button-secondary"><span>Annuleren</span></button>
+                        <button id="prev" class="f-button f-button-secondary"><span>Vorige</span></button>
                     </nav>
                 </form>
             </div>
@@ -54,13 +58,13 @@
             (function() {
                 var fallback;
                 if ('__proto__' in {}) {
-                    // document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
+                   // document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
                     fallback = 'zepto';
                 } else {
-                    document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+                  //  document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
                     fallback = 'jquery';
                 }
-                window.$ || document.write('<script src="js/vendors/zepto/' + fallback + '.js"><\/script>');
+                window.$ || document.write('<script src="js/vendors/'+fallback+'/' + fallback + '.js"><\/script>');
             }());
         </script>
         <script src="js/vendors/history.js"></script>
