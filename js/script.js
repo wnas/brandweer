@@ -168,9 +168,26 @@ var brandweer = function () {
         setHistory = function (x) {
             history.pushState(null, null, x);
         },
-        showHideFieldsets = function (theFieldset) {
+        showHideFieldsets = function (elem) {
+            // make sure it has a #
+            if(elem.charAt( 0 ) !== '#'){
+                console.log('hi there');
+                elem = '#'+elem;
+            }
+
+            // hide all fieldsets
             deActivate();
-            activate($(theFieldset));
+            // show the correct one.
+            activate($(elem));
+
+            // reset the navigation classes
+            deActivate($('.navigate'));
+            // and activate the correct one...
+            activate( $('.navigate[href="'+elem+'"]'));
+
+            // push the element into the history stack.
+            setHistory(elem);
+
         },
         getActiveFieldset = function () {
             var activeId = $('fieldset.active').attr('id');
@@ -195,10 +212,9 @@ var brandweer = function () {
         },
 
         topNavigation = function(elem){
-            deActivate($('.navigate'));
-            activate($(elem));
+
             var loc = elem.href.split('#')[1];
-            showHideFieldsets('#' + loc);
+            showHideFieldsets(loc);
         },
 
         bottomNavigation = function(elem){
@@ -206,12 +222,12 @@ var brandweer = function () {
             switch(elem.id){
                 case "confirm":
                     // get the data
-                    showHideFieldsets('#'+config.questions[i+1]);
+                    showHideFieldsets(config.questions[i+1]);
                     break;
 
                 case "prev":
                     if( i > 0){
-                        showHideFieldsets('#'+config.questions[i-1]);
+                        showHideFieldsets(config.questions[i-1]);
                     }
                     break;
 
@@ -220,6 +236,8 @@ var brandweer = function () {
 
             }
         },
+
+
 
         getCurrentQuestion = function(elem){
             var q = config.questions,
@@ -250,49 +268,48 @@ var brandweer = function () {
 //                addData();
 //            });
 //            $('#confirm').click(saveAndNext);
-//            window.addEventListener("popstate", function() {
-//                var loc = location.hash;
-//                if (!loc) {
-//                    loc = '#buildings';
-//                }
-//                showHideFieldsets(loc);
-//                console.log(loc);
-//                activate($('.navigate[href="' + loc + '"]'));
-//            });
+            window.addEventListener("popstate", function() {
+                var loc = location.hash;
+                if (!loc) {
+                    loc = '#intro';
+                }
+                console.log('loc');
+                setTimeout(0,showHideFieldsets(loc));
+            });
             var buttons = $('.navigate, .f-button');
-            activate($('#intro'));
+
 
             $('body').on('click', '.navigate, .f-button', navigate);
 
 
         },
-        saveAndNext = function (event) {
-            alert('saveAndNext');
-            // get the active fieldset
-            event.preventDefault();
-            var activeFieldset = $('fieldset.active'),
-            // and it's id
-                activeId = activeFieldset.attr('id');
-
-            // put it into history
-            setHistory('#' + activeId);
-
-            // reset the top navigation
-            deActivate($('.navigate').removeClass('active'));
-            // and activate the currenct one.
-            $('.navigate').attr('href', '#' + activeId).addClass('done');
-
-            // hide all fieldsets
-            deActivate();
-            // and show the current one...
-            activate(activeFieldset.next('fieldset').not('.last'));
-
-            // show the data we are about to send...
-            addData();
-            console.log(config.answers);
-            return false;
-
-        },
+//        saveAndNext = function (event) {
+//            alert('saveAndNext');
+//            // get the active fieldset
+//            event.preventDefault();
+//            var activeFieldset = $('fieldset.active'),
+//            // and it's id
+//                activeId = activeFieldset.attr('id');
+//
+//            // put it into history
+//            setHistory('#' + activeId);
+//
+//            // reset the top navigation
+//            deActivate($('.navigate').removeClass('active'));
+//            // and activate the currenct one.
+//            $('.navigate').attr('href', '#' + activeId).addClass('done');
+//
+//            // hide all fieldsets
+//            deActivate();
+//            // and show the current one...
+//            activate(activeFieldset.next('fieldset').not('.last'));
+//
+//            // show the data we are about to send...
+//            addData();
+//            console.log(config.answers);
+//            return false;
+//
+//        },
         addBuilding = function (multipolygon) {
             var map = config.map;
             var proj = new Proj4js.Proj("EPSG:28992");
