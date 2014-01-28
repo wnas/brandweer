@@ -1,17 +1,21 @@
+// main js
+
 Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' +
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
-var brandweer = function() {
+var brandweer = function () {
+    var $ = Zepto || jQuery;
+
     "use strict";
     /*jshint devel:true */
     var config = {
             // foo: bar
-            "map": null,
-            "src": "js/json/data.json",
-            "multipleSelectClone": '',
-            "headerHeight": $('#header').height(),
-            "navHeight": $('#main-nav').height(),
-            "questions": [
+            "map":null,
+            "src":"js/json/data.json",
+            "multipleSelectClone":'',
+            "headerHeight":$('#header').height(),
+            "navHeight":$('#main-nav').height(),
+            "questions":[
                 "intro",
                 "buildings",
                 "personalInformation",
@@ -26,39 +30,43 @@ var brandweer = function() {
                 "drogestijgleiding",
                 "rwa",
                 "verdiepingen",
-                "bvh",
+                "bhv",
                 "people",
                 "exercise",
                 "final"
             ],
-            "markers": {
-                "entrances": "Tb1.001",
-                "sleutelbuis": "Tb1.003",
-                "gasafsluiter": "Tb2.021",
-                "hoofdSchakelaarElektriciteit": "Tb2.003",
-                "hoofdafsluiterwater": "Tb2.022",
-                "gasflessen": "Tw2.001",
-                "drogestijgleiding": "Tb1.007",
-                "rwa": "Tb2.005"
+            "markers":{
+                "entrances":"Tb1.001",
+                "sleutelbuis":"Tb1.003",
+                "gasafsluiter":"Tb2.021",
+                "hoofdSchakelaarElektriciteit":"Tb2.003",
+                "hoofdafsluiterwater":"Tb2.022",
+                "gasflessen":"Tw2.001",
+                "drogestijgleiding":"Tb1.007",
+                "rwa":"Tb2.005"
             },
-            "answers": [],
-            "active": "active",
-            "numberOfQuestions": 16,
-            "tmpl_dir": '/Brandweer/templates',
-            "mainNavigation": $('.top-navigation'),
-            "info": {
-                "show": ".revealInformation",
-                "hide": ".hideInformation"
+            "answers":[],
+            "css":{
+                "active":"active"
+            },
+            "numberOfQuestions":16,
+            "tmpl_dir":'/Brandweer/templates',
+            "mainNavigation":$('.top-navigation'),
+            "info":{
+                "show":".revealInformation",
+                "hide":".hideInformation"
             }
         },
-        init = function() {
+        init = function () {
+
+            setMapSize();
 
             $.ajax({
-                type: 'GET',
-                url: config.src,
-                data: {name: 'Brandweer'},
-                dataType: 'json',
-                success: function(data) {
+                type:'GET',
+                url:config.src,
+                data:{name:'Brandweer'},
+                dataType:'json',
+                success:function (data) {
                     // draw me a map
                     doMaps(data);
                     // Do some nice stuff here
@@ -72,12 +80,12 @@ var brandweer = function() {
 
 
                     }
-                    console.log(config.questions[0]);
+
                     // activate($('#'+config.questions[0]+' fieldset'));
 
 
                 },
-                error: function(xhr, type) {
+                error:function (xhr, type) {
                     console.log('oops.');
                 }
             });
@@ -86,25 +94,25 @@ var brandweer = function() {
             doNavigation();
             toggleInfo();
 
-            $('fieldset').each(function() {
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button>');
+            $('fieldset').each(function () {
+                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button><button class="contact"><span>Contact</span></button>');
 
             });
-            $('body').on('click', '.hideFieldset', function() {
+            $('body').on('click', '.hideFieldset', function () {
                 $(this).parent().toggleClass('hideMe');
             });
 
 
         },
-        toggleInfo = function() {
-            $('body').on('click', config.info.show, function() {
+        toggleInfo = function () {
+            $('body').on('click', config.info.show, function () {
                 $(this).closest('fieldset').toggleClass('info');
             });
-            $('body').on('click', config.info.hide, function() {
+            $('body').on('click', config.info.hide, function () {
                 $(this).closest('fieldset').toggleClass('info');
             });
         },
-        render = function(tmpl_name, tmpl_data) {
+        render = function (tmpl_name, tmpl_data) {
 
             if (!render.tmpl_cache) {
                 render.tmpl_cache = {};
@@ -115,10 +123,10 @@ var brandweer = function() {
 
                 var tmpl_string;
                 $.ajax({
-                    url: tmpl_url,
-                    method: 'GET',
-                    async: false,
-                    success: function(data) {
+                    url:tmpl_url,
+                    method:'GET',
+                    async:false,
+                    success:function (data) {
                         tmpl_string = data;
                     }
                 });
@@ -129,7 +137,7 @@ var brandweer = function() {
             return render.tmpl_cache[tmpl_name](tmpl_data);
 
         },
-        popTmpl = function(arg, msg) {
+        popTmpl = function (arg, msg) {
 
             var src = render(arg, {}),
                 tmp = Handlebars.compile(src);
@@ -137,165 +145,308 @@ var brandweer = function() {
             $('#' + arg).append(tmp(msg));
 
         },
-        renderNavigationItem = function(arg, i) {
+        renderNavigationItem = function (arg, i) {
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
         },
-        setMapSize = function() {
+    // helpers shizzle
+        setMapSize = function () {
 
             var headerHeight = config.headerHeight,
-                map = $('#map, .f-form');
+                map = $('#map, #mask, #questions');
 
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
 
         },
-        activate = function(elem) {
-            elem.addClass(config.active);
+        activate = function (elem) {
+            elem.addClass(config.css.active);
         },
-        deActivate = function(elem) {
+        deActivate = function (elem) {
             if (!elem) {
                 elem = $('fieldset');
             }
-            elem.removeClass(config.active);
+            elem.removeClass(config.css.active);
         },
-        setHistory = function(x) {
+        setHistory = function (x) {
             history.pushState(null, null, x);
         },
-        showHideFieldsets = function(theFieldset) {
+        showHideFieldsets = function (elem) {
+            // check to see if we need access to the map.
+            /*
+             "intro",
+             "buildings",
+             "personalInformation",
+             "contactInformation",
+             "functions",
+             "entrances",
+             "sleutelbuis",
+             "gasafsluiter",
+             "hoofdSchakelaarElektriciteit",
+             "hoofdafsluiterwater",
+             "gasflessen",
+             "drogestijgleiding",
+             "rwa",
+             "verdiepingen",
+             "bhv",
+             "people",
+             "exercise",
+             "final"
+
+             */
+            if(elem.charAt( 0 ) !== '#'){
+                // if it has no #, add one.
+                elem = '#'+elem;
+            }
+            var q = config.questions[getCurrentQuestion(elem.substring(1))];
+           switch(q){
+               case 'gasafsluiter':
+               case 'contactInformation':
+               case "contactInformation":
+               case "functions":
+               case "entrances":
+               case "sleutelbuis":
+               case "gasafsluiter":
+               case "hoofdSchakelaarElektriciteit":
+               case "hoofdafsluiterwater":
+               case "gasflessen":
+               case "drogestijgleiding":
+               case "rwa":
+               case "verdiepingen":
+                   $('#mask').hide();
+                   break;
+
+               case 'bhv':
+               case 'intro':
+               case 'personalInformation':
+               case 'exercise':
+               case 'final':
+
+                   $('#mask').show();
+                   break;
+
+               default:
+                   break;
+
+           }
+            // make sure it has a #
+
+
+            // hide all fieldsets
             deActivate();
-            activate($(theFieldset));
+            // show the correct one.
+            activate($(elem));
+
+            // reset the navigation classes
+            deActivate($('.navigate'));
+            // and activate the correct one...
+            activate( $('.navigate[href="'+elem+'"]'));
+
+            // push the element into the history stack.
+            setHistory(elem);
+
         },
-        doNavigation = function() {
-            // if we click on a navigation item (event delegation like)
-            $('body').on('click', '.navigate', function() {
-                // we look what it points to.
-                var theFieldset = $(this).attr('href');
-                deActivate($('.navigate'));
-                activate($(this));
-                // and we set our history up to re
-                // http://diveintohtml5.info/history.html
-                setHistory(theFieldset);
-                addData();
-            });
-            $('#confirm').click(saveAndNext);
+        getActiveFieldset = function () {
+            var activeId = $('fieldset.active').attr('id');
+            return activeId;
+        },
+        navigate = function (e) {
+            e.preventDefault();
+
+
+
+            switch (this.className.split(' ')[0]) {
+                case "navigate":
+                    topNavigation(this);
+                    break;
+
+                case "f-button":
+                    bottomNavigation(this);
+                    break;
+
+                default:
+                    break;
+            }
+
+        },
+
+        topNavigation = function(elem){
+
+            var loc = elem.href.split('#')[1];
+            showHideFieldsets(loc);
+        },
+
+        bottomNavigation = function(elem){
+            var i = getCurrentQuestion(getActiveFieldset());
+            switch(elem.id){
+                case "confirm":
+                    // get the data
+                    showHideFieldsets(config.questions[i+1]);
+                    break;
+
+                case "prev":
+                    if( i > 0){
+                        showHideFieldsets(config.questions[i-1]);
+                    }
+                    break;
+
+                default:
+                    break;
+
+            }
+        },
+
+
+
+        getCurrentQuestion = function(elem){
+            var q = config.questions,
+                ql = q.length,
+                i;
+            for (i = 0; i < ql; i += 1) {
+                if (q[i] === elem) {
+                    return i;
+                }
+            }
+            return null;
+        },
+
+        doNavigation = function () {
+//            // if we click on a navigation item (event delegation like)
+//            $('body').on('click', '.navigate', function(e) {
+//                console.log(e);
+//                // we look what it points to.
+//                var theFieldset = $(this).attr('href');
+//
+//                // reset state
+//                deActivate($('.navigate'));
+//                // show where we are...
+//                activate($(this));
+//
+//                // and we set our history up to re
+//                // http://diveintohtml5.info/history.html
+//                setHistory(theFieldset);
+//                addData();
+//            });
+//            $('#confirm').click(saveAndNext);
             window.addEventListener("popstate", function() {
                 var loc = location.hash;
                 if (!loc) {
                     loc = '#intro';
                 }
-                showHideFieldsets(loc);
-                activate($('.navigate[href="' + loc + '"]'));
+                console.log('loc');
+                setTimeout(0,showHideFieldsets(loc));
             });
-        },
-        saveAndNext = function(event) {
-            console.log('saveAndNext');
-            // get the active fieldset
-            event.preventDefault();
-            var activeFieldset = $('fieldset.active'),
-            // and it's id
-                activeId = activeFieldset.attr('id');
+            var buttons = $('.navigate, .f-button');
 
-            if (!activeId) {
-                activeId = "buildings";
-            }
 
-            // put it into history
-            setHistory('#' + activeId);
+            $('body').on('click', '.navigate, .f-button', navigate);
 
-            // reset the top navigation
-            deActivate($('.navigate').removeClass('active'));
-            // and activate the currenct one.
-            $('.navigate').attr('href', '#' + activeId).addClass('done');
-
-            // hide all fieldsets
-            deActivate();
-            // and show the current one...
-            activate(activeFieldset.next('fieldset').not('.last'));
-
-            // show the data we are about to send...
-            addData();
-            console.log(config.answers);
-            return false;
 
         },
-        addBuilding = function(multipolygon){
+//        saveAndNext = function (event) {
+//            alert('saveAndNext');
+//            // get the active fieldset
+//            event.preventDefault();
+//            var activeFieldset = $('fieldset.active'),
+//            // and it's id
+//                activeId = activeFieldset.attr('id');
+//
+//            // put it into history
+//            setHistory('#' + activeId);
+//
+//            // reset the top navigation
+//            deActivate($('.navigate').removeClass('active'));
+//            // and activate the currenct one.
+//            $('.navigate').attr('href', '#' + activeId).addClass('done');
+//
+//            // hide all fieldsets
+//            deActivate();
+//            // and show the current one...
+//            activate(activeFieldset.next('fieldset').not('.last'));
+//
+//            // show the data we are about to send...
+//            addData();
+//            console.log(config.answers);
+//            return false;
+//
+//        },
+        addBuilding = function (multipolygon) {
             var map = config.map;
             var proj = new Proj4js.Proj("EPSG:28992");
-            $.each(multipolygon[0], function(index, gebouw) {
+            $.each(multipolygon[0], function (index, gebouw) {
                 var result = [];
                 for (var i = 0, max = gebouw.length; i < max; i++) {
-                    var test = {x: gebouw[i][0], y: gebouw[i][1]};
+                    var test = {x:gebouw[i][0], y:gebouw[i][1]};
                     Proj4js.transform(proj, Proj4js.WGS84, test);
                     result.push([test.y, test.x]);
-                };
+                }
+                ;
                 var polygon = L.polygon(result);
                 polygon.setStyle({
-                    weight: 5,
-                    color: '#ff0000',
-                    dashArray: '',
-                    fillOpacity: 0.1
+                    weight:5,
+                    color:'#ff0000',
+                    dashArray:'',
+                    fillOpacity:0.1
                 });
                 polygon.addTo(map);
                 polygon.on({
-                    mouseover: highlightFeature,
-                    mouseout: resetHighlight
+                    mouseover:highlightFeature,
+                    mouseout:resetHighlight
                     //click: zoomToFeature
                 });
             });
         },
-        resetHighlight =function(e) {
+        resetHighlight = function (e) {
             var layer = e.target;
             layer.setStyle({
-                weight: 2,
-                color: '#ff0000',
-                dashArray: '',
-                fillOpacity: 0.1
+                weight:2,
+                color:'#ff0000',
+                dashArray:'',
+                fillOpacity:0.1
             });
         },
-        highlightFeature = function(e) {
+        highlightFeature = function (e) {
             var layer = e.target;
 
             layer.setStyle({
-                weight: 5,
-                color: '#0dff22',
-                dashArray: '',
-                fillOpacity: 0.7
+                weight:5,
+                color:'#0dff22',
+                dashArray:'',
+                fillOpacity:0.7
             });
 
             if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
             }
         },
-        doMaps = function(data) {
+        doMaps = function (data) {
 
             var thiz = $('#map'),
                 it = data.buildings[0].id,
-                coordz = data.buildings[0].geometry.coordinates,
-                zoom = data.buildings[0].zoom;
+                coordz = data.buildings[0].geometry.coordinates;
 
-            setMapSize();
 
-            window.onresize = function(event) {
+
+            window.onresize = function (event) {
                 setMapSize();
             };
 
-            var map = new L.map('map',{minZoom: 16, maxZoom:22}).setView(coordz, 19);
+            var map = new L.map('map', {minZoom:16, maxZoom:22}).setView(coordz, 19);
             config.map = map;
 
             var lcms = L.tileLayer.wms("http://www.mapcache.org/wms/lcms?", {
-                minZoom: 18,
+                minZoom:18,
                 maxZoom:22,
-                layers: 'default',
-                format: 'image/png',
-                transparent: true,
-                attribution: ""
+                layers:'default',
+                format:'image/png',
+                transparent:true,
+                attribution:""
             });
             map.addLayer(lcms);
             var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {
-                    subdomains: subDomains,
-                    minZoom: 16,
+                    subdomains:subDomains,
+                    minZoom:16,
                     maxZoom:18,
                 });
             map.addLayer(cloudmade);
@@ -309,11 +460,11 @@ var brandweer = function() {
 //        });
 //        map.addLayer(gbkn);
             $.ajax({
-                type: 'GET',
-                url: 'js/json/bag.json',
-                dataType: 'json',
-                success: function(data) {
-                    $.each(data.features, function(index, item) {
+                type:'GET',
+                url:'js/json/bag.json',
+                dataType:'json',
+                success:function (data) {
+                    $.each(data.features, function (index, item) {
                         switch (item.geometry.type) {
                             case "Point":
                                 break;
@@ -323,7 +474,7 @@ var brandweer = function() {
                                 addBuilding(item.geometry.coordinates);
                                 break;
                         }
-                        if(item.properties.pandgeometrie){
+                        if (item.properties.pandgeometrie) {
                             switch (item.properties.pandgeometrie.type) {
                                 case "Point":
                                     break;
@@ -337,10 +488,10 @@ var brandweer = function() {
                     });
                 }
             });
-            map.on('zoomend', function(e) {
+            map.on('zoomend', function (e) {
                 console.log(config.map.getZoom());
             });
-            map.on('click', function(e) {
+            map.on('click', function (e) {
                 var activeQuestion = $('fieldset.active'),
                     activeId = activeQuestion.attr('id');
 
@@ -348,31 +499,31 @@ var brandweer = function() {
 
                 var nImg = document.createElement('img');
 
-                nImg.onload = function() {
+                nImg.onload = function () {
 
                 };
-                nImg.onerror = function() {
+                nImg.onerror = function () {
                     // image did not load
                     custom = 'img/marker-icon.png';
                 };
 
                 nImg.src = custom;
                 var RedIcon = L.Icon.Default.extend({
-                    options: {
-                        iconUrl: custom,
-                        iconSize: [32, 32]
+                    options:{
+                        iconUrl:custom,
+                        iconSize:[32, 32]
                     }
                 });
                 var redIcon = new RedIcon();
                 //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-                var marker = new L.marker(e.latlng, {draggable: 'true', title: activeId, icon: redIcon});
+                var marker = new L.marker(e.latlng, {draggable:'true', title:activeId, icon:redIcon});
                 console.log(marker);
                 map.addLayer(marker);
                 addData(e);
             });
             return map;
         },
-        addData = function(e) {
+        addData = function (e) {
             console.log('addData');
             var activeQuestion = $('fieldset.active'),
                 activeId = activeQuestion.attr('id');
@@ -403,7 +554,7 @@ var brandweer = function() {
                 case "personalInformation":
                 case "contactInformation":
 
-                    $('#' + activeId + ' .f-input').each(function() {
+                    $('#' + activeId + ' .f-input').each(function () {
                         var set = {};
 //                        console.log($(this));
                         set.id = $(this).attr('id');
@@ -426,8 +577,9 @@ var brandweer = function() {
             activeId = '';
         };
     return {
-        init: init
+        init:init
     };
 }();
-
-brandweer.init();
+Zepto(function ($) {
+    brandweer.init();
+});
