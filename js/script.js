@@ -30,7 +30,7 @@ var brandweer = function () {
                 "drogestijgleiding",
                 "rwa",
                 "verdiepingen",
-                "bvh",
+                "bhv",
                 "people",
                 "exercise",
                 "final"
@@ -58,6 +58,8 @@ var brandweer = function () {
             }
         },
         init = function () {
+
+            setMapSize();
 
             $.ajax({
                 type:'GET',
@@ -150,7 +152,7 @@ var brandweer = function () {
         setMapSize = function () {
 
             var headerHeight = config.headerHeight,
-                map = $('#map, .f-form, #mask');
+                map = $('#map, #mask, #questions');
 
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
@@ -169,11 +171,65 @@ var brandweer = function () {
             history.pushState(null, null, x);
         },
         showHideFieldsets = function (elem) {
-            // make sure it has a #
+            // check to see if we need access to the map.
+            /*
+             "intro",
+             "buildings",
+             "personalInformation",
+             "contactInformation",
+             "functions",
+             "entrances",
+             "sleutelbuis",
+             "gasafsluiter",
+             "hoofdSchakelaarElektriciteit",
+             "hoofdafsluiterwater",
+             "gasflessen",
+             "drogestijgleiding",
+             "rwa",
+             "verdiepingen",
+             "bhv",
+             "people",
+             "exercise",
+             "final"
+
+             */
             if(elem.charAt( 0 ) !== '#'){
-                console.log('hi there');
+                // if it has no #, add one.
                 elem = '#'+elem;
             }
+            var q = config.questions[getCurrentQuestion(elem.substring(1))];
+           switch(q){
+               case 'gasafsluiter':
+               case 'contactInformation':
+               case "contactInformation":
+               case "functions":
+               case "entrances":
+               case "sleutelbuis":
+               case "gasafsluiter":
+               case "hoofdSchakelaarElektriciteit":
+               case "hoofdafsluiterwater":
+               case "gasflessen":
+               case "drogestijgleiding":
+               case "rwa":
+               case "verdiepingen":
+                   $('#mask').hide();
+                   break;
+
+               case 'bhv':
+               case 'intro':
+               case 'personalInformation':
+               case 'exercise':
+               case 'final':
+
+                   $('#mask').show();
+                   break;
+
+               default:
+                   break;
+
+           }
+            // make sure it has a #
+
 
             // hide all fieldsets
             deActivate();
@@ -195,6 +251,8 @@ var brandweer = function () {
         },
         navigate = function (e) {
             e.preventDefault();
+
+
 
             switch (this.className.split(' ')[0]) {
                 case "navigate":
@@ -248,6 +306,7 @@ var brandweer = function () {
                     return i;
                 }
             }
+            return null;
         },
 
         doNavigation = function () {
@@ -365,7 +424,7 @@ var brandweer = function () {
                 it = data.buildings[0].id,
                 coordz = data.buildings[0].geometry.coordinates;
 
-            setMapSize();
+
 
             window.onresize = function (event) {
                 setMapSize();
