@@ -89,9 +89,8 @@ var brandweer = function () {
                 dataType:'json',
                 success:function (data) {
                     // draw me a map
-
                     doMaps(data);
-                    buildContactOption(data);
+
                     // Do some nice stuff here
                     for (var i in config.questions) {
                         // create the various templates
@@ -103,6 +102,7 @@ var brandweer = function () {
 
 
                     }
+                    buildContactOption(data);
 
                     // activate($('#'+config.questions[0]+' fieldset'));
 
@@ -125,7 +125,7 @@ var brandweer = function () {
                 $(this).parent().toggleClass('hideMe');
             });
 
-            buildContactOption();
+            //buildContactOption();
 
 
         },
@@ -171,7 +171,6 @@ var brandweer = function () {
 
         },
         renderNavigationItem = function (arg, i) {
-
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
 
         },
@@ -195,7 +194,7 @@ var brandweer = function () {
             elem.removeClass(config.css.active);
         },
 
-        // history
+    // history
         getHistory = function(){
             if (window.history && window.history.pushState) {
                 window.addEventListener("popstate", function () {
@@ -266,7 +265,7 @@ var brandweer = function () {
                     break;
                 default:
                     $('#mask').hide();
-                    console.log('set marker?')
+                    //  console.log('set marker?')
                     break;
 
             }
@@ -301,15 +300,15 @@ var brandweer = function () {
             return activeId;
         },
         navigate = function (e) {
+            // stop what you are doing
             e.preventDefault();
-
-            switch (this.className.split(' ')[0]) {
+            switch (e.target.className.split(' ')[0]) {
                 case "navigate":
-                    topNavigation(this);
+                    topNavigation(e.target);
                     break;
 
                 case "f-button":
-                    bottomNavigation(this);
+                    bottomNavigation(e.target);
                     break;
 
                 default:
@@ -326,7 +325,7 @@ var brandweer = function () {
         bottomNavigation = function (elem) {
 
             var i = getCurrentQuestion(getActiveFieldset());
-
+            console.log(elem.id);
             switch (elem.id) {
                 case "confirm":
                     // get the data
@@ -375,8 +374,8 @@ var brandweer = function () {
             $('#contact .email a').attr('href','mailto:'+e).text(e);
             $('#contact .tel a').attr('href','tel:'+t).text(t);
 
-            $('body').on('click','.contact',function(){
-               $('#contact').toggle();
+            $('body').on('click','.contact, #hideContact',function(){
+                $('#contact').toggle();
             });
 
 
@@ -424,12 +423,18 @@ var brandweer = function () {
                 layer.bringToFront();
             }
         },
-        select = function(e){
+        select = function(e,map){
 //            var layer = e.target;
 //            console.log(layer);
             var layer = e.target;
             layer.setStyle( config.css.map.activeStyle );
+            addMarker();
 
+        },
+
+        addMarker = function(){
+
+           // do stuff.
         },
 
         doMaps = function (data) {
@@ -490,7 +495,7 @@ var brandweer = function () {
                             case "MultiPolygon":
                                 addBuilding(item.geometry.coordinates);
 
-                              //  console.log(item.id);
+                                //  console.log(item.id);
                                 break;
                         }
                         if (item.properties.pandgeometrie) {
@@ -509,39 +514,10 @@ var brandweer = function () {
             });
 
             map.on('zoomend', function (e) {
-              //  console.log(config.map.getZoom());
+                //  console.log(config.map.getZoom());
             });
 
-            map.on('click', function (e) {
-//                var activeQuestion = $('fieldset.active'),
-//                    activeId = activeQuestion.attr('id');
-//
-//                var custom = 'img/nen1414/' + config.markers[activeId] + '.png';
-//
-//                var nImg = document.createElement('img');
-//
-//                nImg.onload = function () {
-//
-//                };
-//                nImg.onerror = function () {
-//                    // image did not load
-//                    custom = 'img/marker-icon.png';
-//                };
-//
-//                nImg.src = custom;
-//                var RedIcon = L.Icon.Default.extend({
-//                    options:{
-//                        iconUrl:custom,
-//                        iconSize:[32, 32]
-//                    }
-//                });
-//                var redIcon = new RedIcon();
-//                //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-//                var marker = new L.marker(e.latlng, {draggable:'true', title:activeId, icon:redIcon});
-//                console.log(marker);
-//                map.addLayer(marker);
-//                addData(e);
-            });
+
             return map;
         },
         addData = function (e) {
