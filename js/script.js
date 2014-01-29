@@ -81,17 +81,18 @@ var brandweer = function () {
         },
         init = function () {
             setMapSize();
-
+            // get us some data
             $.ajax({
                 type:'GET',
                 url:config.src,
                 data:{name:'Brandweer'},
                 dataType:'json',
                 success:function (data) {
+                    // if we have data
                     // draw me a map
                     doMaps(data);
 
-                    // Do some nice stuff here
+                    // iterate over the questions
                     for (var i in config.questions) {
                         // create the various templates
                         popTmpl(config.questions[i], data);
@@ -196,24 +197,34 @@ var brandweer = function () {
 
     // history
         getHistory = function(){
+            // if we have history support
             if (window.history && window.history.pushState) {
+                // listen to the popstate event.
                 window.addEventListener("popstate", function () {
+                    // get the correct question
                     var loc = location.hash;
+                    // if there is none
                     if (!loc) {
+                        // set the first one
                         loc = '#intro';
                     }
+                    // show the correct question
                     showHideFieldsets(loc);
                 });
             }
         },
         setHistory = function (x) {
+            // if we have history suppport
             if (window.history && window.history.pushState) {
+                // update the history
                 history.pushState(null, null, x);
             }
 
         },
 
         contactInformation = function(){
+            // remove the empty fields div which get built
+            // @todo @wilfred make sure only the needed elements get build.
             $('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
@@ -238,8 +249,9 @@ var brandweer = function () {
         },
 
         validateFields = function(e){
+            // stop what you are doing
             e.preventDefault()
-            alert('test')
+            // @todo @wilfred build navigation. look at essent code :).
         },
 
         showHideFieldsets = function (elem) {
@@ -249,6 +261,7 @@ var brandweer = function () {
                 // if it has no #, add one.
                 elem = '#' + elem;
             }
+            // get rid of the # for this.
             var q = config.questions[getCurrentQuestion(elem.substring(1))];
             switch (q) {
                 case 'bhv':
@@ -256,14 +269,16 @@ var brandweer = function () {
                 case 'personalInformation':
                 case 'exercise':
                 case 'final':
-
+                    // hide the map
                     $('#mask').show();
                     break;
 
                 case 'contactInformation':
+                    // do stuff with the contact information
                     contactInformation(q);
                     break;
                 default:
+                    // show the map.
                     $('#mask').hide();
                     //  console.log('set marker?')
                     break;
@@ -275,8 +290,6 @@ var brandweer = function () {
             if ( q === 'final'){
                 disableElement($('#confirm'));
             }
-            // make sure it has a #
-
 
             // hide all fieldsets
             deActivate();
@@ -293,21 +306,27 @@ var brandweer = function () {
 
         },
         disableElement = function(elem){
+            // disable an element.
             elem.attr('disabled','disabled');
         },
         getActiveFieldset = function () {
+            // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
             return activeId;
         },
         navigate = function (e) {
             // stop what you are doing
             e.preventDefault();
+
+            // depending on what we pressed
             switch (e.target.className.split(' ')[0]) {
                 case "navigate":
+                    // we navigate with the top buttons
                     topNavigation(e.target);
                     break;
 
                 case "f-button":
+                    // or the bottom ones
                     bottomNavigation(e.target);
                     break;
 
@@ -318,22 +337,29 @@ var brandweer = function () {
         },
 
         topNavigation = function (elem) {
+            // get the url
             var loc = elem.href.split('#')[1];
+            // show the correct fieldset, hide the others and update the history.
             showHideFieldsets(loc);
         },
 
         bottomNavigation = function (elem) {
-
+            // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
-            console.log(elem.id);
+
+            // depending on which button we press
             switch (elem.id) {
                 case "confirm":
-                    // get the data
+                    // we need to save here
+                    // go forward
+                    // @todo check if we are not at the end.
                     showHideFieldsets(config.questions[i + 1]);
                     break;
 
                 case "prev":
+                    // if we are not at the beginning
                     if (i > 0) {
+                        // go back;
                         showHideFieldsets(config.questions[i - 1]);
                     }
                     break;
@@ -346,34 +372,49 @@ var brandweer = function () {
 
 
         getCurrentQuestion = function (elem) {
+            // get the questions
             var q = config.questions,
+                // cache the length
                 ql = q.length,
+                // set a var to count with
                 i;
+
+            // loop over the questions
             for (i = 0; i < ql; i += 1) {
+                // if we find the current question
                 if (q[i] === elem) {
+                    // give back it's number in the array.
                     return i;
                 }
             }
+            // otherwise assume we are just starting fresh
             return 0;
         },
 
         doNavigation = function () {
+            // learn from the past. and set the correct state when we load.
             getHistory();
+
+            // what do we listen to for navigation.
             var triggers = $('.navigate, .f-button');
+            // do stuff
             $('body').on('click', triggers, navigate);
         },
 
         buildContactOption = function(data){
+            // get the data for contact.
             var h = data.contact.header,
                 b = data.contact.body,
                 e = data.contact.email,
                 t = data.contact.tel;
 
+            // and build the contact form...
             $('#contact h3').text(h);
             $('#contact .body').text(b);
             $('#contact .email a').attr('href','mailto:'+e).text(e);
             $('#contact .tel a').attr('href','tel:'+t).text(t);
 
+            // show hide contact form...
             $('body').on('click','.contact, #hideContact',function(){
                 $('#contact').toggle();
             });
@@ -427,30 +468,44 @@ var brandweer = function () {
 //            var layer = e.target;
 //            console.log(layer);
             var layer = e.target;
+            // @milo can this be done with css?
             layer.setStyle( config.css.map.activeStyle );
             addMarker(layer);
 
         },
 
         addMarker = function(){
+            /*
+                @milo
+                here I want to have the possibilty to set one or more markers for each question
+                each on it's own layer
+                these layers I want to turn on and off by setting a class to them or something.
+
+             */
          //  console.log($(this));
            // do stuff.
         },
 
         doMaps = function (data) {
 
-
+/*
+ @milo
+ can we build the initial map from the bag.json data.
+ I hope we can put each building on it's own layer. that way we can add stuff to buildings and focus
+ and highlight the building we are adding stuff to.
+ */
             var thiz = $('#map'),
                 it = data.buildings[0].id,
                 coordz = data.buildings[0].geometry.coordinates;
 
 
             window.onresize = function (event) {
+                // maximize the map.
                 setMapSize();
             };
 
             var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
-
+// @milo here i set the controls to the right, is this the way?
             map.addControl( L.control.zoom({position: 'topright'}) );
 
             config.map = map;
@@ -487,6 +542,7 @@ var brandweer = function () {
                 dataType:'json',
                 success:function (data) {
                     $.each(data.features, function (index, item) {
+                        // @milo please put some comment in here, so I know what is going on. pretty please?
                         switch (item.geometry.type) {
                             case "Point":
                                 break;
@@ -512,7 +568,7 @@ var brandweer = function () {
                     });
                 }
             });
-
+// @milo is this neccesary...
             map.on('zoomend', function (e) {
                 //  console.log(config.map.getZoom());
             });
