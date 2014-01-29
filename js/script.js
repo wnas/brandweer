@@ -428,12 +428,12 @@ var brandweer = function () {
 //            console.log(layer);
             var layer = e.target;
             layer.setStyle( config.css.map.activeStyle );
-            addMarker();
+            addMarker(layer);
 
         },
 
         addMarker = function(){
-
+         //  console.log($(this));
            // do stuff.
         },
 
