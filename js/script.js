@@ -4,7 +4,7 @@ Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
 var brandweer = function () {
-    //var $ = Zepto || jQuery;
+    var $;
 
     "use strict";
     /*jshint devel:true */
@@ -80,6 +80,7 @@ var brandweer = function () {
             }
         },
         init = function () {
+            // maximize the map container and some more...
             setMapSize();
             // get us some data
             $.ajax({
@@ -130,6 +131,7 @@ var brandweer = function () {
 
 
         },
+    // show or hide stuff. booring
         toggleInfo = function () {
             $('body').on('click', config.info.show, function () {
                 $(this).closest('fieldset').toggleClass('info');
@@ -139,27 +141,34 @@ var brandweer = function () {
             });
         },
         render = function (tmpl_name, tmpl_data) {
-
+            // if we don't have a cache
             if (!render.tmpl_cache) {
+                // create it as an object.
                 render.tmpl_cache = {};
             }
 
+            // if it doesn't have a certain element
             if (!render.tmpl_cache[tmpl_name]) {
+                // where do we get it from, the template that is
                 var tmpl_url = config.tmpl_dir + '/' + tmpl_name + '.tmpl';
 
+                // set up a var for the data
                 var tmpl_string;
                 $.ajax({
                     url:tmpl_url,
                     method:'GET',
                     async:false,
                     success:function (data) {
+                        // and fill it with the data we get.
                         tmpl_string = data;
                     }
                 });
 
+                // create the cache var.
                 render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
             }
 
+            // and give it back
             return render.tmpl_cache[tmpl_name](tmpl_data);
 
         },
@@ -425,6 +434,7 @@ var brandweer = function () {
         },
 
         addBuilding = function (multipolygon) {
+            // @milo comments please, this is way too smart for me...
             var map = config.map;
             var proj = new Proj4js.Proj("EPSG:28992");
             $.each(multipolygon[0], function (index, gebouw) {
@@ -467,7 +477,23 @@ var brandweer = function () {
         select = function(e,map){
 //            var layer = e.target;
 //            console.log(layer);
-            var layer = e.target;
+            var layer = e.target,
+                map = config.map;
+
+            console.log(map);
+            /*
+                @milo
+                bovenstaande geeft in chrome de volgende foutmelding
+
+             Uncaught TypeError: Converting circular structure to JSON :8080/:3
+
+             in firefox:
+             TypeError: cyclic object value
+
+                    heb het idee dat dit door iets geheel anders komt, is dit iets wat jij herkent?
+                    maar ik krijg dat ook als ik e.target wil benaderen.
+                    maw ik kan nu niets zetten...
+             */
             // @milo can this be done with css?
             layer.setStyle( config.css.map.activeStyle );
             addMarker(layer);
