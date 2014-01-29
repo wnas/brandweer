@@ -91,6 +91,7 @@ var brandweer = function () {
                     // draw me a map
 
                     doMaps(data);
+                    buildContactOption(data);
                     // Do some nice stuff here
                     for (var i in config.questions) {
                         // create the various templates
@@ -123,6 +124,8 @@ var brandweer = function () {
             $('body').on('click', '.hideFieldset', function () {
                 $(this).parent().toggleClass('hideMe');
             });
+
+            buildContactOption();
 
 
         },
@@ -176,7 +179,7 @@ var brandweer = function () {
         setMapSize = function () {
 
             var headerHeight = config.headerHeight,
-                map = $('#map, #mask');
+                map = $('#map, #mask, #contact');
 
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
@@ -359,6 +362,26 @@ var brandweer = function () {
             getHistory();
             var triggers = $('.navigate, .f-button');
             $('body').on('click', triggers, navigate);
+        },
+
+        buildContactOption = function(data){
+            var h = data.contact.header,
+                b = data.contact.body,
+                e = data.contact.email,
+                t = data.contact.tel;
+
+            $('#contact h3').text(h);
+            $('#contact .body').text(b);
+            $('#contact .email a').attr('href','mailto:'+e).text(e);
+            $('#contact .tel a').attr('href','tel:'+t).text(t);
+
+            $('body').on('click','.contact',function(){
+               $('#contact').toggle();
+            });
+
+
+
+
         },
 
         addBuilding = function (multipolygon) {
