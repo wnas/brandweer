@@ -47,10 +47,16 @@ var brandweer = function () {
             },
             "answers":[],
             "css":{
-                "active":"active"
+                "active":"active",
+                "highLightedStyle":{
+                    weight:5,
+                    color:'#0dff22',
+                    dashArray:'',
+                    fillOpacity:0.7
+                }
             },
             "numberOfQuestions":16,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -178,7 +184,7 @@ var brandweer = function () {
                     if (!loc) {
                         loc = '#intro';
                     }
-                    setTimeout(0, showHideFieldsets(loc));
+                    showHideFieldsets(loc);
                 });
             }
         },
@@ -203,7 +209,7 @@ var brandweer = function () {
                     $(this).find('.f-input').val('');
                 });
 
-                $(this).parent().after(ci);
+                $(this).parent().append(ci);
             });
 
             $('body').on('click','.eraseCI',function(){
@@ -237,12 +243,18 @@ var brandweer = function () {
                     break;
 
                 case 'contactInformation':
-                    contactInformation(q)
+                    contactInformation(q);
                     break;
                 default:
                     $('#mask').hide();
                     break;
 
+            }
+            if ( q === 'intro'){
+                disableElement($('#prev'));
+            }
+            if ( q === 'final'){
+                disableElement($('#confirm'));
             }
             // make sure it has a #
 
@@ -260,6 +272,9 @@ var brandweer = function () {
             // push the element into the history stack.
             setHistory(elem);
 
+        },
+        disableElement = function(elem){
+            elem.attr('disabled','disabled');
         },
         getActiveFieldset = function () {
             var activeId = $('fieldset.active').attr('id');
@@ -289,7 +304,9 @@ var brandweer = function () {
         },
 
         bottomNavigation = function (elem) {
+
             var i = getCurrentQuestion(getActiveFieldset());
+
             switch (elem.id) {
                 case "confirm":
                     // get the data
@@ -318,45 +335,15 @@ var brandweer = function () {
                     return i;
                 }
             }
-            return 'intro';
+            return 0;
         },
 
         doNavigation = function () {
-
             getHistory();
-
             var triggers = $('.navigate, .f-button');
             $('body').on('click', triggers, navigate);
-
-
         },
-//        saveAndNext = function (event) {
-//            alert('saveAndNext');
-//            // get the active fieldset
-//            event.preventDefault();
-//            var activeFieldset = $('fieldset.active'),
-//            // and it's id
-//                activeId = activeFieldset.attr('id');
-//
-//            // put it into history
-//            setHistory('#' + activeId);
-//
-//            // reset the top navigation
-//            deActivate($('.navigate').removeClass('active'));
-//            // and activate the currenct one.
-//            $('.navigate').attr('href', '#' + activeId).addClass('done');
-//
-//            // hide all fieldsets
-//            deActivate();
-//            // and show the current one...
-//            activate(activeFieldset.next('fieldset').not('.last'));
-//
-//            // show the data we are about to send...
-//            addData();
-//            console.log(config.answers);
-//            return false;
-//
-//        },
+
         addBuilding = function (multipolygon) {
             var map = config.map;
             var proj = new Proj4js.Proj("EPSG:28992");
@@ -396,20 +383,17 @@ var brandweer = function () {
         highlightFeature = function (e) {
             var layer = e.target;
 
-            layer.setStyle({
-                weight:5,
-                color:'#0dff22',
-                dashArray:'',
-                fillOpacity:0.7
-            });
+            layer.setStyle( config.css.hightLightedStyle);
 
             if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
             }
         },
         select = function(e){
+//            var layer = e.target;
+//            console.log(layer);
             var layer = e.target;
-            console.log(layer);
+            this._container.className = 'foo';
 
         },
 
@@ -425,7 +409,10 @@ var brandweer = function () {
                 setMapSize();
             };
 
-            var map = new L.map('map', {minZoom:16, maxZoom:22}).setView(coordz, 19);
+            var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
+
+            map.addControl( L.control.zoom({position: 'topright'}) );
+
             config.map = map;
 
             var lcms = L.tileLayer.wms("http://www.mapcache.org/wms/lcms?", {
@@ -482,7 +469,6 @@ var brandweer = function () {
                                     break;
                             }
                         }
-                       // $('#questions').append('<span class="building" id="'+item.id+'">gebouw</span> ');
                     });
                 }
             });
@@ -490,7 +476,8 @@ var brandweer = function () {
             map.on('zoomend', function (e) {
               //  console.log(config.map.getZoom());
             });
-//            map.on('click', function (e) {
+
+            map.on('click', function (e) {
 //                var activeQuestion = $('fieldset.active'),
 //                    activeId = activeQuestion.attr('id');
 //
@@ -519,7 +506,7 @@ var brandweer = function () {
 //                console.log(marker);
 //                map.addLayer(marker);
 //                addData(e);
-//            });
+            });
             return map;
         },
         addData = function (e) {
