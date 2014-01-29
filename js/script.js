@@ -48,12 +48,28 @@ var brandweer = function () {
             "answers":[],
             "css":{
                 "active":"active",
-                "highLightedStyle":{
-                    weight:5,
-                    color:'#0dff22',
-                    dashArray:'',
-                    fillOpacity:0.7
+                "map":{
+                    "activeStyle":{
+                        weight:2,
+                        color:'#ff0000',
+                        dashArray:'',
+                        fillOpacity:0.1
+                    },
+                    "highLightedStyle":{
+                        weight:5,
+                        color:'#0dff22',
+                        dashArray:'',
+                        fillOpacity:0.7
+                    },
+                    "selectedStyle":{
+                        // style away.
+                        weight:3,
+                        color:'#ff3300',
+                        dashArray:'',
+                        fillOpacity:0.2
+                    }
                 }
+
             },
             "numberOfQuestions":16,
             "tmpl_dir":'/templates',
@@ -209,7 +225,7 @@ var brandweer = function () {
                     $(this).find('.f-input').val('');
                 });
 
-                $(this).parent().append(ci);
+                $(this).parent().prepend(ci);
             });
 
             $('body').on('click','.eraseCI',function(){
@@ -247,6 +263,7 @@ var brandweer = function () {
                     break;
                 default:
                     $('#mask').hide();
+                    console.log('set marker?')
                     break;
 
             }
@@ -373,17 +390,12 @@ var brandweer = function () {
         },
         resetHighlight = function (e) {
             var layer = e.target;
-            layer.setStyle({
-                weight:2,
-                color:'#ff0000',
-                dashArray:'',
-                fillOpacity:0.1
-            });
+            layer.setStyle( config.css.map.defaultStyle);
         },
         highlightFeature = function (e) {
             var layer = e.target;
 
-            layer.setStyle( config.css.hightLightedStyle);
+            layer.setStyle( config.css.map.highLightedStyle);
 
             if (!L.Browser.ie && !L.Browser.opera) {
                 layer.bringToFront();
@@ -393,7 +405,7 @@ var brandweer = function () {
 //            var layer = e.target;
 //            console.log(layer);
             var layer = e.target;
-            this._container.className = 'foo';
+            layer.setStyle( config.css.map.activeStyle );
 
         },
 
