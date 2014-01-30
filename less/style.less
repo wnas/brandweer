@@ -43,10 +43,7 @@ html {
 
 fieldset {
   border: 0;
-  background-color: fade(@background-color,90%);
-  box-shadow: 0 1px 5px fade(@foreground-color,65%);
-  border-radius: 4px;
-  border: fade(@background-color,90%);
+  .default-pane-style;
   
   padding-bottom: 20px;
   border-top: none;
@@ -98,7 +95,7 @@ fieldset {
   left:0;
 }
 
-/* position controls should be done in js are settings of leaflet module */
+// position controls should be done in js are settings of leaflet module
 .leaflet-left {
   right:0;
 }
@@ -109,7 +106,7 @@ fieldset {
   position: absolute;
   z-index: 7;
   pointer-events: auto;
-  right: 10px;
+  right: -10px;
 }
 
 
