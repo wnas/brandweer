@@ -19,16 +19,53 @@
 
 @import "layout.less";
 
+#contact {
+  display:none;
+  background-color:green;
+  color:red;
+  z-index: 50;
+  position: absolute;
+}
+.ci {
+  float: right;
+  padding: 10px;
+  background-color: #fff;
+  min-width: 200px;
+  margin-right: -224px;
+  border: 1px solid red;
+}
+html {
+  height: 100%;
+
+}
+.building {
+  outline: 1px solid red;
+  display: inline-block;
+  width: 100px;height: 20px;background-color: red;
+  padding:  5px;margin:30px;
+  margin-top: -100px;
+  position: relative;
+}
+
 fieldset {
- display: none;
-  background-color: rgba(255,255,255,.8);
+  border: 0;
+  .default-pane-style;
+  
+  padding-bottom: 20px;
+  border-top: none;
+  & h2 {
+    padding: 0 4.5%;
+  }
+  
+  display: none;
+  
 
   &.active {
     display:block;
     position: absolute;
 
     left:10px;
-    top: 10px;
+    top: 21px;
     z-index: 2;
 
     width:50%;
@@ -40,7 +77,7 @@ fieldset {
   }
 
   &.hideMe {
-    height: 10px;
+    height: 17px;
     min-height: 10px;
     overflow: hidden;
   }
@@ -48,18 +85,37 @@ fieldset {
     margin: 5px 10px;
   }
 }
+
+#mask {
+  width: 100%;
+  height: 100%;
+  background-color: fade(@tertiary-color,50%);
+  z-index:0;
+  position: fixed;
+}
+
 #map {
   background-color: #ccc;
   width: 100%;
   z-index:-1;
   left:0;
 }
-fieldset{
 
-  .question {
-
-  }
+// position controls should be done in js are settings of leaflet module
+.leaflet-left {
+  right:0;
 }
+.leaflet-top {
+  margin-top: 15px;
+}
+.leaflet-control {
+  position: absolute;
+  z-index: 7;
+  pointer-events: auto;
+  right: -10px;
+}
+
+
 
 
 
@@ -101,5 +157,25 @@ fieldset{
   }
 }
 
-
+.hideFieldset {
+  border: 0;
+  padding: 0;
+  margin: 0 10px;
+  span {
+    position: absolute;
+    left: -999em;
+  }
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid lighten(@tertiary-color,60%);
+  
+}
+.hideMe .hideFieldset {
+    border-bottom: 0;
+    border-top: 10px solid lighten(@tertiary-color,60%);
+    margin-top: 15px;
+  }
 

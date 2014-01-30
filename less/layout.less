@@ -1,6 +1,5 @@
 // less for layout
 
-
 #main:extend(blockpadding) {
 
   display: block;
@@ -46,9 +45,6 @@
 
 
 
-
-
-
 #map {
   &>div{
     height: 100%;
@@ -59,26 +55,33 @@
   .leaflet-top, .leaflet-bottom {
     z-index: 2;
   }
-
 }
-.revealInformation {
-  border: 0;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  background-color: #fff;
+.revealInformation, .contact {
   position: absolute;
-  top:0;
-  right:-28px;
+  top: 0;
+  right:-34px;  
   display: block;
   width: 30px;
   height:30px;
-  font-family: Helvetica;
-  font-size: 1.5em;
-  font-weight: 700;
-  color: lighten(@tertiary-color,60%);
+  
+  .default-pane-style;
+  .icons;
   cursor: pointer;
+  
   &:hover {
-    color: @tertiary-color;
+  .default-pane-style-hover;
+  .icons-hover;
+  }
+  span {
+    text-indent: -11111px;
+    display: block;
+  }
+}
+.revealInformation {
+  top: 34px;
+  background-position: 0 -30px;
+  &:hover {
+    background-position: -30px -30px;
   }
 }
 .info .information {

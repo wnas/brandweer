@@ -93,13 +93,13 @@
 	top: 0;
 	}
 .leaflet-right {
-	right: 0;
+	right: 10px;
 	}
 .leaflet-bottom {
 	bottom: 0;
 	}
 .leaflet-left {
-	right: 10px;
+	left: 10px;
 	}
 .leaflet-control {
 	float: left;
