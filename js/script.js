@@ -427,10 +427,6 @@ var brandweer = function () {
             $('body').on('click','.contact, #hideContact',function(){
                 $('#contact').toggle();
             });
-
-
-
-
         },
 
         addBuilding = function (multipolygon) {
@@ -525,10 +521,6 @@ var brandweer = function () {
                 bindPopup('this is the place for the '+options.activeId).
                 openPopup();
             // console.log(marker);
-
-            marker.on('click',function(){
-                options.map.removeLayer(marker);
-            });
             options.map.addLayer(marker);
             /*
                 @milo
@@ -628,28 +620,14 @@ var brandweer = function () {
                 //  console.log(config.map.getZoom());
             });
 
+
             map.on('click',function(e){
                 var options = {
                     "e":e,
                     "map":map,
-                    "activeId" :getActiveFieldset(),
-                    "single":"false"
-                }
-                switch (options.activeId){
-                    case "entrances":
-                        options.single = 'true';
-                        addMarker(options);
-                        break;
-
-                    case "functions":
-                        console.log('functions');
-                     //   addFunctions(options);
-                        break;
-
-                    default:
-                        break;
-                }
-
+                    "activeId" :getActiveFieldset()
+                };
+                addMarker(options);
             });
 
 
