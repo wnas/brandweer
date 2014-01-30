@@ -52,21 +52,24 @@ var brandweer = function () {
                     "activeStyle":{
                         weight:2,
                         color:'#ff0000',
+                        fillColor: "#ffffff",
                         dashArray:'',
                         fillOpacity:0.1
                     },
                     "highLightedStyle":{
                         weight:5,
                         color:'#0dff22',
+                        fillColor: "#ffffff",
                         dashArray:'',
-                        fillOpacity:0.7
+                        fillOpacity:0.1
                     },
                     "selectedStyle":{
                         // style away.
                         weight:3,
-                        color:'#ff3300',
+                        color:'#0dff22',
+                        fillColor: "#0dff22",
                         dashArray:'',
-                        fillOpacity:0.2
+                        fillOpacity:0.4
                     }
                 }
 
@@ -232,14 +235,14 @@ var brandweer = function () {
 
             $('body').on('click','.eraseCI',function(){
                 $(this).parent().remove();
-            })
+            });
 
 
         },
 
         validateFields = function(e){
-            e.preventDefault()
-            alert('test')
+            e.preventDefault();
+            alert('test');
         },
 
         showHideFieldsets = function (elem) {
@@ -377,60 +380,58 @@ var brandweer = function () {
             $('body').on('click','.contact, #hideContact',function(){
                 $('#contact').toggle();
             });
-
-
-
-
         },
-
-        addBuilding = function (multipolygon) {
-            var map = config.map;
+        transformCoords = function(coordarray){
             var proj = new Proj4js.Proj("EPSG:28992");
-            $.each(multipolygon[0], function (index, gebouw) {
-                var result = [];
-                for (var i = 0, max = gebouw.length; i < max; i++) {
-                    var test = {x:gebouw[i][0], y:gebouw[i][1]};
+            var result = [];
+            $.each(coordarray, function (index, pair) {
+                if (typeof(pair) === "number"){
+                    var test = {x:coordarray[0], y:coordarray[1]};
                     Proj4js.transform(proj, Proj4js.WGS84, test);
-                    result.push([test.y, test.x]);
+                    result = [test.x, test.y];
+                } else if (pair.length === 2 ) {
+                    var test = {x:pair[0], y:pair[1]};
+                    Proj4js.transform(proj, Proj4js.WGS84, test);
+                    result.push([test.x, test.y]);
+                } else {
+                    result.push(transformCoords(pair));
                 }
-                ;
-                var polygon = L.polygon(result);
-                polygon.setStyle({
-                    weight:5,
-                    color:'#ff0000',
-                    dashArray:'',
-                    fillOpacity:0.1
-                });
-                polygon.addTo(map);
-                polygon.on({
-                    mouseover:highlightFeature,
-                    mouseout:resetHighlight,
-                    click: select
-                });
-
             });
+            return result;
         },
-        resetHighlight = function (e) {
-            var layer = e.target;
-            layer.setStyle( config.css.map.defaultStyle);
-        },
-        highlightFeature = function (e) {
-            var layer = e.target;
-
-            layer.setStyle( config.css.map.highLightedStyle);
-
-            if (!L.Browser.ie && !L.Browser.opera) {
-                layer.bringToFront();
-            }
-        },
-        select = function(e,map){
-//            var layer = e.target;
-//            console.log(layer);
-            var layer = e.target;
-            layer.setStyle( config.css.map.activeStyle );
-            addMarker();
-
-        },
+        onEachFeature = function(feature, layer) {
+			layer.on('click', function (e) {
+                if(!feature.properties.selected){
+                    console.log(feature.properties);
+                    feature.properties.selected = true;
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.selectedStyle);
+                    }
+                } else {
+                    feature.properties.selected = false;
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.activeStyle);
+                    }
+                }
+            });
+            layer.on('mouseover', function (e) {
+                if(!feature.properties.selected){
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.highLightedStyle);
+                        if (!L.Browser.ie && !L.Browser.opera) {
+                        layer.bringToFront();
+                        }
+                    }
+                }
+            });
+            layer.on('mouseout', function (e) {
+                if(!feature.properties.selected){
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.activeStyle);
+                    }
+                }
+            });
+		},
 
         addMarker = function(){
 
@@ -449,15 +450,16 @@ var brandweer = function () {
                 setMapSize();
             };
 
-            var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
+            var map = new L.map('map', {//minZoom:16, //maxZoom:22, 
+                zoomControl: false}).setView(coordz, 19);
 
             map.addControl( L.control.zoom({position: 'topright'}) );
 
             config.map = map;
 
             var lcms = L.tileLayer.wms("http://www.mapcache.org/wms/lcms?", {
-                minZoom:18,
-                maxZoom:22,
+                //minZoom:18,
+                //maxZoom:22,
                 layers:'default',
                 format:'image/png',
                 transparent:true,
@@ -467,9 +469,9 @@ var brandweer = function () {
             var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {
-                    subdomains:subDomains,
-                    minZoom:16,
-                    maxZoom:18,
+                    subdomains:subDomains//,
+                    //minZoom:16
+                    //maxZoom:18
                 });
             map.addLayer(cloudmade);
 //        var gbkn = L.tileLayer.wms("http://view.safetymaps.nl/map/mapserv?MAP=/home/mapserver/doiv.map", {
@@ -486,36 +488,47 @@ var brandweer = function () {
                 url:'js/json/bag.json',
                 dataType:'json',
                 success:function (data) {
+                    var output = {};
                     $.each(data.features, function (index, item) {
-                        switch (item.geometry.type) {
+//                        if(item.geometry){                           
+//                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+//                        }
+                            switch (item.geometry.type) {
                             case "Point":
+                                //console.log(item.geometry.coordinates);
+                                item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                                 break;
                             case "Polygon":
                                 break;
                             case "MultiPolygon":
-                                addBuilding(item.geometry.coordinates);
-
-                                //  console.log(item.id);
+                                item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                                 break;
-                        }
-                        if (item.properties.pandgeometrie) {
-                            switch (item.properties.pandgeometrie.type) {
-                                case "Point":
-                                    break;
-                                case "Polygon":
-                                    break;
-                                case "MultiPolygon":
-                                    addBuilding(item.properties.pandgeometrie.coordinates);
-                                    break;
                             }
-                        }
+//                        }
+//                        if (item.properties.pandgeometrie) {
+//                            switch (item.properties.pandgeometrie.type) {
+//                                case "Point":
+//                                    break;
+//                                case "Polygon":
+//                                    break;
+//                                case "MultiPolygon":
+//                                    item.properties.pandgeometrie.coordinates = transformCoords(item.properties.pandgeometrie.coordinates);
+//                                    break;
+//                            }
+//                        }
+                        
                     });
-                }
-            });
+                    new L.GeoJSON(data,{ 
+                        style: config.css.map.activeStyle, 
+                        onEachFeature: onEachFeature
+                        }).addTo(map);
+                    }
+                    
+                });
 
-            map.on('zoomend', function (e) {
-                //  console.log(config.map.getZoom());
-            });
+                map.on('zoomend', function (e) {
+                    //  console.log(config.map.getZoom());
+                });
 
 
             return map;
