@@ -72,7 +72,7 @@ var brandweer = function () {
 
             },
             "numberOfQuestions":16,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -637,11 +637,16 @@ var brandweer = function () {
                 }
                 switch (options.activeId){
                     case "entrances":
-o                       options.single = 'true'
+                        options.single = 'true';
+                        addMarker(options);
+                        break;
+
+                    case "functions":
+                        console.log('functions');
+                     //   addFunctions(options);
                         break;
 
                     default:
-                        addMarker(options);
                         break;
                 }
 
