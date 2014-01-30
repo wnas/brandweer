@@ -429,69 +429,57 @@ var brandweer = function () {
             });
         },
 
-        addBuilding = function (multipolygon) {
-            // @milo comments please, this is way too smart for me...
-            var map = config.map;
+        transformCoords = function(coordarray){
             var proj = new Proj4js.Proj("EPSG:28992");
-            $.each(multipolygon[0], function (index, gebouw) {
-                var result = [];
-                for (var i = 0, max = gebouw.length; i < max; i++) {
-                    var test = {x:gebouw[i][0], y:gebouw[i][1]};
+            var result = [];
+            $.each(coordarray, function (index, pair) {
+                if (typeof(pair) === "number"){
+                    var test = {x:coordarray[0], y:coordarray[1]};
                     Proj4js.transform(proj, Proj4js.WGS84, test);
-                    result.push([test.y, test.x]);
+                    result = [test.x, test.y];
+                } else if (pair.length === 2 ) {
+                    var test = {x:pair[0], y:pair[1]};
+                    Proj4js.transform(proj, Proj4js.WGS84, test);
+                    result.push([test.x, test.y]);
+                } else {
+                    result.push(transformCoords(pair));
                 }
-                ;
-                var polygon = L.polygon(result);
-                polygon.setStyle({
-                    weight:5,
-                    color:'#ff0000',
-                    dashArray:'',
-                    fillOpacity:0.1
-                });
-                polygon.addTo(map);
-                polygon.on({
-                    mouseover:highlightFeature,
-                    mouseout:resetHighlight
-                });
-
+            });
+            return result;
+        },
+        onEachFeature = function(feature, layer) {
+            layer.on('click', function (e) {
+                if(!feature.properties.selected){
+                    console.log(feature.properties);
+                    feature.properties.selected = true;
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.selectedStyle);
+                    }
+                } else {
+                    feature.properties.selected = false;
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.activeStyle);
+                    }
+                }
+            });
+            layer.on('mouseover', function (e) {
+                if(!feature.properties.selected){
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.highLightedStyle);
+                        if (!L.Browser.ie && !L.Browser.opera) {
+                            layer.bringToFront();
+                        }
+                    }
+                }
+            });
+            layer.on('mouseout', function (e) {
+                if(!feature.properties.selected){
+                    if(feature.geometry.type !== "Point"){
+                        layer.setStyle(config.css.map.activeStyle);
+                    }
+                }
             });
         },
-        resetHighlight = function (e) {
-            var layer = e.target;
-            layer.setStyle( config.css.map.defaultStyle);
-        },
-        highlightFeature = function (e) {
-            var layer = e.target;
-
-            layer.setStyle( config.css.map.highLightedStyle);
-
-            if (!L.Browser.ie && !L.Browser.opera) {
-                layer.bringToFront();
-            }
-        },
-//        select = function(e,map){
-////            var layer = e.target;
-////            console.log(layer);
-//            var layer = e.target;
-//
-//            /*
-//                @milo
-//                bovenstaande geeft in chrome de volgende foutmelding
-//
-//             Uncaught TypeError: Converting circular structure to JSON :8080/:3
-//
-//             in firefox:
-//             TypeError: cyclic object value
-//
-//                    heb het idee dat dit door iets geheel anders komt, is dit iets wat jij herkent?
-//                    maar ik krijg dat ook als ik e.target wil benaderen.
-//                    maw ik kan nu niets zetten...
-//             */
-//            // @milo can this be done with css?
-//            layer.setStyle( config.css.map.activeStyle );
-//            addMarker(layer);
-//
-//        },
 
         addMarker = function(options){
 
@@ -588,32 +576,31 @@ var brandweer = function () {
                 url:'js/json/bag.json',
                 dataType:'json',
                 success:function (data) {
+                    var output = {};
                     $.each(data.features, function (index, item) {
-                        // @milo please put some comment in here, so I know what is going on. pretty please?
-                        switch (item.geometry.type) {
-                            case "Point":
-                                break;
-                            case "Polygon":
-                                break;
-                            case "MultiPolygon":
-                                addBuilding(item.geometry.coordinates);
+                        if(item.geometry){
+                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+                        }
+//                        }
+//                        if (item.properties.pandgeometrie) {
+//                            switch (item.properties.pandgeometrie.type) {
+//                                case "Point":
+//                                    break;
+//                                case "Polygon":
+//                                    break;
+//                                case "MultiPolygon":
+//                                    item.properties.pandgeometrie.coordinates = transformCoords(item.properties.pandgeometrie.coordinates);
+//                                    break;
+//                            }
+//                        }
 
-                                //  console.log(item.id);
-                                break;
-                        }
-                        if (item.properties.pandgeometrie) {
-                            switch (item.properties.pandgeometrie.type) {
-                                case "Point":
-                                    break;
-                                case "Polygon":
-                                    break;
-                                case "MultiPolygon":
-                                    addBuilding(item.properties.pandgeometrie.coordinates);
-                                    break;
-                            }
-                        }
                     });
+                    new L.GeoJSON(data,{
+                        style: config.css.map.activeStyle,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
                 }
+
             });
 // @milo is this neccesary...
             map.on('zoomend', function (e) {
