@@ -433,5 +433,11 @@
         "rwa":{
             "header":""
         }
+    },
+    "contact":{
+        "header":"contact",
+        "body":"Uw kunt voor vragen altijd contact met ons opnemen, dit kan via e-mail of via de telefoon.",
+        "email":"wilfred@wnas.nl",
+        "tel": "0640884567"
     }
 }

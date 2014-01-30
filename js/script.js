@@ -4,7 +4,7 @@ Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
 var brandweer = function () {
-    //var $ = Zepto || jQuery;
+
 
     "use strict";
     /*jshint devel:true */
@@ -64,9 +64,9 @@ var brandweer = function () {
                     "selectedStyle":{
                         // style away.
                         weight:3,
-                        color:'#ff3300',
+                        color:'#ffffff',
                         dashArray:'',
-                        fillOpacity:0.2
+                        fillOpacity:0.6
                     }
                 }
 
@@ -80,18 +80,20 @@ var brandweer = function () {
             }
         },
         init = function () {
+            // maximize the map container and some more...
             setMapSize();
-
+            // get us some data
             $.ajax({
                 type:'GET',
                 url:config.src,
                 data:{name:'Brandweer'},
                 dataType:'json',
                 success:function (data) {
+                    // if we have data
                     // draw me a map
-
                     doMaps(data);
-                    // Do some nice stuff here
+
+                    // iterate over the questions
                     for (var i in config.questions) {
                         // create the various templates
                         popTmpl(config.questions[i], data);
@@ -102,6 +104,7 @@ var brandweer = function () {
 
 
                     }
+                    buildContactOption(data);
 
                     // activate($('#'+config.questions[0]+' fieldset'));
 
@@ -124,8 +127,11 @@ var brandweer = function () {
                 $(this).parent().toggleClass('hideMe');
             });
 
+            //buildContactOption();
+
 
         },
+    // show or hide stuff. booring
         toggleInfo = function () {
             $('body').on('click', config.info.show, function () {
                 $(this).closest('fieldset').toggleClass('info');
@@ -135,27 +141,34 @@ var brandweer = function () {
             });
         },
         render = function (tmpl_name, tmpl_data) {
-
+            // if we don't have a cache
             if (!render.tmpl_cache) {
+                // create it as an object.
                 render.tmpl_cache = {};
             }
 
+            // if it doesn't have a certain element
             if (!render.tmpl_cache[tmpl_name]) {
+                // where do we get it from, the template that is
                 var tmpl_url = config.tmpl_dir + '/' + tmpl_name + '.tmpl';
 
+                // set up a var for the data
                 var tmpl_string;
                 $.ajax({
                     url:tmpl_url,
                     method:'GET',
                     async:false,
                     success:function (data) {
+                        // and fill it with the data we get.
                         tmpl_string = data;
                     }
                 });
 
+                // create the cache var.
                 render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
             }
 
+            // and give it back
             return render.tmpl_cache[tmpl_name](tmpl_data);
 
         },
@@ -168,7 +181,6 @@ var brandweer = function () {
 
         },
         renderNavigationItem = function (arg, i) {
-
             config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
 
         },
@@ -176,7 +188,7 @@ var brandweer = function () {
         setMapSize = function () {
 
             var headerHeight = config.headerHeight,
-                map = $('#map, #mask');
+                map = $('#map, #mask, #contact');
 
             map.height(window.innerHeight - headerHeight);
             map.css('top', headerHeight);
@@ -192,26 +204,36 @@ var brandweer = function () {
             elem.removeClass(config.css.active);
         },
 
-        // history
+    // history
         getHistory = function(){
+            // if we have history support
             if (window.history && window.history.pushState) {
+                // listen to the popstate event.
                 window.addEventListener("popstate", function () {
+                    // get the correct question
                     var loc = location.hash;
+                    // if there is none
                     if (!loc) {
+                        // set the first one
                         loc = '#intro';
                     }
+                    // show the correct question
                     showHideFieldsets(loc);
                 });
             }
         },
         setHistory = function (x) {
+            // if we have history suppport
             if (window.history && window.history.pushState) {
+                // update the history
                 history.pushState(null, null, x);
             }
 
         },
 
         contactInformation = function(){
+            // remove the empty fields div which get built
+            // @todo @wilfred make sure only the needed elements get build.
             $('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
@@ -236,8 +258,9 @@ var brandweer = function () {
         },
 
         validateFields = function(e){
+            // stop what you are doing
             e.preventDefault()
-            alert('test')
+            // @todo @wilfred build navigation. look at essent code :).
         },
 
         showHideFieldsets = function (elem) {
@@ -247,6 +270,7 @@ var brandweer = function () {
                 // if it has no #, add one.
                 elem = '#' + elem;
             }
+            // get rid of the # for this.
             var q = config.questions[getCurrentQuestion(elem.substring(1))];
             switch (q) {
                 case 'bhv':
@@ -254,16 +278,18 @@ var brandweer = function () {
                 case 'personalInformation':
                 case 'exercise':
                 case 'final':
-
+                    // hide the map
                     $('#mask').show();
                     break;
 
                 case 'contactInformation':
+                    // do stuff with the contact information
                     contactInformation(q);
                     break;
                 default:
+                    // show the map.
                     $('#mask').hide();
-                    console.log('set marker?')
+                    //  console.log('set marker?')
                     break;
 
             }
@@ -273,8 +299,6 @@ var brandweer = function () {
             if ( q === 'final'){
                 disableElement($('#confirm'));
             }
-            // make sure it has a #
-
 
             // hide all fieldsets
             deActivate();
@@ -291,22 +315,28 @@ var brandweer = function () {
 
         },
         disableElement = function(elem){
+            // disable an element.
             elem.attr('disabled','disabled');
         },
         getActiveFieldset = function () {
+            // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
             return activeId;
         },
         navigate = function (e) {
+            // stop what you are doing
             e.preventDefault();
 
-            switch (this.className.split(' ')[0]) {
+            // depending on what we pressed
+            switch (e.target.className.split(' ')[0]) {
                 case "navigate":
-                    topNavigation(this);
+                    // we navigate with the top buttons
+                    topNavigation(e.target);
                     break;
 
                 case "f-button":
-                    bottomNavigation(this);
+                    // or the bottom ones
+                    bottomNavigation(e.target);
                     break;
 
                 default:
@@ -316,22 +346,29 @@ var brandweer = function () {
         },
 
         topNavigation = function (elem) {
+            // get the url
             var loc = elem.href.split('#')[1];
+            // show the correct fieldset, hide the others and update the history.
             showHideFieldsets(loc);
         },
 
         bottomNavigation = function (elem) {
-
+            // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
 
+            // depending on which button we press
             switch (elem.id) {
                 case "confirm":
-                    // get the data
+                    // we need to save here
+                    // go forward
+                    // @todo check if we are not at the end.
                     showHideFieldsets(config.questions[i + 1]);
                     break;
 
                 case "prev":
+                    // if we are not at the beginning
                     if (i > 0) {
+                        // go back;
                         showHideFieldsets(config.questions[i - 1]);
                     }
                     break;
@@ -344,24 +381,60 @@ var brandweer = function () {
 
 
         getCurrentQuestion = function (elem) {
+            // get the questions
             var q = config.questions,
+                // cache the length
                 ql = q.length,
+                // set a var to count with
                 i;
+
+            // loop over the questions
             for (i = 0; i < ql; i += 1) {
+                // if we find the current question
                 if (q[i] === elem) {
+                    // give back it's number in the array.
                     return i;
                 }
             }
+            // otherwise assume we are just starting fresh
             return 0;
         },
 
         doNavigation = function () {
+            // learn from the past. and set the correct state when we load.
             getHistory();
+
+            // what do we listen to for navigation.
             var triggers = $('.navigate, .f-button');
+            // do stuff
             $('body').on('click', triggers, navigate);
         },
 
+        buildContactOption = function(data){
+            // get the data for contact.
+            var h = data.contact.header,
+                b = data.contact.body,
+                e = data.contact.email,
+                t = data.contact.tel;
+
+            // and build the contact form...
+            $('#contact h3').text(h);
+            $('#contact .body').text(b);
+            $('#contact .email a').attr('href','mailto:'+e).text(e);
+            $('#contact .tel a').attr('href','tel:'+t).text(t);
+
+            // show hide contact form...
+            $('body').on('click','.contact, #hideContact',function(){
+                $('#contact').toggle();
+            });
+
+
+
+
+        },
+
         addBuilding = function (multipolygon) {
+            // @milo comments please, this is way too smart for me...
             var map = config.map;
             var proj = new Proj4js.Proj("EPSG:28992");
             $.each(multipolygon[0], function (index, gebouw) {
@@ -382,8 +455,7 @@ var brandweer = function () {
                 polygon.addTo(map);
                 polygon.on({
                     mouseover:highlightFeature,
-                    mouseout:resetHighlight,
-                    click: select
+                    mouseout:resetHighlight
                 });
 
             });
@@ -401,28 +473,90 @@ var brandweer = function () {
                 layer.bringToFront();
             }
         },
-        select = function(e){
+//        select = function(e,map){
+////            var layer = e.target;
+////            console.log(layer);
 //            var layer = e.target;
-//            console.log(layer);
-            var layer = e.target;
-            layer.setStyle( config.css.map.activeStyle );
+//
+//            /*
+//                @milo
+//                bovenstaande geeft in chrome de volgende foutmelding
+//
+//             Uncaught TypeError: Converting circular structure to JSON :8080/:3
+//
+//             in firefox:
+//             TypeError: cyclic object value
+//
+//                    heb het idee dat dit door iets geheel anders komt, is dit iets wat jij herkent?
+//                    maar ik krijg dat ook als ik e.target wil benaderen.
+//                    maw ik kan nu niets zetten...
+//             */
+//            // @milo can this be done with css?
+//            layer.setStyle( config.css.map.activeStyle );
+//            addMarker(layer);
+//
+//        },
 
+        addMarker = function(options){
+
+            var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
+
+            var nImg = document.createElement('img');
+
+            nImg.onload = function() {
+
+            };
+            nImg.onerror = function() {
+                // image did not load
+                custom = 'img/marker-icon.png';
+            };
+
+            nImg.src = custom;
+            var RedIcon = L.Icon.Default.extend({
+                options: {
+                    iconUrl: custom,
+                    iconSize: [32, 32]
+                }
+            });
+            var redIcon = new RedIcon();
+
+            //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
+            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
+                bindPopup('this is the place for the '+options.activeId).
+                openPopup();
+            // console.log(marker);
+            options.map.addLayer(marker);
+            /*
+                @milo
+                here I want to have the possibilty to set one or more markers for each question
+                each on it's own layer
+                these layers I want to turn on and off by setting a class to them or something.
+
+             */
+         //  console.log($(this));
+           // do stuff.
         },
 
         doMaps = function (data) {
 
-
+/*
+ @milo
+ can we build the initial map from the bag.json data.
+ I hope we can put each building on it's own layer. that way we can add stuff to buildings and focus
+ and highlight the building we are adding stuff to.
+ */
             var thiz = $('#map'),
                 it = data.buildings[0].id,
                 coordz = data.buildings[0].geometry.coordinates;
 
 
             window.onresize = function (event) {
+                // maximize the map.
                 setMapSize();
             };
 
             var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
-
+// @milo here i set the controls to the right, is this the way?
             map.addControl( L.control.zoom({position: 'topright'}) );
 
             config.map = map;
@@ -459,6 +593,7 @@ var brandweer = function () {
                 dataType:'json',
                 success:function (data) {
                     $.each(data.features, function (index, item) {
+                        // @milo please put some comment in here, so I know what is going on. pretty please?
                         switch (item.geometry.type) {
                             case "Point":
                                 break;
@@ -467,7 +602,7 @@ var brandweer = function () {
                             case "MultiPolygon":
                                 addBuilding(item.geometry.coordinates);
 
-                              //  console.log(item.id);
+                                //  console.log(item.id);
                                 break;
                         }
                         if (item.properties.pandgeometrie) {
@@ -484,41 +619,21 @@ var brandweer = function () {
                     });
                 }
             });
-
+// @milo is this neccesary...
             map.on('zoomend', function (e) {
-              //  console.log(config.map.getZoom());
+                //  console.log(config.map.getZoom());
             });
 
-            map.on('click', function (e) {
-//                var activeQuestion = $('fieldset.active'),
-//                    activeId = activeQuestion.attr('id');
-//
-//                var custom = 'img/nen1414/' + config.markers[activeId] + '.png';
-//
-//                var nImg = document.createElement('img');
-//
-//                nImg.onload = function () {
-//
-//                };
-//                nImg.onerror = function () {
-//                    // image did not load
-//                    custom = 'img/marker-icon.png';
-//                };
-//
-//                nImg.src = custom;
-//                var RedIcon = L.Icon.Default.extend({
-//                    options:{
-//                        iconUrl:custom,
-//                        iconSize:[32, 32]
-//                    }
-//                });
-//                var redIcon = new RedIcon();
-//                //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-//                var marker = new L.marker(e.latlng, {draggable:'true', title:activeId, icon:redIcon});
-//                console.log(marker);
-//                map.addLayer(marker);
-//                addData(e);
+            map.on('click',function(e){
+                var options = {
+                    "e":e,
+                    "map":map,
+                    "activeId" :getActiveFieldset()
+                }
+                addMarker(options);
             });
+
+
             return map;
         },
         addData = function (e) {
