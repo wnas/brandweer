@@ -450,13 +450,21 @@ var brandweer = function () {
         onEachFeature = function(feature, layer) {
             layer.on('click', function (e) {
                 if(!feature.properties.selected){
+
+                    console.log('yay');
+                    console.log(feature.properties.gid);
                     console.log(feature.properties);
+                    var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
+                        plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.selectedStyle);
                     }
+                    layer.bindPopup(straatHuisnummer+plaats).
+                        openPopup();
                 } else {
                     feature.properties.selected = false;
+                    console.log('nope')
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.activeStyle);
                     }
@@ -509,6 +517,13 @@ var brandweer = function () {
                 bindPopup('this is the place for the '+options.activeId).
                 openPopup();
             // console.log(marker);
+
+            if (options.single === 'true'){
+                removeMarker(options,marker)
+            }
+            marker.on('click',function(){
+                removeMarker(options,marker);
+            });
             options.map.addLayer(marker);
             /*
                 @milo
@@ -519,6 +534,10 @@ var brandweer = function () {
              */
          //  console.log($(this));
            // do stuff.
+        },
+
+        removeMarker = function(options,marker){
+            options.map.removeLayer(marker);
         },
 
         doMaps = function (data) {
@@ -612,9 +631,25 @@ var brandweer = function () {
                 var options = {
                     "e":e,
                     "map":map,
-                    "activeId" :getActiveFieldset()
-                };
-                addMarker(options);
+                    "activeId" :getActiveFieldset(),
+                    "single":"false"
+                }
+                switch (options.activeId){
+                    case "entrances":
+                        options.single = 'true';
+                        addMarker(options);
+                        break;
+
+                    case "functions":
+                        console.log('functions');
+                        //   addFunctions(options);
+                        break;
+
+                    default:
+                        addMarker(options);
+                        break;
+                }
+
             });
 
 
