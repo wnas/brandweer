@@ -28,6 +28,7 @@ var brandweer = function () {
                 "hoofdSchakelaarElektriciteit",
                 "hoofdafsluiterwater",
                 "gasflessen",
+                "gevaarlijkestoffen",
                 "drogestijgleiding",
                 "rwa",
                 "verdiepingen",
@@ -120,9 +121,12 @@ var brandweer = function () {
             // set up the navigation.
             doNavigation();
             toggleInfo();
+            var info = '<button class="revealInformation">?</button>',
+                contact = '<button class="contact"><span>Contact</span></button>',
+                hide = '<button class="hideFieldset"><span>Verberg</span></button>';
 
             $('fieldset').each(function () {
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button><button class="contact"><span>Contact</span></button>');
+                $(this).prepend(hide+contact+info);
 
             });
             $('body').on('click', '.hideFieldset', function () {
@@ -281,7 +285,7 @@ var brandweer = function () {
                 case 'exercise':
                 case 'final':
                     // hide the map
-                    config.body.toggleClass(config.css.hideMap);
+                    config.body.addClass(config.css.hideMap);
                    // $('#mask').show();
                     break;
 
@@ -291,7 +295,7 @@ var brandweer = function () {
                     break;
                 default:
                     // show the map.
-
+                    config.body.removeClass(config.css.hideMap);
                     //  console.log('set marker?')
                     break;
 

@@ -430,8 +430,67 @@
             "header":"header",
             "body":"bodytest"
         },
-        "rwa":{
-            "header":""
+
+        "intro": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "buildings": {
+            "header":"gebouwen",
+            "body":"<p>De gebruiker kan nu op de grijze BAG-Panden klikken. Bij elke klik wordt de vraag gesteld om deze toe te voegen aan de kaart voor de brandweer. Het object wordt groen gekleurd als deze met “ja” wordt beantwoord.</p>"      },
+        "functions": {
+            "header":"gebruiks functies",
+            "body":"bodytest"
+        },
+        "entrances": {
+            "header":"Ingangen",
+            "body":"dkddkd"
+        },
+        "sleutelbuis": {
+            "header":"sleutelbuis",
+            "body":"<p>Een verbindingsweg naar uw pand mag geen obstakels hebben zoals hekwerken die op slot zijn, overhangende takken of bijvoorbeeld geparkeerde auto's. Hekwerken kunnen op slot indien in de directe omgeving van het hekwerk een sleutelbuis/-kluis aanwezig is met daarin de toegangssleutel. Wanneer u een dergelijke sleutelbuis/-kluis wilt aanbrengen dient u hiervoor contact op te nemen met de brandweer.</p>",
+            "image":"img/informatie/sleutelbuis/sleutelbuis-pz-light.jpg"
+        },
+        "gasafsluiter": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "hoofdSchakelaarElektriciteit": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "hoofdafsluiterwater": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "gasflessen": {
+            "header":"header",
+            "body":"bodytest",
+            "image":"img/informatie/gasflessen/gasflessen.jpg"
+        },
+        "drogestijgleiding": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "rwa": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "verdiepingen": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "bhv": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "people": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "exercise": {
+            "header":"header",
+            "body":"bodytest"
         }
     },
     "contact":{
