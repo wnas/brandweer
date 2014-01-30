@@ -57,27 +57,20 @@
   }
 }
 .revealInformation, .contact {
-  border: 0;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-radius: 2px;
-  background-color: #fff;
   position: absolute;
   top: 0;
-  right:-32px;
+  right:-34px;  
   display: block;
   width: 30px;
   height:30px;
-  font-family: Helvetica;
-  font-size: 1.5em;
-  font-weight: 700;
-  color: lighten(@tertiary-color,60%);
+  
+  .default-pane-style;
+  .icons;
   cursor: pointer;
-  background: fade(@background-color,80%) url(../img/iconen-information.svg) no-repeat 0 0;
-  background-size: 60px 1000px;
+  
   &:hover {
-    background: #fff url(../img/iconen-information.svg) no-repeat -30px 0;
-    background-size: 60px 1000px;
+  .default-pane-style-hover;
+  .icons-hover;
   }
   span {
     text-indent: -11111px;
@@ -85,11 +78,10 @@
   }
 }
 .revealInformation {
-  top:32px;
-  background-image: none;
+  top: 34px;
+  background-position: 0 -30px;
   &:hover {
-    color: @tertiary-color;
-    background-image: none;
+    background-position: -30px -30px;
   }
 }
 .info .information {
