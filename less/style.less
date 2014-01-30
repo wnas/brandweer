@@ -95,15 +95,23 @@ fieldset {
     min-height: 10px;
     overflow: hidden;
   }
-  
 }
-
+.hideMap {
+  .active {
+    max-width: 100%;
+    width:  100%;
+  }
+  #mask {
+    display: block;
+  }
+}
 #mask {
   width: 100%;
   height: 100%;
   background-color: fade(@tertiary-color,50%);
   z-index:0;
   position: fixed;
+  display: none;
 }
 
 #map {

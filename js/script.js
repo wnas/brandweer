@@ -15,10 +15,11 @@ var brandweer = function () {
             "multipleSelectClone":'',
             "headerHeight":$('#header').height(),
             "navHeight":$('#main-nav').height(),
+            "body": $('body'),
             "questions":[
                 "intro",
-                "buildings",
                 "personalInformation",
+                "buildings",
                 "contactInformation",
                 "functions",
                 "entrances",
@@ -48,6 +49,7 @@ var brandweer = function () {
             "answers":[],
             "css":{
                 "active":"active",
+                "hideMap":"hideMap",
                 "map":{
                     "activeStyle":{
                         weight:2,
@@ -279,7 +281,8 @@ var brandweer = function () {
                 case 'exercise':
                 case 'final':
                     // hide the map
-                    $('#mask').show();
+                    config.body.toggleClass(config.css.hideMap);
+                   // $('#mask').show();
                     break;
 
                 case 'contactInformation':
@@ -288,7 +291,7 @@ var brandweer = function () {
                     break;
                 default:
                     // show the map.
-                    $('#mask').hide();
+
                     //  console.log('set marker?')
                     break;
 
