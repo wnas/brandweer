@@ -4,7 +4,7 @@ Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.387
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
 var brandweer = function () {
-    var $;
+
 
     "use strict";
     /*jshint devel:true */
@@ -64,9 +64,9 @@ var brandweer = function () {
                     "selectedStyle":{
                         // style away.
                         weight:3,
-                        color:'#ff3300',
+                        color:'#ffffff',
                         dashArray:'',
-                        fillOpacity:0.2
+                        fillOpacity:0.6
                     }
                 }
 
@@ -455,8 +455,7 @@ var brandweer = function () {
                 polygon.addTo(map);
                 polygon.on({
                     mouseover:highlightFeature,
-                    mouseout:resetHighlight,
-                    click: select
+                    mouseout:resetHighlight
                 });
 
             });
@@ -474,33 +473,59 @@ var brandweer = function () {
                 layer.bringToFront();
             }
         },
-        select = function(e,map){
+//        select = function(e,map){
+////            var layer = e.target;
+////            console.log(layer);
 //            var layer = e.target;
-//            console.log(layer);
-            var layer = e.target,
-                map = config.map;
+//
+//            /*
+//                @milo
+//                bovenstaande geeft in chrome de volgende foutmelding
+//
+//             Uncaught TypeError: Converting circular structure to JSON :8080/:3
+//
+//             in firefox:
+//             TypeError: cyclic object value
+//
+//                    heb het idee dat dit door iets geheel anders komt, is dit iets wat jij herkent?
+//                    maar ik krijg dat ook als ik e.target wil benaderen.
+//                    maw ik kan nu niets zetten...
+//             */
+//            // @milo can this be done with css?
+//            layer.setStyle( config.css.map.activeStyle );
+//            addMarker(layer);
+//
+//        },
 
-            console.log(map);
-            /*
-                @milo
-                bovenstaande geeft in chrome de volgende foutmelding
+        addMarker = function(options){
 
-             Uncaught TypeError: Converting circular structure to JSON :8080/:3
+            var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
 
-             in firefox:
-             TypeError: cyclic object value
+            var nImg = document.createElement('img');
 
-                    heb het idee dat dit door iets geheel anders komt, is dit iets wat jij herkent?
-                    maar ik krijg dat ook als ik e.target wil benaderen.
-                    maw ik kan nu niets zetten...
-             */
-            // @milo can this be done with css?
-            layer.setStyle( config.css.map.activeStyle );
-            addMarker(layer);
+            nImg.onload = function() {
 
-        },
+            };
+            nImg.onerror = function() {
+                // image did not load
+                custom = 'img/marker-icon.png';
+            };
 
-        addMarker = function(){
+            nImg.src = custom;
+            var RedIcon = L.Icon.Default.extend({
+                options: {
+                    iconUrl: custom,
+                    iconSize: [32, 32]
+                }
+            });
+            var redIcon = new RedIcon();
+
+            //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
+            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
+                bindPopup('this is the place for the '+options.activeId).
+                openPopup();
+            // console.log(marker);
+            options.map.addLayer(marker);
             /*
                 @milo
                 here I want to have the possibilty to set one or more markers for each question
@@ -597,6 +622,15 @@ var brandweer = function () {
 // @milo is this neccesary...
             map.on('zoomend', function (e) {
                 //  console.log(config.map.getZoom());
+            });
+
+            map.on('click',function(e){
+                var options = {
+                    "e":e,
+                    "map":map,
+                    "activeId" :getActiveFieldset()
+                }
+                addMarker(options);
             });
 
 
