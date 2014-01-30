@@ -53,8 +53,22 @@ fieldset {
   
   padding-bottom: 20px;
   border-top: none;
-  & h2 {
+  & h2,p {
     padding: 0 4.5%;
+  }
+  & ul {
+    padding: 0 4.5%;
+    & li {
+      list-style: none;
+      padding-top: 1em;
+      line-height: 1.6em;
+      & strong {
+        float: left;
+        width: 3em;
+        height: 2em;
+        color: lighten(@tertiary-color,10%);
+      }
+    }
   }
   
   display: none;
@@ -69,7 +83,7 @@ fieldset {
     z-index: 2;
 
     width:50%;
-    min-width: 300px;
+    min-width: 260px;
     max-width: 600px;
 
     min-height: 200px;
@@ -81,9 +95,7 @@ fieldset {
     min-height: 10px;
     overflow: hidden;
   }
-  p {
-    margin: 5px 10px;
-  }
+  
 }
 
 #mask {
