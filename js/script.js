@@ -525,6 +525,10 @@ var brandweer = function () {
                 bindPopup('this is the place for the '+options.activeId).
                 openPopup();
             // console.log(marker);
+
+            marker.on('click',function(){
+                options.map.removeLayer(marker);
+            });
             options.map.addLayer(marker);
             /*
                 @milo
@@ -628,9 +632,19 @@ var brandweer = function () {
                 var options = {
                     "e":e,
                     "map":map,
-                    "activeId" :getActiveFieldset()
+                    "activeId" :getActiveFieldset(),
+                    "single":"false"
                 }
-                addMarker(options);
+                switch (options.activeId){
+                    case "entrances":
+o                       options.single = 'true'
+                        break;
+
+                    default:
+                        addMarker(options);
+                        break;
+                }
+
             });
 
 
