@@ -1,18 +1,34 @@
 {
+
+    "intro":{
+        "header":"SafetyMaps Web",
+        "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
+    },
+    "buildings":[
+        {
+            "id":"bagId",
+            "header":"Gebouwen",
+            "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
+            "geometry":{
+                "type":"point",
+                "coordinates":[51.690599, 5.3064146]
+            }
+        }
+    ],
     "personalInformation":[
         {"copy":{
-                "header":"Persoonlijke informatie",
-                "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
-            }
+            "header":"Persoonlijke informatie",
+            "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
+        }
         },
         {"fields":[{
-                "name":"firstname",
-                "type":"text",
-                "value": "emiel",
-                "placeholder":"Voornaam",
-                "required":"f-required"
+            "name":"firstname",
+            "type":"text",
+            "value": "emiel",
+            "placeholder":"Voornaam",
+            "required":"f-required"
 
-            },
+        },
             {
                 "name":"surname",
                 "type":"text",
@@ -74,21 +90,6 @@
 
 
     ],
-    "intro":{
-        "header":"SafetyMaps Web",
-        "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
-    },
-    "buildings":[
-        {
-            "id":"bagId",
-            "header":"Gebouwen",
-            "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
-            "geometry":{
-                "type":"point",
-                "coordinates":[51.690599, 5.3064146]
-            }
-        }
-    ],
     "contactInformation":[
         {
             "copy":{
@@ -124,13 +125,19 @@
                         "type":"tel",
                         "value":"",
                         "placeholder":"06 12345678",
-                        "required":""
+                        "required":"f-required"
                     }
                 ]
             ]
         }
     ],
     "functions":[
+        {
+            "copy":{
+                "header":"Functie",
+                "body":"<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>"
+            }
+        },
         {
             "building":"bagId",
             "functions":[
@@ -169,7 +176,7 @@
         {
             "building":"bagId",
             "header":"Hoofdingang",
-            "body":"<p>geef aub aan waar uw hoofdingang zich bevind.</p>",
+            "body":"<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -186,7 +193,7 @@
         {
             "building":"bagId",
             "header":"sleutelbuis",
-            "body":"<p>sleutelbuis?</p>",
+            "body":"<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -199,7 +206,7 @@
         {
             "building":"bagId",
             "header":"Gasafsluiter",
-            "body":"<p>waar zit de gas afsluiter?</p>",
+            "body":"<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -212,7 +219,7 @@
         {
             "building":"bagId",
             "header":"Hoofdschakelaar electriciteit",
-            "body":"<p>Waar zit die hoofdschakelaar</p>",
+            "body":"<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -225,7 +232,7 @@
         {
             "building":"bagId",
             "header":"Hoofdafsluiter water",
-            "body":"<p>Geef op de kaart aan waar de hoofdafsluiter zit.</p>",
+            "body":"<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -236,30 +243,72 @@
     ],
     "gasflessen":[
         {
-           "building":"bagId",
-            "header":"gasflessen",
-            "body":"Waar staan uw gasflessen...",
-            "geometry":{
-                "type": "Point",
-                "coordinates": [
-                    51.690599, 5.3064146
-                ]
-            },
-            "amount":"4"
-
+            "copy":{
+                "header":"gasflessen",
+                "body":"<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>"
+            }
         },
         {
-            "building":"bagId",
-            "header":"gasflessen",
-            "body":"Waar staan uw gasflessen...",
-            "geometry":{
-                "type": "Point",
-                "coordinates": [
-                    51.690569, 5.3064146
-                ]
-            },
-            "amount":"2"
+            "items":
+            [
+                {
+                   "building":"bagId",
+                   "geometry":{
+                        "type": "Point",
+                        "coordinates": [
+                            51.690599, 5.3064146
+                        ]
+                    },
+                    "amount":"4"
 
+                },
+                {
+                    "building":"bagId",
+                    "geometry":{
+                        "type": "Point",
+                        "coordinates": [
+                            51.690569, 5.3064146
+                        ]
+                    },
+                    "amount":"2"
+
+                }
+            ]
+        }
+    ],
+    "gevaarlijkestoffen":[
+        {
+            "copy":{
+                "header":"Gevaarlijke stoffen",
+                "body":"<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie. </p>"
+            }
+        },
+        {
+            "items":
+                    [
+                        {
+                            "building":"bagId",
+                            "geometry":{
+                                "type": "Point",
+                                "coordinates": [
+                                    51.690599, 5.3064146
+                                ]
+                            },
+                            "amount":"4"
+
+                        },
+                        {
+                            "building":"bagId",
+                            "geometry":{
+                                "type": "Point",
+                                "coordinates": [
+                                    51.690569, 5.3064146
+                                ]
+                            },
+                            "amount":"2"
+
+                        }
+                    ]
         }
     ],
     "drogestijgleiding":[
@@ -298,7 +347,8 @@
     ],
     "bhv":{
         "header":"BHV",
-        "value":"nee"
+        "label":"Heeft u een BHV-organisatie?",
+        "value":""
     },
     "people":[
         {
@@ -307,7 +357,7 @@
             "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
             "occupants":[
                 [
-                    
+
                     {
                         "type":"Bewoners",
                         "time":"Overdag",
@@ -356,7 +406,7 @@
                         "type":"Personeel",
                         "time":"Nacht",
                         "amount":""
-                    }                
+                    }
                 ]
             ]
         }
@@ -379,6 +429,15 @@
         "contactInformation": {
             "header":"header",
             "body":"bodytest"
+        },
+        "rwa":{
+            "header":""
         }
+    },
+    "contact":{
+        "header":"contact",
+        "body":"Uw kunt voor vragen altijd contact met ons opnemen, dit kan via e-mail of via de telefoon.",
+        "email":"wilfred@wnas.nl",
+        "tel": "0640884567"
     }
 }
