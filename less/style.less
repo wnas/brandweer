@@ -96,36 +96,14 @@ fieldset {
   }
 
   &.hideMe {
-    height: 17px;
+    height: 10px;
     min-height: 10px;
     overflow: hidden;
   }
   
 }
-.hideMap {
-  .active {
-    max-width: 100%;
-    width:  100%;
-  }
-  #mask {
-    display: block;
-  }
-}
-#mask {
-  width: 100%;
-  height: 100%;
-  background-color: fade(@tertiary-color,50%);
-  z-index:0;
-  position: fixed;
-  display: none;
-}
 
-#map {
-  background-color: #ccc;
-  width: 100%;
-  z-index:-1;
-  left:0;
-}
+
 
 // position controls should be done in js are settings of leaflet module
 .leaflet-left {
@@ -167,6 +145,11 @@ div#questions {
   }
 }
 
+
+
+// inconbar
+
+
 .hideFieldset {
   border: 0;
   padding: 0;
@@ -175,19 +158,53 @@ div#questions {
     position: absolute;
     left: -999em;
   }
-  width: 0;
-  height: 0;
-  background-color: transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid lighten(@tertiary-color,60%);
-  
+  width: 30px;
+  height: 30px;
+  .icons;
+  background-position: 0 -60px;
 }
 .hideMe .hideFieldset {
-    border-bottom: 0;
-    border-top: 10px solid lighten(@tertiary-color,60%);
-    margin-top: 15px;
+    .icons;
+  background-position: -30px -60px;
+}
+
+.revealInformation, .contact {
+  position: absolute;
+  top: 0;
+  right:-54px;  
+  display: block;
+  width: 30px;
+  height:30px;
+  .default-pane-style;
+  .icons;
+  cursor: pointer;
+  @media only screen and(max-width:600px) {
+    right: 39px;
+    margin-top: 5px;
+   }
+  &:hover {
+  .default-pane-style-hover;
+  .icons-h;
   }
+  span {
+    text-indent: -11111px;
+    display: block;
+  }
+}
+.revealInformation {
+  top: 34px;
+  background-position: 0 -30px;
+  &:hover {
+    background-position: -30px -30px;
+  }
+  @media only screen and(max-width:600px) {
+    right: 5px;
+    top: 0px;
+   }
+}
+
+
+
 
 
 .null {
