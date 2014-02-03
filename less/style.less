@@ -76,15 +76,15 @@ fieldset {
 
   &.active {
     display:block;
-    position: absolute;
+//    position: absolute;
 
     left:10px;
     top: 21px;
     z-index: 2;
 
-    width:50%;
-    min-width: 260px;
-    max-width: 600px;
+    width:70%;
+//    min-width: 260px;
+//    max-width: 600px;
 
     min-height: 200px;
 
@@ -98,8 +98,8 @@ fieldset {
 }
 .hideMap {
   .active {
-    max-width: 100%;
-    width:  100%;
+  //  max-width: 100%;
+  //  width:  100%;
   }
   #mask {
     display: block;
@@ -198,7 +198,11 @@ fieldset {
   border-top: 10px solid lighten(@tertiary-color,60%);
   margin-top: 15px;
 }
-
+.amount {
+  position: relative;
+  left: 100%;
+  border: 1px solid red;
+}
 
 .null {
   display:none;

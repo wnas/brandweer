@@ -251,7 +251,7 @@ var brandweer = function () {
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
-                        par = $('<p>'+l+'<strong>'+v+'</strong></p>');
+                        par = $('<p>'+l+'<input type="text" class="f-input" readonly value="'+v+'"></p>');
                     ci.append(par);
                     $(this).find('.f-input').val('');
                 });
@@ -261,7 +261,12 @@ var brandweer = function () {
 
             $('body').on('click','.eraseCI',function(){
                 $(this).parent().remove();
-            })
+            });
+
+            $('body').on('click','.hideAmount',function(){
+                alert('yaya');
+                $(this).closest('.amount').hide();
+            });
 
 
         },
@@ -366,12 +371,28 @@ var brandweer = function () {
             // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
 
+
             // depending on which button we press
             switch (elem.id) {
                 case "confirm":
                     // we need to save here
-                    // go forward
+                    // build an array for the question at hand
+                    config.answers[getActiveFieldset()] = [];
+                    // find the inputs where the values are in.
+
+                    $('#'+getActiveFieldset()).find('.f-input').each(function(i){
+                        // what is it's value
+                        var v = $(this).val(),
+                        // and id...
+                            it = $(this).attr('id');
+                        // place 'm in to the array.
+                        config.answers[getActiveFieldset()][it] = v;
+                    });
+                    console.log(i);
+                    saveData(config.answers);
                     // @todo check if we are not at the end.
+
+                    // go forward
                     showHideFieldsets(config.questions[i + 1]);
                     break;
 
@@ -389,6 +410,14 @@ var brandweer = function () {
             }
         },
 
+        setData = function(p){
+              console.log(p);
+        },
+
+        saveData = function(i){
+            console.log(i);
+            console.log('we need to send that...');
+        },
 
         getCurrentQuestion = function (elem) {
             // get the questions
@@ -470,6 +499,7 @@ var brandweer = function () {
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.selectedStyle);
                     }
+                    $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
                     layer.bindPopup(straatHuisnummer+plaats).
                         openPopup();
                 } else {
@@ -504,33 +534,35 @@ var brandweer = function () {
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
 
-            var RedIcon = L.Icon.Default.extend({
+            var BrandweerIcon = L.Icon.Default.extend({
                 options: {
                     iconUrl: custom,
                     iconSize: [32, 32]
                 }
             });
-            var redIcon = new RedIcon();
+            var brandweerIcon = new BrandweerIcon();
 
-            //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
+            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
+
             switch (options.activeId){
                 case "gasflessen":
-                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
-                        bindPopup('<input type="number" class="f-input f-input-gasflessen" data-lat="'+ options.e.latLng +'">').openPopup();
+                    $('#'+options.activeId).append('<input class="f-input" hidden value="'+options.e.latLng+'">');
+                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number"> </div>'
+                    $('#'+options.activeId).append(amount);
 
                     break;
 
                 case "gevaarlijkestoffen":
-                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
-                        bindPopup('<input type="number" class="f-input f-input-gevaarlijkestoffen" data-lat="'+ options.e.latLng +'">').openPopup();
+
 
                     break;
 
                 default:
-                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
-                        bindPopup('this is the place for the '+options.activeId);
+
                     break;
             }
+
+
 
             // console.log(marker);
 
