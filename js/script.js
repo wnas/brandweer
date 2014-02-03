@@ -121,16 +121,16 @@ var brandweer = function () {
             // set up the navigation.
             doNavigation();
             toggleInfo();
-            var info = '<button class="revealInformation">?</button>',
+            var info = '<button class="revealInformation">Informatie</button>',
                 contact = '<button class="contact"><span>Contact</span></button>',
                 hide = '<button class="hideFieldset"><span>Verberg</span></button>';
 
             $('fieldset').each(function () {
-                $(this).prepend(hide+contact+info);
+                $(this).prepend('<div class="iconBar">'+hide+contact+info+'</div>');
 
             });
             $('body').on('click', '.hideFieldset', function () {
-                $(this).parent().toggleClass('hideMe');
+                $(this).closest('fieldset').toggleClass('hideMe');
             });
 
             //buildContactOption();
