@@ -14,6 +14,7 @@
 @import "mixins.less";
 @import "reset.less";
 @import "typography.less";
+@import "icons.less";
 @import "forms.less";
 @import "navigate.less";
 
@@ -96,7 +97,7 @@ fieldset {
   }
 
   &.hideMe {
-    height: 10px;
+    height: 20px;
     min-height: 10px;
     overflow: hidden;
   }
@@ -128,7 +129,7 @@ div#questions {
   width: 40%;
   
   @media only screen and(max-width:600px) {
-    width: 100%;
+    width: 97%;
     margin-top: -3px;
     }
 }
@@ -149,11 +150,15 @@ div#questions {
 
 // inconbar
 
+div.iconBar {
+  @media only screen and(max-width:600px) {
+    padding: 0 0.7em 0 0;
+  }
+}
 
 .hideFieldset {
   border: 0;
-  padding: 0;
-  margin: 0 10px;
+  margin: 0 5px;
   span {
     position: absolute;
     left: -999em;
@@ -161,46 +166,34 @@ div#questions {
   width: 30px;
   height: 30px;
   .icons;
-  background-position: 0 -60px;
+  .default-icon-style;
+  .icon-arrow-up;
+  border: 0;
 }
 .hideMe .hideFieldset {
-    .icons;
-  background-position: -30px -60px;
+  .icons;
+  .icon-arrow-down;
 }
 
-.revealInformation, .contact {
-  position: absolute;
-  top: 0;
-  right:-54px;  
-  display: block;
+// dafuq? Need button.x and !important emphasis for padding?
+button.revealInformation, button.contact {
+  padding: 0 !important;
+  margin: 0 0 0.5em 0.5em;
+  float:right;
   width: 30px;
   height:30px;
-  .default-pane-style;
-  .icons;
   cursor: pointer;
-  @media only screen and(max-width:600px) {
-    right: 39px;
-    margin-top: 5px;
-   }
-  &:hover {
-  .default-pane-style-hover;
-  .icons-h;
-  }
-  span {
-    text-indent: -11111px;
-    display: block;
-  }
+  .default-icon-style;
+  .icons;
+  .icon-contact;
+  .icons-hover;
+  
+  // don't need this span
+  span {display: none;}
 }
-.revealInformation {
-  top: 34px;
-  background-position: 0 -30px;
-  &:hover {
-    background-position: -30px -30px;
-  }
-  @media only screen and(max-width:600px) {
-    right: 5px;
-    top: 0px;
-   }
+button.revealInformation {
+  .icon-info;
+  .icons-hover;
 }
 
 
