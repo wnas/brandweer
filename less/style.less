@@ -21,18 +21,26 @@
 
 #contact {
   display:none;
-  background-color:green;
-  color:red;
   z-index: 50;
   position: absolute;
+  .default-pane-style;
+  margin: 15%;
+  height: 200px !important;
+  width: 70%  !important;
+  text-align: center;
+  ul {
+    margin: 10px 0;
+    li {list-style: none;}
+  }
+  & button#hideContact {
+    .close-button;
+  }
 }
 .ci {
+  .default-pane-style;
   float: right;
-  padding: 10px;
-  background-color: #fff;
-  min-width: 200px;
-  margin-right: -224px;
-  border: 1px solid red;
+  margin: -10px -328px 0 0;
+  width: 260px;
 }
 html {
   height: 100%;
@@ -50,7 +58,7 @@ html {
 fieldset {
   border: 0;
   .default-pane-style;
-
+  
   padding-bottom: 20px;
   border-top: none;
   & h2,p {
@@ -70,21 +78,21 @@ fieldset {
       }
     }
   }
-
+  
   display: none;
-
+  
 
   &.active {
     display:block;
-//    position: absolute;
+    position: absolute;
 
     left:10px;
     top: 21px;
     z-index: 2;
 
-    width:70%;
-//    min-width: 260px;
-//    max-width: 600px;
+    width:50%;
+    min-width: 260px;
+    max-width: 600px;
 
     min-height: 200px;
 
@@ -98,8 +106,8 @@ fieldset {
 }
 .hideMap {
   .active {
-  //  max-width: 100%;
-  //  width:  100%;
+    max-width: 100%;
+    width:  100%;
   }
   #mask {
     display: block;
@@ -142,29 +150,7 @@ fieldset {
 .b-question {
   position: relative;
 }
-.b-map-overlay {
-// position: absolute;
 
-//  height: @mapHeight;
-//  margin-left: 20%;
-//  padding: @padding;
-//
-//  //outline: 1px solid red;
-//  background-color: rgba(106,145,136,.8);
-//
-//  &:before {
-//    content:'';
-//    display: block;
-//    width: 0px;
-//    height: 0px;
-//    margin: 4em 0 0 -26px;
-//
-//    border-bottom: 20px solid transparent;
-//    border-top: 20px solid transparent;
-//    border-right: 20px solid rgba(106,145,136,.8);
-//
-//  }
-}
 
 #status {
   height: 5px;
@@ -191,18 +177,14 @@ fieldset {
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
   border-bottom: 10px solid lighten(@tertiary-color,60%);
-
+  
 }
 .hideMe .hideFieldset {
-  border-bottom: 0;
-  border-top: 10px solid lighten(@tertiary-color,60%);
-  margin-top: 15px;
-}
-.amount {
-  position: relative;
-  left: 100%;
-  border: 1px solid red;
-}
+    border-bottom: 0;
+    border-top: 10px solid lighten(@tertiary-color,60%);
+    margin-top: 15px;
+  }
+
 
 .null {
   display:none;
