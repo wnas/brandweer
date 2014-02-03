@@ -93,9 +93,9 @@
   padding: 0;
   top: 0px;
   left: 318px;
-  width: 500px;
+  width: 664px;
   .default-pane-style;
-  background: lighten(@theme-color,5%);
+  background: fade(@theme-color,95%);
   border: 1px solid @theme-color;
   box-shadow: 3px 3px 6px rgba(0,0,0,.4);
 
@@ -119,6 +119,10 @@
   }
   & button {
     .close-button
+  }
+  @media only screen and(max-width:1024px) {
+  width: 100%;
+  left: 0;
   }
 }
 
