@@ -78,7 +78,7 @@ var brandweer = function () {
 
             },
             "numberOfQuestions":16,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -529,7 +529,7 @@ var brandweer = function () {
             });
         },
 
-        addMarker = function(options){
+        addMarker = function(options,e){
 
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
@@ -543,11 +543,11 @@ var brandweer = function () {
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
-
+            $('#'+options.activeId).append('<input class="f-input" hidden value="'+options.e.latlng+'">');
             switch (options.activeId){
                 case "gasflessen":
-                    $('#'+options.activeId).append('<input class="f-input" hidden value="'+options.e.latLng+'">');
-                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number"> </div>'
+
+                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>'
                     $('#'+options.activeId).append(amount);
 
                     break;
