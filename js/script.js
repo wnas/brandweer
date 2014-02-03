@@ -8,6 +8,8 @@ var brandweer = function () {
 
     "use strict";
     /*jshint devel:true */
+
+    var  $ = Zepto;
     var config = {
             // foo: bar
             "map":null,
@@ -44,6 +46,7 @@ var brandweer = function () {
                 "hoofdSchakelaarElektriciteit":"Tb2.003",
                 "hoofdafsluiterwater":"Tb2.022",
                 "gasflessen":"Tw2.001",
+                "gevaarlijkestoffen":"Tw2.002",
                 "drogestijgleiding":"Tb1.007",
                 "rwa":"Tb2.005"
             },
@@ -498,19 +501,9 @@ var brandweer = function () {
 
         addMarker = function(options){
 
+           
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
 
-            var nImg = document.createElement('img');
-
-            nImg.onload = function() {
-
-            };
-            nImg.onerror = function() {
-                // image did not load
-                custom = 'img/marker-icon.png';
-            };
-
-            nImg.src = custom;
             var RedIcon = L.Icon.Default.extend({
                 options: {
                     iconUrl: custom,
@@ -520,18 +513,34 @@ var brandweer = function () {
             var redIcon = new RedIcon();
 
             //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
-                bindPopup('this is the place for the '+options.activeId).
-                openPopup();
+            switch (options.activeId){
+                case "gasflessen":
+                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
+                        bindPopup('<input type="number" class="f-input f-input-gasflessen" data-lat="'+ options.e.latLng +'">').openPopup();
+
+                    break;
+
+                case "gevaarlijkestoffen":
+                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
+                        bindPopup('<input type="number" class="f-input f-input-gevaarlijkestoffen" data-lat="'+ options.e.latLng +'">').openPopup();
+
+                    break;
+
+                default:
+                    var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
+                        bindPopup('this is the place for the '+options.activeId);
+                    break;
+            }
+
             // console.log(marker);
 
             if (options.single === 'true'){
-                removeMarker(options,marker)
+                removeMarker(options,marker);
             }
             marker.on('click',function(){
-                removeMarker(options,marker);
+                //removeMarker(options,marker);
             });
-            options.map.addLayer(marker);
+            options.map.addLayer(marker).openPopup();
             /*
                 @milo
                 here I want to have the possibilty to set one or more markers for each question
@@ -543,12 +552,16 @@ var brandweer = function () {
            // do stuff.
         },
 
+        addAmount = function(options){
+
+
+        },
+
         removeMarker = function(options,marker){
             options.map.removeLayer(marker);
         },
 
         doMaps = function (data) {
-
 /*
  @milo
  can we build the initial map from the bag.json data.
@@ -588,15 +601,7 @@ var brandweer = function () {
                     maxZoom:18,
                 });
             map.addLayer(cloudmade);
-//        var gbkn = L.tileLayer.wms("http://view.safetymaps.nl/map/mapserv?MAP=/home/mapserver/doiv.map", {
-//            minZoom: 16,
-//            maxZoom:22,
-//            layers: 'gbkn_topografie,gbkn_panden',
-//            format: 'image/png',
-//            transparent: true,
-//            attribution: ""
-//        });
-//        map.addLayer(gbkn);
+
             $.ajax({
                 type:'GET',
                 url:'js/json/bag.json',
@@ -607,18 +612,7 @@ var brandweer = function () {
                         if(item.geometry){
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                         }
-//                        }
-//                        if (item.properties.pandgeometrie) {
-//                            switch (item.properties.pandgeometrie.type) {
-//                                case "Point":
-//                                    break;
-//                                case "Polygon":
-//                                    break;
-//                                case "MultiPolygon":
-//                                    item.properties.pandgeometrie.coordinates = transformCoords(item.properties.pandgeometrie.coordinates);
-//                                    break;
-//                            }
-//                        }
+
 
                     });
                     new L.GeoJSON(data,{
@@ -632,6 +626,7 @@ var brandweer = function () {
             map.on('zoomend', function (e) {
                 //  console.log(config.map.getZoom());
             });
+
 
 
             map.on('click',function(e){
@@ -661,59 +656,6 @@ var brandweer = function () {
 
 
             return map;
-        },
-        addData = function (e) {
-
-            var activeQuestion = $('fieldset.active'),
-                activeId = activeQuestion.attr('id');
-
-
-            var answer = [];
-
-
-            if (e) {
-                var coords = e.latlng;
-            } else {
-                coords = [];
-            }
-            switch (activeId) {
-                case "buildings":
-                    console.log('buildings');
-                case "entrances":
-                case "sleutelbuis":
-                case "gasafsluiter":
-                case "hoofdSchakelaarElektriciteit":
-                case "hoofdafsluiterwater":
-                case "drogestijgleiding":
-                    console.log('only place...');
-                    answer.coords = coords;
-                    $('#' + activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw ' + activeId + '? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>');
-
-                    break;
-                case "personalInformation":
-                case "contactInformation":
-
-                    $('#' + activeId + ' .f-input').each(function () {
-                        var set = {};
-//                        console.log($(this));
-                        set.id = $(this).attr('id');
-                        set.value = $(this).val();
-                        console.log(set.id);
-                        answer.push(set);
-                    });
-                case "intro":
-                    break;
-                default:
-
-                    console.log('fall to the default');
-                    break;
-            }
-            answer.id = activeId;
-            config.answers.push(answer);
-            $('.confirmation').remove();
-            // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
-            console.log(config.answers);
-            activeId = '';
         };
     return {
         init:init
