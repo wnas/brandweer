@@ -15,7 +15,7 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 5;
+  z-index: 500;
   & h1:extend(blockpadding) {
 
       background: url(../img/logo.svg) no-repeat center right;
@@ -57,15 +57,17 @@
 .revealInformation, .contact {
   position: absolute;
   top: 0;
-  right:-34px;  
+  right:-54px;  
   display: block;
   width: 30px;
   height:30px;
-  
   .default-pane-style;
   .icons;
   cursor: pointer;
-  
+  @media only screen and(max-width:600px) {
+    right: 39px;
+    margin-top: 5px;
+   }
   &:hover {
   .default-pane-style-hover;
   .icons-h;
@@ -81,30 +83,28 @@
   &:hover {
     background-position: -30px -30px;
   }
+  @media only screen and(max-width:600px) {
+    right: 5px;
+    top: 0px;
+   }
 }
 .info .information {
   display:block;
 }
 .information:extend(blockpadding) {
   position: absolute;
-
   overflow: auto;
   z-index: 2;
   padding: 0;
-  top: 0px;
-  left: 318px;
-  width: 664px;
+  top: 0;
+  right: -134%;
+  width: 100%;
   .default-pane-style;
   background: fade(@theme-color,95%);
   border: 1px solid @theme-color;
-  box-shadow: 3px 3px 6px rgba(0,0,0,.4);
-
   display:none;
-
   & h2 {
     margin: 0;
-    padding: 0 .2em 0 .5em;
-    font-size:1.3em;
     line-height: 2em;
     font-style: italic;
     color: @background-color;
@@ -120,9 +120,12 @@
   & button {
     .close-button
   }
-  @media only screen and(max-width:1024px) {
-  width: 100%;
-  left: 0;
-  }
+  
+  @media only screen and(max-width:600px) {
+    width: 100%;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+   }
 }
 
