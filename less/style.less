@@ -58,6 +58,10 @@ html {
 fieldset {
   border: 0;
   .default-pane-style;
+  @media only screen and(max-width:600px) {
+    box-shadow: none;
+    border-radius: 0;
+   }
   
   padding-bottom: 20px;
   border-top: none;
@@ -84,14 +88,11 @@ fieldset {
 
   &.active {
     display:block;
-    position: absolute;
-
+    width: 100%;
     left:10px;
     top: 21px;
     z-index: 2;
-
-   
-
+    
   }
 
   &.hideMe {
@@ -144,8 +145,14 @@ fieldset {
 
 
 
-.b-question {
+div#questions {
   position: relative;
+  width: 40%;
+  
+  @media only screen and(max-width:600px) {
+    width: 100%;
+    margin-top: -3px;
+    }
 }
 
 
