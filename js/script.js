@@ -501,7 +501,7 @@ var brandweer = function () {
 
         addMarker = function(options){
 
-           
+
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
 
             var RedIcon = L.Icon.Default.extend({
