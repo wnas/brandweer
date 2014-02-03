@@ -1,9 +1,11 @@
+@theme-color: teal;
 
 .f-input,
 .f-select,
 .f-button {
   box-sizing: border-box;
 }
+
 
 .f-form {
   padding: 1rem 0;
@@ -112,32 +114,106 @@
   width: 40%;
 }
 
-  .f-radio-label,
-  .f-checkbox-label {
-    position: relative;
-    .f-radio,
-    .f-checkbox {
-      visibility: hidden;
-      &:checked ~ .f-inner-label::before {
-        background-color: #000;
-        .radio-checkbox-checked-before;
-      }
-  
+.f-radio-label,
+.f-checkbox-label {
+  position: relative;
+  .f-radio,
+  .f-checkbox {
+    visibility: hidden;
+    &:checked ~ .f-inner-label::before {
+      background-color: #000;
+      .radio-checkbox-checked-before;
     }
-  
+
   }
 
-  .f-inner-label {
-    padding: @padding;
-    &::before {  .radio-checkbox-before;
-    }
-  }
-  
-  .f-radio-label .f-inner-label::before {
-    border-radius: 1em;
+}
+
+.f-inner-label {
+  padding: @padding;
+  &::before {  .radio-checkbox-before;
   }
 }
 
+.f-radio-label .f-inner-label::before {
+  border-radius: 1em;
+}
+
+.f-button-bar:extend(blockpadding) {
+  position: fixed;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+  
+  background: rgba(255, 255, 255, .7);
+  border: rgba(255,255,255,.9);
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  
+}
+.f-button {
+  padding: .6em 1em;
+  text-decoration: none;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid rgba(0, 205, 0, .9);
+  border-radius: 2px;
+  color: black;
+  width: 220px;
+  margin: 10px 30px;
+
+  font-family: helvetica;
+  font-weight: 700;
+  font-size: 1em;
+  float: right;
+
+  background: rgba(0, 255, 0, .2);
+  &.f-button-secondary {
+    background: rgba(255, 0, 0, .2);
+    border: 1px solid rgba(255, 0, 0, .3);
+    float: left;
+    &:hover {
+      background: rgba(255, 0, 0, .4);
+    }
+  }
+  &:hover {
+    background: rgba(0, 205, 0, .4);
+  }
+}
+
+  }
+
+@media screen and (max-width: 580px) {
+  .f-button-bar {
+    
+  }
+  .f-form .f-button-secondary {
+    width:  16%;
+    float: left;
+    margin: 10px 0 10px 2%;
+    & span {
+      display: none;
+      text-indent: -11111px;
+    }
+    &:after {
+    content: "X";
+    color: #000;
+    }
+  }
+  .f-form .f-button-primary {
+    width:  78%;
+    margin-right: 30px;
+    margin: 10px 2% 10px 0;
+  }
+  .f-form .f-button {
+    font-size: 1em;
+//    width: 97.5%;
+    
+
+
+  }
+}
 
 
 
