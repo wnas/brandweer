@@ -78,7 +78,9 @@
 .info .information {
   display:block;
 }
-.information:extend(blockpadding) {
+.information {
+  &:extend(.default-pane-style);
+  &:extend(.blockpadding);
   position: absolute;
   overflow: auto;
   z-index: 2;
@@ -86,7 +88,8 @@
   top: 0;
   right: -118%;
   width: 100%;
-  .default-pane-style;
+//  .default-pane-style;
+
   background: fade(@theme-color,95%);
   border: 1px solid @theme-color;
   display:none;

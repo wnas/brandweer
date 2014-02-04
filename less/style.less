@@ -58,7 +58,7 @@ html {
 
 fieldset {
   border: 0;
-  .default-pane-style;
+  &:extend(.default-pane-style);
   @media only screen and(max-width:600px) {
     box-shadow: none;
     border-radius: 0;
@@ -102,11 +102,12 @@ fieldset {
     overflow: hidden;
     h2 {
       position:absolute;
-      top: 0;
+      top: 35px;
       left:0;
-      color:red;
-      background-color: brown;
-      font-size: 50%;
+      color:#fff;
+  background-color: #333;
+     font-size: 1em;
+      padding: 4px;
     }
   }
   
