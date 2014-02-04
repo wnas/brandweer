@@ -160,6 +160,7 @@ var brandweer = function () {
                 if ( $(this).val() !== '0' ){
                     var val = $(this).val().charAt(0);
                     sub.removeAttr('disabled');
+                    sub.append('<option>Kies een deelfunctie</option>');
                   //  console.log(val.charAt(0));
                     for(var i in store ){
                         if (i.charAt(0) === val){
