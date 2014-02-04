@@ -14,6 +14,7 @@
 @import "mixins.less";
 @import "reset.less";
 @import "typography.less";
+@import "icons.less";
 @import "forms.less";
 @import "navigate.less";
 
@@ -96,36 +97,14 @@ fieldset {
   }
 
   &.hideMe {
-    height: 17px;
+    height: 20px;
     min-height: 10px;
     overflow: hidden;
   }
   
 }
-.hideMap {
-  .active {
-    max-width: 100%;
-    width:  100%;
-  }
-  #mask {
-    display: block;
-  }
-}
-#mask {
-  width: 100%;
-  height: 100%;
-  background-color: fade(@tertiary-color,50%);
-  z-index:0;
-  position: fixed;
-  display: none;
-}
 
-#map {
-  background-color: #ccc;
-  width: 100%;
-  z-index:-1;
-  left:0;
-}
+
 
 // position controls should be done in js are settings of leaflet module
 .leaflet-left {
@@ -150,7 +129,7 @@ div#questions {
   width: 40%;
   
   @media only screen and(max-width:600px) {
-    width: 100%;
+    width: 97%;
     margin-top: -3px;
     }
 }
@@ -167,27 +146,58 @@ div#questions {
   }
 }
 
+
+
+// inconbar
+
+div.iconBar {
+  @media only screen and(max-width:600px) {
+    padding: 0 0.7em 0 0;
+  }
+}
+
 .hideFieldset {
   border: 0;
-  padding: 0;
-  margin: 0 10px;
+  margin: 0 5px;
   span {
     position: absolute;
     left: -999em;
   }
-  width: 0;
-  height: 0;
-  background-color: transparent;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid lighten(@tertiary-color,60%);
-  
+  width: 30px;
+  height: 30px;
+  .icons;
+  .default-icon-style;
+  .icon-arrow-up;
+  border: 0;
 }
 .hideMe .hideFieldset {
-    border-bottom: 0;
-    border-top: 10px solid lighten(@tertiary-color,60%);
-    margin-top: 15px;
-  }
+  .icons;
+  .icon-arrow-down;
+}
+
+// dafuq? Need button.x and !important emphasis for padding?
+button.revealInformation, button.contact {
+  padding: 0 !important;
+  margin: 0 0 0.5em 0.5em;
+  float:right;
+  width: 30px;
+  height:30px;
+  cursor: pointer;
+  .default-icon-style;
+  .icons;
+  .icon-contact;
+  .icons-hover;
+  
+  // don't need this span
+  span {display: none;}
+}
+button.revealInformation {
+  .icon-info;
+  .icons-hover;
+}
+
+
+
 
 
 .null {
