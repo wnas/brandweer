@@ -111,6 +111,7 @@ var brandweer = function () {
                     }
                     buildContactOption(data);
                     buildIconBar();
+                    buildFunctions(data.functions);
 
                 },
                 error:function (xhr, type) {
@@ -124,6 +125,26 @@ var brandweer = function () {
 
 
         },
+
+        buildFunctions = function(data){
+            // get us the functions
+            var data = data[1].mainfunction;
+
+            // iterate over them
+            for(var i in data){
+                // build us an option for each function
+                $('#mainSelect').append('<option value="'+data[i].value+'">'+data[i].name+'</option>');
+               // get the subfunctions
+                var sub = data[i].subFunction;
+                for(var j in sub){
+                    // and put them into the next select
+                    var val = sub[j].value;
+                    $('#subSelect').append('<option class="'+val.charAt(0)+'" value="'+val+'">'+sub[j].name+'</option>');
+                }
+            }
+
+        },
+
 
         buildIconBar = function(){
             var info = '<button class="revealInformation">Informatie</button>',
@@ -374,7 +395,7 @@ var brandweer = function () {
                     config.answers[getActiveFieldset()] = [];
                     // find the inputs where the values are in.
 
-                    $('#'+getActiveFieldset()).find('.f-input').each(function(i){
+                    $('#'+getActiveFieldset()).find('.f-input, .f-select').each(function(i){
                         // what is it's value
                         var v = $(this).val(),
                         // and id...
@@ -409,7 +430,7 @@ var brandweer = function () {
         },
 
         saveData = function(i){
-          //  console.log(i);
+            console.log(i);
          //   console.log('we need to send that...');
         },
 

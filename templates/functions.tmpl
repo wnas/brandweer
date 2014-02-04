@@ -6,31 +6,24 @@
 {{/information}}
 
 {{#functions}}
-    <div class="copy">
-        <h2>{{copy.header}}</h2>
-        <div>{{{copy.body}}}</div>
-    </div>
 
-    <div class="fields">
-
-
-        <div class="b-map-overlay functions multiple-select">
-            <div class="f-container">
-                <label class="f-label">origin</label>
-                <select class="f-select multiple-select-origin" data-source="">
-                    <option value="Industrie">Industrie</option>
-                    <option value="Wonen">Wonen</option>
-                    <option value="Winkel">Winkel</option>
-                </select>
-            </div>
-            <div class="f-container">
-                <label class="f-label">Sub functions</label>
-                <select class="f-select multiple-select-target" data-edited="false">
-                    <option value="Chemie">Chemie</option>
-                    <option value="Brandstof">Brandstof</option>
-                    <option value="Opslag">Opslag</option>
-                </select>
-            </div>
+    {{#copy}}
+        <div class="copy">
+            <h2>{{header}}</h2>
+            <div>{{{body}}}</div>
         </div>
-    </div>
+    {{/copy}}
+
 {{/functions}}
+<div class="fields">
+<div class="f-container multiple-select multiple-origin">
+<label for="mainSelect" class="f-label">Hoofdfunctie</label>
+<select id="mainSelect" class="f-select"><option>Kies een hoofdfunctie</option></select>
+</div>
+
+<div class="f-container multiple-select multiple-target">
+<label for="subSelect" class="f-label">Deelfunctie</label>
+<select id="subSelect" class="f-select" disabled><option>Kies een deelfunctie</option></select>
+</div>
+</div>
+

@@ -140,32 +140,80 @@
         },
         {
             "building":"bagId",
-            "functions":[
+            "mainfunction":[
                 {
-                    "name":"wonen",
-                    "value":"w",
+                    "name":"Industrie, nuts, afval, groothandel, opslag en transport",
+                    "value":"a",
                     "subFunction":[
                         {
-                            "name":"permanente bewoning",
-                            "value":"pb"
+                            "name":"Chemie",
+                            "value":"a1"
                         },
                         {
-                            "name":"vakantie woning",
-                            "value":"vw"
+                            "name":"Brandstof en energieopwekking",
+                            "value":"a2"
+                        },
+                        {
+                            "name":"Opslag, handel en transport",
+                            "value":"a3"
+                        },
+                        {
+                            "name":"Afvalverwerking",
+                            "value":"a4"
+                        },
+                        {
+                            "name":"Overige productie, maakindustrie, bouw",
+                            "value":"a5"
                         }
                     ]
                 },
                 {
-                    "name":"horeca",
-                    "value":"h",
+                    "name":"Wonen, zorg, onderwijs, gevangenis",
+                    "value":"b",
                     "subFunction":[
                         {
-                            "name":"kroeg",
-                            "value":"k"
+                            "name":"Gevangenis",
+                            "value":"b1"
                         },
                         {
-                            "name":"restaurant",
-                            "value":"r"
+                            "name":"Zorg met overnachting of zorg voor kwetsbare gebruikers",
+                            "value":"b2"
+                        },
+                        {
+                            "name":"Onderwijs of dagopvang minderjarigen",
+                            "value":"b3"
+                        },
+                        {
+                            "name":"Zelfstandig wonen",
+                            "value":"b4"
+                        },
+                        {
+                            "name":"Overige zorg of onderwijs",
+                            "value":"b5"
+                        }
+                    ]
+                },
+                {
+                    "name":"Winkel, gastvrijheid of vermaak",
+                    "value":"c",
+                    "subFunction":[
+                        {
+                            "name":"Zonder nachtverblijf",
+                            "value":"c1"
+                        },
+                        {
+                            "name":"Met nachtverblijf",
+                            "value":"c2"
+                        }
+                    ]
+                },
+                {
+                    "name":"Geen van bovenstaande. Landbouw. Overheid, dienstverlening, kantoor.",
+                    "value":"d",
+                    "subFunction":[
+                        {
+                            "name":"Overige, niet-risicovol",
+                            "value":"d1"
                         }
                     ]
                 }
