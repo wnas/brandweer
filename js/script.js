@@ -241,7 +241,7 @@ var brandweer = function () {
         contactInformation = function(){
             // remove the empty fields div which get built
             // @todo @wilfred make sure only the needed elements get build.
-            $('.fields').empty().remove();
+            //$('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
                 var ci = $('<div class="ci"><button class="eraseCI">x</button></div>');
@@ -255,16 +255,14 @@ var brandweer = function () {
                 });
 
                 $(this).parent().prepend(ci);
+                ci = '';
             });
 
             $('body').on('click','.eraseCI',function(){
                 $(this).parent().remove();
             });
 
-            $('body').on('click','.hideAmount',function(){
-                alert('yaya');
-                $(this).closest('.amount').hide();
-            });
+
 
 
         },
@@ -306,12 +304,12 @@ var brandweer = function () {
                     break;
 
             }
-            if ( q === 'intro'){
-                disableElement($('#prev'));
-            }
-            if ( q === 'final'){
-                disableElement($('#confirm'));
-            }
+//            if ( q === 'intro'){
+//                disableElement($('#prev'));
+//            }
+//            if ( q === 'final'){
+//                disableElement($('#confirm'));
+//            }
 
             // hide all fieldsets
             deActivate();
