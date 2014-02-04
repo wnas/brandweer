@@ -76,7 +76,7 @@ var brandweer = function () {
 
             },
             "numberOfQuestions":16,
-            "tmpl_dir":'/templates',
+            "tmpl_dir":'/Brandweer/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",

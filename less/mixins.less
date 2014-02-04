@@ -104,6 +104,7 @@ blockpadding {
   &:before {
   font-family: 'iconsregular';
   font-size: 4.5em;
+  font-weight: 100;
   line-height: 0.65em;
   content:'a';
   color: @theme-color;
@@ -118,13 +119,22 @@ blockpadding {
 }
   
 // arrows, for show and hide elements
-.icon-arrow-up {&:before {content:'a';line-height: 0.25em;}}
-.icon-arrow-down {&:before {content:'a';line-height: 0.25em;}-webkit-transform:rotate(180deg);}
+.icon-arrow-up {&:before {content:'a';line-height: 0.15em;}}
+.icon-arrow-down {&:before {content:'a';line-height: 0.15em;}
+  transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  -moz-transform:rotate(180deg);
+  -o-transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  }
 
 // questionmark, information
-.icon-info {&:before {content:'?';line-height: 0.65em;}}
+.icon-info {&:before {content:'?';line-height: 0.55em;}}
 // phone horn, contact
-.icon-contact {&:before {content:'t';line-height: 0.65em;}}
+.icon-contact {&:before {content:'t';line-height: 0.55em;}}
+
+.icon-logo {&:before {content:'l';line-height: 0.65em;}}
+.icon-brandweer {&:before {content:'b';line-height: 0.65em;}}
 
 // basic panes for icons
 .default-icon-style {
