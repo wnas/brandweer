@@ -56,6 +56,16 @@ html {
   position: relative;
 }
 
+div#questions {
+  position: relative;
+  width: 40%;
+  float: left;
+  
+  @media only screen and(max-width:600px) {
+    width: 100%;
+    }
+}
+
 fieldset {
   border: 0;
   &:extend(.default-pane-style);
@@ -102,45 +112,16 @@ fieldset {
     overflow: hidden;
     h2 {
       position:absolute;
-      top: 35px;
-      left:0;
       color:#fff;
-  background-color: #333;
-     font-size: 1em;
+      background-color: #333;
+      font-size: 1em;
       padding: 4px;
     }
+    p {line-height: 5em;}
   }
   
 }
 
-
-
-// position controls should be done in js are settings of leaflet module
-.leaflet-left {
-  right:0;
-}
-.leaflet-top {
-  margin-top: 15px;
-}
-.leaflet-control {
-  position: absolute;
-  z-index: 7;
-  pointer-events: auto;
-  right: -10px;
-}
-
-
-
-div#questions {
-  position: relative;
-  width: 40%;
-  float: left;
-  
-  @media only screen and(max-width:600px) {
-    width: 97%;
-    margin-top: -3px;
-    }
-}
 
 
 #status {
@@ -166,7 +147,7 @@ div.iconBar {
 
 .hideFieldset {
   border: 0;
-  margin: 0 5px;
+  margin: 5px 5px;
   span {
     position: absolute;
     left: -999em;
@@ -176,6 +157,8 @@ div.iconBar {
   .icons;
   .default-icon-style;
   .icon-arrow-up;
+  @media only screen and(max-width:600px) {
+  width: 79%;}
   border: 0;
 }
 .hideMe .hideFieldset {
@@ -183,7 +166,6 @@ div.iconBar {
   .icon-arrow-down;
 }
 
-// dafuq? Need button.x and !important emphasis for padding?
 .revealInformation,
 .contact {
   padding: 0;
