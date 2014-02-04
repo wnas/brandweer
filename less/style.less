@@ -58,7 +58,7 @@ html {
 
 fieldset {
   border: 0;
-  .default-pane-style;
+  &:extend(.default-pane-style);
   @media only screen and(max-width:600px) {
     box-shadow: none;
     border-radius: 0;
@@ -68,7 +68,6 @@ fieldset {
   border-top: none;
   & h2,p {
     padding: 0 4.5%;
-    margin-top: 0;
   }
   & ul {
     padding: 0 4.5%;
@@ -103,14 +102,12 @@ fieldset {
     overflow: hidden;
     h2 {
       position:absolute;
-      margin-top: 12px;
-      top: 4px;
-      left:40px;
-      font-size: 100%;
-      text-align: left;
-    }
-    p {
-      margin-top: 19px;
+      top: 35px;
+      left:0;
+      color:#fff;
+  background-color: #333;
+     font-size: 1em;
+      padding: 4px;
     }
   }
   
@@ -125,7 +122,6 @@ fieldset {
 .leaflet-top {
   margin-top: 15px;
 }
-@media only screen and(max-width:600px) {.leaflet-top {top: 4em;}}
 .leaflet-control {
   position: absolute;
   z-index: 7;
@@ -170,30 +166,32 @@ div.iconBar {
 
 .hideFieldset {
   border: 0;
+  margin: 0 5px;
   span {
     position: absolute;
     left: -999em;
   }
-  width: 290px;
-  height: 50px;
+  width: 30px;
+  height: 30px;
   .icons;
   .default-icon-style;
   .icon-arrow-up;
   border: 0;
-  text-align: left;
-  margin-top: -10px;
 }
 .hideMe .hideFieldset {
   .icons;
   .icon-arrow-down;
-  text-align: right;
 }
 
-.revealInformation, .contact {
-  margin: 1px 5px 0 0;
+// dafuq? Need button.x and !important emphasis for padding?
+.revealInformation,
+.contact {
+  padding: 0;
+  margin: 5px 5px 0 0;
   float:right;
   width: 30px;
   height:30px;
+  cursor: pointer;
   .default-icon-style;
   .icons;
   .icon-contact;
@@ -204,7 +202,6 @@ div.iconBar {
 }
 button.revealInformation {
   .icon-info;
-  .icons-hover;
 }
 
 
