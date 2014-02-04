@@ -128,23 +128,53 @@ var brandweer = function () {
 
         buildFunctions = function(data){
             // get us the functions
-            var data = data[1].mainfunction;
+            var data = data[1].mainfunction,
+                store = [];
 
             // iterate over them
             for(var i in data){
                 // build us an option for each function
                 $('#mainSelect').append('<option value="'+data[i].value+'">'+data[i].name+'</option>');
                // get the subfunctions
+
                 var sub = data[i].subFunction;
                 for(var j in sub){
                     // and put them into the next select
-                    var val = sub[j].value;
-                    $('#subSelect').append('<option class="'+val.charAt(0)+'" value="'+val+'">'+sub[j].name+'</option>');
+
+                    var val = sub[j].value,
+                            name = sub[j].name;
+                    store[val] = name;
+//                    $('#subSelect').append('<option class="'+val.charAt(0)+'" value="'+val+'">'+sub[j].name+'</option>');
                 }
             }
 
+            showCorrectSubFunctions(store);
         },
 
+        showCorrectSubFunctions = function(store){
+            var sub = $('#subSelect');
+
+            sub.find('option').remove();
+            $('body').on('change','#mainSelect',function(){
+                $('#subSelect').find('option').remove();
+                if ( $(this).val() !== '0' ){
+                    var val = $(this).val().charAt(0);
+                    sub.removeAttr('disabled');
+                  //  console.log(val.charAt(0));
+                    for(var i in store ){
+                        if (i.charAt(0) === val){
+                            sub.append('<option value="'+i+'">'+store[i]+'</option');
+                        }
+                    }
+
+                } else {
+                    console.log('none');
+                    $('#subSelect').find('option').remove();
+                }
+                $('#subSelect').focus();
+            });
+
+        },
 
         buildIconBar = function(){
             var info = '<button class="revealInformation">Informatie</button>',

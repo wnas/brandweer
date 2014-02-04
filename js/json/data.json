@@ -405,7 +405,6 @@
             "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
             "occupants":[
                 [
-
                     {
                         "type":"Bewoners",
                         "time":"Overdag",
