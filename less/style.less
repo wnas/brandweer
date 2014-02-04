@@ -68,6 +68,7 @@ fieldset {
   border-top: none;
   & h2,p {
     padding: 0 4.5%;
+    margin-top: 0;
   }
   & ul {
     padding: 0 4.5%;
@@ -102,11 +103,14 @@ fieldset {
     overflow: hidden;
     h2 {
       position:absolute;
-      top: 0;
-      left:0;
-      color:red;
-      background-color: brown;
-      font-size: 50%;
+      margin-top: 12px;
+      top: 4px;
+      left:40px;
+      font-size: 100%;
+      text-align: left;
+    }
+    p {
+      margin-top: 19px;
     }
   }
   
@@ -121,6 +125,7 @@ fieldset {
 .leaflet-top {
   margin-top: 15px;
 }
+@media only screen and(max-width:600px) {.leaflet-top {top: 4em;}}
 .leaflet-control {
   position: absolute;
   z-index: 7;
@@ -165,31 +170,30 @@ div.iconBar {
 
 .hideFieldset {
   border: 0;
-  margin: 0 5px;
   span {
     position: absolute;
     left: -999em;
   }
-  width: 30px;
-  height: 30px;
+  width: 290px;
+  height: 50px;
   .icons;
   .default-icon-style;
   .icon-arrow-up;
   border: 0;
+  text-align: left;
+  margin-top: -10px;
 }
 .hideMe .hideFieldset {
   .icons;
   .icon-arrow-down;
+  text-align: right;
 }
 
-// dafuq? Need button.x and !important emphasis for padding?
-button.revealInformation, button.contact {
-  padding: 0 !important;
-  margin: 0 0 0.5em 0.5em;
+.revealInformation, .contact {
+  margin: 1px 5px 0 0;
   float:right;
   width: 30px;
   height:30px;
-  cursor: pointer;
   .default-icon-style;
   .icons;
   .icon-contact;
