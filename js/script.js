@@ -1,5 +1,3 @@
-// main js
-
 Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' +
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
@@ -9,7 +7,7 @@ var brandweer = function () {
     "use strict";
     /*jshint devel:true */
 
-    var  $ = Zepto;
+    //var  $ = Zepto;
     var config = {
             // foo: bar
             "map":null,
@@ -117,7 +115,7 @@ var brandweer = function () {
 
                 },
                 error:function (xhr, type) {
-                    console.log('oops.');
+                 //   console.log('oops.');
                 }
             });
 
@@ -388,7 +386,7 @@ var brandweer = function () {
                         // place 'm in to the array.
                         config.answers[getActiveFieldset()][it] = v;
                     });
-                    console.log(i);
+                 //   console.log(i);
                     saveData(config.answers);
                     // @todo check if we are not at the end.
 
@@ -411,12 +409,12 @@ var brandweer = function () {
         },
 
         setData = function(p){
-              console.log(p);
+           //   console.log(p);
         },
 
         saveData = function(i){
-            console.log(i);
-            console.log('we need to send that...');
+          //  console.log(i);
+         //   console.log('we need to send that...');
         },
 
         getCurrentQuestion = function (elem) {
@@ -490,9 +488,9 @@ var brandweer = function () {
             layer.on('click', function (e) {
                 if(!feature.properties.selected){
 
-                    console.log('yay');
-                    console.log(feature.properties.gid);
-                    console.log(feature.properties);
+                //    console.log('yay');
+                //    console.log(feature.properties.gid);
+                //    console.log(feature.properties);
                     var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
                         plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
@@ -504,7 +502,8 @@ var brandweer = function () {
                         openPopup();
                 } else {
                     feature.properties.selected = false;
-                    console.log('nope')
+                 //   console.log('nope');
+                    $('#'+feature.properties.gid).remove();
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.activeStyle);
                     }
@@ -543,16 +542,19 @@ var brandweer = function () {
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
-            $('#'+options.activeId).append('<input class="f-input" hidden value="'+options.e.latlng+'">');
+            $('#'+options.activeId).append('<input class="f-input" type="hidden" value="'+options.e.latlng+'">');
             switch (options.activeId){
                 case "gasflessen":
 
-                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>'
+                    $('#'+options.activeId).removeClass('hideMe');
+                    var amount = '<div class="amount f-container"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>'
                     $('#'+options.activeId).append(amount);
 
+                    $('.amount:last-child').find('.f-input').focus();
                     break;
 
                 case "gevaarlijkestoffen":
+                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="number" class="f-input"> </div>'
 
 
                     break;
@@ -675,7 +677,7 @@ var brandweer = function () {
                         break;
 
                     case "functions":
-                        console.log('functions');
+                  //      console.log('functions');
                         //   addFunctions(options);
                         break;
 
