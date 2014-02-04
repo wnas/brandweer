@@ -29,8 +29,7 @@
   background: -webkit-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
   background: -ms-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
   background: -o-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
-  background: linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
-//  font-family: 'klmicons', verdana, arial, sans-serif;
+  background: linear-gradient(bottom, #00a1de 70%, #0091c8 98%); //  font-family: 'klmicons', verdana, arial, sans-serif;
   text-shadow: 0 2px 1px #1f6e95;
 
 }
@@ -57,58 +56,61 @@ blockpadding {
   margin: 0 auto;
   max-width: 64em;
 }
+
 .b-hide {
   display: none;
 }
 
-.calcWidth(a,b){
-  /* Firefox */
+.calcWidth(a, b) {
+/* Firefox */
   width: -moz-calc(75% - 100px);
 
-  /* WebKit */
+/* WebKit */
   width: -webkit-calc(75% - 100px);
 
-  /* Opera */
+/* Opera */
   width: -o-calc(75% - 100px);
 
-  /* Standard */
+/* Standard */
   width: calc(75% - 100px);
 }
 
 // basic panes white translucent
 .default-pane-style {
-  background-color: fade(@background-color,90%);
-  box-shadow: 0 1px 5px fade(@foreground-color,65%);
+  background-color: fade(@background-color, 90%);
+  box-shadow: 0 1px 5px fade(@foreground-color, 65%);
   border-radius: 4px;
-  border: fade(@background-color,100%);
+  border: fade(@background-color, 100%);
   padding: 10px;
 }
+
 .default-pane-style-hover {
   background-color: @background-color;
 }
 
 // icons
 
- //text-indent: -11111px;
- // background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxhYWdfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9Ii0zMCA4MTEuOSA2MCA2MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMzAgODExLjkgNjAgNjAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZmlsbD0iIzY2NjZGRiIgZD0iTS0xNiw4MjIuNWMwLjEsMC4xLDAuMSwwLjMsMCwwLjRsLTEuMywxLjNjLTAuMSwwLjEtMC4zLDAuMS0wLjQsMGwtMy43LTMuN2MtMC4xLTAuMS0wLjEtMC4zLDAtMC40DQoJCWwxLjMtMS4zYzAuMS0wLjEsMC4zLTAuMSwwLjQsMEwtMTYsODIyLjV6Ii8+DQoJPHBhdGggZmlsbD0iIzY2NjZGRiIgZD0iTS02LjgsODMxLjdjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjQsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNA0KCQlsMS4zLTEuM2MwLjEtMC4xLDAuMy0wLjEsMC40LDBMLTYuOCw4MzEuN3oiLz4NCgk8cGF0aCBmaWxsPSIjNjY2NkZGIiBkPSJNLTE2LjcsODI4LjdjMi40LDIuNCw0LjEsMS4zLDQuMSwxLjNsMy44LDMuOGMwLDAtMC44LDAuOC0xLjEsMS4xYy0xLjMsMS4zLTQtMC44LTguMi00LjgNCgkJcy02LjEtNi44LTQuOC04LjJjMC4zLTAuNCwxLjEtMS4yLDEuMS0xLjJsMy44LDMuOEMtMTgsODI0LjUtMTkuMiw4MjYuMi0xNi43LDgyOC43Ii8+DQo8L2c+DQo8Zz4NCgk8cGF0aCBkPSJNMTQsODIyLjVjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjMsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNGwxLjMtMS4zDQoJCWMwLjEtMC4xLDAuMy0wLjEsMC40LDBMMTQsODIyLjV6Ii8+DQoJPHBhdGggZD0iTTIzLjIsODMxLjdjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjQsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNEwxOSw4MjgNCgkJYzAuMS0wLjEsMC4zLTAuMSwwLjQsMEwyMy4yLDgzMS43eiIvPg0KCTxwYXRoIGQ9Ik0xMy4zLDgyOC43YzIuNCwyLjQsNC4xLDEuMyw0LjEsMS4zbDMuOCwzLjhjMCwwLTAuOCwwLjgtMS4xLDEuMWMtMS4zLDEuMy00LTAuOC04LjItNC44cy02LjEtNi44LTQuOC04LjINCgkJYzAuMy0wLjQsMS4xLTEuMiwxLjEtMS4ybDMuOCwzLjhDMTIsODI0LjUsMTAuOCw4MjYuMiwxMy4zLDgyOC43Ii8+DQo8L2c+DQo8Zz4NCgk8cGF0aCBmaWxsPSIjNjY2NkZGIiBkPSJNLTE4LjIsODUwLjJjMC45LTAuNiwxLjgtMC44LDMuMS0wLjhjMS42LDAsMi45LDAuNCwzLjksMS4xYzEsMC44LDEuNSwxLjksMS41LDMuM2MwLDEtMC4yLDEuNy0wLjcsMi4zDQoJCWMtMC4zLDAuNC0wLjgsMC45LTEuNSwxLjRsLTAuOCwwLjZjLTAuNCwwLjMtMC43LDAuNy0wLjgsMS4xYy0wLjEsMC4zLTAuMSwwLjctMC4xLDEuMmgtMi45YzAtMS4xLDAuMi0yLDAuNC0yLjUNCgkJYzAuMi0wLjUsMC43LTEsMS40LTEuNWwwLjgtMC42YzAuMy0wLjIsMC41LTAuNCwwLjYtMC42YzAuMy0wLjQsMC40LTAuOCwwLjQtMS4yYzAtMC42LTAuMi0xLTAuNS0xLjRjLTAuMy0wLjUtMC45LTAuNy0xLjctMC43DQoJCWMtMC44LDAtMS40LDAuMy0xLjcsMC44Yy0wLjMsMC41LTAuNSwxLjEtMC41LDEuN2gtMy4xQy0yMC4zLDg1Mi40LTE5LjUsODUxLTE4LjIsODUwLjJ6IE0tMTYuNSw4NjJoMy4xdjMuMWgtMy4xVjg2MnoiLz4NCjwvZz4NCjxnPg0KCTxwYXRoIGQ9Ik0xMS44LDg1MC4yYzAuOS0wLjYsMS44LTAuOCwzLjEtMC44YzEuNiwwLDIuOSwwLjQsMy45LDEuMWMxLDAuOCwxLjUsMS45LDEuNSwzLjNjMCwxLTAuMiwxLjctMC43LDIuMw0KCQljLTAuMywwLjQtMC44LDAuOS0xLjUsMS40bC0wLjgsMC42Yy0wLjQsMC4zLTAuNywwLjctMC44LDEuMWMtMC4xLDAuMy0wLjEsMC43LTAuMSwxLjJoLTIuOWMwLTEuMSwwLjItMiwwLjQtMi41DQoJCWMwLjItMC41LDAuNy0xLDEuNC0xLjVsMC44LTAuNmMwLjMtMC4yLDAuNS0wLjQsMC42LTAuNmMwLjMtMC40LDAuNC0wLjgsMC40LTEuMmMwLTAuNi0wLjItMS0wLjUtMS40Yy0wLjMtMC41LTAuOS0wLjctMS43LTAuNw0KCQljLTAuOCwwLTEuNCwwLjMtMS43LDAuOGMtMC4zLDAuNS0wLjUsMS4xLTAuNSwxLjdIOS43QzkuNyw4NTIuNCwxMC41LDg1MSwxMS44LDg1MC4yeiBNMTMuNSw4NjJoMy4xdjMuMWgtMy4xVjg2MnoiLz4NCjwvZz4NCjwvc3ZnPg0K);
- // background-image: url(../img/iconen-information.svg);
-  
-  //background-position: 0 0;
-  //background-repeat: no-repeat;
-  //background-size: 60px 90px;
-  
-  // Old background SVG shizzle is above, new font shizzle below ;)
+//text-indent: -11111px;
+// background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxhYWdfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9Ii0zMCA4MTEuOSA2MCA2MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAtMzAgODExLjkgNjAgNjAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPGc+DQoJPHBhdGggZmlsbD0iIzY2NjZGRiIgZD0iTS0xNiw4MjIuNWMwLjEsMC4xLDAuMSwwLjMsMCwwLjRsLTEuMywxLjNjLTAuMSwwLjEtMC4zLDAuMS0wLjQsMGwtMy43LTMuN2MtMC4xLTAuMS0wLjEtMC4zLDAtMC40DQoJCWwxLjMtMS4zYzAuMS0wLjEsMC4zLTAuMSwwLjQsMEwtMTYsODIyLjV6Ii8+DQoJPHBhdGggZmlsbD0iIzY2NjZGRiIgZD0iTS02LjgsODMxLjdjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjQsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNA0KCQlsMS4zLTEuM2MwLjEtMC4xLDAuMy0wLjEsMC40LDBMLTYuOCw4MzEuN3oiLz4NCgk8cGF0aCBmaWxsPSIjNjY2NkZGIiBkPSJNLTE2LjcsODI4LjdjMi40LDIuNCw0LjEsMS4zLDQuMSwxLjNsMy44LDMuOGMwLDAtMC44LDAuOC0xLjEsMS4xYy0xLjMsMS4zLTQtMC44LTguMi00LjgNCgkJcy02LjEtNi44LTQuOC04LjJjMC4zLTAuNCwxLjEtMS4yLDEuMS0xLjJsMy44LDMuOEMtMTgsODI0LjUtMTkuMiw4MjYuMi0xNi43LDgyOC43Ii8+DQo8L2c+DQo8Zz4NCgk8cGF0aCBkPSJNMTQsODIyLjVjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjMsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNGwxLjMtMS4zDQoJCWMwLjEtMC4xLDAuMy0wLjEsMC40LDBMMTQsODIyLjV6Ii8+DQoJPHBhdGggZD0iTTIzLjIsODMxLjdjMC4xLDAuMSwwLjEsMC4zLDAsMC40bC0xLjQsMS4zYy0wLjEsMC4xLTAuMywwLjEtMC40LDBsLTMuNy0zLjdjLTAuMS0wLjEtMC4xLTAuMywwLTAuNEwxOSw4MjgNCgkJYzAuMS0wLjEsMC4zLTAuMSwwLjQsMEwyMy4yLDgzMS43eiIvPg0KCTxwYXRoIGQ9Ik0xMy4zLDgyOC43YzIuNCwyLjQsNC4xLDEuMyw0LjEsMS4zbDMuOCwzLjhjMCwwLTAuOCwwLjgtMS4xLDEuMWMtMS4zLDEuMy00LTAuOC04LjItNC44cy02LjEtNi44LTQuOC04LjINCgkJYzAuMy0wLjQsMS4xLTEuMiwxLjEtMS4ybDMuOCwzLjhDMTIsODI0LjUsMTAuOCw4MjYuMiwxMy4zLDgyOC43Ii8+DQo8L2c+DQo8Zz4NCgk8cGF0aCBmaWxsPSIjNjY2NkZGIiBkPSJNLTE4LjIsODUwLjJjMC45LTAuNiwxLjgtMC44LDMuMS0wLjhjMS42LDAsMi45LDAuNCwzLjksMS4xYzEsMC44LDEuNSwxLjksMS41LDMuM2MwLDEtMC4yLDEuNy0wLjcsMi4zDQoJCWMtMC4zLDAuNC0wLjgsMC45LTEuNSwxLjRsLTAuOCwwLjZjLTAuNCwwLjMtMC43LDAuNy0wLjgsMS4xYy0wLjEsMC4zLTAuMSwwLjctMC4xLDEuMmgtMi45YzAtMS4xLDAuMi0yLDAuNC0yLjUNCgkJYzAuMi0wLjUsMC43LTEsMS40LTEuNWwwLjgtMC42YzAuMy0wLjIsMC41LTAuNCwwLjYtMC42YzAuMy0wLjQsMC40LTAuOCwwLjQtMS4yYzAtMC42LTAuMi0xLTAuNS0xLjRjLTAuMy0wLjUtMC45LTAuNy0xLjctMC43DQoJCWMtMC44LDAtMS40LDAuMy0xLjcsMC44Yy0wLjMsMC41LTAuNSwxLjEtMC41LDEuN2gtMy4xQy0yMC4zLDg1Mi40LTE5LjUsODUxLTE4LjIsODUwLjJ6IE0tMTYuNSw4NjJoMy4xdjMuMWgtMy4xVjg2MnoiLz4NCjwvZz4NCjxnPg0KCTxwYXRoIGQ9Ik0xMS44LDg1MC4yYzAuOS0wLjYsMS44LTAuOCwzLjEtMC44YzEuNiwwLDIuOSwwLjQsMy45LDEuMWMxLDAuOCwxLjUsMS45LDEuNSwzLjNjMCwxLTAuMiwxLjctMC43LDIuMw0KCQljLTAuMywwLjQtMC44LDAuOS0xLjUsMS40bC0wLjgsMC42Yy0wLjQsMC4zLTAuNywwLjctMC44LDEuMWMtMC4xLDAuMy0wLjEsMC43LTAuMSwxLjJoLTIuOWMwLTEuMSwwLjItMiwwLjQtMi41DQoJCWMwLjItMC41LDAuNy0xLDEuNC0xLjVsMC44LTAuNmMwLjMtMC4yLDAuNS0wLjQsMC42LTAuNmMwLjMtMC40LDAuNC0wLjgsMC40LTEuMmMwLTAuNi0wLjItMS0wLjUtMS40Yy0wLjMtMC41LTAuOS0wLjctMS43LTAuNw0KCQljLTAuOCwwLTEuNCwwLjMtMS43LDAuOGMtMC4zLDAuNS0wLjUsMS4xLTAuNSwxLjdIOS43QzkuNyw4NTIuNCwxMC41LDg1MSwxMS44LDg1MC4yeiBNMTMuNSw4NjJoMy4xdjMuMWgtMy4xVjg2MnoiLz4NCjwvZz4NCjwvc3ZnPg0K);
+// background-image: url(../img/iconen-information.svg);
+
+//background-position: 0 0;
+//background-repeat: no-repeat;
+//background-size: 60px 90px;
+
+// Old background SVG shizzle is above, new font shizzle below ;)
 
 // icon base build up 
 .icons {
   &:before {
-  font-family: 'iconsregular';
-  font-size: 4.5em;
-  line-height: 0.65em;
-  content:'a';
-  color: @theme-color;
+    font-family: 'iconsregular';
+    font-size: 4.5em;
+    line-height: 0.65em;
+    content: 'a';
+    color: @theme-color;
   }
 }
+
 .icons-hover {
   &:hover {
     &:before {
@@ -116,37 +118,60 @@ blockpadding {
     }
   }
 }
-  
+
 // arrows, for show and hide elements
-.icon-arrow-up {&:before {content:'a';line-height: 0.25em;}}
-.icon-arrow-down {&:before {content:'a';line-height: 0.25em;}-webkit-transform:rotate(180deg);}
+.icon-arrow-up {
+  &:before {
+    content: 'a';
+    line-height: 0.25em;
+  }
+}
+
+.icon-arrow-down {
+  &:before {
+    content: 'a';
+    line-height: 0.25em;
+  }
+  -webkit-transform: rotate(180deg);
+}
 
 // questionmark, information
-.icon-info {&:before {content:'?';line-height: 0.65em;}}
+.icon-info {
+  &:before {
+    content: '?';
+    line-height: 0.65em;
+  }
+}
+
 // phone horn, contact
-.icon-contact {&:before {content:'t';line-height: 0.65em;}}
+.icon-contact {
+  &:before {
+    content: 't';
+    line-height: 0.65em;
+  }
+}
 
 // basic panes for icons
 .default-icon-style {
-  background-color: fade(@background-color,0%);
+  background-color: fade(@background-color, 0%);
   border-radius: 4px;
-  border: 1px solid fade(@theme-color,70%);
+  border: 1px solid fade(@theme-color, 70%);
 }
 
 // icons
 
 .close-button {
-    float:right;
-    right: 0px;
-    top: 5px;
-    width: 20px;
-      height: 20px;
-      background: #ff0000;
-      color: #ff0000;
-      border: none;
-      border-radius: 30px;
-      background: url(../img/close-button.svg) no-repeat center right;
-      text-indent: -111111px;
-      box-shadow: 2px 2px 4px rgba(0,0,0,.4);
-      cursor: pointer;
+  float: right;
+  right: 0px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  background: #ff0000;
+  color: #ff0000;
+  border: none;
+  border-radius: 30px;
+  background: url(../img/close-button.svg) no-repeat center right;
+  text-indent: -111111px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, .4);
+  cursor: pointer;
 }

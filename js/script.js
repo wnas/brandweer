@@ -76,6 +76,7 @@ var brandweer = function () {
 
             },
             "numberOfQuestions":16,
+            "numberOfContacts":0,
             "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
@@ -109,9 +110,7 @@ var brandweer = function () {
 
                     }
                     buildContactOption(data);
-
-                    // activate($('#'+config.questions[0]+' fieldset'));
-
+                    buildIconBar();
 
                 },
                 error:function (xhr, type) {
@@ -122,21 +121,21 @@ var brandweer = function () {
             // set up the navigation.
             doNavigation();
             toggleInfo();
+
+
+        },
+
+        buildIconBar = function(){
             var info = '<button class="revealInformation">Informatie</button>',
                 contact = '<button class="contact"><span>Contact</span></button>',
                 hide = '<button class="hideFieldset"><span>Verberg</span></button>';
 
             $('fieldset').each(function () {
                 $(this).prepend('<div class="iconBar">'+hide+contact+info+'</div>');
-
             });
             $('body').on('click', '.hideFieldset', function () {
                 $(this).closest('fieldset').toggleClass('hideMe');
             });
-
-            //buildContactOption();
-
-
         },
     // show or hide stuff. booring
         toggleInfo = function () {
@@ -244,7 +243,9 @@ var brandweer = function () {
             //$('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
-                var ci = $('<div class="ci"><button class="eraseCI">x</button></div>');
+
+                var offSet = config.numberOfContacts * 40;
+                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="eraseCI">x</button></div>');
                 var fields = $(this).parent().find('.f-container');
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
@@ -254,8 +255,11 @@ var brandweer = function () {
                     $(this).find('.f-input').val('');
                 });
 
-                $(this).parent().prepend(ci);
+
+                $(this).parent().append(ci);
                 ci = '';
+
+                config.numberOfContacts = config.numberOfContacts + 1;
             });
 
             $('body').on('click','.eraseCI',function(){
@@ -304,12 +308,6 @@ var brandweer = function () {
                     break;
 
             }
-//            if ( q === 'intro'){
-//                disableElement($('#prev'));
-//            }
-//            if ( q === 'final'){
-//                disableElement($('#confirm'));
-//            }
 
             // hide all fieldsets
             deActivate();
@@ -570,7 +568,7 @@ var brandweer = function () {
                 removeMarker(options,marker);
             }
             marker.on('click',function(){
-                //removeMarker(options,marker);
+                removeMarker(options,marker);
             });
             options.map.addLayer(marker).openPopup();
             /*
