@@ -552,13 +552,18 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function(feature, layer) {
+
             layer.on('click', function (e) {
+
                 var gid = feature.properties.gid,
                     ident = feature.properties.identificatie;
                 if(!feature.properties.selected){
                    // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
                    //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
+
+                    e['feature'] = feature.properties;
+                    fireEvent(map.click( e ));
                     if(feature.geometry.type !== "Point"){
                         // add building to array
                         config.buildings[gid] = ident;
@@ -567,6 +572,7 @@ var brandweer = function () {
                     }
                     $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
               //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
+
                 } else {
                     feature.properties.selected = false;
                     console.log('nope');
@@ -582,6 +588,7 @@ var brandweer = function () {
                     }
                 }
             });
+
             layer.on('mouseover', function (e) {
 
                 if(!feature.properties.selected){
@@ -681,8 +688,6 @@ var brandweer = function () {
                     '"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
                 select = $('#danger-'+ num);
 
-            console.log(select);
-
             $('#'+options.activeId).append(kind + amount);
             for( var i in config.gevaarlijkestoffen ){
                 var opt = '<option value="'+config.gevaarlijkestoffen[i]+'">'+i+'</option>';
@@ -760,6 +765,7 @@ var brandweer = function () {
                     $.each(data.features, function (index, item) {
                         if(item.geometry){
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+                            console.log(item.properties);
                         }
                         /* @wnas this is the point where the address information should be transfered to the input boxes.
                            basically this means writing the address into personalInformation. We could also generate data.json 
@@ -801,6 +807,7 @@ var brandweer = function () {
                     "activeId" :getActiveFieldset(),
                     "single":"false"
                 };
+//                console.log(options);
                 switch (options.activeId){
                     case "entrances":
                         options.single = 'true';
