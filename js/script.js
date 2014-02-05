@@ -55,6 +55,7 @@ var brandweer = function () {
                 "Giftig" : "GHS06"
             },
             "answers":[],
+            "buildings":[],
             "css":{
                 "active":"active",
                 "hideMap":"hideMap",
@@ -272,7 +273,9 @@ var brandweer = function () {
     // history
         getHistory = function(){
             // if we have history support
+
             if (window.history && window.history.pushState) {
+              //  showHideFieldsets('#intro');
                 // listen to the popstate event.
                 window.addEventListener("popstate", function () {
                     // get the correct question
@@ -288,6 +291,7 @@ var brandweer = function () {
             }
             // if we don't have history support
             else {
+                console.log('nope');
                 // start at the beginning...
                 showHideFieldsets('#intro');
             }
@@ -338,7 +342,7 @@ var brandweer = function () {
         validateFields = function(e){
             // stop what you are doing
             e.preventDefault()
-            // @todo @wilfred build navigation. look at essent code :).
+            // @todo @wilfred build validation, if there is still time :).
         },
 
         showHideFieldsets = function (elem) {
@@ -545,23 +549,33 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function(feature, layer) {
+            config.buildings['foo']='bar';
             layer.on('click', function (e) {
+                var gid = feature.properties.gid,
+                    ident = feature.properties.identificatie;
                 if(!feature.properties.selected){
-
                    // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
                    //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
                     if(feature.geometry.type !== "Point"){
-                        console.log('test');
+                        // add building to array
+                        config.buildings[gid] = ident;
+
                         layer.setStyle(config.css.map.selectedStyle);
                     }
                     $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
               //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
                 } else {
                     feature.properties.selected = false;
-                 //   console.log('nope');
+                    console.log('nope');
                     $('#'+feature.properties.gid).remove();
                     if(feature.geometry.type !== "Point"){
+                        // remove building from array
+                        var i = config.buildings.indexOf(ident);
+                        if ( i != -1 ){
+                            config.buildings.splice(i,1);
+                        }
+
                         layer.setStyle(config.css.map.activeStyle);
                     }
                 }
@@ -619,6 +633,7 @@ var brandweer = function () {
             }
 
             if (options.single === 'true'){
+                console.log('true');
                 removeMarker(options,marker);
             }
             marker.on('click',function(){
@@ -758,7 +773,7 @@ var brandweer = function () {
                 switch (options.activeId){
                     case "entrances":
                         options.single = 'true';
-                        addMarker(options);
+                        addMarker(options,options.e);
                         break;
 
                     case "functions":

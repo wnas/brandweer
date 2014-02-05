@@ -47,6 +47,9 @@ html {
   height: 100%;
 
 }
+h2 {
+  margin:.5em 0;
+}
 .building {
   outline: 1px solid red;
   display: inline-block;
@@ -137,9 +140,10 @@ fieldset {
 
 
 
-// inconbar
+// iconbar
 
-div.iconBar {
+.iconBar {
+  border-bottom: 1px solid #ccc;
   @media only screen and(max-width:600px) {
     padding: 0 0.7em 0 0;
   }
@@ -152,19 +156,25 @@ div.iconBar {
     position: absolute;
     left: -999em;
   }
-  width: 30px;
+  width: auto;
+  padding-right: 20px;
+//  display: inline-block;
   height: 30px;
   .icons;
   .default-icon-style;
   .icon-arrow-up;
   @media only screen and(max-width:600px) {
-  width: 79%;}
+    width: 79%;
+  }
   border: 0;
 }
 .hideMe .hideFieldset {
+  padding-right:0;
+  padding-left: 20px;
   .icons;
   .icon-arrow-down;
 }
+
 
 .revealInformation,
 .contact {
@@ -176,20 +186,26 @@ div.iconBar {
   cursor: pointer;
   .default-icon-style;
   .icons;
-  .icon-contact;
   .icons-hover;
   
   // don't need this span
   span {display: none;}
 }
+.contact {
+  .icon-contact;
+}
 button.revealInformation {
   .icon-info;
 }
 
-
-
-
-.hide,
-.null {
-  display:none;
+.revealInformation {
+  overflow: hidden;
+  text-indent: 40px;
+  &:before {
+    margin-left: -40px;
+  }
 }
+
+
+
+

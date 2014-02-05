@@ -9,11 +9,12 @@
 {{/information}}
 
 {{#gevaarlijkestoffen}}
-    <div class="copy">
-        <h2>{{copy.header}}</h2>
-        <div>{{{copy.body}}}</div>
-    </div>
-
+    {{#copy}}
+        <div class="copy">
+            <h2>{{header}}</h2>
+            <div>{{{body}}}</div>
+        </div>
+    {{/copy}}
 
 
 {{/gevaarlijkestoffen}}
