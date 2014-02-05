@@ -4,7 +4,8 @@
         <title>Brandweer</title>
         <meta charset="UTF-8"/>
         <link rel="shortcut icon" href="http://www.brandweer.nl/favicon.ico" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
+
         <link rel="stylesheet" href="js/leaflet-0.7.1/leaflet.css" />
         <link  rel="stylesheet" href="css/style.css" />
         <!--[if lt IE 8]>
@@ -13,10 +14,10 @@
 
 
     </head>
-    <body>
+    <body id="page">
         <div id="status"></div>
         <header id="header">
-            <h1>Brandweer</h1>
+            <h1><a href="#intro"><span>Brandweer</span></a></h1>
 
             <nav>
                 <ul class="top-navigation"></ul>
@@ -47,6 +48,7 @@
                     <fieldset id="hoofdSchakelaarElektriciteit"></fieldset>
                     <fieldset id="hoofdafsluiterwater"></fieldset>
                     <fieldset id="gasflessen"></fieldset>
+                    <fieldset id="gevaarlijkestoffen"></fieldset>
                     <fieldset id="drogestijgleiding"></fieldset>
                     <fieldset id="rwa"></fieldset>
                     <fieldset id="verdiepingen"></fieldset>
@@ -71,7 +73,7 @@
                    // document.write('<script src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"><\/script>');
                     fallback = 'zepto';
                 } else {
-                  //  document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
+                    document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"><\/script>');
                     fallback = 'jquery';
                 }
                 window.$ || document.write('<script src="js/vendors/'+fallback+'/' + fallback + '.js"><\/script>');

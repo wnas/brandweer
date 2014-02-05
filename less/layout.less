@@ -1,51 +1,11 @@
 // less for layout
 
-#main:extend(blockpadding) {
-
-  display: block;
-  margin-top: 4em;
-  padding: 0;
-  height: 100%;
-  position: relative;
-  z-index:10;
-}
-
-#header {
-  background: @primary-color;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  & h1:extend(blockpadding) {
-
-      background: url(../img/logo.svg) no-repeat center right;
-      text-indent:-9999em;
-
-
-    height: 2em;
-   font-size: 1em;
-
-  }
-}
-.login:extend(blockpadding) {
-  & p {
-  display: block;
-  position: absolute;
-  z-index: 1;
-  margin: 0px;
-  top: 20px;
-  color: @tertiary-color;
-  font-size: 0.8em;
-  & span {
-    color: #fff;
-  }
-  }
-}
-
-
-
+// 1. Map leaflet main map
 #map {
+  background-color: #ccc;
+  width: 100%;
+  z-index:2;
+  left:0;
   &>div{
     height: 100%;
   }
@@ -56,95 +16,121 @@
     z-index: 2;
   }
 }
-.revealInformation, .contact {
+
+// position controls should be done in js are settings of leaflet module
+.leaflet-left {
+  right:0;
+}
+.leaflet-top {
+  margin-top: 15px;
+  @media only screen and(max-width:600px) {margin-top: 55px;}
+}
+
+.leaflet-control {
   position: absolute;
-  top: 0;
-  right:-34px;  
-  display: block;
-  width: 30px;
-  height:30px;
-  
-  .default-pane-style;
-  .icons;
-  cursor: pointer;
-  
-  &:hover {
-  .default-pane-style-hover;
-  .icons-hover;
+  z-index: 7;
+  pointer-events: auto;
+  right: -10px;
+}
+
+// 2. Overlay for map leaflet when the map is not used
+.hideMap {
+  .active {
+    max-width: 100%;
+    width:  100%;
   }
-  span {
-    text-indent: -11111px;
+  #mask {
     display: block;
   }
 }
-.revealInformation {
-  top: 34px;
-  background-position: 0 -30px;
-  &:hover {
-    background-position: -30px -30px;
+#mask {
+  width: 100%;
+  height: 100%;
+  background-color: fade(@tertiary-color,50%);
+  z-index:0;
+  position: fixed;
+  display: none;
+}
+
+
+// 3. Main blaock for styling layout width of the screen
+#main:extend(blockpadding) {
+  display: block;
+  margin-top: 4em;
+  @media only screen and(max-width:600px) {margin-top: 3em;}
+  padding: 0;
+  position: relative;
+  z-index:10;
+}
+// 4. Main navigation bar top layer of screen
+#header {
+  background: @primary-color;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  & h1:extend(blockpadding) {
+    max-width: 1024px;
+    text-align: right;
+    .icons;
+    .icon-logo;
+    font-size: .6em;
+    @media only screen and(max-width:600px) {font-size: .3em;}
+    padding: 11px 0;
+    &:before {color: @logo-color;}
+    & a {
+      padding-right: 1em;
+      .icons;
+      .icon-brandweer;
+      &:before {color: @background-color;}
+      & span {
+        display: none;
+      }
+    }
   }
 }
+
+// 5. Top layer information ;
 .info .information {
   display:block;
 }
-.information:extend(blockpadding) {
+.information {
+  &:extend(.default-pane-style);
+  &:extend(.blockpadding);
   position: absolute;
-  max-height: 60%;
   overflow: auto;
   z-index: 2;
   padding: 0;
-  top: 0px;
-  left: 100%;
-  width: 70%;
-  background: lighten(@tertiary-color,85%);
-  border: 1px solid lighten(@tertiary-color,70%);
-  border-radius: 2px;
-  box-shadow: 3px 3px 6px rgba(0,0,0,.4);
-
+  top: 0;
+  right: -118%;
+  width: 100%;
+  background: fade(@theme-color,95%);
+  border: 1px solid @theme-color;
   display:none;
-
   & h2 {
-    margin: 0.2em 0 0 0;
-    padding: 0 .2em 0 .5em;
-    font-size:1em;
+    margin: 0;
     line-height: 2em;
+    font-style: italic;
+    color: @background-color;
   }
   & div {
   padding: .65em;
-  font-size: 0.8em;
+  p {
+  padding-left: 0;
+  font-size: 1em;
+  color: @background-color;
+  }
   }
   & button {
-    float:right;
-    right: 0px;
-    top: 5px;
-    width: 20px;
-      height: 20px;
-      background: #ff0000;
-      color: #ff0000;
-      border: none;
-      border-radius: 30px;
-      background: url(../img/close-button.svg) no-repeat center right;
-      text-indent: -111111px;
-      box-shadow: 2px 2px 4px rgba(0,0,0,.4);
-      cursor: pointer;
+    .close-button
   }
-}
-
-a.next {
-  display: block;
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  margin:auto;
-  margin-bottom: -200px;
   
-  border-radius: 45px;
-  background-color: #555;
-  text-indent: -11111px;
-  &:hover {
-    background-color: @logo-color;
-  }
+  @media only screen and(max-width:600px) {
+    width: 100%;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+   }
 }
-
-
 

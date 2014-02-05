@@ -1,5 +1,3 @@
-// main js
-
 Proj4js.defs['EPSG:28992'] = '+proj=sterea +lat_0=52.15616055555555 +lon_0=5.38763888888889 +k=0.9999079 +x_0=155000 +y_0=463000 ' +
     '+ellps=bessel +units=m ' +
     '+towgs84=565.2369,50.0087,465.658,-0.406857330322398,0.350732676542563,-1.8703473836068,4.0812 +no_defs';
@@ -8,6 +6,8 @@ var brandweer = function () {
 
     "use strict";
     /*jshint devel:true */
+
+    //var  $ = Zepto;
     var config = {
             // foo: bar
             "map":null,
@@ -15,10 +15,11 @@ var brandweer = function () {
             "multipleSelectClone":'',
             "headerHeight":$('#header').height(),
             "navHeight":$('#main-nav').height(),
+            "body": $('body'),
             "questions":[
                 "intro",
-                "buildings",
                 "personalInformation",
+                "buildings",
                 "contactInformation",
                 "functions",
                 "entrances",
@@ -27,6 +28,7 @@ var brandweer = function () {
                 "hoofdSchakelaarElektriciteit",
                 "hoofdafsluiterwater",
                 "gasflessen",
+                "gevaarlijkestoffen",
                 "drogestijgleiding",
                 "rwa",
                 "verdiepingen",
@@ -42,40 +44,47 @@ var brandweer = function () {
                 "hoofdSchakelaarElektriciteit":"Tb2.003",
                 "hoofdafsluiterwater":"Tb2.022",
                 "gasflessen":"Tw2.001",
+                "gevaarlijkestoffen":"Tw2.002",
                 "drogestijgleiding":"Tb1.007",
                 "rwa":"Tb2.005"
+            },
+            "gevaarlijkestoffen":{
+                "Brandbare": "GHS03",
+                "Ontvlambare" : "GHS02",
+                "Bijtend" : "GHS05",
+                "Giftig" : "GHS06"
             },
             "answers":[],
             "css":{
                 "active":"active",
+                "hideMap":"hideMap",
                 "map":{
                     "activeStyle":{
                         weight:2,
                         color:'#ff0000',
-                        fillColor: "#ffffff",
                         dashArray:'',
                         fillOpacity:0.1
                     },
                     "highLightedStyle":{
                         weight:5,
                         color:'#0dff22',
-                        fillColor: "#ffffff",
                         dashArray:'',
-                        fillOpacity:0.1
+                        fillOpacity:0.5
                     },
                     "selectedStyle":{
                         // style away.
                         weight:3,
-                        color:'#0dff22',
-                        fillColor: "#0dff22",
+                        color:'#00aa00',
                         dashArray:'',
-                        fillOpacity:0.4
+                        fillOpacity:0.8
                     }
                 }
 
             },
             "numberOfQuestions":16,
-            "tmpl_dir":'/Brandweer/templates',
+            "numberOfContacts":0,
+            "numberOfMarkers":0,
+            "tmpl_dir":'templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -108,13 +117,12 @@ var brandweer = function () {
 
                     }
                     buildContactOption(data);
-
-                    // activate($('#'+config.questions[0]+' fieldset'));
-
+                    buildIconBar();
+                    buildFunctions(data.functions);
 
                 },
                 error:function (xhr, type) {
-                    console.log('oops.');
+                 //   console.log('oops.');
                 }
             });
 
@@ -122,17 +130,71 @@ var brandweer = function () {
             doNavigation();
             toggleInfo();
 
-            $('fieldset').each(function () {
-                $(this).prepend('<button class="hideFieldset"><span>Verberg</apan></button><button class="contact"><span>Contact</span></button>');
 
+        },
+
+        buildFunctions = function(data){
+            // get us the functions
+            var data = data[1].mainfunction,
+                store = [];
+
+            // iterate over them
+            for(var i in data){
+                // build us an option for each function
+                $('#mainSelect').append('<option value="'+data[i].value+'">'+data[i].name+'</option>');
+               // get the subfunctions
+
+                var sub = data[i].subFunction;
+                for(var j in sub){
+                    // and put them into the next select
+
+                    var val = sub[j].value,
+                            name = sub[j].name;
+                    store[val] = name;
+//                    $('#subSelect').append('<option class="'+val.charAt(0)+'" value="'+val+'">'+sub[j].name+'</option>');
+                }
+            }
+
+            showCorrectSubFunctions(store);
+        },
+
+        showCorrectSubFunctions = function(store){
+            var sub = $('#subSelect');
+
+            sub.find('option').remove();
+            $('body').on('change','#mainSelect',function(){
+                $('#subSelect').find('option').remove();
+                if ( $(this).val() !== '0' ){
+                    var val = $(this).val().charAt(0);
+                    sub.removeAttr('disabled');
+                    sub.append('<option>Kies een deelfunctie</option>');
+                  //  console.log(val.charAt(0));
+                    for(var i in store ){
+                        if (i.charAt(0) === val){
+                            sub.append('<option value="'+i+'">'+store[i]+'</option>');
+                        }
+                    }
+
+                } else {
+                    console.log('none');
+                    $('#subSelect').find('option').remove();
+                }
+                $('#subSelect').focus();
+            });
+
+        },
+
+        buildIconBar = function(){
+            var info = '<button class="revealInformation">Informatie</button>',
+                contact = '<button class="contact"><span>Contact</span></button>',
+                hide = '<button class="hideFieldset"><span>Verberg</span></button>';
+
+            $('fieldset').each(function () {
+                $(this).prepend('<div class="iconBar">'+hide+contact+info+'</div>');
             });
             $('body').on('click', '.hideFieldset', function () {
-                $(this).parent().toggleClass('hideMe');
+                $(this).closest('fieldset').toggleClass('hideMe');
             });
-
-            //buildContactOption();
-
-
         },
     // show or hide stuff. booring
         toggleInfo = function () {
@@ -224,6 +286,11 @@ var brandweer = function () {
                     showHideFieldsets(loc);
                 });
             }
+            // if we don't have history support
+            else {
+                // start at the beginning...
+                showHideFieldsets('#intro');
+            }
         },
         setHistory = function (x) {
             // if we have history suppport
@@ -237,20 +304,26 @@ var brandweer = function () {
         contactInformation = function(){
             // remove the empty fields div which get built
             // @todo @wilfred make sure only the needed elements get build.
-            $('.fields').empty().remove();
+            //$('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
-                var ci = $('<div class="ci"><button class="eraseCI">x</button></div>');
+
+                var offSet = config.numberOfContacts * 40;
+                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="eraseCI">x</button></div>');
                 var fields = $(this).parent().find('.f-container');
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
-                        par = $('<p>'+l+'<strong>'+v+'</strong></p>');
+                        par = $('<p>'+l+'<input type="text" class="f-input" readonly value="'+v+'"></p>');
                     ci.append(par);
                     $(this).find('.f-input').val('');
                 });
 
-                $(this).parent().prepend(ci);
+
+                $(this).parent().append(ci);
+                ci = '';
+
+                config.numberOfContacts = config.numberOfContacts + 1;
             });
 
             $('body').on('click','.eraseCI',function(){
@@ -258,11 +331,13 @@ var brandweer = function () {
             });
 
 
+
+
         },
 
         validateFields = function(e){
             // stop what you are doing
-            e.preventDefault()
+            e.preventDefault();
             // @todo @wilfred build navigation. look at essent code :).
         },
 
@@ -282,7 +357,8 @@ var brandweer = function () {
                 case 'exercise':
                 case 'final':
                     // hide the map
-                    $('#mask').show();
+                    config.body.addClass(config.css.hideMap);
+                   // $('#mask').show();
                     break;
 
                 case 'contactInformation':
@@ -291,16 +367,10 @@ var brandweer = function () {
                     break;
                 default:
                     // show the map.
-                    $('#mask').hide();
+                    config.body.removeClass(config.css.hideMap);
                     //  console.log('set marker?')
                     break;
 
-            }
-            if ( q === 'intro'){
-                disableElement($('#prev'));
-            }
-            if ( q === 'final'){
-                disableElement($('#confirm'));
             }
 
             // hide all fieldsets
@@ -359,12 +429,28 @@ var brandweer = function () {
             // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
 
+
             // depending on which button we press
             switch (elem.id) {
                 case "confirm":
                     // we need to save here
-                    // go forward
+                    // build an array for the question at hand
+                    config.answers[getActiveFieldset()] = [];
+                    // find the inputs where the values are in.
+
+                    $('#'+getActiveFieldset()).find('.f-input, .f-select').each(function(i){
+                        // what is it's value
+                        var v = $(this).val(),
+                        // and id...
+                            it = $(this).attr('id');
+                        // place 'm in to the array.
+                        config.answers[getActiveFieldset()][it] = v;
+                    });
+                 //   console.log(i);
+                    saveData(config.answers);
                     // @todo check if we are not at the end.
+
+                    // go forward
                     showHideFieldsets(config.questions[i + 1]);
                     break;
 
@@ -382,6 +468,14 @@ var brandweer = function () {
             }
         },
 
+        setData = function(p){
+           //   console.log(p);
+        },
+
+        saveData = function(i){
+            console.log(i);
+         //   console.log('we need to send that...');
+        },
 
         getCurrentQuestion = function (elem) {
             // get the questions
@@ -431,6 +525,7 @@ var brandweer = function () {
                 $('#contact').toggle();
             });
         },
+
         transformCoords = function(coordarray){
             var proj = new Proj4js.Proj("EPSG:28992");
             var result = [];
@@ -450,26 +545,34 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function(feature, layer) {
-			layer.on('click', function (e) {
+            layer.on('click', function (e) {
                 if(!feature.properties.selected){
-                    console.log(feature.properties);
+
+                   // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
+                   //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
                     if(feature.geometry.type !== "Point"){
+                        console.log('test');
                         layer.setStyle(config.css.map.selectedStyle);
                     }
+                    $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
+              //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
                 } else {
                     feature.properties.selected = false;
+                 //   console.log('nope');
+                    $('#'+feature.properties.gid).remove();
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.activeStyle);
                     }
                 }
             });
             layer.on('mouseover', function (e) {
+
                 if(!feature.properties.selected){
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.highLightedStyle);
                         if (!L.Browser.ie && !L.Browser.opera) {
-                        layer.bringToFront();
+                            layer.bringToFront();
                         }
                     }
                 }
@@ -481,33 +584,48 @@ var brandweer = function () {
                     }
                 }
             });
-		},
+        },
 
-        addMarker = function(options){
+        addMarker = function(options,e){
+            options.numberOfMarkers = config.numberOfMarkers;
+
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
-            var nImg = document.createElement('img');
-            nImg.onload = function() {
-            };
-            nImg.onerror = function() {
-                // image did not load
-                custom = 'img/marker-icon.png';
-            };
 
-            nImg.src = custom;
-            var RedIcon = L.Icon.Default.extend({
+            var BrandweerIcon = L.Icon.Default.extend({
                 options: {
                     iconUrl: custom,
                     iconSize: [32, 32]
                 }
             });
-            var redIcon = new RedIcon();
 
-            //  $('.leaflet-marker-pane').find('img').attr('title',activeId).remove();
-            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: redIcon}).
-                bindPopup('this is the place for the '+options.activeId).
-                openPopup();
-            // console.log(marker);
-            options.map.addLayer(marker);
+
+            var brandweerIcon = new BrandweerIcon();
+
+            var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
+            $('#'+options.activeId).append('<input class="f-input" type="hidden" value="'+options.e.latlng+'">');
+            switch (options.activeId){
+                case "gasflessen":
+                    addGasAmount(options);
+                    $('.amount:last-child').find('.f-input').focus();
+                    break;
+
+                case "gevaarlijkestoffen":
+                    addDangerAmount(options);
+                    break;
+
+                default:
+
+                    break;
+            }
+
+            if (options.single === 'true'){
+                removeMarker(options,marker);
+            }
+            marker.on('click',function(){
+                removeMarker(options,marker);
+
+            });
+            options.map.addLayer(marker).openPopup();
             /*
                 @milo
                 here I want to have the possibilty to set one or more markers for each question
@@ -515,17 +633,70 @@ var brandweer = function () {
                 these layers I want to turn on and off by setting a class to them or something.
 
              */
-         //  console.log($(this));
-           // do stuff.
+            config.numberOfMarkers = config.numberOfMarkers + 1;
+        },
+
+        addGasAmount = function(options){
+            // make sure the fieldset where we will put the input is visible
+            showCurrentFieldset(options.activeId);
+            // create the input
+            var amount = '<div class="amount f-container" data-id="' + 
+                options.numberOfMarkers + 
+                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>';
+            // put it in the fieldset.
+            $('#'+options.activeId).append(amount);
+            // up the ante
+            config.numberOfMarkers = config.numberOfMarkers + 1;
+
+        },
+
+        addDangerAmount = function(options){
+            // make sure the fieldset where we will put the input is visible
+            showCurrentFieldset(options.activeId);
+            var num = options.numberOfMarkers,
+                kind = '<div class="kind" data-id="' + 
+                    num + 
+                    '"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-' + 
+                    num + 
+                    '"><option>Selecteer een gevaarlijke stof</option></select> </div>',
+                amount = '<div class="amount" data-id="' + 
+                    options.numberOfMarkers +
+                    '"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
+                select = $('#danger-'+ num);
+
+            console.log(select);
+
+            $('#'+options.activeId).append(kind + amount);
+            for( var i in config.gevaarlijkestoffen ){
+                var opt = '<option value="'+config.gevaarlijkestoffen[i]+'">'+i+'</option>';
+                $('#danger-'+num).append(opt);
+                console.log(opt);
+            }
+            $('#danger-'+options.numberOfMarkers).focus();
+            config.numberOfMarkers = config.numberOfMarkers + 1;
+        },
+
+        showCurrentFieldset = function(it){
+            $('#'+it).removeClass('hideMe');
+        },
+
+        removeMarker = function(options,marker){
+            options.map.removeLayer(marker);
+            $('[data-id="'+options.numberOfMarkers+'"]').remove();
         },
 
         doMaps = function (data) {
-
 /*
  @milo
  can we build the initial map from the bag.json data.
  I hope we can put each building on it's own layer. that way we can add stuff to buildings and focus
  and highlight the building we are adding stuff to.
+            
+ @wnas
+ That is what I am doing, each bag pand (or feature) can be handled by adding events to the onEachFeature function. 
+ I have created a new bag2.json and have also set up an api to get bag panden. The structure of the file has been simplified. Accuracy is in centimeters.
+ The api takes a "nummeraanduiding" from a given adres, sets a buffer of 100 meters and grabs all panden that overlap the buffer.
+ I have altered the code to reflect these changes.
  */
             var thiz = $('#map'),
                 it = data.buildings[0].id,
@@ -537,16 +708,17 @@ var brandweer = function () {
                 setMapSize();
             };
 
-            var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
-            // @milo here i set the controls to the right, is this the way?
-
+            var map = new L.map('map', {
+                minZoom:16, 
+                maxZoom:22, 
+                zoomControl: false}).setView(coordz, 19);
             map.addControl( L.control.zoom({position: 'topright'}) );
 
             config.map = map;
 
             var lcms = L.tileLayer.wms("http://www.mapcache.org/wms/lcms?", {
-                //minZoom:18,
-                //maxZoom:22,
+                minZoom:18,
+                maxZoom:22,
                 layers:'default',
                 format:'image/png',
                 transparent:true,
@@ -556,115 +728,82 @@ var brandweer = function () {
             var cloudmadeUrl = 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
                 subDomains = ['1', '2', '3', '4'],
                 cloudmade = new L.TileLayer(cloudmadeUrl, {
-                    subdomains:subDomains//,
-                    //minZoom:16
-                    //maxZoom:18
+                    subdomains:subDomains,
+                    minZoom:16,
+                    maxZoom:18
                 });
             map.addLayer(cloudmade);
-//        var gbkn = L.tileLayer.wms("http://view.safetymaps.nl/map/mapserv?MAP=/home/mapserver/doiv.map", {
-//            minZoom: 16,
-//            maxZoom:22,
-//            layers: 'gbkn_topografie,gbkn_panden',
-//            format: 'image/png',
-//            transparent: true,
-//            attribution: ""
-//        });
-//        map.addLayer(gbkn);
+            
             $.ajax({
                 type:'GET',
-                url:'js/json/bag.json',
+                //url:'/api/bag/adres/796010000436350',
+                url: 'js/json/adres.json',
                 dataType:'json',
                 success:function (data) {
-                    var output = {};
                     $.each(data.features, function (index, item) {
-                        if(item.geometry){                           
+                        if(item.geometry){
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                         }
-//                        }
-//                        if (item.properties.pandgeometrie) {
-//                            switch (item.properties.pandgeometrie.type) {
-//                                case "Point":
-//                                    break;
-//                                case "Polygon":
-//                                    break;
-//                                case "MultiPolygon":
-//                                    item.properties.pandgeometrie.coordinates = transformCoords(item.properties.pandgeometrie.coordinates);
-//                                    break;
-//                            }
-//                        }
-                        
+                        /* @wnas this is the point where the address information should be transfered to the input boxes.
+                           basically this means writing the address into personalInformation. We could also generate data.json 
+                           directly from a database and have the address constructed in the process. Which one is in your favour?
+                        */
+                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
                     });
-                    new L.GeoJSON(data,{ 
-                        style: config.css.map.activeStyle, 
-                        onEachFeature: onEachFeature
-                        }).addTo(map);
-                    }
                     
-                });
+                    new L.GeoJSON(data,{
+                        style: config.css.map.activeStyle,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                }
 
+            });
+            $.ajax({
+                type:'GET',
+                //url:'/api/bag/panden/796010000436352',
+                url: 'js/json/bag.json',
+                dataType:'json',
+                success:function (data) {
+                    $.each(data.features, function (index, item) {
+                        if(item.geometry){
+                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+                        }
+                    });
+                    new L.GeoJSON(data,{
+                        style: config.css.map.activeStyle,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                }
+
+            });
 
             map.on('click',function(e){
                 var options = {
                     "e":e,
                     "map":map,
-                    "activeId" :getActiveFieldset()
+                    "activeId" :getActiveFieldset(),
+                    "single":"false"
                 };
-                addMarker(options);
+                switch (options.activeId){
+                    case "entrances":
+                        options.single = 'true';
+                        addMarker(options);
+                        break;
+
+                    case "functions":
+                  //      console.log('functions');
+                        //   addFunctions(options);
+                        break;
+
+                    default:
+                        addMarker(options);
+                        break;
+                }
+
             });
+
+
             return map;
-        },
-        addData = function (e) {
-
-            var activeQuestion = $('fieldset.active'),
-                activeId = activeQuestion.attr('id');
-
-
-            var answer = [];
-
-
-            if (e) {
-                var coords = e.latlng;
-            } else {
-                coords = [];
-            }
-            switch (activeId) {
-                case "buildings":
-                    console.log('buildings');
-                case "entrances":
-                case "sleutelbuis":
-                case "gasafsluiter":
-                case "hoofdSchakelaarElektriciteit":
-                case "hoofdafsluiterwater":
-                case "drogestijgleiding":
-                    console.log('only place...');
-                    answer.coords = coords;
-                    $('#' + activeId).append('<p class="confirmation">Is dit de correcte plaats voor uw ' + activeId + '? Zo ja, bevestig uw selectie en ga naar de volgende vraag. Zo nee, geef hem dan correct aan.</p>');
-
-                    break;
-                case "personalInformation":
-                case "contactInformation":
-
-                    $('#' + activeId + ' .f-input').each(function () {
-                        var set = {};
-//                        console.log($(this));
-                        set.id = $(this).attr('id');
-                        set.value = $(this).val();
-                        console.log(set.id);
-                        answer.push(set);
-                    });
-                case "intro":
-                    break;
-                default:
-
-                    console.log('fall to the default');
-                    break;
-            }
-            answer.id = activeId;
-            config.answers.push(answer);
-            $('.confirmation').remove();
-            // $('#data').append('<input id="' + activeId + '" value="' + coords + '">')
-            console.log(config.answers);
-            activeId = '';
         };
     return {
         init:init

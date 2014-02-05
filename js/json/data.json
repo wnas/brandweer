@@ -24,7 +24,7 @@
         {"fields":[{
             "name":"firstname",
             "type":"text",
-            "value": "emiel",
+            "value": "Gerben",
             "placeholder":"Voornaam",
             "required":"f-required"
 
@@ -39,7 +39,7 @@
             {
                 "name":"bedrijfsnaam",
                 "type":"text",
-                "value": "Geweldig bedrijf",
+                "value": "ghdesigns",
                 "placeholder":"Bedrijfsnaam",
                 "required":"f-required"
             },
@@ -75,7 +75,7 @@
             {
                 "name":"email",
                 "type":"email",
-                "value":"e@ma.il",
+                "value":"info@ghdesigns.com",
                 "placeholder":"uw email adres",
                 "required":""
 
@@ -140,32 +140,80 @@
         },
         {
             "building":"bagId",
-            "functions":[
+            "mainfunction":[
                 {
-                    "name":"wonen",
-                    "value":"w",
+                    "name":"Industrie, nuts, afval, groothandel, opslag en transport",
+                    "value":"a",
                     "subFunction":[
                         {
-                            "name":"permanente bewoning",
-                            "value":"pb"
+                            "name":"Chemie",
+                            "value":"a1"
                         },
                         {
-                            "name":"vakantie woning",
-                            "value":"vw"
+                            "name":"Brandstof en energieopwekking",
+                            "value":"a2"
+                        },
+                        {
+                            "name":"Opslag, handel en transport",
+                            "value":"a3"
+                        },
+                        {
+                            "name":"Afvalverwerking",
+                            "value":"a4"
+                        },
+                        {
+                            "name":"Overige productie, maakindustrie, bouw",
+                            "value":"a5"
                         }
                     ]
                 },
                 {
-                    "name":"horeca",
-                    "value":"h",
+                    "name":"Wonen, zorg, onderwijs, gevangenis",
+                    "value":"b",
                     "subFunction":[
                         {
-                            "name":"kroeg",
-                            "value":"k"
+                            "name":"Gevangenis",
+                            "value":"b1"
                         },
                         {
-                            "name":"restaurant",
-                            "value":"r"
+                            "name":"Zorg met overnachting of zorg voor kwetsbare gebruikers",
+                            "value":"b2"
+                        },
+                        {
+                            "name":"Onderwijs of dagopvang minderjarigen",
+                            "value":"b3"
+                        },
+                        {
+                            "name":"Zelfstandig wonen",
+                            "value":"b4"
+                        },
+                        {
+                            "name":"Overige zorg of onderwijs",
+                            "value":"b5"
+                        }
+                    ]
+                },
+                {
+                    "name":"Winkel, gastvrijheid of vermaak",
+                    "value":"c",
+                    "subFunction":[
+                        {
+                            "name":"Zonder nachtverblijf",
+                            "value":"c1"
+                        },
+                        {
+                            "name":"Met nachtverblijf",
+                            "value":"c2"
+                        }
+                    ]
+                },
+                {
+                    "name":"Geen van bovenstaande. Landbouw. Overheid, dienstverlening, kantoor.",
+                    "value":"d",
+                    "subFunction":[
+                        {
+                            "name":"Overige, niet-risicovol",
+                            "value":"d1"
                         }
                     ]
                 }
@@ -357,7 +405,6 @@
             "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
             "occupants":[
                 [
-
                     {
                         "type":"Bewoners",
                         "time":"Overdag",
@@ -430,8 +477,67 @@
             "header":"header",
             "body":"bodytest"
         },
-        "rwa":{
-            "header":""
+
+        "intro": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "buildings": {
+            "header":"gebouwen",
+            "body":"<p>De gebruiker kan nu op de grijze BAG-Panden klikken. Bij elke klik wordt de vraag gesteld om deze toe te voegen aan de kaart voor de brandweer. Het object wordt groen gekleurd als deze met “ja” wordt beantwoord.</p>"      },
+        "functions": {
+            "header":"gebruiks functies",
+            "body":"bodytest"
+        },
+        "entrances": {
+            "header":"Ingangen",
+            "body":"dkddkd"
+        },
+        "sleutelbuis": {
+            "header":"sleutelbuis",
+            "body":"<p>Een verbindingsweg naar uw pand mag geen obstakels hebben zoals hekwerken die op slot zijn, overhangende takken of bijvoorbeeld geparkeerde auto's. Hekwerken kunnen op slot indien in de directe omgeving van het hekwerk een sleutelbuis/-kluis aanwezig is met daarin de toegangssleutel. Wanneer u een dergelijke sleutelbuis/-kluis wilt aanbrengen dient u hiervoor contact op te nemen met de brandweer.</p>",
+            "image":"img/informatie/sleutelbuis/sleutelbuis-pz-light.jpg"
+        },
+        "gasafsluiter": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "hoofdSchakelaarElektriciteit": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "hoofdafsluiterwater": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "gasflessen": {
+            "header":"header",
+            "body":"bodytest",
+            "image":"img/informatie/gasflessen/gasflessen.jpg"
+        },
+        "drogestijgleiding": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "rwa": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "verdiepingen": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "bhv": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "people": {
+            "header":"header",
+            "body":"bodytest"
+        },
+        "exercise": {
+            "header":"header",
+            "body":"bodytest"
         }
     },
     "contact":{
