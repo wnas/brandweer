@@ -24,7 +24,7 @@
         {"fields":[{
             "name":"firstname",
             "type":"text",
-            "value": "emiel",
+            "value": "Gerben",
             "placeholder":"Voornaam",
             "required":"f-required"
 
@@ -39,7 +39,7 @@
             {
                 "name":"bedrijfsnaam",
                 "type":"text",
-                "value": "Geweldig bedrijf",
+                "value": "ghdesigns",
                 "placeholder":"Bedrijfsnaam",
                 "required":"f-required"
             },
@@ -75,7 +75,7 @@
             {
                 "name":"email",
                 "type":"email",
-                "value":"e@ma.il",
+                "value":"info@ghdesigns.com",
                 "placeholder":"uw email adres",
                 "required":""
 
