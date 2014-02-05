@@ -59,6 +59,7 @@ var brandweer = function () {
             "css":{
                 "active":"active",
                 "hideMap":"hideMap",
+                "hide":"hide",
                 "map":{
                     "activeStyle":{
                         weight:2,
@@ -85,7 +86,7 @@ var brandweer = function () {
             "numberOfQuestions":16,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -291,7 +292,6 @@ var brandweer = function () {
             }
             // if we don't have history support
             else {
-                console.log('nope');
                 // start at the beginning...
                 showHideFieldsets('#intro');
             }
@@ -313,7 +313,7 @@ var brandweer = function () {
                 e.preventDefault();
 
                 var offSet = config.numberOfContacts * 40;
-                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="eraseCI">x</button></div>');
+                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
                 var fields = $(this).parent().find('.f-container');
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
@@ -333,6 +333,9 @@ var brandweer = function () {
             $('body').on('click','.eraseCI',function(){
                 $(this).parent().remove();
             });
+            $('body').on('click','.hideCI',function(){
+                $(this).parent().toggleClass(config.css.hide);
+            })
 
 
 
@@ -549,14 +552,18 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function(feature, layer) {
-            config.buildings['foo']='bar';
+
             layer.on('click', function (e) {
+
                 var gid = feature.properties.gid,
                     ident = feature.properties.identificatie;
                 if(!feature.properties.selected){
                    // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
                    //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
+
+                    e['feature'] = feature.properties;
+                    fireEvent(map.click( e ));
                     if(feature.geometry.type !== "Point"){
                         // add building to array
                         config.buildings[gid] = ident;
@@ -565,6 +572,7 @@ var brandweer = function () {
                     }
                     $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
               //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
+
                 } else {
                     feature.properties.selected = false;
                     console.log('nope');
@@ -580,6 +588,7 @@ var brandweer = function () {
                     }
                 }
             });
+
             layer.on('mouseover', function (e) {
 
                 if(!feature.properties.selected){
@@ -649,15 +658,15 @@ var brandweer = function () {
 
              */
             config.numberOfMarkers = config.numberOfMarkers + 1;
-         //  console.log($(this));
-           // do stuff.
         },
 
         addGasAmount = function(options){
             // make sure the fieldset where we will put the input is visible
             showCurrentFieldset(options.activeId);
             // create the input
-            var amount = '<div class="amount f-container" data-id="'+options.numberOfMarkers+'"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>';
+            var amount = '<div class="amount f-container" data-id="' + 
+                options.numberOfMarkers + 
+                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>';
             // put it in the fieldset.
             $('#'+options.activeId).append(amount);
             // up the ante
@@ -669,12 +678,15 @@ var brandweer = function () {
             // make sure the fieldset where we will put the input is visible
             showCurrentFieldset(options.activeId);
             var num = options.numberOfMarkers,
-                kind = '<div class="kind" data-id="'+num+'"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-'+num+'"><option>Selecteer een gevaarlijke stof</option></select> </div>',
-                amount = '<div class="amount" data-id="'+options.numberOfMarkers+'"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
-                select = $('#danger-'+num);
-
-
-            console.log(select);
+                kind = '<div class="kind" data-id="' + 
+                    num + 
+                    '"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-' + 
+                    num + 
+                    '"><option>Selecteer een gevaarlijke stof</option></select> </div>',
+                amount = '<div class="amount" data-id="' + 
+                    options.numberOfMarkers +
+                    '"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
+                select = $('#danger-'+ num);
 
             $('#'+options.activeId).append(kind + amount);
             for( var i in config.gevaarlijkestoffen ){
@@ -701,6 +713,12 @@ var brandweer = function () {
  can we build the initial map from the bag.json data.
  I hope we can put each building on it's own layer. that way we can add stuff to buildings and focus
  and highlight the building we are adding stuff to.
+            
+ @wnas
+ That is what I am doing, each bag pand (or feature) can be handled by adding events to the onEachFeature function. 
+ I have created a new bag2.json and have also set up an api to get bag panden. The structure of the file has been simplified. Accuracy is in centimeters.
+ The api takes a "nummeraanduiding" from a given adres, sets a buffer of 100 meters and grabs all panden that overlap the buffer.
+ I have altered the code to reflect these changes.
  */
             var thiz = $('#map'),
                 it = data.buildings[0].id,
@@ -712,8 +730,10 @@ var brandweer = function () {
                 setMapSize();
             };
 
-            var map = new L.map('map', {minZoom:16, maxZoom:22, zoomControl: false}).setView(coordz, 19);
-// @milo here i set the controls to the right, is this the way?
+            var map = new L.map('map', {
+                minZoom:16, 
+                maxZoom:22, 
+                zoomControl: false}).setView(coordz, 19);
             map.addControl( L.control.zoom({position: 'topright'}) );
 
             config.map = map;
@@ -732,22 +752,45 @@ var brandweer = function () {
                 cloudmade = new L.TileLayer(cloudmadeUrl, {
                     subdomains:subDomains,
                     minZoom:16,
-                    maxZoom:18,
+                    maxZoom:18
                 });
             map.addLayer(cloudmade);
-
+            
             $.ajax({
                 type:'GET',
-                url:'js/json/bag.json',
+                //url:'/api/bag/adres/796010000436350',
+                url: 'js/json/adres.json',
                 dataType:'json',
                 success:function (data) {
-                    var output = {};
+                    $.each(data.features, function (index, item) {
+                        if(item.geometry){
+                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+                            console.log(item.properties);
+                        }
+                        /* @wnas this is the point where the address information should be transfered to the input boxes.
+                           basically this means writing the address into personalInformation. We could also generate data.json 
+                           directly from a database and have the address constructed in the process. Which one is in your favour?
+                        */
+                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
+                    });
+                    
+                    new L.GeoJSON(data,{
+                        style: config.css.map.activeStyle,
+                        onEachFeature: onEachFeature
+                    }).addTo(map);
+                }
+
+            });
+            $.ajax({
+                type:'GET',
+                //url:'/api/bag/panden/796010000436352',
+                url: 'js/json/bag.json',
+                dataType:'json',
+                success:function (data) {
                     $.each(data.features, function (index, item) {
                         if(item.geometry){
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                         }
-
-
                     });
                     new L.GeoJSON(data,{
                         style: config.css.map.activeStyle,
@@ -756,12 +799,6 @@ var brandweer = function () {
                 }
 
             });
-// @milo is this neccesary...
-            map.on('zoomend', function (e) {
-                //  console.log(config.map.getZoom());
-            });
-
-
 
             map.on('click',function(e){
                 var options = {
@@ -769,11 +806,12 @@ var brandweer = function () {
                     "map":map,
                     "activeId" :getActiveFieldset(),
                     "single":"false"
-                }
+                };
+//                console.log(options);
                 switch (options.activeId){
                     case "entrances":
                         options.single = 'true';
-                        addMarker(options,options.e);
+                        addMarker(options);
                         break;
 
                     case "functions":
