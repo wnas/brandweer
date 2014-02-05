@@ -34,7 +34,16 @@
     li {list-style: none;}
   }
   & button#hideContact {
+    width: 30px;
+    height: 30px;
+    .default-icon-style;
+    .icons;
     .icon-close;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
   }
 }
 .ci {
@@ -67,6 +76,17 @@ div#questions {
   @media only screen and(max-width:600px) {
     width: 100%;
     }
+}
+div#questions #personalInformation {
+  width: 800px;
+  & label {
+    width: 200px;
+    float:left;
+  }
+  & input {
+    width: 300px;
+    float:left;
+  }
 }
 
 fieldset {
@@ -113,16 +133,14 @@ fieldset {
     height: 20px;
     min-height: 10px;
     overflow: hidden;
-    h2 {
+    h2.main {
       position:absolute;
       color:#fff;
       background-color: #333;
       font-size: 1em;
       padding: 4px;
     }
-    p {line-height: 5em;}
   }
-  
 }
 
 
@@ -143,7 +161,7 @@ fieldset {
 // iconbar
 
 .iconBar {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ddd;
   @media only screen and(max-width:600px) {
     padding: 0 0.7em 0 0;
   }
@@ -163,8 +181,11 @@ fieldset {
   .icons;
   .default-icon-style;
   .icon-arrow-up;
+  &:hover {
+      background: none;
+  }
   @media only screen and(max-width:600px) {
-    width: 79%;
+    width: 74%;
   }
   border: 0;
 }
@@ -173,6 +194,9 @@ fieldset {
   padding-left: 20px;
   .icons;
   .icon-arrow-down;
+  &:hover {
+      background: none;
+  } 
 }
 
 
@@ -187,7 +211,6 @@ fieldset {
   .default-icon-style;
   .icons;
   .icons-hover;
-  
   // don't need this span
   span {display: none;}
 }

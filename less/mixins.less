@@ -113,10 +113,23 @@ blockpadding {
 .icons-hover {
   &:hover {
     &:before {
-      color: @foreground-color;
+      color: @background-color;
     }
   }
 }
+
+// basic panes for icons
+.default-icon-style {
+  background-color: fade(@background-color,0%);
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  &:hover {
+    background-color: fade(@theme-color,70%);
+    border: 1px solid fade(#ddd,10%);
+  }
+}
+
+// icons
   
 // arrows, for show and hide elements
 .icon-arrow-up {&:before {content:'a';line-height:0.15em;}}
@@ -127,7 +140,15 @@ blockpadding {
   -o-transform:rotate(180deg);
   -ms-transform:rotate(180deg);
   }
-.icon-close {&:before {content:'X';line-height: 0.55em;color:#fff;}}
+.icon-close {
+  &:before {
+    content:'x';
+    line-height: 0.6em;
+    }
+    &:hover {
+      &:before{background: red;width: 30px height: 30px;display: block;}
+    }
+  }
 
 // questionmark, information
 .icon-info {&:before {content:'?';line-height: 0.55em;}}
@@ -139,14 +160,7 @@ blockpadding {
 
 
 
-// basic panes for icons
-.default-icon-style {
-  background-color: fade(@background-color,0%);
-  border-radius: 4px;
-  border: 1px solid fade(@theme-color,70%);
-}
 
-// icons
 
 
 
