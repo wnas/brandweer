@@ -59,6 +59,7 @@ var brandweer = function () {
             "css":{
                 "active":"active",
                 "hideMap":"hideMap",
+                "hide":"hide",
                 "map":{
                     "activeStyle":{
                         weight:2,
@@ -313,7 +314,7 @@ var brandweer = function () {
                 e.preventDefault();
 
                 var offSet = config.numberOfContacts * 40;
-                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="eraseCI">x</button></div>');
+                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
                 var fields = $(this).parent().find('.f-container');
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
@@ -333,6 +334,9 @@ var brandweer = function () {
             $('body').on('click','.eraseCI',function(){
                 $(this).parent().remove();
             });
+            $('body').on('click','.hideCI',function(){
+                $(this).parent().toggleClass(config.css.hide);
+            })
 
 
 
