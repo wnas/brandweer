@@ -240,7 +240,7 @@
     "sleutelbuis":[
         {
             "building":"bagId",
-            "header":"sleutelbuis",
+            "header":"Sleutelbuis",
             "body":"<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
             "geometry":{
                 "type": "Point",
@@ -292,7 +292,7 @@
     "gasflessen":[
         {
             "copy":{
-                "header":"gasflessen",
+                "header":"Gasflessen",
                 "body":"<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>"
             }
         },
@@ -483,7 +483,7 @@
             "body":"bodytest"
         },
         "buildings": {
-            "header":"gebouwen",
+            "header":"Gebouwen",
             "body":"<p>De gebruiker kan nu op de grijze BAG-Panden klikken. Bij elke klik wordt de vraag gesteld om deze toe te voegen aan de kaart voor de brandweer. Het object wordt groen gekleurd als deze met “ja” wordt beantwoord.</p>"      },
         "functions": {
             "header":"gebruiks functies",

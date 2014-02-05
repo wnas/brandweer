@@ -48,7 +48,14 @@ var brandweer = function () {
                 "drogestijgleiding":"Tb1.007",
                 "rwa":"Tb2.005"
             },
+            "gevaarlijkestoffen":{
+                "Brandbare": "GHS03",
+                "Ontvlambare" : "GHS02",
+                "Bijtend" : "GHS05",
+                "Giftig" : "GHS06"
+            },
             "answers":[],
+            "buildings":[],
             "css":{
                 "active":"active",
                 "hideMap":"hideMap",
@@ -63,21 +70,22 @@ var brandweer = function () {
                         weight:5,
                         color:'#0dff22',
                         dashArray:'',
-                        fillOpacity:0.7
+                        fillOpacity:0.5
                     },
                     "selectedStyle":{
                         // style away.
                         weight:3,
-                        color:'#ffffff',
+                        color:'#00aa00',
                         dashArray:'',
-                        fillOpacity:0.6
+                        fillOpacity:0.8
                     }
                 }
 
             },
             "numberOfQuestions":16,
             "numberOfContacts":0,
-            "tmpl_dir":'/Brandweer/templates',
+            "numberOfMarkers":0,
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -164,7 +172,7 @@ var brandweer = function () {
                   //  console.log(val.charAt(0));
                     for(var i in store ){
                         if (i.charAt(0) === val){
-                            sub.append('<option value="'+i+'">'+store[i]+'</option');
+                            sub.append('<option value="'+i+'">'+store[i]+'</option>');
                         }
                     }
 
@@ -265,7 +273,9 @@ var brandweer = function () {
     // history
         getHistory = function(){
             // if we have history support
+
             if (window.history && window.history.pushState) {
+              //  showHideFieldsets('#intro');
                 // listen to the popstate event.
                 window.addEventListener("popstate", function () {
                     // get the correct question
@@ -278,6 +288,12 @@ var brandweer = function () {
                     // show the correct question
                     showHideFieldsets(loc);
                 });
+            }
+            // if we don't have history support
+            else {
+                console.log('nope');
+                // start at the beginning...
+                showHideFieldsets('#intro');
             }
         },
         setHistory = function (x) {
@@ -326,7 +342,7 @@ var brandweer = function () {
         validateFields = function(e){
             // stop what you are doing
             e.preventDefault()
-            // @todo @wilfred build navigation. look at essent code :).
+            // @todo @wilfred build validation, if there is still time :).
         },
 
         showHideFieldsets = function (elem) {
@@ -533,31 +549,39 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function(feature, layer) {
+            config.buildings['foo']='bar';
             layer.on('click', function (e) {
+                var gid = feature.properties.gid,
+                    ident = feature.properties.identificatie;
                 if(!feature.properties.selected){
-
-                //    console.log('yay');
-                //    console.log(feature.properties.gid);
-                //    console.log(feature.properties);
-                    var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
-                        plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
+                   // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
+                   //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
                     feature.properties.selected = true;
                     if(feature.geometry.type !== "Point"){
+                        // add building to array
+                        config.buildings[gid] = ident;
+
                         layer.setStyle(config.css.map.selectedStyle);
                     }
                     $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
-                    layer.bindPopup(straatHuisnummer+plaats).
-                        openPopup();
+              //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
                 } else {
                     feature.properties.selected = false;
-                 //   console.log('nope');
+                    console.log('nope');
                     $('#'+feature.properties.gid).remove();
                     if(feature.geometry.type !== "Point"){
+                        // remove building from array
+                        var i = config.buildings.indexOf(ident);
+                        if ( i != -1 ){
+                            config.buildings.splice(i,1);
+                        }
+
                         layer.setStyle(config.css.map.activeStyle);
                     }
                 }
             });
             layer.on('mouseover', function (e) {
+
                 if(!feature.properties.selected){
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.highLightedStyle);
@@ -577,7 +601,7 @@ var brandweer = function () {
         },
 
         addMarker = function(options,e){
-
+            options.numberOfMarkers = config.numberOfMarkers;
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
 
@@ -587,24 +611,20 @@ var brandweer = function () {
                     iconSize: [32, 32]
                 }
             });
+
+
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
             $('#'+options.activeId).append('<input class="f-input" type="hidden" value="'+options.e.latlng+'">');
             switch (options.activeId){
                 case "gasflessen":
-
-                    $('#'+options.activeId).removeClass('hideMe');
-                    var amount = '<div class="amount f-container"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>'
-                    $('#'+options.activeId).append(amount);
-
+                    addGasAmount(options);
                     $('.amount:last-child').find('.f-input').focus();
                     break;
 
                 case "gevaarlijkestoffen":
-                    var amount = '<div class="amount"><button class="hideAmount">verberg</button><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="number" class="f-input"> </div>'
-
-
+                    addDangerAmount(options);
                     break;
 
                 default:
@@ -612,15 +632,13 @@ var brandweer = function () {
                     break;
             }
 
-
-
-            // console.log(marker);
-
             if (options.single === 'true'){
+                console.log('true');
                 removeMarker(options,marker);
             }
             marker.on('click',function(){
                 removeMarker(options,marker);
+
             });
             options.map.addLayer(marker).openPopup();
             /*
@@ -630,17 +648,51 @@ var brandweer = function () {
                 these layers I want to turn on and off by setting a class to them or something.
 
              */
+            config.numberOfMarkers = config.numberOfMarkers + 1;
          //  console.log($(this));
            // do stuff.
         },
 
-        addAmount = function(options){
+        addGasAmount = function(options){
+            // make sure the fieldset where we will put the input is visible
+            showCurrentFieldset(options.activeId);
+            // create the input
+            var amount = '<div class="amount f-container" data-id="'+options.numberOfMarkers+'"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>';
+            // put it in the fieldset.
+            $('#'+options.activeId).append(amount);
+            // up the ante
+            config.numberOfMarkers = config.numberOfMarkers + 1;
+
+        },
+
+        addDangerAmount = function(options){
+            // make sure the fieldset where we will put the input is visible
+            showCurrentFieldset(options.activeId);
+            var num = options.numberOfMarkers,
+                kind = '<div class="kind" data-id="'+num+'"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-'+num+'"><option>Selecteer een gevaarlijke stof</option></select> </div>',
+                amount = '<div class="amount" data-id="'+options.numberOfMarkers+'"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
+                select = $('#danger-'+num);
 
 
+            console.log(select);
+
+            $('#'+options.activeId).append(kind + amount);
+            for( var i in config.gevaarlijkestoffen ){
+                var opt = '<option value="'+config.gevaarlijkestoffen[i]+'">'+i+'</option>';
+                $('#danger-'+num).append(opt);
+                console.log(opt);
+            }
+            $('#danger-'+options.numberOfMarkers).focus();
+            config.numberOfMarkers = config.numberOfMarkers + 1;
+        },
+
+        showCurrentFieldset = function(it){
+            $('#'+it).removeClass('hideMe');
         },
 
         removeMarker = function(options,marker){
             options.map.removeLayer(marker);
+            $('[data-id="'+options.numberOfMarkers+'"]').remove();
         },
 
         doMaps = function (data) {
@@ -721,7 +773,7 @@ var brandweer = function () {
                 switch (options.activeId){
                     case "entrances":
                         options.single = 'true';
-                        addMarker(options);
+                        addMarker(options,options.e);
                         break;
 
                     case "functions":

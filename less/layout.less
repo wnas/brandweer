@@ -31,6 +31,9 @@
   z-index: 7;
   pointer-events: auto;
   right: -10px;
+  @media only screen and(max-width:600px) {
+    margin-top:0;
+  }
 }
 
 // 2. Overlay for map leaflet when the map is not used
@@ -47,7 +50,7 @@
   width: 100%;
   height: 100%;
   background-color: fade(@tertiary-color,50%);
-  z-index:0;
+  z-index:3;
   position: fixed;
   display: none;
 }
