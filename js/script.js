@@ -56,6 +56,7 @@ var brandweer = function () {
             },
             "answers":[],
             "buildings":[],
+            "activeQuestion":"intro",
             "css":{
                 "active":"active",
                 "hideMap":"hideMap",
@@ -379,7 +380,6 @@ var brandweer = function () {
                     break;
 
             }
-
             // hide all fieldsets
             deActivate();
             // show the correct one.
@@ -401,6 +401,7 @@ var brandweer = function () {
         getActiveFieldset = function () {
             // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
+            config.activeQuestion = activeId;
             return activeId;
         },
         navigate = function (e) {
@@ -554,43 +555,52 @@ var brandweer = function () {
         onEachFeature = function(feature, layer) {
 
             layer.on('click', function (e) {
-
+                e.f = feature.properties;
                 var gid = feature.properties.gid,
                     ident = feature.properties.identificatie;
-                if(!feature.properties.selected){
-                   // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
-                   //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
-                    feature.properties.selected = true;
 
-                    e['feature'] = feature.properties;
-                    fireEvent(map.click( e ));
-                    if(feature.geometry.type !== "Point"){
-                        // add building to array
-                        config.buildings[gid] = ident;
+                    if(!feature.properties.selected){
+                        // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
+                        //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
+                        feature.properties.selected = true;
+                        if(feature.geometry.type !== "Point"){
+                            // add building to array
+                           // console.log(feature.properties);
+                           // console.log(ident);
+                            config.buildings[gid] = feature.properties;
 
-                        layer.setStyle(config.css.map.selectedStyle);
-                    }
-                    $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
-              //      layer.bindPopup(straatHuisnummer+plaats).openPopup();
-
-                } else {
-                    feature.properties.selected = false;
-                    console.log('nope');
-                    $('#'+feature.properties.gid).remove();
-                    if(feature.geometry.type !== "Point"){
-                        // remove building from array
-                        var i = config.buildings.indexOf(ident);
-                        if ( i != -1 ){
-                            config.buildings.splice(i,1);
+                            layer.setStyle(config.css.map.selectedStyle);
                         }
+                        fireEvent(map.click( e ));
+//                        $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
 
-                        layer.setStyle(config.css.map.activeStyle);
+                    } else {
+                        feature.properties.selected = false;
+                        var i;
+//                        $('#'+feature.properties.gid).remove();
+                        if(feature.geometry.type !== "Point"){
+                            for(i in config.buildings){
+                                console.log(i);
+                                console.log(config.buildings);
+                                console.log(config.buildings[i]);
+//                                console.log(config.buildings[i][sub]);
+                                if ( config.buildings[i][gid] !== undefined ){
+                                    config.buildings.splice(i,1);
+                                }
+                                else {
+                                    console.log('ummm');
+                                }
+                            }
+                        //    console.log(config.buildings);
+
+                            layer.setStyle(config.css.map.activeStyle);
+                        }
                     }
-                }
+
+
             });
 
             layer.on('mouseover', function (e) {
-
                 if(!feature.properties.selected){
                     if(feature.geometry.type !== "Point"){
                         layer.setStyle(config.css.map.highLightedStyle);
@@ -609,7 +619,8 @@ var brandweer = function () {
             });
         },
 
-        addMarker = function(options,e){
+        addMarker = function(options){
+            console.log('add marker');
             options.numberOfMarkers = config.numberOfMarkers;
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
@@ -622,10 +633,11 @@ var brandweer = function () {
             });
 
 
+            console.info(options);
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
-            $('#'+options.activeId).append('<input class="f-input" type="hidden" value="'+options.e.latlng+'">');
+            $('#'+options.activeId).append('<input class="f-input" id="foo" type="hidden" value="'+options.e.latlng+'">');
             switch (options.activeId){
                 case "gasflessen":
                     addGasAmount(options);
@@ -642,7 +654,7 @@ var brandweer = function () {
             }
 
             if (options.single === 'true'){
-                console.log('true');
+//                console.log('true');
                 removeMarker(options,marker);
             }
             marker.on('click',function(){
@@ -692,7 +704,7 @@ var brandweer = function () {
             for( var i in config.gevaarlijkestoffen ){
                 var opt = '<option value="'+config.gevaarlijkestoffen[i]+'">'+i+'</option>';
                 $('#danger-'+num).append(opt);
-                console.log(opt);
+//                console.log(opt);
             }
             $('#danger-'+options.numberOfMarkers).focus();
             config.numberOfMarkers = config.numberOfMarkers + 1;
@@ -765,7 +777,7 @@ var brandweer = function () {
                     $.each(data.features, function (index, item) {
                         if(item.geometry){
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-                            console.log(item.properties);
+                         //   console.log(item.properties);
                         }
                         /* @wnas this is the point where the address information should be transfered to the input boxes.
                            basically this means writing the address into personalInformation. We could also generate data.json 
@@ -799,32 +811,37 @@ var brandweer = function () {
                 }
 
             });
+                map.on('click',function(e){
+                    console.log(config.buildings);
+    //              console.info(e.features.gid);
+                    var options = {
+                        "e":e,
+                        "map":map,
+                        "activeId" :getActiveFieldset(),
+                        "single":"false"
+                    };
+                    switch (options.activeId){
+                        case "entrances":
+                            options.single = 'true';
+                            addMarker(options);
+                            break;
 
-            map.on('click',function(e){
-                var options = {
-                    "e":e,
-                    "map":map,
-                    "activeId" :getActiveFieldset(),
-                    "single":"false"
-                };
-//                console.log(options);
-                switch (options.activeId){
-                    case "entrances":
-                        options.single = 'true';
-                        addMarker(options);
-                        break;
+                        case "functions":
+                        case "buildings":
+                        case "bhv":
+                        case "intro":
+                        case "exercise":
+                        case "final":
+                            //   addFunctions(options);
+                            break;
 
-                    case "functions":
-                  //      console.log('functions');
-                        //   addFunctions(options);
-                        break;
+                        default:
+                            addMarker(options);
+                            break;
+                    }
 
-                    default:
-                        addMarker(options);
-                        break;
-                }
+                });
 
-            });
 
 
             return map;
