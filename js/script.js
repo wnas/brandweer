@@ -565,33 +565,33 @@ var brandweer = function () {
                         feature.properties.selected = true;
                         if(feature.geometry.type !== "Point"){
                             // add building to array
-                           // console.log(feature.properties);
-                           // console.log(ident);
+                            console.log( typeof feature.properties );
                             config.buildings[gid] = feature.properties;
 
                             layer.setStyle(config.css.map.selectedStyle);
                         }
                         fireEvent(map.click( e ));
-//                        $('#buildings').append('<input type="hidden"  class="f-input" id="'+feature.properties.gid+'" value="'+feature.properties.identificatie+'"> ');
 
                     } else {
                         feature.properties.selected = false;
-                        var i;
-//                        $('#'+feature.properties.gid).remove();
+
                         if(feature.geometry.type !== "Point"){
-                            for(i in config.buildings){
-                                console.log(i);
-                                console.log(config.buildings);
-                                console.log(config.buildings[i]);
-//                                console.log(config.buildings[i][sub]);
+/*
+    @milo
+
+    dit werkt niet, ik kan hem niet weghalen. mijn test werkt wel
+ http://jsbin.com/revi/11/edit
+    maar hier niet. kun jij even zien wat ik mis, ik heb er al te lang naar gekeken.
+ */
+                            for(var i in config.buildings){
+                                console.log(config.buildings[i][feature.properties.gid]);
                                 if ( config.buildings[i][gid] !== undefined ){
+                                    // remove the building from the array
                                     config.buildings.splice(i,1);
                                 }
                                 else {
-                                    console.log('ummm');
                                 }
                             }
-                        //    console.log(config.buildings);
 
                             layer.setStyle(config.css.map.activeStyle);
                         }
@@ -633,7 +633,7 @@ var brandweer = function () {
             });
 
 
-            console.info(options);
+           // console.info(options);
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable: 'true', title: options.activeId, icon: brandweerIcon});
@@ -812,8 +812,6 @@ var brandweer = function () {
 
             });
                 map.on('click',function(e){
-                    console.log(config.buildings);
-    //              console.info(e.features.gid);
                     var options = {
                         "e":e,
                         "map":map,
