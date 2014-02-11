@@ -399,6 +399,7 @@ var brandweer = function () {
             elem.attr('disabled','disabled');
         },
         getActiveFieldset = function () {
+//            console.log('getactivefieldset');
             // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
             config.activeQuestion = activeId;
@@ -555,50 +556,48 @@ var brandweer = function () {
         onEachFeature = function(feature, layer) {
 
             layer.on('click', function (e) {
+                var buildingQuestion = false;
+                if ( getActiveFieldset() === 'buildings' ){
+                    buildingQuestion = true;
+                }
                 e.f = feature.properties;
                 var gid = feature.properties.gid,
                     ident = feature.properties.identificatie;
-
-                    if(!feature.properties.selected){
-                        // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
-                        //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
-                        feature.properties.selected = true;
-                        if(feature.geometry.type !== "Point"){
-                            // add building to array
-                            console.log( typeof feature.properties );
-                            config.buildings[gid] = feature.properties;
-
-                            layer.setStyle(config.css.map.selectedStyle);
-                        }
-
-                        console.log(config.buildings);
-                        fireEvent(map.click( e ));
-
-                    } else {
-                        feature.properties.selected = false;
-
-                        if(feature.geometry.type !== "Point"){
-/*
-    @milo
-
-    dit werkt niet, ik kan hem niet weghalen. mijn test werkt wel
- http://jsbin.com/revi/11/edit
-    maar hier niet. kun jij even zien wat ik mis, ik heb er al te lang naar gekeken.
- */
-                            for(var i in config.buildings){
-                                console.log(feature.properties.gid);
-                                console.log(config.buildings[i][gid]);
-                                if ( config.buildings[i][gid] !== undefined ){
-                                    // remove the building from the array
-                                    config.buildings.splice(i,1);
-                                }
-                                else {
-                                }
+                    if ( buildingQuestion ){
+                        if(!feature.properties.selected){
+                            // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
+                            //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
+                            feature.properties.selected = true;
+                            if(feature.geometry.type !== "Point"){
+                                // add building to array
+                                config.buildings.push(feature.properties);
+                                // and style the layer to show the state
+                                layer.setStyle(config.css.map.selectedStyle);
                             }
                             console.log(config.buildings);
-                            layer.setStyle(config.css.map.activeStyle);
+
+
+
+                        } else {
+                            feature.properties.selected = false;
+                            var b = config.buildings,
+                                T;
+                            if(feature.geometry.type !== "Point"){
+                                for( T in config.buildings){
+                                    console.log(T);
+                                    if ( config.buildings[T].gid !== undefined ){
+                                        // remove the building from the array
+                                        config.buildings.splice(T,1);
+                                    }
+                                }
+                                console.log(b);
+                                layer.setStyle(config.css.map.activeStyle);
+                            }
                         }
+                    } else {
+                        fireEvent(map.click( e ));
                     }
+
 
 
             });
