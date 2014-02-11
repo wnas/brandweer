@@ -87,7 +87,7 @@ var brandweer = function () {
             "numberOfQuestions":16,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -132,6 +132,8 @@ var brandweer = function () {
             // set up the navigation.
             doNavigation();
             toggleInfo();
+            contactInformation();
+
 
 
         },
@@ -307,16 +309,19 @@ var brandweer = function () {
         },
 
         contactInformation = function(){
+            var fields,
+                ci;
             // remove the empty fields div which get built
             // @todo @wilfred make sure only the needed elements get build.
             //$('.fields').empty().remove();
             $('body').on('click','#addContact',function(e){
                 e.preventDefault();
-
+//                console.log('click addcontact');
                 var offSet = config.numberOfContacts * 40;
-                var ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
-                var fields = $(this).parent().find('.f-container');
-                fields.each(function(){
+                ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
+                fields = $(this).parent().find('.f-container');
+                fields.each(function(i){
+                    console.log(i);
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
                         par = $('<label class="f-label">'+l+'<input type="text" class="f-input" readonly value="'+v+'"></label>');
@@ -326,9 +331,7 @@ var brandweer = function () {
 
 
                 $(this).parent().append(ci);
-                ci = '';
-
-                config.numberOfContacts = config.numberOfContacts + 1;
+                 config.numberOfContacts = config.numberOfContacts + 1;
             });
 
             $('body').on('click','.eraseCI',function(){
@@ -336,11 +339,7 @@ var brandweer = function () {
             });
             $('body').on('click','.hideCI',function(){
                 $(this).parent().toggleClass(config.css.hide);
-            })
-
-
-
-
+            });
         },
 
         validateFields = function(e){
@@ -371,7 +370,6 @@ var brandweer = function () {
 
                 case 'contactInformation':
                     // do stuff with the contact information
-                    contactInformation(q);
                     break;
                 default:
                     // show the map.
