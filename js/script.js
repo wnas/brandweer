@@ -319,7 +319,7 @@ var brandweer = function () {
                 fields.each(function(){
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
-                        par = $('<p>'+l+'<input type="text" class="f-input" readonly value="'+v+'"></p>');
+                        par = $('<label class="f-label">'+l+'<input type="text" class="f-input" readonly value="'+v+'"></label>');
                     ci.append(par);
                     $(this).find('.f-input').val('');
                 });
