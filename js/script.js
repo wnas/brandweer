@@ -570,6 +570,8 @@ var brandweer = function () {
 
                             layer.setStyle(config.css.map.selectedStyle);
                         }
+
+                        console.log(config.buildings);
                         fireEvent(map.click( e ));
 
                     } else {
@@ -584,7 +586,8 @@ var brandweer = function () {
     maar hier niet. kun jij even zien wat ik mis, ik heb er al te lang naar gekeken.
  */
                             for(var i in config.buildings){
-                                console.log(config.buildings[i][feature.properties.gid]);
+                                console.log(feature.properties.gid);
+                                console.log(config.buildings[i][gid]);
                                 if ( config.buildings[i][gid] !== undefined ){
                                     // remove the building from the array
                                     config.buildings.splice(i,1);
@@ -592,7 +595,7 @@ var brandweer = function () {
                                 else {
                                 }
                             }
-
+                            console.log(config.buildings);
                             layer.setStyle(config.css.map.activeStyle);
                         }
                     }
