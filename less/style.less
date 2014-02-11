@@ -52,7 +52,35 @@
   left: 110%;
   top:0;
   width: 260px;
+  & .eraseCI {
+    float: right;
+    width: 30px;
+    height: 30px;
+    .default-icon-style;
+    .icons;
+    .icon-close;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
+  }
+  & .hideCI {
+    float: left;
+    width: 225px;
+    height: 30px;
+    .default-icon-style;
+    .icons;
+    .icon-arrow-up;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
+  }
 }
+
+
 html {
   height: 100%;
 
@@ -229,6 +257,16 @@ button.revealInformation {
   }
 }
 
+button#addContact {
+  margin: 20px 0 0 20px;
+  width: 30px;
+    height: 30px;
+  .default-icon-style;
+  .icons;
+  .icons-hover;
+  .icon-add;
+  & span {display: none;}
+}
 
 
 
