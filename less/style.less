@@ -47,12 +47,17 @@
   }
 }
 .ci {
+  .f-label {
+    margin: 0;
+    padding: 0;
+    }
   .default-pane-style;
+  background: @background-color;
   position:absolute;
   left: 110%;
   top:0;
-  width: 260px;
-  background: #fff;
+  width: 130%;
+  
   & .eraseCI {
     float: right;
     width: 30px;
@@ -68,7 +73,7 @@
   }
   & .hideCI {
     float: left;
-    width: 225px;
+    width: 90%;
     height: 30px;
     margin-bottom: 10px;
     .default-icon-style;
@@ -81,12 +86,21 @@
     }
   }
   & input.f-input {
-    margin-left: 0;
+    margin: 1px 0 0 0;
     border: 0;
     border-bottom: 1px solid fade(@theme-color,10%);
     background: fade(@theme-color,5%);
   }
 }
+@media screen and (max-width: 600px) {
+    .ci {
+      left: 0;
+      width:96%;
+      & .hideCI {
+        width: 90%;
+      }
+    }
+  }
 
 html {
   height: 100%;
