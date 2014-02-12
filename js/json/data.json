@@ -100,28 +100,28 @@
             {"fields":[
                 [
                     {
-                        "name":"firstname",
+                        "name":"Voornaam",
                         "type":"text",
                         "value": "",
                         "placeholder":"Voornaam",
                         "required":"f-required"
                     },
                     {
-                        "name":"surname",
+                        "name":"Achternaam",
                         "type":"text",
                         "value": "",
                         "placeholder":"Achternaam",
                         "required":"f-required"
                     },
                     {
-                        "name":"email",
+                        "name":"Email-adres",
                         "type":"email",
                         "value":"",
                         "placeholder":"jan@provider.nl",
                         "required":""
                     },
                     {
-                        "name":"telephone",
+                        "name":"Telefoonnummer",
                         "type":"tel",
                         "value":"",
                         "placeholder":"06 12345678",
