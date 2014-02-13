@@ -56,6 +56,7 @@ var brandweer = function () {
             },
             "answers":[],
             "buildings":[],
+            "activeBuilding":null,
             "activeQuestion":"intro",
             "css":{
                 "active":"active",
@@ -321,13 +322,14 @@ var brandweer = function () {
                 ci = $('<div class="ci" style="margin-top: '+offSet+'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
                 fields = $(this).parent().find('.f-container');
                 fields.each(function(i){
-                    console.log(i);
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
                         par = $('<label class="f-label">'+l+'<input type="text" class="f-input" readonly value="'+v+'"></label>');
                     ci.append(par);
                     $(this).find('.f-input').val('');
                 });
+
+                ci.append('<input type="hidden" name="activeBuilding" class="f-input" value="'+config.activeBuilding+'"/> ')
 
 
                 $(this).parent().append(ci);
@@ -561,6 +563,10 @@ var brandweer = function () {
                 e.f = feature.properties;
                 var gid = feature.properties.gid,
                     ident = feature.properties.identificatie;
+
+                config.activeBuilding = gid;
+                console.log('clicked a building - '+config.activeBuilding);
+
                     if ( buildingQuestion ){
                         if(!feature.properties.selected){
                             // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
@@ -568,6 +574,7 @@ var brandweer = function () {
                             feature.properties.selected = true;
                             if(feature.geometry.type !== "Point"){
                                 // add building to array
+//                                config.building[gid] = feature.properties;
                                 config.buildings.push(feature.properties);
                                 // and style the layer to show the state
                                 layer.setStyle(config.css.map.selectedStyle);
