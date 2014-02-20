@@ -14,13 +14,16 @@
 	    	{{#each this}}
 	    	{{@key}}
 	    		<div class="f-container">
-		    		<label class="f-label">{{type}} ({{time}})</label>
+
 		    		<input 
 		    			class="f-input" 
 		    			type="number" 
 		    			value="{{amount}}"
 		    			placeholder=0
 		    			id="{{time}}-{{type}}">
+		    		<label
+		    		 for="{{time}}-{{type}}"
+		    		 class="f-label">{{type}} ({{time}})</label>
 	    		</div>
 	    	{{/each}}
     	</div>
