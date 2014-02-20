@@ -94,7 +94,7 @@ var brandweer = function () {
             "numberOfQuestions":16,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'/templates',
+            "tmpl_dir":'templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -592,6 +592,8 @@ var brandweer = function () {
                             config.buildings.push(feature.properties);
                             // and style the layer to show the state
                             layer.setStyle(config.css.map.selectedStyle);
+
+                            console.log(config.buildings);
                         }
                     } else {
                         feature.properties.selected = false;
