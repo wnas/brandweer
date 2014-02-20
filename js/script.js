@@ -72,7 +72,7 @@ var brandweer = function () {
                     "highLightedStyle":{
                         weight:5,
                         color:'#0dff22',
-                        dashArray:'',
+                        dashArray:'5',
                         fillOpacity:0.5
                     },
                     "selectedStyle":{
@@ -81,6 +81,12 @@ var brandweer = function () {
                         color:'#00aa00',
                         dashArray:'',
                         fillOpacity:0.8
+                    },
+                    "currentStyle":{
+                        weight:2,
+                        color:'#33aa00',
+                        dashArray:'',
+                        fillOpacity:0.6
                     }
                 }
 
@@ -88,7 +94,7 @@ var brandweer = function () {
             "numberOfQuestions":16,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'/Brandweer/templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -370,9 +376,6 @@ var brandweer = function () {
                    // $('#mask').show();
                     break;
 
-                case 'contactInformation':
-                    // do stuff with the contact information
-                    break;
                 default:
                     // show the map.
                     config.body.removeClass(config.css.hideMap);
@@ -410,6 +413,7 @@ var brandweer = function () {
             e.preventDefault();
 
             // depending on what we pressed
+            // oh, extreme caution, have to refactor this...
             switch (e.target.className.split(' ')[0]) {
                 case "navigate":
                     // we navigate with the top buttons
@@ -435,6 +439,8 @@ var brandweer = function () {
         },
 
         bottomNavigation = function (elem) {
+
+            console.log('bottom');
             // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
 
@@ -442,25 +448,8 @@ var brandweer = function () {
             // depending on which button we press
             switch (elem.id) {
                 case "confirm":
-                    // we need to save here
-                    // build an array for the question at hand
-                    config.answers[getActiveFieldset()] = [];
-                    // find the inputs where the values are in.
-
-                    $('#'+getActiveFieldset()).find('.f-input, .f-select').each(function(i){
-                        // what is it's value
-                        var v = $(this).val(),
-                        // and id...
-                            it = $(this).attr('id');
-                        // place 'm in to the array.
-                        config.answers[getActiveFieldset()][it] = v;
-                    });
-                 //   console.log(i);
-                    saveData(config.answers);
-                    // @todo check if we are not at the end.
-
-                    // go forward
-                    showHideFieldsets(config.questions[i + 1]);
+                case "confirmAndNext":
+                    goNextAndSave();
                     break;
 
                 case "prev":
@@ -475,6 +464,28 @@ var brandweer = function () {
                     break;
 
             }
+        },
+
+        goNextAndSave = function(){
+            // we need to save here
+            // build an array for the question at hand
+            config.answers[getActiveFieldset()] = [];
+            // find the inputs where the values are in.
+
+            $('#'+getActiveFieldset()).find('.f-input, .f-select').each(function(i){
+                // what is it's value
+                var v = $(this).val(),
+                // and id...
+                    it = $(this).attr('id');
+                // place 'm in to the array.
+                config.answers[getActiveFieldset()][it] = v;
+            });
+            //   console.log(i);
+            saveData(config.answers);
+            // @todo check if we are not at the end.
+
+            // go forward
+            showHideFieldsets(config.questions[i + 1]);
         },
 
         setData = function(p){
@@ -508,6 +519,7 @@ var brandweer = function () {
 
         doNavigation = function () {
             // learn from the past. and set the correct state when we load.
+            console.log('dn');
             getHistory();
 
             // what do we listen to for navigation.
@@ -565,46 +577,37 @@ var brandweer = function () {
                     ident = feature.properties.identificatie;
 
                 config.activeBuilding = gid;
-                console.log('clicked a building - '+config.activeBuilding);
-
-                    if ( buildingQuestion ){
-                        if(!feature.properties.selected){
-                            // var straatHuisnummer = '<p>'+feature.properties.openbare_ruimte+' '+feature.properties.huisnummer+' <span class="'+feature.properties.huisletter+'">'+feature.properties.huisletter+'</span></p>',
-                            //     plaats = '<p>'+feature.properties.postcode+' '+feature.properties.woonplaats+'</p>';
-                            feature.properties.selected = true;
-                            if(feature.geometry.type !== "Point"){
-                                // add building to array
-//                                config.building[gid] = feature.properties;
-                                config.buildings.push(feature.properties);
-                                // and style the layer to show the state
-                                layer.setStyle(config.css.map.selectedStyle);
-                            }
-                            console.log(config.buildings);
-
-
-
-                        } else {
-                            feature.properties.selected = false;
-                            var b = config.buildings,
-                                T;
-                            if(feature.geometry.type !== "Point"){
-                                for( T in config.buildings){
-                                    console.log(T);
-                                    if ( config.buildings[T].gid !== undefined ){
-                                        // remove the building from the array
-                                        config.buildings.splice(T,1);
-                                    }
-                                }
-                                console.log(b);
-                                layer.setStyle(config.css.map.activeStyle);
-                            }
+                layer.setStyle(config.css.map.currentStyle);
+                if ( buildingQuestion ){
+                    if(!feature.properties.selected){
+                        feature.properties.selected = true;
+                        if(feature.geometry.type !== "Point"){
+                            // add building to array
+//                              config.buildings.push(feature.properties);
+                            // and style the layer to show the state
+                            layer.setStyle(config.css.map.selectedStyle);
                         }
+                        console.log(config.buildings);
+
+
+
                     } else {
-                        fireEvent(map.click( e ));
+                        feature.properties.selected = false;
+                        var b = config.buildings,
+                            T;
+                        if(feature.geometry.type !== "Point"){
+                            for( T in config.buildings){
+                                console.log(T);
+                                if ( config.buildings[T].gid !== undefined ){
+                                    // remove the building from the array
+                                    config.buildings.splice(T,1);
+                                }
+                            }
+                            console.log(b);
+                            layer.setStyle(config.css.map.activeStyle);
+                        }
                     }
-
-
-
+                }
             });
 
             layer.on('mouseover', function (e) {
