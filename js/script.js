@@ -99,7 +99,8 @@ var brandweer = function () {
             "info":{
                 "show":".revealInformation",
                 "hide":".hideInformation"
-            }
+            },
+            "globalData":null
         },
     // bit dirty...
         len, i, j,
@@ -114,6 +115,7 @@ var brandweer = function () {
                 dataType:'json',
                 success:function (data) {
                     // if we have data
+                    config.globalData = data;
                     // draw me a map
                     doMaps(data);
 
@@ -182,6 +184,7 @@ var brandweer = function () {
             $('body').on('change', '#mainSelect', function () {
                 $('#subSelect').find('option').remove();
                 if ($(this).val() !== '0') {
+                    // @todo refactor to look into the json sub structure.
                     var val = $(this).val().charAt(0);
                     sub.removeAttr('disabled');
                     sub.append('<option>Kies een deelfunctie</option>');
@@ -496,8 +499,8 @@ var brandweer = function () {
             //   console.log(p);
         },
 
-        saveData = function (i) {
-            console.log(i);
+        saveData = function (arg) {
+            console.log(arg);
             //   console.log('we need to send that...');
         },
 
@@ -615,7 +618,7 @@ var brandweer = function () {
                         "single":"false"
                     };
 
-                    console.log('testing'+options.activeId+options.map);
+                    //console.log('testing'+options.activeId+options.map);
 
                     switch (options.activeId) {
                         case "entrances":
@@ -624,7 +627,7 @@ var brandweer = function () {
                             break;
 
                         case "functions":
-                        case "buildings":
+//                        case "buildings":
                         case "bhv":
                         case "intro":
                         case "exercise":
@@ -660,7 +663,7 @@ var brandweer = function () {
         },
 
         addMarker = function (options) {
-            console.log('add marker ',options);
+          //  console.log('add marker ',options);
             options.numberOfMarkers = config.numberOfMarkers;
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
@@ -677,10 +680,24 @@ var brandweer = function () {
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable:'true', title:options.activeId, icon:brandweerIcon});
-            $('#' + options.activeId).append('<input class="f-input" id="'+options.activeBuilding+'" type="hidden" value="' + options.e.latlng + '">');
+            // @todo put directly into answer.json;
+            var answer = {
+                "geometry":{
+                    "type":"Point",
+                    "coordinates":[options.e.latlng.lat,options.e.latlng.lng]
+                },
+                "properties":{
+                    "building":options.activeBuilding,
+                    "type":options.activeId
+                }
+            }
+
+           // console.log(a);
+          //  $('#' + options.activeId).append('<input class="f-input" id="'+options.activeBuilding+'" type="hidden" value="' + options.e.latlng + '">');
             switch (options.activeId) {
                 case "gasflessen":
-                    addGasAmount(options);
+                   // answer.properties.gasAmount = '';
+                    addGasAmount(options,answer);
                     $('.amount:last-child').find('.f-input').focus();
                     break;
 
@@ -693,15 +710,11 @@ var brandweer = function () {
                     break;
             }
 
-            if (options.single === 'true') {
-//                console.log('true');
-                removeMarker(options, marker);
-            }
+            options.map.addLayer(marker);
+
             marker.on('click', function () {
                 removeMarker(options, marker);
-
             });
-            options.map.addLayer(marker).openPopup();
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
@@ -709,21 +722,28 @@ var brandweer = function () {
              these layers I want to turn on and off by setting a class to them or something.
 
              */
+            config.answers.push(answer);
+            answer = '';
             config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
-        addGasAmount = function (options) {
+        addGasAmount = function (options,answer) {
             // make sure the fieldset where we will put the input is visible
             showCurrentFieldset(options.activeId);
+
             // create the input
             var amount = '<div class="amount f-container" data-id="' +
                 options.numberOfMarkers +
-                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" name="gf" data-building="'+options.activeBuilding+'" class="f-input"> </div>';
+                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" name="gf" id="gf'+config.numberOfMarkers+'-'+options.activeBuilding+'" class="f-input"> </div>';
             // put it in the fieldset.
             $('#' + options.activeId).append(amount);
             // up the ante
             config.numberOfMarkers = config.numberOfMarkers + 1;
+            $('body').on('blur','.amount:last-child .f-input',function(){
 
+                answer.properties.gasAmount = $(this).val();
+
+            });
         },
 
         addDangerAmount = function (options) {
