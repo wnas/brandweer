@@ -162,7 +162,7 @@ var brandweer = function () {
 
                 var sub = data[i].subFunction;
                 len = sub.length;
-                for( i = 0; i<len; i++){
+                for( j = 0; j<len; j++){
                     // and put them into the next select
 
                     var val = sub[j].value,
@@ -407,7 +407,6 @@ var brandweer = function () {
 //            elem.attr('disabled','disabled');
 //        },
         getActiveFieldset = function () {
-//            console.log('getactivefieldset');
             // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
             config.activeQuestion = activeId;
@@ -454,7 +453,7 @@ var brandweer = function () {
             switch (elem.id) {
                 case "confirm":
                 case "confirmAndNext":
-                    goNextAndSave();
+                    goNextAndSave(i);
                     break;
 
                 case "prev":
@@ -471,7 +470,7 @@ var brandweer = function () {
             }
         },
 
-        goNextAndSave = function () {
+        goNextAndSave = function (i) {
             // we need to save here
             // build an array for the question at hand
             config.answers[getActiveFieldset()] = [];
@@ -571,7 +570,6 @@ var brandweer = function () {
             return result;
         },
         onEachFeature = function (feature, layer) {
-
             layer.on('click', function (e) {
                 var buildingQuestion = false;
                 if (getActiveFieldset() === 'buildings') {
@@ -588,30 +586,55 @@ var brandweer = function () {
                         feature.properties.selected = true;
                         if (feature.geometry.type !== "Point") {
                             // add building to array
-//                              config.buildings.push(feature.properties);
+                            config.buildings.push(feature.properties);
                             // and style the layer to show the state
                             layer.setStyle(config.css.map.selectedStyle);
                         }
-                        console.log(config.buildings);
-
-
                     } else {
                         feature.properties.selected = false;
                         var b = config.buildings,
                             T;
                         if (feature.geometry.type !== "Point") {
-                            len = config.buildings.length;
-                            for(var i = 0; i<len; i++){
-                           // for (T in config.buildings) {
+                           for (T in config.buildings) {
                                 console.log(T);
                                 if (config.buildings[T].gid !== undefined) {
                                     // remove the building from the array
                                     config.buildings.splice(T, 1);
                                 }
                             }
-                            console.log(b);
                             layer.setStyle(config.css.map.activeStyle);
                         }
+                    }
+                }
+                else {
+                    var options = {
+                        "e":e,
+                        "map":config.map,
+                        "activeId":getActiveFieldset(),
+                        "single":"false"
+                    };
+
+                    console.log('testing'+options.activeId+options.map);
+
+                    switch (options.activeId) {
+                        case "entrances":
+                            options.single = 'true';
+                            addMarker(options);
+                            break;
+
+                        case "functions":
+                        case "buildings":
+                        case "bhv":
+                        case "intro":
+                        case "exercise":
+                        case "final":
+                            //   addFunctions(options);
+                            break;
+
+                        default:
+                            console.log('default');
+                            addMarker(options);
+                            break;
                     }
                 }
             });
@@ -636,7 +659,7 @@ var brandweer = function () {
         },
 
         addMarker = function (options) {
-            console.log('add marker');
+            console.log('add marker ',options);
             options.numberOfMarkers = config.numberOfMarkers;
 
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
@@ -832,36 +855,10 @@ var brandweer = function () {
                 }
 
             });
-            map.on('click', function (e) {
-                var options = {
-                    "e":e,
-                    "map":map,
-                    "activeId":getActiveFieldset(),
-                    "single":"false"
-                };
-                switch (options.activeId) {
-                    case "entrances":
-                        options.single = 'true';
-                        addMarker(options);
-                        break;
-
-                    case "functions":
-                    case "buildings":
-                    case "bhv":
-                    case "intro":
-                    case "exercise":
-                    case "final":
-                        //   addFunctions(options);
-                        break;
-
-                    default:
-                        addMarker(options);
-                        break;
-                }
-
-            });
-
-
+//            map.on('click', function (e) {
+//
+//
+//            });
             return map;
         };
     return {
