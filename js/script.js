@@ -611,6 +611,7 @@ var brandweer = function () {
                         "e":e,
                         "map":config.map,
                         "activeId":getActiveFieldset(),
+                        "activeBuilding":ident,
                         "single":"false"
                     };
 
@@ -676,7 +677,7 @@ var brandweer = function () {
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable:'true', title:options.activeId, icon:brandweerIcon});
-            $('#' + options.activeId).append('<input class="f-input" id="foo" type="hidden" value="' + options.e.latlng + '">');
+            $('#' + options.activeId).append('<input class="f-input" id="'+options.activeBuilding+'" type="hidden" value="' + options.e.latlng + '">');
             switch (options.activeId) {
                 case "gasflessen":
                     addGasAmount(options);
@@ -717,7 +718,7 @@ var brandweer = function () {
             // create the input
             var amount = '<div class="amount f-container" data-id="' +
                 options.numberOfMarkers +
-                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" class="f-input"> </div>';
+                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" name="gf" data-building="'+options.activeBuilding+'" class="f-input"> </div>';
             // put it in the fieldset.
             $('#' + options.activeId).append(amount);
             // up the ante
