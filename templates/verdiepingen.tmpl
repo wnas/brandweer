@@ -1,14 +1,11 @@
-{{#information}}
-    <div class="information">
-        <h2>{{verdiepingen.header}}<button class="hideInformation"><span>close</span></button></h2>
-        <div>{{{verdiepingen.body}}}</div>
-    </div>
-{{/information}}
-
 {{#verdiepingen}}
 	<div id="verdiepingen-{{bagId}}">
-		<h2 class="main">{{header}}</h2>
-		{{{body}}}
+	    <div class="information">
+                <h2>{{copy.header}}<button class="hideInformation"><span>close</span></button></h2>
+                <div>{{{copy.help}}}</div>
+            </div>
+		<h2 class="main">{{copy.header}}</h2>
+		{{{copy.body}}}
 		<div class="f-container">
 			<label class="f-label" for="etages-{{bagId}}">Verdiepingen</label>
 			<input class="f-input" type="number" id="etages-{{bagId}}">
