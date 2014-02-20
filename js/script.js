@@ -94,7 +94,7 @@ var brandweer = function () {
             "numberOfQuestions":16,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'templates',
+            "tmpl_dir":'/templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
