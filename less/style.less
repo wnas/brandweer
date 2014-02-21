@@ -282,27 +282,3 @@ button#addContact {
   & span {display: none;}
 }
 
-
-
-#people {
-  input {
-    padding-top: 20px;
-    }
-  }
-  input, textarea {
-    & + label {
-      opacity: 0;
-      top: 3px;
-    }
-    &:valid + label {
-      position: absolute;
-      top: 0px;
-      transition: top 0.7s ease, opacity 0.7s ease;
-      opacity: 0.7;
-      font-weight: 600;
-      color: #ccc;
-    }
-    &:focus + label {
-      color: green;
-    }
-}

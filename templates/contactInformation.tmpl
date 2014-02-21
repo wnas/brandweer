@@ -18,15 +18,17 @@
 
                 {{#this}}
                 <div class="f-container {{#if required}}{{required}}{{/if}}">
-                    <label
-                            for="contact-{{name}}"
-                            class="f-label">{{name}}</label>
+                    
                     <input
                             type="{{type}}"
                             id="contact-{{name}}"
                             value="{{value}}"
                             placeholder="{{placeholder}}"
-                            class="f-input"/>
+                            class="f-input" required />
+                            
+                        	<label
+                            for="contact-{{name}}"
+                            class="f-label">{{name}}</label>
                 </div>
                 {{/this}}
                 
