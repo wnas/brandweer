@@ -1,13 +1,10 @@
-{{#information}}
-    <div class="information">
-        <h2>{{exercise.header}}<button class="hideInformation"><span>close</span></button></h2>
-        <div>{{{exercise.body}}}</div>
-    </div>
-{{/information}}
-
 {{#exercise}}
-	<h2 class="main">{{header}}</h2>
-	{{{body}}}
+    <div class="information">
+            <h2>{{copy.header}}<button class="hideInformation"><span>close</span></button></h2>
+            <div>{{{copy.help}}}</div>
+        </div>
+	<h2 class="main">{{copy.header}}</h2>
+	{{{copy.body}}}
 	<div class="f-container">
 		<label
 			class="f-label" 

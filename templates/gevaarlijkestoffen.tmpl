@@ -1,15 +1,13 @@
 
 
 
-{{#information}}
-    <div class="information">
-        <h2>{{gevaarlijkestoffen.header}}<button class="hideInformation"><span>close</span></button></h2>
-        <div>{{{gevaarlijkestoffen.body}}}</div>
-    </div>
-{{/information}}
 
 {{#gevaarlijkestoffen}}
     {{#copy}}
+         <div class="information">
+                <h2>{{header}}<button class="hideInformation"><span>close</span></button></h2>
+                <div>{{{help}}}</div>
+            </div>
         <div class="copy">
             <h2 class="main">{{header}}</h2>
             <div>{{{body}}}</div>

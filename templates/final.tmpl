@@ -1,4 +1,8 @@
 {{#final}}
-    <h2 class="main">{{header}}</h2>
-    {{{body}}}
+     <div class="information">
+        <h2>{{copy.header}}<button class="hideInformation"><span>close</span></button></h2>
+        <div>{{{copy.help}}}</div>
+    </div>
+    <h2 class="main">{{copy.header}}</h2>
+    {{{copy.body}}}
 {{/final}}
