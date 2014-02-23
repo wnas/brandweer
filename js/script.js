@@ -108,10 +108,12 @@ var brandweer = function () {
             // set the topnavigation item if we do so...
             // 
             // @todo Grab the data for the user, based upon the url used to log in
+            //var url = "/webdata/1021";
+            var url = "js/json/data-1021.json";
             var hash = window.location.href.split("#")[1];
             $.ajax({
                 type:'GET',
-                url:config.src,
+                url:url,
                 data:{name:'Brandweer'},
                 dataType:'json',
                 success:function (data) {
@@ -778,8 +780,8 @@ var brandweer = function () {
             });
             $.ajax({
                 type:'GET',
-                url:'/api/bag/adres/' + adres,
-                //url:'js/json/adres.json',
+                //url:'/api/bag/adres/' + adres,
+                url:'js/json/adres-815010000001910.json',
                 dataType:'json',
                 success:function (data) {
                     $.each(data.features, function (index, item) {
@@ -802,8 +804,8 @@ var brandweer = function () {
             });
             $.ajax({
                 type:'GET',
-                url:'/api/bag/panden/' + adres,
-                //url:'js/json/bag.json',
+                //url:'/api/bag/panden/' + adres,
+                url:'js/json/panden-815010000001910.json',
                 dataType:'json',
                 success:function (data) {
                     $.each(data.features, function (index, item) {
