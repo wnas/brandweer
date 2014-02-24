@@ -138,7 +138,7 @@ var brandweer = function () {
                     buildContactOption(data);
                     buildIconBar();
                     buildFunctions(data.functions);
-                    buildHazards(data.gevaarlijkestoffen);
+                    buildHazards(data.gevaarlijkestoffen, 0);
                     showHideFieldsets(hash);
                     //doNavigation();
                 },
@@ -152,10 +152,9 @@ var brandweer = function () {
             toggleInfo();
             contactInformation();
         },
-        buildHazards = function (data) {
-            $('#gevaarlijkestoffen-subselect').hide();
+        buildHazards = function (data, index) {
             for( i = 0; i< data.functions.length; i++){
-                $('#gevaarlijkestoffen-select').append('<option value="' + 
+                $('#gevaarlijkestoffen-select'+ index).append('<option value="' + 
                         data.functions[i].value + '">' + 
                         data.functions[i].name + '</option>');
             }
@@ -170,7 +169,7 @@ var brandweer = function () {
             for( i = 0; i<len; i++){
            // for (var i in data) {
                 // build us an option for each function
-                $('#functions-select').append('<option value="' + data[i].value + '">' + data[i].name + '</option>');
+                $('#functions-select0').append('<option value="' + data[i].value + '">' + data[i].name + '</option>');
                 // get the subfunctions
 
                 var sub = data[i].subfunctions;
@@ -189,11 +188,11 @@ var brandweer = function () {
         },
 
         showCorrectSubFunctions = function (store) {
-            var sub = $('#functions-subselect');
+            var sub = $('#functions-subselect0');
 
             sub.find('option').remove();
-            $('body').on('change', '#functions-select', function () {
-                $('#functions-subselect').find('option').remove();
+            $('body').on('change', '#functions-select0', function () {
+                $('#functions-subselect0').find('option').remove();
                 if ($(this).val() !== '0') {
                     // @todo refactor to look into the json sub structure.
                     var val = $(this).val().charAt(0);
@@ -352,6 +351,13 @@ var brandweer = function () {
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
+                case 'gevaarlijkestoffen':
+                    $('#gevaarlijkestoffen-form0').hide();
+                    $('#gevaarlijkestoffen-subselect0').parent().hide();
+                    $("label[for='gevaarlijkestoffen-select0']").text('Categorie');
+                    $("#gevaarlijkestoffen-select0 option[name='default']").text('Kies een categorie');
+                case 'gasflessen':
+                    $('#gasflessen-form0').hide();
                 default:
                     $('#prev').html('<span>Vorige</span>');
                     $('#confirm').html('<span>Volgende vraag</span>');
@@ -636,13 +642,9 @@ var brandweer = function () {
             };
 
             switch (options.activeId) {
-                case "gasflessen":
-                    addGasAmount(options,answer);
-                    $('.amount:last-child').find('.f-input').focus();
-                    break;
-
                 case "gevaarlijkestoffen":
-                    addDangerAmount(options);
+                case "gasflessen":
+                    addEntry(options);
                     break;
                 default:
                     break;
@@ -651,6 +653,8 @@ var brandweer = function () {
             options.map.addLayer(marker);
             marker.on('click', function () {
                 removeMarker(options, marker);
+                // @todo the formfields should also be removed when the marker is
+                // removed
             });
             /*
              @milo
@@ -664,47 +668,21 @@ var brandweer = function () {
             config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
-        addGasAmount = function (options,answer) {
-            // make sure the fieldset where we will put the input is visible
-            showCurrentFieldset(options.activeId);
-
-            // create the input
-            var amount = '<div class="amount f-container" data-id="' +
-                options.numberOfMarkers +
-                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" name="gf" id="gf'+config.numberOfMarkers+'-'+options.activeBuilding+'" class="f-input"> </div>';
-            // put it in the fieldset.
-            $('#' + options.activeId).append(amount);
-            // up the ante
-            config.numberOfMarkers = config.numberOfMarkers + 1;
-            $('body').on('blur','.amount:last-child .f-input',function(){
-
-                answer.properties.gasAmount = $(this).val();
-
-            });
-        },
-
-        addDangerAmount = function (options) {
-            // make sure the fieldset where we will put the input is visible
-            showCurrentFieldset(options.activeId);
-            var num = options.numberOfMarkers,
-                kind = '<div class="kind" data-id="' +
-                    num +
-                    '"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-' +
-                    num +
-                    '"><option>Selecteer een gevaarlijke stof</option></select> </div>',
-                amount = '<div class="amount" data-id="' +
-                    options.numberOfMarkers +
-                    '"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
-                select = $('#danger-' + num);
-
-            $('#' + options.activeId).append(kind + amount);
-            len = config.gevaarlijkestoffen.length;
-            for(var i = 0; i<len; i++){
-                var opt = '<option value="' + config.gevaarlijkestoffen[i] + '">' + i + '</option>';
-                $('#danger-' + num).append(opt);
+        addEntry = function (options) {
+            var templateid = '#' + options.activeId + '-form0';
+            if(options.numberOfMarkers === 0){
+                //show the first form with id ending in 0
+                $(templateid).show();
+                $(templateid).find('.f-input').last().focus();
+            } else {
+                //clone the form with id ending in 0, change id's and append
+                config.numberOfMarkers = config.numberOfMarkers + 1;
+                var formClone = $(templateid).clone();
+                formClone.attr('id', options.activeId + '-form' + options.numberOfMarkers);
+                $('#' + options.activeId).append(formClone);
+                formClone.show();
+                formClone.find('.f-input').last().focus();
             }
-            $('#danger-' + options.numberOfMarkers).focus();
-            config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
         showCurrentFieldset = function (it) {
@@ -776,7 +754,7 @@ var brandweer = function () {
                     "map": config.map,
                     "activeId": getActiveFieldset()
                     };
-                addMarker(options);pg
+                addMarker(options);
             });
             $.ajax({
                 type:'GET',

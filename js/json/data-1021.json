@@ -301,7 +301,17 @@
       "body": "<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>",
       "help": "help",
       "multi": false
-    }
+    },
+    "fields": [
+      {
+        "name": "gasamm0",
+        "type": "number",
+        "placeholder": "Aantal gasflessen op deze locatie",
+        "value": "",
+        "checkbox": false,
+        "required": ""
+      }
+    ]
   },
   "gevaarlijkestoffen": {
     "name": "gevaarlijkestoffen",
@@ -313,7 +323,7 @@
     },
     "fields": [
       {
-        "name": "ammount",
+        "name": "gevamm0",
         "type": "number",
         "placeholder": "Hoeveelheid",
         "value": "",
