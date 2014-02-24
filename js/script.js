@@ -344,6 +344,19 @@ var brandweer = function () {
                     if($('#confirm').css('display') !== 'none'){
                         $('#confirm').show();
                     }
+                    config.body.addClass(config.css.hideMap);
+                    break;
+                case 'exercise':
+                case 'bhv':
+                case 'contactInformation':
+                case 'personalInformation':
+                    $('#prev').html('<span>Vorige</span>');
+                    $('#confirm').html('<span>Volgende vraag</span>');
+                    if($('#confirm').css('display') !== 'none'){
+                        $('#confirm').show();
+                    }
+                    $('#prev').show();
+                    config.body.addClass(config.css.hideMap);
                     break;
                 case 'final':
                     if($('#confirm').css('display') === 'none'){
@@ -365,7 +378,6 @@ var brandweer = function () {
                         $('#confirm').show();
                     }
                     $('#prev').show();
-
                     config.body.removeClass(config.css.hideMap);
                     break;
             }
