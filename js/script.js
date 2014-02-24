@@ -756,43 +756,49 @@ var brandweer = function () {
                     };
                 addMarker(options);
             });
+//            $.ajax({
+//                type:'GET',
+//                //url:'/api/bag/adres/' + adres + '?srid=28992',
+//                url:'js/json/adres-815010000001910.json',
+//                dataType:'json',
+//                success:function (data) {
+//                    $.each(data.features, function (index, item) {
+//                        if (item.geometry) {
+//                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+//                        }
+//                        /* @wnas this is the point where the address information should be transfered to the input boxes.
+//                         basically this means writing the address into personalInformation. We could also generate data.json
+//                         directly from a database and have the address constructed in the process. Which one is in your favour?
+//                         */
+//                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
+//                    });
+//
+//                    new L.GeoJSON(data, {
+//                        style:config.css.map.activeStyle,
+//                        onEachFeature:onEachFeature
+//                    }).addTo(map);
+//                }
+//
+//            });
             $.ajax({
                 type:'GET',
-                //url:'/api/bag/adres/' + adres,
-                url:'js/json/adres-815010000001910.json',
+                url:'/api/bag/panden/' + adres+ '?srid=28992',
+                //url:'js/json/panden-815010000001910.json',
                 dataType:'json',
                 success:function (data) {
                     $.each(data.features, function (index, item) {
                         if (item.geometry) {
                             item.geometry.coordinates = transformCoords(item.geometry.coordinates);
                         }
-                        /* @wnas this is the point where the address information should be transfered to the input boxes.
-                         basically this means writing the address into personalInformation. We could also generate data.json
-                         directly from a database and have the address constructed in the process. Which one is in your favour?
-                         */
-                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
-                    });
-
-                    new L.GeoJSON(data, {
-                        style:config.css.map.activeStyle,
-                        onEachFeature:onEachFeature
-                    }).addTo(map);
-                }
-
-            });
-            $.ajax({
-                type:'GET',
-                //url:'/api/bag/panden/' + adres,
-                url:'js/json/panden-815010000001910.json',
-                dataType:'json',
-                success:function (data) {
-                    $.each(data.features, function (index, item) {
-                        if (item.geometry) {
-                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-                        }
                     });
                     new L.GeoJSON(data, {
-                        style:config.css.map.activeStyle,
+                        style: function(feature) {
+                            if (feature.properties.selected) {
+                                return config.css.map.selectedStyle;
+                            } else {
+                                return config.css.map.activeStyle;
+                            }
+                        },
                         onEachFeature:onEachFeature
                     }).addTo(map);
                 }
