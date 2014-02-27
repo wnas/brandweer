@@ -11,7 +11,7 @@ var brandweer = function () {
     var config = {
             // foo: bar
             "map":null,
-            "src":"js/json/data.json",
+            "src":"/webdata/1031",
             "multipleSelectClone":'',
             "headerHeight":$('#header').height(),
             "navHeight":$('#main-nav').height(),
@@ -91,10 +91,9 @@ var brandweer = function () {
                 }
 
             },
-            "numberOfQuestions":16,
+            "numberOfQuestions":17,
             "numberOfContacts":0,
             "numberOfMarkers":0,
-            "tmpl_dir":'templates',
             "mainNavigation":$('.top-navigation'),
             "info":{
                 "show":".revealInformation",
@@ -102,42 +101,49 @@ var brandweer = function () {
             },
             "globalData":null
         },
-    // bit dirty...
         len, i, j,
         init = function () {
-            // maximize the map container and some more...
             setMapSize();
-            // get us some data
+            // We need to check the url during init, not somewhere else as we cannot
+            // set the topnavigation item if we do so...
+            // 
+            // @todo Grab the data for the user, based upon the url used to log in
+            //var url = "/webdata/1021";
+            var url = "js/json/data-1021.json";
+            var hash = window.location.href.split("#")[1];
             $.ajax({
                 type:'GET',
-                url:config.src,
+                url:url,
                 data:{name:'Brandweer'},
                 dataType:'json',
                 success:function (data) {
                     // if we have data
                     config.globalData = data;
+                    
                     // draw me a map
                     doMaps(data);
 
                     // iterate over the questions
-
                     len = config.questions.length;
                     for(var i = 0; i<len; i++){
-                   // for (var i in config.questions) {
-                        // create the various templates
-                        popTmpl(config.questions[i], data);
+                        var source   = $("#smw-template").html();
+                        var template = Handlebars.compile(source);
+                        $("#" + config.questions[i]).html(template(data[config.questions[i]]));
+                        
+                        //render all the navigation items and check which one needs to be active
                         if (i > 0 && i <= config.numberOfQuestions) {
-                            // create the top navigation links
-                            renderNavigationItem(config.questions[i], i);
+                            renderNavigationItem(config.questions[i], i, (config.questions[i] === hash));
                         }
                     }
                     buildContactOption(data);
                     buildIconBar();
                     buildFunctions(data.functions);
-
+                    buildHazards(data.gevaarlijkestoffen, 0);
+                    showHideFieldsets(hash);
+                    //doNavigation();
                 },
                 error:function (xhr, type) {
-                    //   console.log('oops.');
+                    // @todo do error handling in case someone landed here that is not registered
                 }
             });
 
@@ -145,13 +151,17 @@ var brandweer = function () {
             doNavigation();
             toggleInfo();
             contactInformation();
-
-
         },
-
+        buildHazards = function (data, index) {
+            for( i = 0; i< data.functions.length; i++){
+                $('#gevaarlijkestoffen-select'+ index).append('<option value="' + 
+                        data.functions[i].value + '">' + 
+                        data.functions[i].name + '</option>');
+            }
+        },
         buildFunctions = function (data) {
             // get us the functions
-            data = data[1].mainfunction;
+            data = data.functions;
             var store = [];
 
             // iterate over them
@@ -159,10 +169,10 @@ var brandweer = function () {
             for( i = 0; i<len; i++){
            // for (var i in data) {
                 // build us an option for each function
-                $('#mainSelect').append('<option value="' + data[i].value + '">' + data[i].name + '</option>');
+                $('#functions-select0').append('<option value="' + data[i].value + '">' + data[i].name + '</option>');
                 // get the subfunctions
 
-                var sub = data[i].subFunction;
+                var sub = data[i].subfunctions;
                 len = sub.length;
                 for( j = 0; j<len; j++){
                     // and put them into the next select
@@ -178,25 +188,22 @@ var brandweer = function () {
         },
 
         showCorrectSubFunctions = function (store) {
-            var sub = $('#subSelect');
+            var sub = $('#functions-subselect0');
 
             sub.find('option').remove();
-            $('body').on('change', '#mainSelect', function () {
-                $('#subSelect').find('option').remove();
+            $('body').on('change', '#functions-select0', function () {
+                $('#functions-subselect0').find('option').remove();
                 if ($(this).val() !== '0') {
                     // @todo refactor to look into the json sub structure.
                     var val = $(this).val().charAt(0);
                     sub.removeAttr('disabled');
                     sub.append('<option>Kies een deelfunctie</option>');
-                    //  console.log(val.charAt(0));
                     for (var i in store) {
                         if (i.charAt(0) === val) {
                             sub.append('<option value="' + i + '">' + store[i] + '</option>');
                         }
                     }
-
                 } else {
-                    console.log('none');
                     $('#subSelect').find('option').remove();
                 }
                 $('#subSelect').focus();
@@ -225,51 +232,14 @@ var brandweer = function () {
                 $(this).closest('fieldset').toggleClass('info');
             });
         },
-        render = function (tmpl_name, tmpl_data) {
-            // if we don't have a cache
-            if (!render.tmpl_cache) {
-                // create it as an object.
-                render.tmpl_cache = {};
+        renderNavigationItem = function (arg, i, active) {
+            if(!active){
+                config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
+            } else {
+                config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate active"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
             }
-
-            // if it doesn't have a certain element
-            if (!render.tmpl_cache[tmpl_name]) {
-                // where do we get it from, the template that is
-                var tmpl_url = config.tmpl_dir + '/' + tmpl_name + '.tmpl';
-
-                // set up a var for the data
-                var tmpl_string;
-                $.ajax({
-                    url:tmpl_url,
-                    method:'GET',
-                    async:false,
-                    success:function (data) {
-                        // and fill it with the data we get.
-                        tmpl_string = data;
-                    }
-                });
-
-                // create the cache var.
-                render.tmpl_cache[tmpl_name] = _.template(tmpl_string);
-            }
-
-            // and give it back
-            return render.tmpl_cache[tmpl_name](tmpl_data);
-
         },
-        popTmpl = function (arg, msg) {
-
-            var src = render(arg, {}),
-                tmp = Handlebars.compile(src);
-
-            $('#' + arg).append(tmp(msg));
-
-        },
-        renderNavigationItem = function (arg, i) {
-            config.mainNavigation.append('<li class="top-navigation-item"><a href="#' + arg + '" class="navigate"><abbr title="' + arg + '">' + i + '</abbr></a></li>');
-
-        },
-    // helpers shizzle
+        // helpers
         setMapSize = function () {
 
             var headerHeight = config.headerHeight,
@@ -288,14 +258,9 @@ var brandweer = function () {
             }
             elem.removeClass(config.css.active);
         },
-
-    // history
         getHistory = function () {
             // if we have history support
-
             if (window.history && window.history.pushState) {
-                //  showHideFieldsets('#intro');
-                // listen to the popstate event.
                 window.addEventListener("popstate", function () {
                     // get the correct question
                     var loc = location.hash;
@@ -303,6 +268,7 @@ var brandweer = function () {
                     if (!loc) {
                         // set the first one
                         loc = '#intro';
+                        
                     }
                     // show the correct question
                     showHideFieldsets(loc);
@@ -331,7 +297,6 @@ var brandweer = function () {
             //$('.fields').empty().remove();
             $('body').on('click', '#addContact', function (e) {
                 e.preventDefault();
-//                console.log('click addcontact');
                 var offSet = config.numberOfContacts * 40;
                 ci = $('<div class="ci" style="margin-top: ' + offSet + 'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
                 fields = $(this).parent().find('.f-container');
@@ -365,50 +330,65 @@ var brandweer = function () {
         },
 
         showHideFieldsets = function (elem) {
-            // check to see if we need access to the map.
-
             if (elem.charAt(0) !== '#') {
-                // if it has no #, add one.
                 elem = '#' + elem;
             }
-            // get rid of the # for this.
+            
             var q = config.questions[getCurrentQuestion(elem.substring(1))];
+            // find q from the list of questions and set the corresponding top menu item.
             switch (q) {
-                case 'bhv':
                 case 'intro':
-                case 'personalInformation':
-                case 'exercise':
-                case 'final':
-                    // hide the map
+                    $('#prev').hide();
+                    $('#prev').html('<span>Vorige</span>');
+                    $('#confirm').html('<span>Eerste vraag</span>');
+                    if($('#confirm').css('display') !== 'none'){
+                        $('#confirm').show();
+                    }
                     config.body.addClass(config.css.hideMap);
-                    // $('#mask').show();
                     break;
-
+                case 'exercise':
+                case 'bhv':
+                case 'contactInformation':
+                case 'personalInformation':
+                    $('#prev').html('<span>Vorige</span>');
+                    $('#confirm').html('<span>Volgende vraag</span>');
+                    if($('#confirm').css('display') !== 'none'){
+                        $('#confirm').show();
+                    }
+                    $('#prev').show();
+                    config.body.addClass(config.css.hideMap);
+                    break;
+                case 'final':
+                    if($('#confirm').css('display') === 'none'){
+                        $('#confirm').hide();
+                    }
+                    config.body.addClass(config.css.hideMap);
+                    break;
+                case 'gevaarlijkestoffen':
+                    $('#gevaarlijkestoffen-form0').hide();
+                    $('#gevaarlijkestoffen-subselect0').parent().hide();
+                    $("label[for='gevaarlijkestoffen-select0']").text('Categorie');
+                    $("#gevaarlijkestoffen-select0 option[name='default']").text('Kies een categorie');
+                case 'gasflessen':
+                    $('#gasflessen-form0').hide();
                 default:
-                    // show the map.
+                    $('#prev').html('<span>Vorige</span>');
+                    $('#confirm').html('<span>Volgende vraag</span>');
+                    if($('#confirm').css('display') !== 'none'){
+                        $('#confirm').show();
+                    }
+                    $('#prev').show();
                     config.body.removeClass(config.css.hideMap);
-                    //  console.log('set marker?')
                     break;
-
             }
-            // hide all fieldsets
             deActivate();
-            // show the correct one.
             activate($(elem));
-
             // reset the navigation classes
             deActivate($('.navigate'));
-            // and activate the correct one...
             activate($('.navigate[href="' + elem + '"]'));
-
             // push the element into the history stack.
             setHistory(elem);
-
         },
-//        disableElement = function(elem){
-//            // disable an element.
-//            elem.attr('disabled','disabled');
-//        },
         getActiveFieldset = function () {
             // tell us which fieldset is active
             var activeId = $('fieldset.active').attr('id');
@@ -444,18 +424,14 @@ var brandweer = function () {
             // show the correct fieldset, hide the others and update the history.
             showHideFieldsets(loc);
         },
-
         bottomNavigation = function (elem) {
-
-            console.log('bottom');
             // get the place of the current question in the array.
             var i = getCurrentQuestion(getActiveFieldset());
-
-
             // depending on which button we press
             switch (elem.id) {
                 case "confirm":
                 case "confirmAndNext":
+                case "p_confirm":
                     goNextAndSave(i);
                     break;
 
@@ -473,7 +449,7 @@ var brandweer = function () {
             }
         },
 
-        goNextAndSave = function (i) {
+        goNextAndSave = function(i) {
             // we need to save here
             // build an array for the question at hand
             config.answers[getActiveFieldset()] = [];
@@ -487,12 +463,10 @@ var brandweer = function () {
                 // place 'm in to the array.
                 config.answers[getActiveFieldset()][it] = v;
             });
-            //   console.log(i);
             saveData(config.answers);
             // @todo check if we are not at the end.
-
             // go forward
-            showHideFieldsets(config.questions[i + 1]);
+            showHideFieldsets(config.questions[i +1]);
         },
 
         setData = function (p) {
@@ -526,12 +500,10 @@ var brandweer = function () {
 
         doNavigation = function () {
             // learn from the past. and set the correct state when we load.
-            console.log('dn');
             getHistory();
 
             // what do we listen to for navigation.
             var triggers = $('.navigate, .f-button');
-            // do stuff
             $('body').on('click', triggers, navigate);
         },
 
@@ -620,25 +592,18 @@ var brandweer = function () {
                         "single":"false"
                     };
 
-                    //console.log('testing'+options.activeId+options.map);
-
                     switch (options.activeId) {
                         case "entrances":
                             options.single = 'true';
                             addMarker(options);
                             break;
-
                         case "functions":
-//                        case "buildings":
                         case "bhv":
                         case "intro":
                         case "exercise":
                         case "final":
-                            //   addFunctions(options);
                             break;
-
                         default:
-                            console.log('default');
                             addMarker(options);
                             break;
                     }
@@ -665,20 +630,14 @@ var brandweer = function () {
         },
 
         addMarker = function (options) {
-          //  console.log('add marker ',options);
             options.numberOfMarkers = config.numberOfMarkers;
-
             var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
-
             var BrandweerIcon = L.Icon.Default.extend({
                 options:{
                     iconUrl:custom,
                     iconSize:[32, 32]
                 }
             });
-
-
-            // console.info(options);
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {draggable:'true', title:options.activeId, icon:brandweerIcon});
@@ -692,30 +651,22 @@ var brandweer = function () {
                     "building":options.activeBuilding,
                     "type":options.activeId
                 }
-            }
+            };
 
-           // console.log(a);
-          //  $('#' + options.activeId).append('<input class="f-input" id="'+options.activeBuilding+'" type="hidden" value="' + options.e.latlng + '">');
             switch (options.activeId) {
-                case "gasflessen":
-                   // answer.properties.gasAmount = '';
-                    addGasAmount(options,answer);
-                    $('.amount:last-child').find('.f-input').focus();
-                    break;
-
                 case "gevaarlijkestoffen":
-                    addDangerAmount(options);
+                case "gasflessen":
+                    addEntry(options);
                     break;
-
                 default:
-
                     break;
             }
 
             options.map.addLayer(marker);
-
             marker.on('click', function () {
                 removeMarker(options, marker);
+                // @todo the formfields should also be removed when the marker is
+                // removed
             });
             /*
              @milo
@@ -729,49 +680,21 @@ var brandweer = function () {
             config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
-        addGasAmount = function (options,answer) {
-            // make sure the fieldset where we will put the input is visible
-            showCurrentFieldset(options.activeId);
-
-            // create the input
-            var amount = '<div class="amount f-container" data-id="' +
-                options.numberOfMarkers +
-                '"><label class="f-label">Aantal gasflessen op deze locatie</label><input type="number" name="gf" id="gf'+config.numberOfMarkers+'-'+options.activeBuilding+'" class="f-input"> </div>';
-            // put it in the fieldset.
-            $('#' + options.activeId).append(amount);
-            // up the ante
-            config.numberOfMarkers = config.numberOfMarkers + 1;
-            $('body').on('blur','.amount:last-child .f-input',function(){
-
-                answer.properties.gasAmount = $(this).val();
-
-            });
-        },
-
-        addDangerAmount = function (options) {
-            // make sure the fieldset where we will put the input is visible
-            showCurrentFieldset(options.activeId);
-            var num = options.numberOfMarkers,
-                kind = '<div class="kind" data-id="' +
-                    num +
-                    '"><label class="f-label">Wat voor een stof is het?</label><select class="f-select" id="danger-' +
-                    num +
-                    '"><option>Selecteer een gevaarlijke stof</option></select> </div>',
-                amount = '<div class="amount" data-id="' +
-                    options.numberOfMarkers +
-                    '"><label class="f-label">Hoeveel gevaarlijke stoffen.</label><input type="text" class="f-input"> </div>',
-                select = $('#danger-' + num);
-
-            $('#' + options.activeId).append(kind + amount);
-            len = config.gevaarlijkestoffen.length;
-            for(var i = 0; i<len; i++){
-//            for (var i in config.gevaarlijkestoffen) {
-                var opt = '<option value="' + config.gevaarlijkestoffen[i] + '">' + i + '</option>';
-                $('#danger-' + num).append(opt);
-//                console.log(opt);
+        addEntry = function (options) {
+            var templateid = '#' + options.activeId + '-form0';
+            if(options.numberOfMarkers === 0){
+                //show the first form with id ending in 0
+                $(templateid).show();
+                $(templateid).find('.f-input').last().focus();
+            } else {
+                //clone the form with id ending in 0, change id's and append
+                config.numberOfMarkers = config.numberOfMarkers + 1;
+                var formClone = $(templateid).clone();
+                formClone.attr('id', options.activeId + '-form' + options.numberOfMarkers);
+                $('#' + options.activeId).append(formClone);
+                formClone.show();
+                formClone.find('.f-input').last().focus();
             }
-            $('#danger-' + options.numberOfMarkers).focus();
-            config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
         showCurrentFieldset = function (it) {
@@ -797,8 +720,10 @@ var brandweer = function () {
              I have altered the code to reflect these changes.
              */
             var thiz = $('#map'),
-                it = data.buildings[0].id,
-                coordz = data.buildings[0].geometry.coordinates;
+                it = data.buildings.features[0].bag_vbo,
+                coordz = data.buildings.features[0].geometry.coordinates;
+                //invert coordz
+                coordz = [coordz[1],coordz[0]];
 
 
             window.onresize = function (event) {
@@ -834,54 +759,63 @@ var brandweer = function () {
                     maxZoom:18
                 });
             map.addLayer(cloudmade);
-
-            $.ajax({
-                type:'GET',
-                //url:'/api/bag/adres/796010000436350',
-                url:'js/json/adres.json',
-                dataType:'json',
-                success:function (data) {
-                    $.each(data.features, function (index, item) {
-                        if (item.geometry) {
-                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-                            //   console.log(item.properties);
-                        }
-                        /* @wnas this is the point where the address information should be transfered to the input boxes.
-                         basically this means writing the address into personalInformation. We could also generate data.json
-                         directly from a database and have the address constructed in the process. Which one is in your favour?
-                         */
-                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
-                    });
-
-                    new L.GeoJSON(data, {
-                        style:config.css.map.activeStyle,
-                        onEachFeature:onEachFeature
-                    }).addTo(map);
-                }
-
+            var adres = data.buildings.features[0].bag_vbo;
+            map.on('click',function (e) {
+                var options = {
+                    "e": e,
+                    "map": config.map,
+                    "activeId": getActiveFieldset()
+                    };
+                addMarker(options);
             });
-            $.ajax({
-                type:'GET',
-                //url:'/api/bag/panden/796010000436352',
-                url:'js/json/bag.json',
-                dataType:'json',
-                success:function (data) {
-                    $.each(data.features, function (index, item) {
-                        if (item.geometry) {
-                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-                        }
-                    });
-                    new L.GeoJSON(data, {
-                        style:config.css.map.activeStyle,
-                        onEachFeature:onEachFeature
-                    }).addTo(map);
-                }
-
-            });
-//            map.on('click', function (e) {
+//            $.ajax({
+//                type:'GET',
+//                //url:'/api/bag/adres/' + adres + '?srid=28992',
+//                url:'js/json/adres-815010000001910.json',
+//                dataType:'json',
+//                success:function (data) {
+//                    $.each(data.features, function (index, item) {
+//                        if (item.geometry) {
+//                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+//                        }
+//                        /* @wnas this is the point where the address information should be transfered to the input boxes.
+//                         basically this means writing the address into personalInformation. We could also generate data.json
+//                         directly from a database and have the address constructed in the process. Which one is in your favour?
+//                         */
+//                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
+//                    });
 //
+//                    new L.GeoJSON(data, {
+//                        style:config.css.map.activeStyle,
+//                        onEachFeature:onEachFeature
+//                    }).addTo(map);
+//                }
 //
 //            });
+            $.ajax({
+                type:'GET',
+                url:'/api/bag/panden/' + adres+ '?srid=28992',
+                //url:'js/json/panden-815010000001910.json',
+                dataType:'json',
+                success:function (data) {
+                    $.each(data.features, function (index, item) {
+                        if (item.geometry) {
+                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
+                        }
+                    });
+                    new L.GeoJSON(data, {
+                        style: function(feature) {
+                            if (feature.properties.selected) {
+                                return config.css.map.selectedStyle;
+                            } else {
+                                return config.css.map.activeStyle;
+                            }
+                        },
+                        onEachFeature:onEachFeature
+                    }).addTo(map);
+                }
+
+            });
             return map;
         };
     return {
