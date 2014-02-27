@@ -34,18 +34,80 @@
     li {list-style: none;}
   }
   & button#hideContact {
-    .close-button;
+    width: 30px;
+    height: 30px;
+    .default-icon-style;
+    .icons;
+    .icon-close;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
   }
 }
 .ci {
+  .f-label {
+    margin: 0;
+    padding: 0;
+    }
   .default-pane-style;
-  float: right;
-  margin: -10px -328px 0 0;
-  width: 260px;
+  background: @background-color;
+  position:absolute;
+  left: 110%;
+  top:0;
+  width: 130%;
+  
+  & .eraseCI {
+    float: right;
+    width: 30px;
+    height: 30px;
+    .default-icon-style;
+    .icons;
+    .icon-close;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
+  }
+  & .hideCI {
+    float: left;
+    width: 90%;
+    height: 30px;
+    margin-bottom: 10px;
+    .default-icon-style;
+    .icons;
+    .icon-arrow-up;
+    .icons-hover;
+    & span {
+      position: absolute;
+      left: -999px;
+    }
+  }
+  & input.f-input {
+    margin: 1px 0 0 0;
+    border: 0;
+    border-bottom: 1px solid fade(@theme-color,10%);
+    background: fade(@theme-color,5%);
+  }
 }
+@media screen and (max-width: 600px) {
+    .ci {
+      left: 0;
+      width:96%;
+      & .hideCI {
+        width: 90%;
+      }
+    }
+  }
+
 html {
   height: 100%;
 
+}
+h2 {
+  margin:.5em 0;
 }
 .building {
   outline: 1px solid red;
@@ -68,16 +130,20 @@ div#questions {
 
 fieldset {
   border: 0;
+  padding-bottom: 20px;
+  margin-bottom: 59px;
   &:extend(.default-pane-style);
   @media only screen and(max-width:600px) {
     box-shadow: none;
     border-radius: 0;
    }
   
-  padding-bottom: 20px;
   border-top: none;
   & h2,p {
     padding: 0 4.5%;
+  }
+  & p {
+    padding-bottom: 12px;
   }
   & ul {
     padding: 0 4.5%;
@@ -110,16 +176,14 @@ fieldset {
     height: 20px;
     min-height: 10px;
     overflow: hidden;
-    h2 {
+    & h2.main {
       position:absolute;
       color:#fff;
       background-color: #333;
       font-size: 1em;
       padding: 4px;
     }
-    p {line-height: 5em;}
   }
-  
 }
 
 
@@ -135,11 +199,10 @@ fieldset {
   }
 }
 
+// iconbar
 
-
-// inconbar
-
-div.iconBar {
+.iconBar {
+  border-bottom: 1px solid #ddd;
   @media only screen and(max-width:600px) {
     padding: 0 0.7em 0 0;
   }
@@ -152,18 +215,31 @@ div.iconBar {
     position: absolute;
     left: -999em;
   }
-  width: 30px;
+  width: auto;
+  padding-right: 20px;
+//  display: inline-block;
   height: 30px;
   .icons;
   .default-icon-style;
   .icon-arrow-up;
+  &:hover {
+      background: none;
+      border: 0;
+  }
   @media only screen and(max-width:600px) {
-  width: 79%;}
+    width: 74%;
+  }
   border: 0;
 }
 .hideMe .hideFieldset {
+  padding-right:0;
+  padding-left: 20px;
   .icons;
   .icon-arrow-down;
+  &:hover {
+      background: none;
+      border: 0;
+  } 
 }
 
 .revealInformation,
@@ -176,20 +252,33 @@ div.iconBar {
   cursor: pointer;
   .default-icon-style;
   .icons;
-  .icon-contact;
   .icons-hover;
-  
   // don't need this span
   span {display: none;}
+}
+.contact {
+  .icon-contact;
 }
 button.revealInformation {
   .icon-info;
 }
 
-
-
-
-.hide,
-.null {
-  display:none;
+.revealInformation {
+  overflow: hidden;
+  text-indent: 40px;
+  &:before {
+    margin-left: -40px;
+  }
 }
+
+button#addContact {
+  margin: 20px 0 0 20px;
+  width: 30px;
+    height: 30px;
+  .default-icon-style;
+  .icons;
+  .icons-hover;
+  .icon-add;
+  & span {display: none;}
+}
+

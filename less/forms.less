@@ -1,11 +1,12 @@
 @theme-color: teal;
 
+
+
 .f-input,
 .f-select,
 .f-button {
   box-sizing: border-box;
 }
-
 
 .f-form {
 
@@ -15,24 +16,62 @@
     padding: .5rem;
     border-bottom: @input-border;
   }
-  .f-container {
-    padding: .5rem 0;
+  
+  div.f-container {
+    float: left;
     position: relative;
-  }
-  .f-label {
     width: 90%;
-
-    display: block;
-    padding: @padding;
-    color: @theme-color;
+    padding: 1.3em 0.3em 0.1em;
+    border-bottom: 1px solid fade(@theme-color,20%);
     margin: 0 4.5%;
-
   }
-  .f-required .f-label {
-    &::after {
-      content: '*';
+  input.f-input, textarea {
+    display: block;
+    width: 90%;
+    border: 0;
+    outline: 0;
+    resize: none;
+ 
+    & + label.f-label {
+      position: absolute;
+      top: 10px;
+      transition: top 0.7s ease, opacity 0.7s ease;
+      opacity: 0;
+
+      font-size: 0.7em;
+      font-weight: 600;
+      margin-left: 0.5em;
+    }
+    &:valid + label.f-label {
+      opacity: 1;
+      top: 5px;
+      color: lighten(@foreground-color,70%);
+    }
+    &:focus + label.f-label {
+      color: @theme-color;
     }
   }
+  // specific for name tags at contact information
+  .ci {
+    & .f-label {
+    color:@theme-color;
+    font-size: 0.7em;
+    font-weight: 600;
+    margin-left: 0.5em;
+    }
+    &.hide {
+      & .hideCI:before {
+        display: block;
+        .icon-arrow-down;
+        margin-top: 10px;
+      }
+      & .f-label {
+      display: none;
+      }
+    }
+  }
+  
+  
   .f-readonly {
     color: @theme-color;
     & .f-input {
@@ -77,29 +116,23 @@
 
 .f-input,
 .f-select {
-  width: 90%;
   padding: @padding;
-  border: @input-border;
-  border-bottom: 0;
-  border-right: 0;
-  margin: 5px 4.5%;
+  border: 0;
+  padding: 3px 6px 6px 10px;
+  background: none;
+  width: 100%;
 
     &:focus {
       outline: none;
-      background-color: lighten(@secondary-color, 2%);
     }
-
     &:disabled {
       border-color: #ccc;
       color: #ccc;
     }
-
     &:readonly {
       border-width: 0 0 1px;
     }
-
-  }
-
+}
 .f-day-select {
   width: 25%;
 }
@@ -122,11 +155,15 @@
       background-color: #000;
       .radio-checkbox-checked-before;
     }
-
   }
-
 }
 
+fieldset#bhv .f-container {
+    border: 0;
+    & label {
+    margin: 10px 0;
+    }
+  }
 .f-inner-label {
   padding: @padding;
   &::before {  .radio-checkbox-before;
@@ -137,19 +174,16 @@
   border-radius: 1em;
 }
 
-.f-button-bar:extend(blockpadding) {
-  position: fixed;
-  bottom: 0;
-  z-index: 10;
-  width: 100%;
-  padding: 0;
-  
-  background: rgba(255, 255, 255, .7);
-  border: rgba(255,255,255,.9);
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  
-}
+
+
+
+
+
+
+
+
+// basic buttons for website
+
 .f-button {
   padding: .6em 1em;
   text-decoration: none;
@@ -160,57 +194,61 @@
   color: black;
   width: 220px;
   margin: 10px 30px;
-
+  
   font-family: helvetica;
   font-weight: 700;
   font-size: 1em;
   float: right;
   background: rgba(0, 255, 0, .2);
-  &.f-button-secondary {
-    background: rgba(255, 0, 0, .2);
-    border: 1px solid rgba(255, 0, 0, .3);
-    float: left;
+  // button secondary is the red colored button for erase and back
+    &.f-button-secondary {
+      background: rgba(255, 0, 0, .2);
+      border: 1px solid rgba(255, 0, 0, .3);
+      float: left;
+      &:hover {
+        background: rgba(255, 0, 0, .4);
+      }
+    }
+  // button secondary is the red colored button for erase and back
     &:hover {
-      background: rgba(255, 0, 0, .4);
+      background: rgba(0, 205, 0, .4);
     }
-  }
-  &:hover {
-    background: rgba(0, 205, 0, .4);
   }
 }
 
-  }
-
-@media screen and (max-width: 580px) {
-  .f-button-bar {
-    
-  }
-  .f-form .f-button-secondary {
-    width:  16%;
-    float: left;
-    margin: 10px 0 10px 2%;
-    & span {
-      display: none;
-      text-indent: -11111px;
+// styling for buttons within the field
+  & .multiple-select,
+  & #contactInformation,
+  & #personalInformation {
+    .f-button {
+      width: 90%;
+      float: left;
+      margin: 20px 20px 0 20px;
+      text-align: centered;
+      &:after {
+        content: "a";
+        font-family: 'iconsregular';
+        font-size: 3.5em;
+        font-weight: 100;
+        
+        line-height: 0;
+        
+        float: right;
+        margin: 9px -30px 0 0;
+        padding: 0 10px;
+        transform:rotate(90deg);
+        -webkit-transform:rotate(90deg);
+        -moz-transform:rotate(90deg);
+        -o-transform:rotate(90deg);
+        -ms-transform:rotate(90deg);
+      }
     }
-    &:after {
-    content: "X";
-    color: #000;
-    }
   }
-  .f-form .f-button-primary {
-    width:  78%;
-    margin-right: 30px;
-    margin: 10px 2% 10px 0;
-  }
-  .f-form .f-button {
-    font-size: 1em;
-//    width: 97.5%;
-    
 
 
-  }
-}
+
+// specific buttons for main navigation on the bottom you can find at navigate.less
+
 
 
 

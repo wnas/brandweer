@@ -113,10 +113,23 @@ blockpadding {
 .icons-hover {
   &:hover {
     &:before {
-      color: @foreground-color;
+      color: @background-color;
     }
   }
 }
+
+// basic panes for icons
+.default-icon-style {
+  background-color: fade(@background-color,0%);
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  &:hover {
+    background-color: fade(@theme-color,70%);
+    border: 1px solid fade(#ddd,10%);
+  }
+}
+
+// icons
   
 // arrows, for show and hide elements
 .icon-arrow-up {&:before {content:'a';line-height:0.15em;}}
@@ -127,36 +140,29 @@ blockpadding {
   -o-transform:rotate(180deg);
   -ms-transform:rotate(180deg);
   }
+.icon-close {
+  &:before {
+    content:'x';
+    line-height: 0.6em;
+    }
+    &:hover {
+      &:before{background: red;width: 30px height: 30px;display: block;}
+    }
+  }
 
 // questionmark, information
 .icon-info {&:before {content:'?';line-height: 0.55em;}}
 // phone horn, contact
 .icon-contact {&:before {content:'t';line-height: 0.55em;}}
+.icon-add {&:before {content:'+';line-height: 0.55em;}}
 
 .icon-logo {&:before {content:'l';line-height: 0.65em;}}
 .icon-brandweer {&:before {content:'b';line-height: 0.65em;}}
 
-// basic panes for icons
-.default-icon-style {
-  background-color: fade(@background-color,0%);
-  border-radius: 4px;
-  border: 1px solid fade(@theme-color,70%);
-}
 
-// icons
 
-.close-button {
-    float:right;
-    right: 0px;
-    top: 5px;
-    width: 20px;
-      height: 20px;
-      background: #ff0000;
-      color: #ff0000;
-      border: none;
-      border-radius: 30px;
-      background: url(../img/close-button.svg) no-repeat center right;
-      text-indent: -111111px;
-      box-shadow: 2px 2px 4px rgba(0,0,0,.4);
-      cursor: pointer;
-}
+
+
+
+
+

@@ -1,24 +1,32 @@
 {
 
     "intro":{
-        "header":"SafetyMaps Web",
-        "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
+        "copy":{
+            "header":"SafetyMaps Web",
+            "body":"<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>"
+        }
+
     },
     "buildings":[
         {
             "id":"bagId",
-            "header":"Gebouwen",
-            "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
             "geometry":{
                 "type":"point",
                 "coordinates":[51.690599, 5.3064146]
+            },
+            "copy":{
+                "header":"Gebouwen",
+                "body":"<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
+                "help":"<p>Try-hard Godard beard authentic PBR&B sapiente banh mi, swag jean shorts deep v butcher. Anim chambray mumblecore post-ironic Banksy sriracha, yr pop-up pork belly. Single-origin coffee XOXO laborum, dolor occupy fingerstache scenester mollit. Qui wolf dolore butcher slow-carb Etsy, occupy organic before they sold out banh mi. Fap ut velit magna, keytar swag bespoke quis tattooed qui synth forage seitan. Reprehenderit pop-up proident, tousled ex shabby chic ethnic flannel Bushwick ugh you probably haven't heard of them direct trade hoodie. Whatever try-hard Schlitz, nisi readymade Tumblr American Apparel cray organic Helvetica paleo.</p><p>Esse laboris 3 wolf moon, banh mi before they sold out duis slow-carb letterpress. Paleo scenester kitsch mixtape, beard tattooed synth drinking vinegar aesthetic culpa Truffaut four loko. Blog readymade pariatur, Terry Richardson trust fund aliqua PBR. Aliqua reprehenderit before they sold out sapiente incididunt forage, labore assumenda art party. Terry Richardson chambray disrupt messenger bag, Echo Park semiotics fingerstache sint Bushwick vinyl accusamus Portland meggings. +1 keytar deep v, sriracha Austin laborum exercitation est craft beer sustainable proident dolor. Shabby chic yr beard, before they sold out sed sapiente craft beer 8-bit.</p>"
             }
+
         }
     ],
     "personalInformation":[
         {"copy":{
             "header":"Persoonlijke informatie",
-            "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>"
+            "body":"<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>",
+            "help":"help"
         }
         },
         {"fields":[{
@@ -94,34 +102,36 @@
         {
             "copy":{
                 "header":"Contact informatie",
-                "body":"<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>"
-                }
-            },
-            {"fields":[
+                "body":"<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>",
+                "help":"help"
+            }
+        },
+        {
+            "fields":[
                 [
                     {
-                        "name":"firstname",
+                        "name":"Voornaam",
                         "type":"text",
                         "value": "",
                         "placeholder":"Voornaam",
                         "required":"f-required"
                     },
                     {
-                        "name":"surname",
+                        "name":"Achternaam",
                         "type":"text",
                         "value": "",
                         "placeholder":"Achternaam",
                         "required":"f-required"
                     },
                     {
-                        "name":"email",
+                        "name":"Email-adres",
                         "type":"email",
                         "value":"",
                         "placeholder":"jan@provider.nl",
                         "required":""
                     },
                     {
-                        "name":"telephone",
+                        "name":"Telefoonnummer",
                         "type":"tel",
                         "value":"",
                         "placeholder":"06 12345678",
@@ -135,7 +145,8 @@
         {
             "copy":{
                 "header":"Functie",
-                "body":"<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>"
+                "body":"<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>",
+                "help":"help"
             }
         },
         {
@@ -223,8 +234,11 @@
     "entrances":[
         {
             "building":"bagId",
-            "header":"Hoofdingang",
-            "body":"<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
+            "copy":{
+                "header":"Hoofdingang",
+                "body":"<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
+                "help":"help"
+            },
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -240,8 +254,12 @@
     "sleutelbuis":[
         {
             "building":"bagId",
-            "header":"sleutelbuis",
-            "body":"<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
+            "copy":{
+                "header":"Sleutelbuis",
+                "body":"<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
+                "help":"help"
+            },
+
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -253,8 +271,12 @@
     "gasafsluiter":[
         {
             "building":"bagId",
-            "header":"Gasafsluiter",
-            "body":"<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
+            "copy":{
+                "header":"Gasafsluiter",
+                "body":"<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
+                "help":"help"
+            },
+
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -266,6 +288,11 @@
     "hoofdSchakelaarElektriciteit":[
         {
             "building":"bagId",
+            "copy":{
+                "header":"Hoofdschakelaar electriciteit",
+                "body":"<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
+                "help":"help"
+            },
             "header":"Hoofdschakelaar electriciteit",
             "body":"<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
             "geometry":{
@@ -279,8 +306,12 @@
     "hoofdafsluiterwater":[
         {
             "building":"bagId",
-            "header":"Hoofdafsluiter water",
-            "body":"<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
+            "copy":{
+                "header":"Hoofdafsluiter water",
+                "body":"<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
+                "help":"help"
+            },
+
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -292,8 +323,9 @@
     "gasflessen":[
         {
             "copy":{
-                "header":"gasflessen",
+                "header":"Gasflessen",
                 "body":"<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>"
+                ,"help":"help"
             }
         },
         {
@@ -329,6 +361,7 @@
             "copy":{
                 "header":"Gevaarlijke stoffen",
                 "body":"<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie. </p>"
+                ,"help":"help"
             }
         },
         {
@@ -362,8 +395,11 @@
     "drogestijgleiding":[
         {
             "building":"bagId",
-            "header":"Droge stijgleiding",
-            "body":"<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart...</p>",
+            "copy":{
+                "header":"Droge stijgleiding",
+                "body":"<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart...</p>",
+                "help":"help"
+            },
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -375,8 +411,12 @@
     "rwa":[
         {
             "building":"bagId",
-            "header":"Automatische rookluiken",
-            "body":"<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
+            "copy":{
+                "header":"Automatische rookluiken",
+                "body":"<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
+                "help":"help"
+            },
+
             "geometry":{
                 "type": "Point",
                 "coordinates": [
@@ -388,21 +428,33 @@
     "verdiepingen":[
         {
             "building":"bagId",
-            "header":"Verdiepingen",
-            "body":"<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+            "copy":{
+                "header":"Verdiepingen",
+                "body":"<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+                "help":"help"
+            },
+
             "amount":"1"
         }
     ],
     "bhv":{
-        "header":"BHV",
-        "label":"Heeft u een BHV-organisatie?",
+        "copy":{
+            "header":"BHV",
+            "body":"Heeft u een BHV-organisatie?",
+            "help":"help"
+        },
+
         "value":""
     },
     "people":[
         {
             "building":"bagId",
-            "header":"Aanwezigen",
-            "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
+            "copy":{
+                "header":"Aanwezigen",
+                "body":"<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
+                "help":"help"
+            },
+
             "occupants":[
                 [
                     {
@@ -459,14 +511,21 @@
         }
     ],
     "exercise":{
-        "header":"Brandweer oefening",
-        "body":"<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+        "copy":{
+            "header":"Brandweer oefening",
+            "body":"<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+            "help":"help"
+        },
+
         "question":"Ik wil wel worden benaderd",
         "value":"nee"
     },
     "final":{
-        "header":"Dank voor uw medewerking",
-        "body":"<p>Hartelijk dank voor uw medewerking.</p>"
+        "copy":{
+            "header":"Dank voor uw medewerking",
+            "body":"<p>Hartelijk dank voor uw medewerking.</p>",
+            "help":"help"
+        }
     },
     "information":{
         "personalInformation": {
@@ -483,7 +542,7 @@
             "body":"bodytest"
         },
         "buildings": {
-            "header":"gebouwen",
+            "header":"Gebouwen",
             "body":"<p>De gebruiker kan nu op de grijze BAG-Panden klikken. Bij elke klik wordt de vraag gesteld om deze toe te voegen aan de kaart voor de brandweer. Het object wordt groen gekleurd als deze met “ja” wordt beantwoord.</p>"      },
         "functions": {
             "header":"gebruiks functies",
