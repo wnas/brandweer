@@ -119,7 +119,7 @@ var brandweer = function () {
                 success:function (data) {
                     // if we have data
                     config.globalData = data;
-                    
+
                     // draw me a map
                     doMaps(data);
 
@@ -129,7 +129,7 @@ var brandweer = function () {
                         var source   = $("#smw-template").html();
                         var template = Handlebars.compile(source);
                         $("#" + config.questions[i]).html(template(data[config.questions[i]]));
-                        
+
                         //render all the navigation items and check which one needs to be active
                         if (i > 0 && i <= config.numberOfQuestions) {
                             renderNavigationItem(config.questions[i], i, (config.questions[i] === hash));
@@ -303,7 +303,7 @@ var brandweer = function () {
                 fields.each(function () {
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
-                        par = $('<label class="f-label">' + l + '<input type="text" class="f-input" readonly value="' + v + '"></label>');
+                        par = $('<label class="f-label">' + l + '<input tabindex="-1" type="text" class="f-input" readonly value="' + v + '"></label>');
                     ci.append(par);
                     $(this).find('.f-input').val('');
                 });
@@ -313,6 +313,7 @@ var brandweer = function () {
 
                 $(this).parent().append(ci);
                 config.numberOfContacts = config.numberOfContacts + 1;
+                $('#contactInformation-firstname0').focus();
             });
 
             $('body').on('click', '.eraseCI', function () {
@@ -339,8 +340,8 @@ var brandweer = function () {
             switch (q) {
                 case 'intro':
                     $('#prev').hide();
-                    $('#prev').html('<span>Vorige</span>');
-                    $('#confirm').html('<span>Eerste vraag</span>');
+                    $('#prev').html('Vorige');
+                    $('#confirm').html('Eerste vraag');
                     if($('#confirm').css('display') !== 'none'){
                         $('#confirm').show();
                     }
@@ -350,8 +351,8 @@ var brandweer = function () {
                 case 'bhv':
                 case 'contactInformation':
                 case 'personalInformation':
-                    $('#prev').html('<span>Vorige</span>');
-                    $('#confirm').html('<span>Volgende vraag</span>');
+                    $('#prev').html('Vorige');
+                    $('#confirm').html('Volgende vraag');
                     if($('#confirm').css('display') !== 'none'){
                         $('#confirm').show();
                     }
@@ -372,8 +373,8 @@ var brandweer = function () {
                 case 'gasflessen':
                     $('#gasflessen-form0').hide();
                 default:
-                    $('#prev').html('<span>Vorige</span>');
-                    $('#confirm').html('<span>Volgende vraag</span>');
+                    $('#prev').html('Vorige');
+                    $('#confirm').html('Volgende vraag');
                     if($('#confirm').css('display') !== 'none'){
                         $('#confirm').show();
                     }
@@ -397,6 +398,8 @@ var brandweer = function () {
         },
         navigate = function (e) {
             // stop what you are doing
+            console.log(e.target.tagName);
+
             e.preventDefault();
 
             // depending on what we pressed
@@ -452,17 +455,17 @@ var brandweer = function () {
         goNextAndSave = function(i) {
             // we need to save here
             // build an array for the question at hand
-            config.answers[getActiveFieldset()] = [];
-            // find the inputs where the values are in.
-
-            $('#' + getActiveFieldset()).find('.f-input, .f-select').each(function (i) {
-                // what is it's value
-                var v = $(this).val(),
-                // and id...
-                    it = $(this).attr('id');
-                // place 'm in to the array.
-                config.answers[getActiveFieldset()][it] = v;
-            });
+//            config.answers[getActiveFieldset()] = [];
+//            // find the inputs where the values are in.
+//
+//            $('#' + getActiveFieldset()).find('.f-input, .f-select').each(function (i) {
+//                // what is it's value
+//                var v = $(this).val(),
+//                // and id...
+//                    it = $(this).attr('id');
+//                // place 'm in to the array.
+//                config.answers[getActiveFieldset()][it] = v;
+//            });
             saveData(config.answers);
             // @todo check if we are not at the end.
             // go forward
@@ -557,6 +560,7 @@ var brandweer = function () {
                 config.activeBuilding = gid;
                 layer.setStyle(config.css.map.currentStyle);
                 if (buildingQuestion) {
+                    console.log('building question');
                     if (!feature.properties.selected) {
                         feature.properties.selected = true;
                         if (feature.geometry.type !== "Point") {
