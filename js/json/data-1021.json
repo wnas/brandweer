@@ -1,558 +1,489 @@
 {
-  "intro": {
-    "name": "intro",
-    "copy": {
-      "header": "SafetyMaps Web",
-      "body": "<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "personalInformation": {
-    "name": "personalInformation",
-    "copy": {
-      "header": "Persoonlijke informatie",
-      "body": "<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>",
-      "help": "help",
-      "multi": false
-    },
-    "fields": [
-      {
-        "name": "firstname",
-        "type": "text",
-        "placeholder": "Voornaam",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "surname",
-        "type": "text",
-        "placeholder": "Achternaam",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "company",
-        "type": "text",
-        "placeholder": "Bedrijfsnaam",
-        "value": "Brandweervereniging Mill en Sint Hubert",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "street",
-        "type": "text",
-        "placeholder": "Straatnaam",
-        "value": "Jochemsweg",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "housenumber",
-        "type": "number",
-        "placeholder": "Huisnummer",
-        "value": "2",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "housenumberextra",
-        "type": "text",
-        "placeholder": "Toevoeging",
-        "value": null,
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "postcode",
-        "type": "text",
-        "placeholder": "Postcode",
-        "value": "5451HW",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "email",
-        "type": "email",
-        "placeholder": "E-mail",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "kvknumber",
-        "type": "text",
-        "placeholder": "KVK nummer",
-        "value": "40216843",
-        "checkbox": false,
-        "required": ""
-      }
-    ]
-  },
-  "buildings": {
-    "name": "buildings",
-    "copy": {
-      "header": "Gebouwen",
-      "body": "<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
-      "help": "help",
-      "multi": false
-    },
-    "features": [
-      {
-        "bag_vbo": "815010000001910",
-        "bag_num": "815200000001910",
-        "geometry": {
-          "type": "Point",
-          "crs": {
-            "type": "name",
-            "properties": {
-              "name": "EPSG:4326"
-            }
-          },
-          "coordinates": [
-            5.78341892478978,
-            51.6782414367867
-          ]
+    "intro": {
+        "name": "intro",
+        "copy": {
+            "header": "SafetyMaps Web",
+            "body": "<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>",
+            "help": "help",
+            "multi": false
         }
-      }
-    ]
-  },
-  "contactInformation": {
-    "name": "contactInformation",
-    "copy": {
-      "header": "Contact informatie",
-      "body": "<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>",
-      "help": "help",
-      "multi": true
     },
-    "fields": [
-      {
-        "name": "firstname",
-        "type": "text",
-        "placeholder": "Voornaam",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "surname",
-        "type": "text",
-        "placeholder": "Achternaam",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "email",
-        "type": "email",
-        "placeholder": "E-mail",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      },
-      {
-        "name": "telephone",
-        "type": "tel",
-        "placeholder": "Telefoon",
-        "value": "",
-        "checkbox": false,
-        "required": "f-required"
-      }
-    ]
-  },
-  "functions": {
-    "name": "functions",
-    "copy": {
-      "header": "Functie",
-      "body": "<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>",
-      "help": "help",
-      "multi": false
+    "personalInformation": {
+        "name": "personalInformation",
+        "copy": {
+            "header": "Persoonlijke informatie",
+            "body": "<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "firstname",
+            "type": "text",
+            "placeholder": "Voornaam",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "surname",
+            "type": "text",
+            "placeholder": "Achternaam",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "company",
+            "type": "text",
+            "placeholder": "Bedrijfsnaam",
+            "value": "Brandweervereniging Mill en Sint Hubert",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "street",
+            "type": "text",
+            "placeholder": "Straatnaam",
+            "value": "Jochemsweg",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "housenumber",
+            "type": "number",
+            "placeholder": "Huisnummer",
+            "value": "2",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "housenumberextra",
+            "type": "text",
+            "placeholder": "Toevoeging",
+            "value": null,
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "postcode",
+            "type": "text",
+            "placeholder": "Postcode",
+            "value": "5451HW",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "email",
+            "type": "email",
+            "placeholder": "E-mail",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "kvknumber",
+            "type": "text",
+            "placeholder": "KVK nummer",
+            "value": "40216843",
+            "checkbox": false,
+            "required": ""
+        }]
     },
-    "functions": [
-      {
-        "name": "Industrie, nuts, afval, groothandel, opslag en transport",
-        "value": "a",
-        "subfunctions": [
-          {
-            "name": "Chemie",
-            "value": "a1"
-          },
-          {
-            "name": "Brandstof en energieopwekking",
-            "value": "a2"
-          },
-          {
-            "name": "Opslag, handel en transport",
-            "value": "a3"
-          },
-          {
-            "name": "Afvalverwerking",
-            "value": "a4"
-          },
-          {
-            "name": "Overige productie, maakindustrie, bouw",
-            "value": "a5"
-          }
-        ]
-      },
-      {
-        "name": "Wonen, zorg, onderwijs, gevangenis",
-        "value": "b",
-        "subfunctions": [
-          {
-            "name": "Gevangenis",
-            "value": "b1"
-          },
-          {
-            "name": "Zorg met overnachting of zorg voor kwetsbare gebruikers",
-            "value": "b2"
-          },
-          {
-            "name": "Onderwijs of dagopvang minderjarigen",
-            "value": "b3"
-          },
-          {
-            "name": "Zelfstandig wonen",
-            "value": "b4"
-          },
-          {
-            "name": "Overige zorg of onderwijs",
-            "value": "b5"
-          }
-        ]
-      },
-      {
-        "name": "Winkel, gastvrijheid of vermaak",
-        "value": "c",
-        "subfunctions": [
-          {
-            "name": "Zonder nachtverblijf",
-            "value": "c1"
-          },
-          {
-            "name": "Met nachtverblijf",
-            "value": "c2"
-          }
-        ]
-      },
-      {
-        "name": "Geen van bovenstaande. Landbouw. Overheid, dienstverlening, kantoor",
-        "value": "d",
-        "subfunctions": [
-          {
-            "name": "Overig, niet-risicovol",
-            "value": "d1"
-          }
-        ]
-      }
-    ]
-  },
-  "entrances": {
-    "name": "entrances",
-    "copy": {
-      "header": "Ingangen",
-      "body": "<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "sleutelbuis": {
-    "name": "sleutelbuis",
-    "copy": {
-      "header": "Sleutelbuis",
-      "body": "<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "gasafsluiter": {
-    "name": "gasafsluiter",
-    "copy": {
-      "header": "Gasafsluiter",
-      "body": "<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "hoofdSchakelaarElektriciteit": {
-    "name": "hoofdSchakelaarElektriciteit",
-    "copy": {
-      "header": "Hoofdschakelaar elektriciteit",
-      "body": "<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "hoofdafsluiterwater": {
-    "name": "hoofdafsluiterwater",
-    "copy": {
-      "header": "Hoofdafsluiter water",
-      "body": "<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "gasflessen": {
-    "name": "gasflessen",
-    "copy": {
-      "header": "Gasflessen",
-      "body": "<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>",
-      "help": "help",
-      "multi": false
+    "buildings": {
+        "name": "buildings",
+        "copy": {
+            "header": "Gebouwen",
+            "body": "<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de rode panden die ook bij uw object horen</li></ul>",
+            "help": "help",
+            "multi": false
+        },
+        "features": [{
+            "bag_vbo": "815010000001910",
+            "bag_num": "815200000001910",
+            "geometry": {
+                "type": "Point",
+                "crs": {
+                    "type": "name",
+                    "properties": {
+                        "name": "EPSG:4326"
+                    }
+                },
+                "coordinates": [
+                    5.78341892478978,
+                    51.6782414367867
+                ]
+            }
+        }]
     },
-    "fields": [
-      {
-        "name": "gasamm0",
-        "type": "number",
-        "placeholder": "Aantal gasflessen op deze locatie",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      }
-    ]
-  },
-  "gevaarlijkestoffen": {
-    "name": "gevaarlijkestoffen",
-    "copy": {
-      "header": "Gevaarlijke stoffen",
-      "body": "<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie.</p>",
-      "help": "help",
-      "multi": false
+    "contactInformation": {
+        "name": "contactInformation",
+        "copy": {
+            "header": "Contact informatie",
+            "body": "<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>",
+            "help": "help",
+            "multi": true
+        },
+        "fields": [{
+            "name": "firstname",
+            "type": "text",
+            "placeholder": "Voornaam",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "surname",
+            "type": "text",
+            "placeholder": "Achternaam",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "email",
+            "type": "email",
+            "placeholder": "E-mail",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }, {
+            "name": "telephone",
+            "type": "tel",
+            "placeholder": "Telefoon",
+            "value": "",
+            "checkbox": false,
+            "required": "f-required"
+        }]
     },
-    "fields": [
-      {
-        "name": "gevamm0",
-        "type": "number",
-        "placeholder": "Hoeveelheid",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      }
-    ],
-    "functions": [
-      {
-        "name": "Explosief",
-        "value": "ghs01",
-        "subfunctions": null
-      },
-      {
-        "name": "Ontvlambaar",
-        "value": "ghs02",
-        "subfunctions": null
-      },
-      {
-        "name": "Oxiderend",
-        "value": "ghs03",
-        "subfunctions": null
-      },
-      {
-        "name": "Gassen onder druk",
-        "value": "ghs04",
-        "subfunctions": null
-      },
-      {
-        "name": "Corrosief",
-        "value": "ghs05",
-        "subfunctions": null
-      },
-      {
-        "name": "Giftig",
-        "value": "ghs06",
-        "subfunctions": null
-      },
-      {
-        "name": "Irriterend, sensibiliserend, schadelijk",
-        "value": "ghs07",
-        "subfunctions": null
-      },
-      {
-        "name": "Lange termijn gezondheidsgevaarlijk",
-        "value": "ghs08",
-        "subfunctions": null
-      },
-      {
-        "name": "Gevaarlijk voor het aquatisch milieu",
-        "value": "ghs09",
-        "subfunctions": null
-      }
-    ]
-  },
-  "drogestijgleiding": {
-    "name": "drogestijgleiding",
-    "copy": {
-      "header": "Droge stijgleiding",
-      "body": "<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "rwa": {
-    "name": "rwa",
-    "copy": {
-      "header": "Rookluiken",
-      "body": "<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
-      "help": "help",
-      "multi": false
-    }
-  },
-  "verdiepingen": {
-    "name": "verdiepingen",
-    "copy": {
-      "header": "Verdiepingen",
-      "body": "<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
-      "help": "help",
-      "multi": false
+    "functions": {
+        "name": "functions",
+        "copy": {
+            "header": "Functie",
+            "body": "<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>",
+            "help": "help",
+            "multi": false
+        },
+        "functions": [{
+            "name": "Industrie, nuts, afval, groothandel, opslag en transport",
+            "value": "a",
+            "subfunctions": [{
+                "name": "Chemie",
+                "value": "a1"
+            }, {
+                "name": "Brandstof en energieopwekking",
+                "value": "a2"
+            }, {
+                "name": "Opslag, handel en transport",
+                "value": "a3"
+            }, {
+                "name": "Afvalverwerking",
+                "value": "a4"
+            }, {
+                "name": "Overige productie, maakindustrie, bouw",
+                "value": "a5"
+            }]
+        }, {
+            "name": "Wonen, zorg, onderwijs, gevangenis",
+            "value": "b",
+            "subfunctions": [{
+                "name": "Gevangenis",
+                "value": "b1"
+            }, {
+                "name": "Zorg met overnachting of zorg voor kwetsbare gebruikers",
+                "value": "b2"
+            }, {
+                "name": "Onderwijs of dagopvang minderjarigen",
+                "value": "b3"
+            }, {
+                "name": "Zelfstandig wonen",
+                "value": "b4"
+            }, {
+                "name": "Overige zorg of onderwijs",
+                "value": "b5"
+            }]
+        }, {
+            "name": "Winkel, gastvrijheid of vermaak",
+            "value": "c",
+            "subfunctions": [{
+                "name": "Zonder nachtverblijf",
+                "value": "c1"
+            }, {
+                "name": "Met nachtverblijf",
+                "value": "c2"
+            }]
+        }, {
+            "name": "Geen van bovenstaande. Landbouw. Overheid, dienstverlening, kantoor",
+            "value": "d",
+            "subfunctions": [{
+                "name": "Overig, niet-risicovol",
+                "value": "d1"
+            }]
+        }]
     },
-    "fields": [
-      {
+    "entrances": {
+        "name": "entrances",
+        "copy": {
+            "header": "Ingangen",
+            "body": "<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "sleutelbuis": {
+        "name": "sleutelbuis",
+        "copy": {
+            "header": "Sleutelbuis",
+            "body": "<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "gasafsluiter": {
+        "name": "gasafsluiter",
+        "copy": {
+            "header": "Gasafsluiter",
+            "body": "<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "hoofdSchakelaarElektriciteit": {
+        "name": "hoofdSchakelaarElektriciteit",
+        "copy": {
+            "header": "Hoofdschakelaar elektriciteit",
+            "body": "<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "hoofdafsluiterwater": {
+        "name": "hoofdafsluiterwater",
+        "copy": {
+            "header": "Hoofdafsluiter water",
+            "body": "<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "gasflessen": {
+        "name": "gasflessen",
+        "copy": {
+            "header": "Gasflessen",
+            "body": "<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "gasamm0",
+            "type": "number",
+            "placeholder": "Aantal gasflessen op deze locatie",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }]
+    },
+    "gevaarlijkestoffen": {
+        "name": "gevaarlijkestoffen",
+        "copy": {
+            "header": "Gevaarlijke stoffen",
+            "body": "<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie.</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "gevamm0",
+            "type": "number",
+            "placeholder": "Hoeveelheid",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }],
+        "functions": [{
+            "name": "Explosief",
+            "value": "ghs01",
+            "subfunctions": null
+        }, {
+            "name": "Ontvlambaar",
+            "value": "ghs02",
+            "subfunctions": null
+        }, {
+            "name": "Oxiderend",
+            "value": "ghs03",
+            "subfunctions": null
+        }, {
+            "name": "Gassen onder druk",
+            "value": "ghs04",
+            "subfunctions": null
+        }, {
+            "name": "Corrosief",
+            "value": "ghs05",
+            "subfunctions": null
+        }, {
+            "name": "Giftig",
+            "value": "ghs06",
+            "subfunctions": null
+        }, {
+            "name": "Irriterend, sensibiliserend, schadelijk",
+            "value": "ghs07",
+            "subfunctions": null
+        }, {
+            "name": "Lange termijn gezondheidsgevaarlijk",
+            "value": "ghs08",
+            "subfunctions": null
+        }, {
+            "name": "Gevaarlijk voor het aquatisch milieu",
+            "value": "ghs09",
+            "subfunctions": null
+        }]
+    },
+    "drogestijgleiding": {
+        "name": "drogestijgleiding",
+        "copy": {
+            "header": "Droge stijgleiding",
+            "body": "<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "rwa": {
+        "name": "rwa",
+        "copy": {
+            "header": "Rookluiken",
+            "body": "<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "verdiepingen": {
         "name": "verdiepingen",
-        "type": "number",
-        "placeholder": "Verdiepingen",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      }
-    ]
-  },
-  "bhv": {
-    "name": "bhv",
-    "copy": {
-      "header": "Bedrijfshulpverlening",
-      "body": "<p>Heeft u een BHV-organisatie?</p>",
-      "help": "help",
-      "multi": false
+        "copy": {
+            "header": "Verdiepingen",
+            "body": "<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "verdiepingen",
+            "type": "number",
+            "placeholder": "Verdiepingen",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }]
     },
-    "fields": [
-      {
+    "bhv": {
         "name": "bhv",
-        "type": "checkbox",
-        "placeholder": "Ja, bij ons is BHV aanwezig",
-        "value": "",
-        "checkbox": true,
-        "required": ""
-      }
-    ]
-  },
-  "people": {
-    "name": "people",
-    "copy": {
-      "header": "Aanwezigen",
-      "body": "<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
-      "help": "help",
-      "multi": false
+        "copy": {
+            "header": "Bedrijfshulpverlening",
+            "body": "<p>Heeft u een BHV-organisatie?</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "bhv",
+            "type": "checkbox",
+            "placeholder": "Ja, bij ons is BHV aanwezig",
+            "value": "",
+            "checkbox": true,
+            "required": ""
+        }]
     },
-    "fields": [
-      {
-        "name": "bw1",
-        "type": "number",
-        "placeholder": "Bewoners (Dag)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "bw2",
-        "type": "number",
-        "placeholder": "Bewoners (Avond)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "bw3",
-        "type": "number",
-        "placeholder": "Bewoners (Nacht)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "bz1",
-        "type": "number",
-        "placeholder": "Bezoekers (Dag)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "bz2",
-        "type": "number",
-        "placeholder": "Bezoekers (Avond)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "bz3",
-        "type": "number",
-        "placeholder": "Bezoekers (Nacht)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "ps1",
-        "type": "number",
-        "placeholder": "Personeel (Dag)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "ps2",
-        "type": "number",
-        "placeholder": "Personeel (Avond)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      },
-      {
-        "name": "ps3",
-        "type": "number",
-        "placeholder": "Personeel (Nacht)",
-        "value": "",
-        "checkbox": false,
-        "required": ""
-      }
-    ]
-  },
-  "exercise": {
-    "name": "exercise",
-    "copy": {
-      "header": "Brandweer oefening",
-      "body": "<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
-      "help": "help",
-      "multi": false
+    "people": {
+        "name": "people",
+        "copy": {
+            "header": "Aanwezigen",
+            "body": "<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "bw1",
+            "type": "number",
+            "placeholder": "Bewoners (Dag)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "bw2",
+            "type": "number",
+            "placeholder": "Bewoners (Avond)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "bw3",
+            "type": "number",
+            "placeholder": "Bewoners (Nacht)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "bz1",
+            "type": "number",
+            "placeholder": "Bezoekers (Dag)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "bz2",
+            "type": "number",
+            "placeholder": "Bezoekers (Avond)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "bz3",
+            "type": "number",
+            "placeholder": "Bezoekers (Nacht)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "ps1",
+            "type": "number",
+            "placeholder": "Personeel (Dag)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "ps2",
+            "type": "number",
+            "placeholder": "Personeel (Avond)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }, {
+            "name": "ps3",
+            "type": "number",
+            "placeholder": "Personeel (Nacht)",
+            "value": "",
+            "checkbox": false,
+            "required": ""
+        }]
     },
-    "fields": [
-      {
-        "name": "oefening",
-        "type": "checkbox",
-        "placeholder": "Ja, ik wil worden benaderd",
-        "value": "",
-        "checkbox": true,
-        "required": ""
-      }
-    ]
-  },
-  "final": {
-    "name": "final",
-    "copy": {
-      "header": "Dank voor uw medewerking",
-      "body": "<p>Hartelijk dank voor uw medewerking.</p>",
-      "help": "help",
-      "multi": false
+    "exercise": {
+        "name": "exercise",
+        "copy": {
+            "header": "Brandweer oefening",
+            "body": "<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
+            "help": "help",
+            "multi": false
+        },
+        "fields": [{
+            "name": "oefening",
+            "type": "checkbox",
+            "placeholder": "Ja, ik wil worden benaderd",
+            "value": "",
+            "checkbox": true,
+            "required": ""
+        }]
+    },
+    "final": {
+        "name": "final",
+        "copy": {
+            "header": "Dank voor uw medewerking",
+            "body": "<p>Hartelijk dank voor uw medewerking.</p>",
+            "help": "help",
+            "multi": false
+        }
+    },
+    "contact": {
+        "name": "contact",
+        "copy": {
+            "header": "Contact",
+            "body": "<p>U kunt voor vragen altijd terecht</p>",
+            "help": "help",
+            "multi": false
+        }
     }
-  },
-  "contact": {
-    "name": "contact",
-    "copy": {
-      "header": "Contact",
-      "body": "<p>U kunt voor vragen altijd terecht</p>",
-      "help": "help",
-      "multi": false
-    }
-  }
 }

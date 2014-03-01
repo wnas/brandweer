@@ -87,7 +87,7 @@
                 <h2 class="main">{{copy.header}}</h2>
                 <div>{{{copy.body}}}</div>
             </div>
-            <div class="form" id="{{name}}-form0">
+            <div class="form clearfix" id="{{name}}-form0">
                 {{#if functions}}
                 <div class="fields">
                     <div class="f-container multiple-select multiple-origin">
@@ -129,7 +129,7 @@
                 {{/if}}
             </div>    
             {{#if copy.multi}}
-                <button id="addContact" title="Voeg een contact persoon toe"><span>+<span></button>
+                <div class="button-bar"><button id="addContact" title="Voeg contact persoon toe"><span>+<span></button><label for="addContact">Voeg contact persoon toe</label></div>
             {{/if}}
         </script>
         <script src="js/leaflet-0.7.1/leaflet-src.js"></script>
