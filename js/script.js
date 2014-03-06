@@ -712,7 +712,17 @@ var brandweer = function($, W) {
             if (options.numberOfMarkers === 0) {
                 //show the first form with id ending in 0
                 $(templateid).show();
-                $(templateid).find('.f-input').last().focus();
+                if (options.activeId === 'gevaarlijkestoffen'){
+                    console.log('gevaarlijkestoffen');
+                    $(templateid).find('.f-select').last().focus();
+                } else {
+                    $(templateid).find('.f-input').last().focus();
+                }
+
+                $(templateid).find('.f-select').blur(function(){
+                    console.log('blur');
+                    answer.properties.kind = $(this).val();
+                });
                 $(templateid).find('.f-input').last().blur(function(){
                     answer.properties.amount = $(this).val();
                 });
@@ -724,6 +734,10 @@ var brandweer = function($, W) {
                 $('#' + options.activeId).append(formClone);
                 formClone.show();
                 formClone.find('.f-input').last().focus();
+                formClone.find('.f-select').blur(function(){
+                    console.log('blur');
+                    answer.properties.kind = $(this).val();
+                });
                 formClone.find('.f-input').last().blur(function(){
                     answer.properties.amount = $(this).val();
                 });
