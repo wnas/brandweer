@@ -396,6 +396,9 @@ var brandweer = function($, W) {
             }
             deActivate();
             activate($(elem));
+
+            deActivate($('#maps .leaflet-marker-icon'));
+            activate($('.leaflet-marker-icon[title="' + q + '"]'));
             // reset the navigation classes
             deActivate($('.navigate'));
             activate($('.navigate[href="' + elem + '"]'));

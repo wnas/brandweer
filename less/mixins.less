@@ -104,11 +104,12 @@ blockpadding {
 .icons {
     &:before {
         font-family: 'iconsregular';
-        font-size: 4.5em;
+        font-size: 45px;
         font-weight: 100;
         line-height: 0.65em;
         content: 'a';
         color: @theme-color;
+
     }
 }
 
@@ -171,7 +172,11 @@ blockpadding {
 .icon-info {
     &:before {
         content: '?';
-        line-height: 0.55em;
+        line-height: 0.6em;
+        display: block;
+    }
+    span {
+        display: none;
     }
 }
 
