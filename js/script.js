@@ -682,7 +682,7 @@ var brandweer = function($, W) {
             switch (options.activeId) {
                 case "gevaarlijkestoffen":
                 case "gasflessen":
-                    addEntry(options);
+                    addEntry(options,answer);
                     break;
                 default:
                     break;
@@ -706,13 +706,16 @@ var brandweer = function($, W) {
             config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
-        addEntry = function(options) {
+        addEntry = function(options,answer) {
             console.log('add entry');
             var templateid = '#' + options.activeId + '-form0';
             if (options.numberOfMarkers === 0) {
                 //show the first form with id ending in 0
                 $(templateid).show();
                 $(templateid).find('.f-input').last().focus();
+                $(templateid).find('.f-input').last().blur(function(){
+                    answer.properties.amount = $(this).val();
+                });
             } else {
                 //clone the form with id ending in 0, change id's and append
                 config.numberOfMarkers = config.numberOfMarkers + 1;
@@ -721,7 +724,11 @@ var brandweer = function($, W) {
                 $('#' + options.activeId).append(formClone);
                 formClone.show();
                 formClone.find('.f-input').last().focus();
+                formClone.find('.f-input').last().blur(function(){
+                    answer.properties.amount = $(this).val();
+                });
             }
+
         },
 
         showCurrentFieldset = function(it) {
