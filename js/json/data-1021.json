@@ -282,7 +282,7 @@
         },
         "fields": [{
             "name": "gevamm0",
-            "type": "number",
+            "type": "text",
             "placeholder": "Hoeveelheid",
             "value": "",
             "checkbox": false,
