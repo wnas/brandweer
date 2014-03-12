@@ -25,6 +25,8 @@
     border-bottom: 1px solid fade(@theme-color,20%);
     margin: 0 4.5%;
   }
+  
+  
   input.f-input, textarea {
     display: block;
     width: 90%;
@@ -51,6 +53,38 @@
       color: @theme-color;
     }
   }
+  
+  // specific for 'aanwezigen' page 
+  div.occupants {
+    margin-top: 20px;
+    div.f-container {
+      width: 30px;
+      margin-right: 30px;
+      margin-bottom: 20px;
+    }
+    input.f-input {
+      margin-top: 15px;
+      & + label.f-label {
+      }  
+    }
+    div.f-container:first-child {
+      &:before {
+        position: absolute;
+        top: -15px;
+        content: 'Bewoners';
+        display: block;
+        font-weight: 700;
+        font-size: 0.9em;
+        color: @theme-color;
+      }
+    }
+    div.f-container:nth-child(2) {
+      &:before {
+        content: 'Bezoekers';
+      }
+    }
+  }
+  
   // specific for name tags at contact information
   .ci {
     & .f-label {
