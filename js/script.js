@@ -130,9 +130,6 @@ var brandweer = function($, W) {
                     len = config.questions.length;
                     for (var i = 0; i < len; i++) {
                         var source = $("#smw-template").html();
-
-                        console.log(source);
-
                         var template = Handlebars.compile(source);
                         $("#" + config.questions[i]).html(template(data[config.questions[i]]));
 
@@ -471,18 +468,30 @@ var brandweer = function($, W) {
         goNextAndSave = function(i) {
             // we need to save here
             // build an array for the question at hand
-            config.answers[getActiveFieldset()] = [];
+
             // find the inputs where the values are in.
             console.log(getActiveFieldset());
-            $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
-                // what is it's value
-                var v = $(this).val(),
-                    // and id...
-                    it = $(this).attr('id');
-                // place 'm in to the array.
-                config.answers[getActiveFieldset()][it] = v;
-            });
+            switch (getActiveFieldset()) {
+                case 'personalInformation':
+                case 'contactInformation':
+                    config.answers[getActiveFieldset()] = [];
+                    $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
+                        // what is it's value
+                        var v = $(this).val(),
+                            // and id...
+                            it = $(this).attr('id');
+                        // place 'm in to the array.
+                        config.answers[getActiveFieldset()][it] = v;
+                    });
+                    //saveData(config.answers);
+
+                    break;
+
+                default:
+                    break;
+            }
             saveData(config.answers);
+
             // @todo check if we are not at the end.
             // go forward
             showHideFieldsets(config.questions[i + 1]);
@@ -661,17 +670,20 @@ var brandweer = function($, W) {
                 options: {
                     iconUrl: custom,
                     iconSize: [32, 32]
-                }
+
+                },
+                uId: 'foo'
             });
             var brandweerIcon = new BrandweerIcon();
 
             var marker = new L.marker(options.e.latlng, {
                 draggable: 'true',
-                title: options.activeId,
+                title: options.activeId + '-' + config.numberOfMarkers,
                 icon: brandweerIcon
             });
             // @todo put directly into answer.json;
             var answer = {
+                "id": options.activeId + '-' + config.numberOfMarkers,
                 "geometry": {
                     "type": "Point",
                     "coordinates": [options.e.latlng.lat, options.e.latlng.lng]
@@ -692,11 +704,7 @@ var brandweer = function($, W) {
             }
 
             options.map.addLayer(marker);
-            marker.on('click', function() {
-                removeMarker(options, marker);
-                // @todo the formfields should also be removed when the marker is
-                // removed
-            });
+
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
@@ -705,8 +713,27 @@ var brandweer = function($, W) {
 
              */
             config.answers.push(answer);
+
+
+            marker.on('click', function(e) {
+                //  console.log(marker);
+                console.log(answer);
+                var args = {
+
+                }
+                removeMarker(options, marker, e);
+                // @todo the formfields should also be removed when the marker is
+                // removed
+            });
+
             answer = '';
             config.numberOfMarkers = config.numberOfMarkers + 1;
+        },
+
+        removeMarker = function(options, marker, e) {
+            console.log(config.anwers);
+            options.map.removeLayer(marker);
+            $('[data-id="' + options.numberOfMarkers + '"]').remove();
         },
 
         addEntry = function(options, answer) {
@@ -746,10 +773,7 @@ var brandweer = function($, W) {
             $('#' + it).removeClass('hideMe');
         },
 
-        removeMarker = function(options, marker) {
-            options.map.removeLayer(marker);
-            $('[data-id="' + options.numberOfMarkers + '"]').remove();
-        },
+
 
         doMaps = function(data) {
             /*
