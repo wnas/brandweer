@@ -130,6 +130,9 @@ var brandweer = function($, W) {
                     len = config.questions.length;
                     for (var i = 0; i < len; i++) {
                         var source = $("#smw-template").html();
+
+                        console.log(source);
+
                         var template = Handlebars.compile(source);
                         $("#" + config.questions[i]).html(template(data[config.questions[i]]));
 
