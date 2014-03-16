@@ -1,253 +1,284 @@
 @theme-color: teal;
 
+
+
 .f-input,
 .f-select,
 .f-button {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .f-form {
-    /*
-  for use in fieldsets
- */
-.button-bar {
-  label {
-    padding: 5px;
-    
+
+  .f-legend {
+    display: block;
+    font-size: 1.5rem;
+    padding: .5rem;
+    border-bottom: @input-border;
   }
-}
-    &:extend(.cf all);
-    .fields {
-        outline: 1px solid red;
-       
-    }
-    .f-legend {
-        display: block;
-        font-size: 1.5rem;
-        padding: .5rem;
-        border-bottom: @input-border;
-    }
+  
+  div.f-container {
+    float: left;
+    position: relative;
+    width: 90%;
+    padding: 1.3em 0.3em 0.1em;
+    border-bottom: 1px solid fade(@theme-color,20%);
+    margin: 0 4.5%;
+  }
+  
+  
+  input.f-input, textarea {
+    display: block;
+    width: 90%;
+    border: 0;
+    outline: 0;
+    resize: none;
+ 
+    & + label.f-label {
+      position: absolute;
+      top: 10px;
+      transition: top 0.7s ease, opacity 0.7s ease;
+      opacity: 0;
 
+      font-size: 0.7em;
+      font-weight: 600;
+      margin-left: 0.5em;
+    }
+    &:valid + label.f-label {
+      opacity: 1;
+      top: 5px;
+      color: lighten(@foreground-color,70%);
+    }
+    &:focus + label.f-label {
+      color: @theme-color;
+    }
+  }
+  
+  // specific for 'aanwezigen' page 
+  div.occupants {
+    margin-top: 20px;
     div.f-container {
-        float: left;
-        position: relative;
-        width: 90%;
-        padding: 1.3em 0.3em 0.1em;
-        border-bottom: 1px solid fade(@theme-color, 20%);
-        margin: 0 4.5%;
+      width: 30px;
+      margin-right: 30px;
+      margin-bottom: 20px;
     }
-    input.f-input, textarea {
+    input.f-input {
+      margin-top: 15px;
+      & + label.f-label {
+      }  
+    }
+    div.f-container:first-child {
+      &:before {
+        position: absolute;
+        top: -15px;
+        content: 'Bewoners';
         display: block;
-        width: 90%;
-        border: 0;
-        outline: 0;
-        resize: none;
-
-        & + label.f-label {
-            position: absolute;
-            top: 10px;
-            transition: top 0.7s ease, opacity 0.7s ease;
-            opacity: 0;
-
-            font-size: 0.7em;
-            font-weight: 600;
-            margin-left: 0.5em;
-        }
-        &:valid + label.f-label {
-            opacity: 1;
-            top: 5px;
-            color: lighten(@foreground-color, 70%);
-        }
-        &:focus + label.f-label {
-            color: @theme-color;
-        }
-    }
-// specific for name tags at contact information
-    .ci {
-        & .f-label {
-            color: @theme-color;
-            font-size: 0.7em;
-            font-weight: 600;
-            margin-left: 0.5em;
-        }
-        &.hide {
-            & .hideCI:before {
-                display: block;
-                .icon-arrow-down;
-                margin-top: 10px;
-            }
-            & .f-label {
-                display: none;
-            }
-        }
-    }
-
-    .f-readonly {
+        font-weight: 700;
+        font-size: 0.9em;
         color: @theme-color;
-        & .f-input {
-            background-color: lighten(@theme-color, 30%);
-            font-style: italic;
-        }
+      }
     }
-    .f-error {
-        color: red;
-        .f-input {
-            border-color: red;
-        }
+    div.f-container:nth-child(2) {
+      &:before {
+        content: 'Bezoekers';
+      }
     }
-    .f-select-label {
-        position: relative;
-        font-size: 0;
-        display: inline-block;
-        white-space: nowrap;
-        overflow: hidden;
-        width: 100%;
+  }
+  
+  // specific for name tags at contact information
+  .ci {
+    & .f-label {
+    color:@theme-color;
+    font-size: 0.7em;
+    font-weight: 600;
+    margin-left: 0.5em;
+    }
+    &.hide {
+      & .hideCI:before {
+        display: block;
+        .icon-arrow-down;
+        margin-top: 10px;
+      }
+      & .f-label {
+      display: none;
+      }
+    }
+  }
+  
+  .f-readonly {
+    color: @theme-color;
+    & .f-input {
+      background-color: lighten(@theme-color, 30%);
+      font-style: italic;
+    }
+  }
+  .f-error {
+    color: red;
+    .f-input {
+      border-color: red;
+    }
+  }
+  .f-select-label {
+    position: relative;
+    font-size: 0;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
 
-        &  .f-select {
-            font-size: 1rem;
-        }
-        &:after { //.select-after;
-        }
+    &  .f-select {
+      font-size: 1rem;
     }
-    .f-input { // make sure that ipad and iphone get proper elements
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        -webkit-border-radius: 0;
+    &:after { //.select-after;
     }
+  }
+  .f-input { // make sure that ipad and iphone get proper elements
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-border-radius: 0;
+  }
 
-    @media only screen and(min-width:700px) {
-        .f-input[type=number]::-webkit-inner-spin-button,
-        .f-input[type=number]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+  @media only screen and(min-width:700px) {
+    .f-input[type=number]::-webkit-inner-spin-button,
+    .f-input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
+  }
 
 .f-input,
 .f-select {
-    padding: @padding;
-    border: 0;
-    padding: 3px 6px 6px 10px;
-    background: none;
-    width: 100%;
+  padding: @padding;
+  border: 0;
+  padding: 3px 6px 6px 10px;
+  background: none;
+  width: 100%;
 
     &:focus {
-        outline: none;
+      outline: none;
     }
     &:disabled {
-        border-color: #ccc;
-        color: #ccc;
+      border-color: #ccc;
+      color: #ccc;
     }
     &:readonly {
-        border-width: 0 0 1px;
+      border-width: 0 0 1px;
     }
 }
-
 .f-day-select {
-    width: 25%;
+  width: 25%;
 }
 
 .f-month-select {
-    width: 30%;
+  width: 30%;
 }
 
 .f-year-select {
-    width: 40%;
+  width: 40%;
 }
 
 .f-radio-label,
 .f-checkbox-label {
-    position: relative;
-    .f-radio,
-    .f-checkbox {
-        visibility: hidden;
-        &:checked ~ .f-inner-label::before {
-            background-color: #000;
-            .radio-checkbox-checked-before;
-        }
+  position: relative;
+  .f-radio,
+  .f-checkbox {
+    visibility: hidden;
+    &:checked ~ .f-inner-label::before {
+      background-color: #000;
+      .radio-checkbox-checked-before;
     }
+  }
 }
 
 fieldset#bhv .f-container {
     border: 0;
     & label {
-        margin: 10px 0;
+    margin: 10px 0;
     }
-}
-
+  }
 .f-inner-label {
-    padding: @padding;
-    &::before {  .radio-checkbox-before;
-    }
+  padding: @padding;
+  &::before {  .radio-checkbox-before;
+  }
 }
 
 .f-radio-label .f-inner-label::before {
-    border-radius: 1em;
+  border-radius: 1em;
 }
+
+
+
+
+
+
+
+
 
 // basic buttons for website
 
 .f-button {
-    padding: .6em 1em;
-    text-decoration: none;
-    background: #fff;
-    cursor: pointer;
-    border: 1px solid rgba(0, 205, 0, .9);
-    border-radius: 2px;
-    color: black;
-    width: 220px;
-    margin: 10px 30px;
-
-    font-family: helvetica;
-    font-weight: 700;
-    font-size: 1em;
-    float: right;
-    background: rgba(0, 255, 0, .2); // button secondary is the red colored button for erase and back
+  padding: .6em 1em;
+  text-decoration: none;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid rgba(0, 205, 0, .9);
+  border-radius: 2px;
+  color: black;
+  width: 220px;
+  margin: 10px 30px;
+  
+  font-family: helvetica;
+  font-weight: 700;
+  font-size: 1em;
+  float: right;
+  background: rgba(0, 255, 0, .2);
+  // button secondary is the red colored button for erase and back
     &.f-button-secondary {
-        background: rgba(255, 0, 0, .2);
-        border: 1px solid rgba(255, 0, 0, .3);
-        float: left;
-        &:hover {
-            background: rgba(255, 0, 0, .4);
-        }
+      background: rgba(255, 0, 0, .2);
+      border: 1px solid rgba(255, 0, 0, .3);
+      float: left;
+      &:hover {
+        background: rgba(255, 0, 0, .4);
+      }
     }
-// button secondary is the red colored button for erase and back
+  // button secondary is the red colored button for erase and back
     &:hover {
-        background: rgba(0, 205, 0, .4);
+      background: rgba(0, 205, 0, .4);
     }
+  }
 }
-
-    }
 
 // styling for buttons within the field
-& .multiple-select,
-& #contactInformation,
-& #personalInformation {
+  & .multiple-select,
+  & #contactInformation,
+  & #personalInformation {
     .f-button {
-        width: 90%;
-        float: left;
-        margin: 20px 20px 0 20px;
-        text-align: centered;
-        &:after {
-            content: "a";
-            font-family: 'iconsregular';
-            font-size: 3.5em;
-            font-weight: 100;
-
-            line-height: 0;
-
-            float: right;
-            margin: 9px -30px 0 0;
-            padding: 0 10px;
-            transform: rotate(90deg);
-            -webkit-transform: rotate(90deg);
-            -moz-transform: rotate(90deg);
-            -o-transform: rotate(90deg);
-            -ms-transform: rotate(90deg);
-        }
+      width: 90%;
+      float: left;
+      margin: 20px 20px 0 20px;
+      text-align: centered;
+      &:after {
+        content: "a";
+        font-family: 'iconsregular';
+        font-size: 3.5em;
+        font-weight: 100;
+        
+        line-height: 0;
+        
+        float: right;
+        margin: 9px -30px 0 0;
+        padding: 0 10px;
+        transform:rotate(90deg);
+        -webkit-transform:rotate(90deg);
+        -moz-transform:rotate(90deg);
+        -o-transform:rotate(90deg);
+        -ms-transform:rotate(90deg);
+      }
     }
-}
+  }
+
+
 
 // specific buttons for main navigation on the bottom you can find at navigate.less
 
