@@ -301,7 +301,7 @@ var brandweer = function($, W) {
                 e.preventDefault();
                 var offSet = config.numberOfContacts * 40,
                     perContact = '';
-                ci = $('<div class="ci" style="margin-top: ' + offSet + 'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
+                ci = $('<div class="ci" id="contactInformation-' + config.numberOfContacts + '" style="margin-top: ' + offSet + 'px"><button class="hideCI"><span>Verberg</span></button><button class="eraseCI"><span>Wis</span></button></div>');
                 fields = $(this).closest('.active').find('.f-container');
 
                 fields.each(function(i) {
@@ -311,15 +311,16 @@ var brandweer = function($, W) {
                         l = $(this).find('label').text(),
                         par = $('<label class="f-label">' + l + '<input tabindex="-1" type="text" class="f-input" readonly value="' + v + '"></label>');
                     perContact[l] = v;
+                    perContact.id = 'contactInformation-' + config.numberOfContacts;
                     config.contacts.push(perContact);
                     ci.append(par);
                     // empty all of the input fields..
                     $(this).find('.f-input').val('');
                 });
+                config.contacts.id = 'contactInformation-' + config.numberOfContacts;
                 config.answers.push(config.contacts);
 
                 config.contacts = [];
-                console.log(config.answers);
                 ci.append('<input type="hidden" name="activeBuilding" class="f-input" value="' + config.activeBuilding + '"/> ');
 
 
@@ -329,6 +330,9 @@ var brandweer = function($, W) {
             });
 
             $('body').on('click', '.eraseCI', function() {
+                console.log(config.answers);
+                var tar = $(this).closest('.ci').attr('id');
+                removeAnswer(tar);
                 $(this).parent().remove();
             });
             $('body').on('click', '.hideCI', function() {
@@ -700,7 +704,6 @@ var brandweer = function($, W) {
                 }
             };
 
-            console.log(answer.id);
             switch (options.activeId) {
                 case "gevaarlijkestoffen":
                 case "gasflessen":
@@ -738,20 +741,30 @@ var brandweer = function($, W) {
         },
 
         removeMarker = function(args) {
-            var t = args.marker.options.title;
-            console.log(t);
-
-            var o = config.answers,
-                i;
-            for (i in o) {
-                console.log(o[i]);
-                if (o[i].id === t) {
-                    o.splice(i, 1);
-                }
-            }
+            var title = args.marker.options.title;
+            //     anwsers = config.answers,
+            //     i;
+            // for (i in answers) {
+            //     console.log(answers[i]);
+            //     if (answers[i].id === title) {
+            //         answers.splice(i, 1);
+            //     }
+            // }
+            removeAnswer(title);
 
             args.options.map.removeLayer(args.marker);
             //  $('[data-id="' + arg.options.numberOfMarkers + '"]').remove();
+        },
+
+        removeAnswer = function(tar) {
+            var answers = config.answers,
+                i;
+            for (i in answers) {
+                console.log(answers[i]);
+                if (answers[i].id === tar) {
+                    answers.splice(i, 1);
+                }
+            }
         },
 
         addEntry = function(options, answer) {
