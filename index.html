@@ -26,7 +26,7 @@
         <div id="mask"></div>
         <div id="map"></div>
         <div id="contact">
-            <button id="hideContact"><span>Verberg</apan></button>
+            <button id="hideContact"><span>Verberg</span></button>
             <h3></h3>
             <p class="body"></p>
             <ul>
@@ -82,9 +82,66 @@
         <script src="js/vendors/history.js"></script>
         <script src="js/vendors/underscore/underscore.js"></script>
         <script src="js/vendors/handlebars/handlebars-v1.1.2.js"></script>
+
+                <script id="smw-template" type="text/x-handlebars-template">
+            <div class="information">
+                <h2>{{copy.header}}<button class="hideInformation"><span>close</span></button></h2>
+                <div>{{{copy.help}}}</div>
+            </div>
+            <div class="copy">
+                <h2 class="main">{{copy.header}}</h2>
+                <div>{{{copy.body}}}</div>
+            </div>
+            <div class="form clearfix" id="{{name}}-form0">
+                {{#if functions}}
+                <div class="fields">
+                    <div class="f-container multiple-select multiple-origin">
+                    <label for="{{name}}-select0" class="f-label">Hoofdfunctie</label>
+                    <select id="{{name}}-select0" class="f-select"><option name="default" value="0">Kies een hoofdfunctie</option></select>
+                </div>
+                <div class="f-container multiple-select multiple-target">
+                    <label for="{{name}}-subselect0" class="f-label">Deelfunctie</label>
+                    <select id="{{name}}-subselect0" class="f-select" disabled><option name="default" value="0">Kies een deelfunctie</option></select>
+                </div>
+                {{/if}}
+                {{#if fields}}
+                <div class="fields">
+                    {{#each fields}}
+                    <div class="f-container {{#if required}}{{required}}{{/if}}">
+                       {{#if checkbox}}
+                        <input 
+                            type="{{type}}"
+                            id="{{../name}}-{{name}}0"
+                            value="{{value}}"
+                            class="f-checkbox" />
+                        <label
+                            for="{{../../name}}-{{name}}0"
+                            class="f-label">{{placeholder}}</label>
+                       {{else}}
+                        <input 
+                            type="{{type}}"
+                            id="{{../../../name}}-{{name}}0"
+                            value="{{value}}"
+                            placeholder="{{placeholder}}"
+                            class="f-input" required />
+                        <label
+                            for="{{../../name}}-{{name}}0"
+                            class="f-label">{{placeholder}}</label>        
+                        {{/if}}
+                    </div>
+                    {{/each}}
+                </div>
+                {{/if}}
+            </div>    
+            {{#if copy.multi}}
+                <div class="button-bar"><button id="addContact" title="Voeg contact persoon toe"><span>+<span></button><label for="addContact">Voeg contact persoon toe</label></div>
+            {{/if}}
+        </script>
+
+        
         <!--geo shizzle -->
         <script src="js/leaflet-0.7.1/leaflet-src.js"></script>
         <script src="js/vendors/proj4js-compressed.js"></script>
-        <script src=js/script.js></script>
+        <script src="js/script.js"></script>
     </body>
 </html>
