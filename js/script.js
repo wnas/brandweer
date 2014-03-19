@@ -306,18 +306,19 @@ var brandweer = function($, W) {
 
                 fields.each(function(i) {
                     console.log(i);
-                    perContact = [];
+                    perContact = {};
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
                         par = $('<label class="f-label">' + l + '<input tabindex="-1" type="text" class="f-input" readonly value="' + v + '"></label>');
                     perContact[l] = v;
-                    perContact.id = 'contactInformation-' + config.numberOfContacts;
+
                     config.contacts.push(perContact);
                     ci.append(par);
                     // empty all of the input fields..
                     $(this).find('.f-input').val('');
                 });
                 config.contacts.id = 'contactInformation-' + config.numberOfContacts;
+                config.contact.type = 'contactInformation';
                 config.answers.push(config.contacts);
 
                 config.contacts = [];
@@ -694,6 +695,7 @@ var brandweer = function($, W) {
             // @todo put directly into answer.json;
             var answer = {
                 "id": options.activeId + '-' + config.numberOfMarkers,
+                "kind": options.activeId,
                 "geometry": {
                     "type": "Point",
                     "coordinates": [options.e.latlng.lat, options.e.latlng.lng]
