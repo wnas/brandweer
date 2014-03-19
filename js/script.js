@@ -448,6 +448,7 @@ var brandweer = function($, W) {
                 case "confirm":
                 case "confirmAndNext":
                 case "p_confirm":
+                    console.log('bottomNavigation');
                     goNextAndSave(i);
                     break;
 
@@ -466,14 +467,16 @@ var brandweer = function($, W) {
         },
 
         goNextAndSave = function(i) {
+            console.log('goNextAndSave');
             // we need to save here
             // build an array for the question at hand
 
             // find the inputs where the values are in.
-            console.log(getActiveFieldset());
             switch (getActiveFieldset()) {
                 case 'personalInformation':
                 case 'contactInformation':
+                case 'functions':
+                    console.log('save');
                     config.answers[getActiveFieldset()] = [];
                     $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
                         // what is it's value
@@ -482,15 +485,18 @@ var brandweer = function($, W) {
                             it = $(this).attr('id');
                         // place 'm in to the array.
                         config.answers[getActiveFieldset()][it] = v;
+                        console.log(it, v);
                     });
-                    //saveData(config.answers);
+
+                    saveData(config.answers);
 
                     break;
 
                 default:
+                    saveData(config.answers);
                     break;
             }
-            saveData(config.answers);
+
 
             // @todo check if we are not at the end.
             // go forward
@@ -694,6 +700,7 @@ var brandweer = function($, W) {
                 }
             };
 
+            console.log(answer.id);
             switch (options.activeId) {
                 case "gevaarlijkestoffen":
                 case "gasflessen":
@@ -714,14 +721,14 @@ var brandweer = function($, W) {
              */
             config.answers.push(answer);
 
-
-            marker.on('click', function(e) {
-                //  console.log(marker);
-                console.log(answer);
+            var it = (answer.id).toString();
+            marker.on('click', function(e, it) {
                 var args = {
-
+                    'options': options,
+                    'marker': marker,
+                    'e': e
                 }
-                removeMarker(options, marker, e);
+                removeMarker(args);
                 // @todo the formfields should also be removed when the marker is
                 // removed
             });
@@ -730,10 +737,21 @@ var brandweer = function($, W) {
             config.numberOfMarkers = config.numberOfMarkers + 1;
         },
 
-        removeMarker = function(options, marker, e) {
-            console.log(config.anwers);
-            options.map.removeLayer(marker);
-            $('[data-id="' + options.numberOfMarkers + '"]').remove();
+        removeMarker = function(args) {
+            var t = args.marker.options.title;
+            console.log(t);
+
+            var o = config.answers,
+                i;
+            for (i in o) {
+                console.log(o[i]);
+                if (o[i].id === t) {
+                    o.splice(i, 1);
+                }
+            }
+
+            args.options.map.removeLayer(args.marker);
+            //  $('[data-id="' + arg.options.numberOfMarkers + '"]').remove();
         },
 
         addEntry = function(options, answer) {
@@ -890,5 +908,5 @@ var brandweer = function($, W) {
     return {
         init: init
     };
-}(jQuery || Zepto, window);
+}(window.jQuery || window.Zepto, window);
 brandweer.init();
