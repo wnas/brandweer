@@ -890,5 +890,5 @@ var brandweer = function($, W) {
     return {
         init: init
     };
-}(jQuery || Zepto, window);
+}(window.jQuery || window.Zepto, window);
 brandweer.init();
