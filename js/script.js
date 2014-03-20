@@ -105,6 +105,29 @@ var brandweer = function($, W) {
         len, i, j,
         init = function() {
             setMapSize();
+
+        // var localData = JSON.parse(localStorage.getItem('sml')),
+        //     localItem;
+
+        // if (localData) {
+        //     for (localItem in localData) {
+        //         console.log(localData[localItem]);
+        //         var opt = localData[localItem];
+
+        //         var map = $('#map');
+
+        //         opt.map = map;
+
+        //         // opt.e.latLng = [opt.geometry.coordinates[0], opt.geometry.coordinates[1]];
+
+        //         // .e.latlng.lat
+        //         console.log(opt);
+        //         //  addMarker(opt);
+
+        //     }
+        // }
+
+            //config.answers = JSON.parse(localStorage.getItem('sml'));
             // We need to check the url during init, not somewhere else as we cannot
             // set the topnavigation item if we do so...
             //
@@ -348,12 +371,13 @@ var brandweer = function($, W) {
         },
 
         showHideFieldsets = function(elem) {
-            if (elem.charAt(0) !== '#') {
+            if (elem && elem.charAt(0) !== '#') {
                 elem = '#' + elem;
             }
 
             var q = config.questions[getCurrentQuestion(elem.substring(1))];
             // find q from the list of questions and set the corresponding top menu item.
+            $('body').data('active', q);
             switch (q) {
                 case 'intro':
                     $('#prev').hide();
@@ -513,6 +537,9 @@ var brandweer = function($, W) {
         },
 
         saveData = function(arg) {
+            var dataToStore = JSON.stringify(arg);
+            localStorage.setItem('sml', dataToStore);
+
             console.log(arg);
             //   console.log('we need to send that...');
         },
@@ -675,34 +702,51 @@ var brandweer = function($, W) {
         },
 
         addMarker = function(options) {
+            // debugger;
             options.numberOfMarkers = config.numberOfMarkers;
-            var custom = 'img/nen1414/' + config.markers[options.activeId] + '.png';
-            var BrandweerIcon = L.Icon.Default.extend({
-                options: {
-                    iconUrl: custom,
-                    iconSize: [32, 32]
 
-                },
-                uId: 'foo'
-            });
+            var question = options.activeId || options.properties.type,
+                marker = config.markers[question],
+                custom = 'img/nen1414/' + marker + '.png',
+                lat,
+                lng,
+                BrandweerIcon = L.Icon.Default.extend({
+                    options: {
+                        iconUrl: custom,
+                        iconSize: [24, 24]
+
+                    },
+                    uId: 'foo'
+                });
             var brandweerIcon = new BrandweerIcon();
 
-            var marker = new L.marker(options.e.latlng, {
+            if (options.e) {
+                lat = options.e.latlng.lat;
+                lng = options.e.latlng.lng
+            } else {
+                lat = options.geometry.coordinates[0];
+                lng = options.geometry.coordinates[1];
+            }
+            var coords = [lat, lng];
+
+            var marker = new L.marker(coords, {
                 draggable: 'true',
-                title: options.activeId + '-' + config.numberOfMarkers,
+                title: question + '-' + config.numberOfMarkers,
                 icon: brandweerIcon
             });
             // @todo put directly into answer.json;
+
+
             var answer = {
-                "id": options.activeId + '-' + config.numberOfMarkers,
-                "kind": options.activeId,
+                "id": question + '-' + config.numberOfMarkers,
+                "kind": question,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [options.e.latlng.lat, options.e.latlng.lng]
+                    "coordinates": coords
                 },
                 "properties": {
-                    "building": options.activeBuilding,
-                    "type": options.activeId
+                    "building": options.activeBuilding || options.properties.building,
+                    "type": question
                 }
             };
 
@@ -724,6 +768,7 @@ var brandweer = function($, W) {
              these layers I want to turn on and off by setting a class to them or something.
 
              */
+            console.log(config.answers);
             config.answers.push(answer);
 
             var it = (answer.id).toString();
