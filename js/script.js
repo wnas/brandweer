@@ -106,27 +106,6 @@ var brandweer = function($, W) {
         init = function() {
             setMapSize();
 
-        // var localData = JSON.parse(localStorage.getItem('sml')),
-        //     localItem;
-
-        // if (localData) {
-        //     for (localItem in localData) {
-        //         console.log(localData[localItem]);
-        //         var opt = localData[localItem];
-
-        //         var map = $('#map');
-
-        //         opt.map = map;
-
-        //         // opt.e.latLng = [opt.geometry.coordinates[0], opt.geometry.coordinates[1]];
-
-        //         // .e.latlng.lat
-        //         console.log(opt);
-        //         //  addMarker(opt);
-
-        //     }
-        // }
-
             //config.answers = JSON.parse(localStorage.getItem('sml'));
             // We need to check the url during init, not somewhere else as we cannot
             // set the topnavigation item if we do so...
@@ -328,7 +307,7 @@ var brandweer = function($, W) {
                 fields = $(this).closest('.active').find('.f-container');
 
                 fields.each(function(i) {
-                    console.log(i);
+                    //     console.log(i);
                     perContact = {};
                     var v = $(this).find('.f-input').val(),
                         l = $(this).find('label').text(),
@@ -341,7 +320,7 @@ var brandweer = function($, W) {
                     $(this).find('.f-input').val('');
                 });
                 config.contacts.id = 'contactInformation-' + config.numberOfContacts;
-                config.contact.type = 'contactInformation';
+                config.contacts.type = 'contactInformation';
                 config.answers.push(config.contacts);
 
                 config.contacts = [];
@@ -354,7 +333,7 @@ var brandweer = function($, W) {
             });
 
             $('body').on('click', '.eraseCI', function() {
-                console.log(config.answers);
+                //   console.log(config.answers);
                 var tar = $(this).closest('.ci').attr('id');
                 removeAnswer(tar);
                 $(this).parent().remove();
@@ -477,7 +456,7 @@ var brandweer = function($, W) {
                 case "confirm":
                 case "confirmAndNext":
                 case "p_confirm":
-                    console.log('bottomNavigation');
+                    //    console.log('bottomNavigation');
                     goNextAndSave(i);
                     break;
 
@@ -496,7 +475,7 @@ var brandweer = function($, W) {
         },
 
         goNextAndSave = function(i) {
-            console.log('goNextAndSave');
+            //    console.log('goNextAndSave');
             // we need to save here
             // build an array for the question at hand
 
@@ -505,7 +484,7 @@ var brandweer = function($, W) {
                 case 'personalInformation':
                 case 'contactInformation':
                 case 'functions':
-                    console.log('save');
+                    //    console.log('save');
                     config.answers[getActiveFieldset()] = [];
                     $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
                         // what is it's value
@@ -514,7 +493,7 @@ var brandweer = function($, W) {
                             it = $(this).attr('id');
                         // place 'm in to the array.
                         config.answers[getActiveFieldset()][it] = v;
-                        console.log(it, v);
+                        //      console.log(it, v);
                     });
 
                     saveData(config.answers);
@@ -629,7 +608,7 @@ var brandweer = function($, W) {
                 config.activeBuilding = gid;
                 layer.setStyle(config.css.map.currentStyle);
                 if (buildingQuestion) {
-                    console.log('building question');
+                    //    console.log('building question');
                     if (!feature.properties.selected) {
                         feature.properties.selected = true;
                         if (feature.geometry.type !== "Point") {
@@ -638,7 +617,7 @@ var brandweer = function($, W) {
                             // and style the layer to show the state
                             layer.setStyle(config.css.map.selectedStyle);
 
-                            console.log(config.buildings);
+                            //      console.log(config.buildings);
                         }
                     } else {
                         feature.properties.selected = false;
@@ -646,7 +625,7 @@ var brandweer = function($, W) {
                             T;
                         if (feature.geometry.type !== "Point") {
                             for (T in config.buildings) {
-                                console.log(T);
+                                //      console.log(T);
                                 if (config.buildings[T].gid !== undefined) {
                                     // remove the building from the array
                                     config.buildings.splice(T, 1);
@@ -768,10 +747,11 @@ var brandweer = function($, W) {
              these layers I want to turn on and off by setting a class to them or something.
 
              */
-            console.log(config.answers);
+            // console.log(config.answers);
             config.answers.push(answer);
 
             var it = (answer.id).toString();
+
             marker.on('click', function(e, it) {
                 var args = {
                     'options': options,
@@ -807,7 +787,7 @@ var brandweer = function($, W) {
             var answers = config.answers,
                 i;
             for (i in answers) {
-                console.log(answers[i]);
+                // console.log(answers[i]);
                 if (answers[i].id === tar) {
                     answers.splice(i, 1);
                 }
@@ -815,7 +795,7 @@ var brandweer = function($, W) {
         },
 
         addEntry = function(options, answer) {
-            console.log('add entry');
+            //  console.log('add entry');
             var templateid = '#' + options.activeId + '-form0';
             if (options.numberOfMarkers === 0) {
                 //show the first form with id ending in 0

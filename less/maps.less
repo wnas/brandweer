@@ -1,0 +1,25 @@
+// stuff for maps.
+
+.leaflet-marker-icon {
+	background-color: #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 24px;
+	height: 24px;
+	padding: 4px;
+	position: absolute;
+	&::before {
+		content:'';
+		position: absolute;
+		display: block;
+		width: 0;
+		height: 0;
+		border-top: 8px solid #f00;
+		border-left: 6px solid transparent;
+		border-right: 6px solid transparent;
+		margin: 32px 0 0 14px;
+	}
+}
+
+
+
