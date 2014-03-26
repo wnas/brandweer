@@ -745,7 +745,8 @@ var brandweer = function($, W) {
 
             options.map.addLayer(marker);
             var s = $('[title='+question + '-' + config.numberOfMarkers+']').attr('style');
-            $('[title='+question + '-' + config.numberOfMarkers+']').after('<span style="'+s+'" data-uid="'+question + '-' + config.numberOfMarkers+'" class="markerhelper">hi</span>')
+            $('[title='+question + '-' + config.numberOfMarkers+']').
+                after('<span style="'+s+'" data-uid="'+question + '-' + config.numberOfMarkers+'" class="markerhelper"></span>');
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
