@@ -309,9 +309,13 @@ var brandweer = function($, W) {
                 fields.each(function(i) {
                     //     console.log(i);
                     perContact = {};
-                    var v = $(this).find('.f-input').val(),
+                    var $i = $(this).find('.f-input'),
+                        v = $i.val(),
                         l = $(this).find('label').text(),
                         par = $('<label class="f-label">' + l + '<input tabindex="-1" type="text" class="f-input" readonly value="' + v + '"></label>');
+
+
+
                     perContact[l] = v;
 
                     config.contacts.push(perContact);
@@ -343,7 +347,8 @@ var brandweer = function($, W) {
             });
         },
 
-        validateFields = function(e) {
+        validateFields = function($i,v) {
+            console.log($i,v);
             // stop what you are doing
             e.preventDefault();
             // @todo @wilfred build validation, if there is still time :).
@@ -739,7 +744,8 @@ var brandweer = function($, W) {
             }
 
             options.map.addLayer(marker);
-
+            var s = $('[title='+question + '-' + config.numberOfMarkers+']').attr('style');
+            $('[title='+question + '-' + config.numberOfMarkers+']').after('<span style="'+s+'" data-uid="'+question + '-' + config.numberOfMarkers+'" class="markerhelper">hi</span>')
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
@@ -777,10 +783,13 @@ var brandweer = function($, W) {
             //         answers.splice(i, 1);
             //     }
             // }
+            console.log(title);
+            $('[data-uid="'+title+'"]').remove();
+            // $('span').data('uid',title).remove();
             removeAnswer(title);
 
             args.options.map.removeLayer(args.marker);
-            //  $('[data-id="' + arg.options.numberOfMarkers + '"]').remove();
+
         },
 
         removeAnswer = function(tar) {
