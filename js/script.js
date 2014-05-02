@@ -347,8 +347,8 @@ var brandweer = function($, W) {
             });
         },
 
-        validateFields = function($i,v) {
-            console.log($i,v);
+        validateFields = function($i, v) {
+            console.log($i, v);
             // stop what you are doing
             e.preventDefault();
             // @todo @wilfred build validation, if there is still time :).
@@ -359,7 +359,12 @@ var brandweer = function($, W) {
                 elem = '#' + elem;
             }
 
-            var q = config.questions[getCurrentQuestion(elem.substring(1))];
+            if (elem !== undefined) {
+                var q = config.questions[getCurrentQuestion(elem.substring(1))];
+            } else {
+                return;
+            }
+
             // find q from the list of questions and set the corresponding top menu item.
             $('body').data('active', q);
             switch (q) {
@@ -521,8 +526,8 @@ var brandweer = function($, W) {
         },
 
         saveData = function(arg) {
-            var dataToStore = JSON.stringify(arg);
-            localStorage.setItem('sml', dataToStore);
+            // var dataToStore = JSON.stringify(arg);
+            // localStorage.setItem('sml', dataToStore);
 
             console.log(arg);
             //   console.log('we need to send that...');
@@ -744,9 +749,9 @@ var brandweer = function($, W) {
             }
 
             options.map.addLayer(marker);
-            var s = $('[title='+question + '-' + config.numberOfMarkers+']').attr('style');
-            $('[title='+question + '-' + config.numberOfMarkers+']').
-                after('<span style="'+s+'" data-uid="'+question + '-' + config.numberOfMarkers+'" class="markerhelper"></span>');
+            var s = $('[title=' + question + '-' + config.numberOfMarkers + ']').attr('style');
+            $('[title=' + question + '-' + config.numberOfMarkers + ']').
+            after('<span style="' + s + '" data-uid="' + question + '-' + config.numberOfMarkers + '" class="markerhelper"></span>');
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
@@ -785,7 +790,7 @@ var brandweer = function($, W) {
             //     }
             // }
             console.log(title);
-            $('[data-uid="'+title+'"]').remove();
+            $('[data-uid="' + title + '"]').remove();
             // $('span').data('uid',title).remove();
             removeAnswer(title);
 
