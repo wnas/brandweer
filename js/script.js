@@ -805,7 +805,9 @@ var brandweer = function($, W) {
         },
 
         removeMarker = function(args) {
-            var title = args.marker.options.title;
+            var title = args.marker.options.title,
+                q = title.split('-')[0],
+                b = $('body').data('active');
             //     anwsers = config.answers,
             //     i;
             // for (i in answers) {
@@ -815,11 +817,18 @@ var brandweer = function($, W) {
             //     }
             // }
             console.log(title);
-            $('[data-uid="' + title + '"]').remove();
+            console.log(args);
+            // $('[data-uid="' + title + '"]').remove();
             // $('span').data('uid',title).remove();
-            removeAnswer(title);
+            if (q === b) {
+                console.log('this is the correct page');
+                removeAnswer(title);
 
-            args.options.map.removeLayer(args.marker);
+                args.options.map.removeLayer(args.marker);
+                $('span[data-uid$="' + title + '"]').remove();
+            } else {
+                alert('je kunt alleen maar een marker weghalen bij de specifieke vraag.');
+            }
 
         },
 
