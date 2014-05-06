@@ -377,7 +377,7 @@ var brandweer = function($, W) {
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
-                case 'exercise':
+
                 case 'bhv':
                 case 'contactInformation':
                 case 'personalInformation':
@@ -389,9 +389,18 @@ var brandweer = function($, W) {
                     $('#prev').show();
                     config.body.addClass(config.css.hideMap);
                     break;
+
+                case 'exercise':
+                    $('#confirm').html('Verstuur gegevens');
+                    $('#prev').html('Vorige');
+                    if ($('#confirm, #prev').css('display') !== 'none') {
+                        $('#confirm, #prev').show();
+                    }
+                    break;
                 case 'final':
                     if ($('#confirm').css('display') === 'none') {
                         $('#confirm').hide();
+                        $('#prev').html('Wijzig gegevens');
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
@@ -496,6 +505,7 @@ var brandweer = function($, W) {
                 case 'functions':
                 case 'people':
                 case 'bhv':
+                case 'exercise':
 
                     //    console.log('save');
                     config.answers[getActiveFieldset()] = [];
@@ -516,7 +526,7 @@ var brandweer = function($, W) {
                             it = $(this).attr('id');
                         // place 'm in to the array.
                         config.answers[getActiveFieldset()][it] = v;
-                        //      console.log(it, v);
+                        console.log(it, v);
                     });
 
                     saveData(config.answers);
@@ -619,6 +629,8 @@ var brandweer = function($, W) {
             return result;
         },
         onEachFeature = function(feature, layer) {
+
+
             layer.on('click', function(e) {
                 var buildingQuestion = false;
                 if (getActiveFieldset() === 'buildings') {
@@ -747,7 +759,7 @@ var brandweer = function($, W) {
                     "coordinates": coords
                 },
                 "properties": {
-                    "building": options.activeBuilding || options.properties.building,
+                    "building": options.activeBuilding || options.properties.building || null,
                     "type": question
                 }
             };
