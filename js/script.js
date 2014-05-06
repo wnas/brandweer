@@ -494,6 +494,7 @@ var brandweer = function($, W) {
                 case 'personalInformation':
                 case 'contactInformation':
                 case 'functions':
+                case 'people':
                     //    console.log('save');
                     config.answers[getActiveFieldset()] = [];
                     $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
