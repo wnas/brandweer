@@ -347,8 +347,8 @@
     "verdiepingen": {
         "name": "verdiepingen",
         "copy": {
-            "header": "Verdiepingen",
-            "body": "<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
+            "header": "Bouwlagen",
+            "body": "<p>Heeft uw gebouw meerdere bouwlagen. Geef deze aub hier aan.</p>",
             "help": "help",
             "multi": false
         },
