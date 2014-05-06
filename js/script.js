@@ -367,6 +367,9 @@ var brandweer = function($, W) {
 
             // find q from the list of questions and set the corresponding top menu item.
             $('body').data('active', q);
+
+            $('.leaflet-marker-pane img').removeClass('activeMarker');
+            $('img[title^="' + q + '"]').addClass('activeMarker');
             switch (q) {
                 case 'intro':
                     $('#prev').hide();
@@ -775,7 +778,7 @@ var brandweer = function($, W) {
 
             options.map.addLayer(marker);
             var s = $('[title=' + question + '-' + config.numberOfMarkers + ']').attr('style');
-            $('[title=' + question + '-' + config.numberOfMarkers + ']').
+            $('[title=' + question + '-' + config.numberOfMarkers + ']').addClass('activeMarker').
             after('<span style="' + s + '" data-uid="' + question + '-' + config.numberOfMarkers + '" class="markerhelper"></span>');
             /*
              @milo
@@ -808,26 +811,13 @@ var brandweer = function($, W) {
             var title = args.marker.options.title,
                 q = title.split('-')[0],
                 b = $('body').data('active');
-            //     anwsers = config.answers,
-            //     i;
-            // for (i in answers) {
-            //     console.log(answers[i]);
-            //     if (answers[i].id === title) {
-            //         answers.splice(i, 1);
-            //     }
-            // }
-            console.log(title);
-            console.log(args);
-            // $('[data-uid="' + title + '"]').remove();
-            // $('span').data('uid',title).remove();
-            if (q === b) {
-                console.log('this is the correct page');
-                removeAnswer(title);
 
+            if (q === b) {
+                removeAnswer(title);
                 args.options.map.removeLayer(args.marker);
                 $('span[data-uid$="' + title + '"]').remove();
             } else {
-                alert('je kunt alleen maar een marker weghalen bij de specifieke vraag.');
+                console.log('je kunt alleen maar een marker weghalen bij de specifieke vraag.');
             }
 
         },
@@ -944,30 +934,7 @@ var brandweer = function($, W) {
                 };
                 addMarker(options);
             });
-            //            $.ajax({
-            //                type:'GET',
-            //                //url:'/api/bag/adres/' + adres + '?srid=28992',
-            //                url:'js/json/adres-815010000001910.json',
-            //                dataType:'json',
-            //                success:function (data) {
-            //                    $.each(data.features, function (index, item) {
-            //                        if (item.geometry) {
-            //                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-            //                        }
-            //                        /* @wnas this is the point where the address information should be transfered to the input boxes.
-            //                         basically this means writing the address into personalInformation. We could also generate data.json
-            //                         directly from a database and have the address constructed in the process. Which one is in your favour?
-            //                         */
-            //                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
-            //                    });
-            //
-            //                    new L.GeoJSON(data, {
-            //                        style:config.css.map.activeStyle,
-            //                        onEachFeature:onEachFeature
-            //                    }).addTo(map);
-            //                }
-            //
-            //            });
+
             $.ajax({
                 type: 'GET',
                 //url: '/api/bag/panden/' + adres + '?srid=28992',
