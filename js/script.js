@@ -495,11 +495,23 @@ var brandweer = function($, W) {
                 case 'contactInformation':
                 case 'functions':
                 case 'people':
+                case 'bhv':
+
                     //    console.log('save');
                     config.answers[getActiveFieldset()] = [];
                     $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
                         // what is it's value
                         var v = $(this).val(),
+                            // and id...
+                            it = $(this).attr('id');
+                        // place 'm in to the array.
+                        config.answers[getActiveFieldset()][it] = v;
+                        //      console.log(it, v);
+                    });
+
+                    $('#' + getActiveFieldset() + '-form0').find('.f-checkbox').each(function(i) {
+                        // what is it's value
+                        var v = $(this).attr('checked'),
                             // and id...
                             it = $(this).attr('id');
                         // place 'm in to the array.
