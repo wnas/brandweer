@@ -390,13 +390,13 @@ var brandweer = function($, W) {
                     config.body.addClass(config.css.hideMap);
                     break;
 
-                case 'exercise':
-                    $('#confirm').html('Verstuur gegevens');
-                    $('#prev').html('Vorige');
-                    if ($('#confirm, #prev').css('display') !== 'none') {
-                        $('#confirm, #prev').show();
-                    }
-                    break;
+                    // case 'exercise':
+                    //     $('#confirm').html('Verstuur gegevens');
+                    //     $('#prev').html('Vorige');
+                    //     if ($('#confirm, #prev').css('display') !== 'none') {
+                    //         $('#confirm, #prev').show();
+                    //     }
+                    //     break;
                 case 'final':
                     if ($('#confirm').css('display') === 'none') {
                         $('#confirm').hide();
@@ -750,7 +750,7 @@ var brandweer = function($, W) {
             });
             // @todo put directly into answer.json;
 
-
+            console.log(options)
             var answer = {
                 "id": question + '-' + config.numberOfMarkers,
                 "kind": question,
@@ -759,7 +759,7 @@ var brandweer = function($, W) {
                     "coordinates": coords
                 },
                 "properties": {
-                    "building": options.activeBuilding || options.properties.building || null,
+                    "building": options.activeBuilding || null,
                     "type": question
                 }
             };
