@@ -347,8 +347,8 @@ var brandweer = function($, W) {
             });
         },
 
-        validateFields = function($i,v) {
-            console.log($i,v);
+        validateFields = function($i, v) {
+            console.log($i, v);
             // stop what you are doing
             e.preventDefault();
             // @todo @wilfred build validation, if there is still time :).
@@ -359,9 +359,17 @@ var brandweer = function($, W) {
                 elem = '#' + elem;
             }
 
-            var q = config.questions[getCurrentQuestion(elem.substring(1))];
+            if (elem !== undefined) {
+                var q = config.questions[getCurrentQuestion(elem.substring(1))];
+            } else {
+                return;
+            }
+
             // find q from the list of questions and set the corresponding top menu item.
             $('body').data('active', q);
+
+            $('.leaflet-marker-pane img').removeClass('activeMarker');
+            $('img[title^="' + q + '"]').addClass('activeMarker');
             switch (q) {
                 case 'intro':
                     $('#prev').hide();
@@ -372,7 +380,7 @@ var brandweer = function($, W) {
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
-                case 'exercise':
+
                 case 'bhv':
                 case 'contactInformation':
                 case 'personalInformation':
@@ -384,9 +392,18 @@ var brandweer = function($, W) {
                     $('#prev').show();
                     config.body.addClass(config.css.hideMap);
                     break;
+
+                    // case 'exercise':
+                    //     $('#confirm').html('Verstuur gegevens');
+                    //     $('#prev').html('Vorige');
+                    //     if ($('#confirm, #prev').css('display') !== 'none') {
+                    //         $('#confirm, #prev').show();
+                    //     }
+                    //     break;
                 case 'final':
                     if ($('#confirm').css('display') === 'none') {
                         $('#confirm').hide();
+                        $('#prev').html('Wijzig gegevens');
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
@@ -489,6 +506,10 @@ var brandweer = function($, W) {
                 case 'personalInformation':
                 case 'contactInformation':
                 case 'functions':
+                case 'people':
+                case 'bhv':
+                case 'exercise':
+
                     //    console.log('save');
                     config.answers[getActiveFieldset()] = [];
                     $('#' + getActiveFieldset() + '-form0').find('.f-input, .f-select').each(function(i) {
@@ -499,6 +520,16 @@ var brandweer = function($, W) {
                         // place 'm in to the array.
                         config.answers[getActiveFieldset()][it] = v;
                         //      console.log(it, v);
+                    });
+
+                    $('#' + getActiveFieldset() + '-form0').find('.f-checkbox').each(function(i) {
+                        // what is it's value
+                        var v = $(this).attr('checked'),
+                            // and id...
+                            it = $(this).attr('id');
+                        // place 'm in to the array.
+                        config.answers[getActiveFieldset()][it] = v;
+                        console.log(it, v);
                     });
 
                     saveData(config.answers);
@@ -521,8 +552,8 @@ var brandweer = function($, W) {
         },
 
         saveData = function(arg) {
-            var dataToStore = JSON.stringify(arg);
-            localStorage.setItem('sml', dataToStore);
+            // var dataToStore = JSON.stringify(arg);
+            // localStorage.setItem('sml', dataToStore);
 
             console.log(arg);
             //   console.log('we need to send that...');
@@ -601,6 +632,8 @@ var brandweer = function($, W) {
             return result;
         },
         onEachFeature = function(feature, layer) {
+
+
             layer.on('click', function(e) {
                 var buildingQuestion = false;
                 if (getActiveFieldset() === 'buildings') {
@@ -720,7 +753,7 @@ var brandweer = function($, W) {
             });
             // @todo put directly into answer.json;
 
-
+            console.log(options)
             var answer = {
                 "id": question + '-' + config.numberOfMarkers,
                 "kind": question,
@@ -729,7 +762,7 @@ var brandweer = function($, W) {
                     "coordinates": coords
                 },
                 "properties": {
-                    "building": options.activeBuilding || options.properties.building,
+                    "building": options.activeBuilding || null,
                     "type": question
                 }
             };
@@ -744,8 +777,9 @@ var brandweer = function($, W) {
             }
 
             options.map.addLayer(marker);
-            var s = $('[title='+question + '-' + config.numberOfMarkers+']').attr('style');
-            $('[title='+question + '-' + config.numberOfMarkers+']').after('<span style="'+s+'" data-uid="'+question + '-' + config.numberOfMarkers+'" class="markerhelper">hi</span>')
+            var s = $('[title=' + question + '-' + config.numberOfMarkers + ']').attr('style');
+            $('[title=' + question + '-' + config.numberOfMarkers + ']').addClass('activeMarker').
+            after('<span style="' + s + '" data-uid="' + question + '-' + config.numberOfMarkers + '" class="markerhelper"></span>');
             /*
              @milo
              here I want to have the possibilty to set one or more markers for each question
@@ -774,21 +808,17 @@ var brandweer = function($, W) {
         },
 
         removeMarker = function(args) {
-            var title = args.marker.options.title;
-            //     anwsers = config.answers,
-            //     i;
-            // for (i in answers) {
-            //     console.log(answers[i]);
-            //     if (answers[i].id === title) {
-            //         answers.splice(i, 1);
-            //     }
-            // }
-            console.log(title);
-            $('[data-uid="'+title+'"]').remove();
-            // $('span').data('uid',title).remove();
-            removeAnswer(title);
+            var title = args.marker.options.title,
+                q = title.split('-')[0],
+                b = $('body').data('active');
 
-            args.options.map.removeLayer(args.marker);
+            if (q === b) {
+                removeAnswer(title);
+                args.options.map.removeLayer(args.marker);
+                $('span[data-uid$="' + title + '"]').remove();
+            } else {
+                console.log('je kunt alleen maar een marker weghalen bij de specifieke vraag.');
+            }
 
         },
 
@@ -904,30 +934,7 @@ var brandweer = function($, W) {
                 };
                 addMarker(options);
             });
-            //            $.ajax({
-            //                type:'GET',
-            //                //url:'/api/bag/adres/' + adres + '?srid=28992',
-            //                url:'js/json/adres-815010000001910.json',
-            //                dataType:'json',
-            //                success:function (data) {
-            //                    $.each(data.features, function (index, item) {
-            //                        if (item.geometry) {
-            //                            item.geometry.coordinates = transformCoords(item.geometry.coordinates);
-            //                        }
-            //                        /* @wnas this is the point where the address information should be transfered to the input boxes.
-            //                         basically this means writing the address into personalInformation. We could also generate data.json
-            //                         directly from a database and have the address constructed in the process. Which one is in your favour?
-            //                         */
-            //                        //config.questions.personalInformation.fields[4].value = item.properties.openbareruimtenaam;
-            //                    });
-            //
-            //                    new L.GeoJSON(data, {
-            //                        style:config.css.map.activeStyle,
-            //                        onEachFeature:onEachFeature
-            //                    }).addTo(map);
-            //                }
-            //
-            //            });
+
             $.ajax({
                 type: 'GET',
                 //url: '/api/bag/panden/' + adres + '?srid=28992',
