@@ -7,7 +7,14 @@
 .f-button {
   box-sizing: border-box;
 }
-
+body[data-active="functions"] {
+    .f-form .f-container {
+    border-bottom:0;
+  }
+}
+body[data-active="gevaarlijkestoffen"] .form > .fields .multiple-select {
+  border-bottom:0;
+}
 .f-form {
 
   .f-legend {
