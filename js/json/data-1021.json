@@ -149,7 +149,7 @@
         "name": "functions",
         "copy": {
             "header": "Functie",
-            "body": "<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>",
+            "body": "<p>Geef voor het pand (de panden) de functie op. Kies eerst de hoofdfunctie en daarna de deelfunctie</p>",
             "help": "help",
             "multi": false
         },

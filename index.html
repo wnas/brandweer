@@ -94,43 +94,43 @@
             </div>
             <div class="form clearfix" id="{{name}}-form0">
                 {{#if functions}}
-                <div class="fields">
-                    <div class="f-container multiple-select multiple-origin">
-                    <label for="{{name}}-select0" class="f-label">Hoofdfunctie</label>
-                    <select id="{{name}}-select0" class="f-select"><option name="default" value="0">Kies een hoofdfunctie</option></select>
-                </div>
-                <div class="f-container multiple-select multiple-target">
-                    <label for="{{name}}-subselect0" class="f-label">Deelfunctie</label>
-                    <select id="{{name}}-subselect0" class="f-select" disabled><option name="default" value="0">Kies een deelfunctie</option></select>
-                </div>
+                    <div class="fields">
+                        <div class="f-container multiple-select multiple-origin">
+                        <label for="{{name}}-select0" class="f-label">Hoofdfunctie</label>
+                        <select id="{{name}}-select0" class="f-select"><option name="default" value="0">Kies een hoofdfunctie</option></select>
+                    </div>
+                    <div class="f-container multiple-select multiple-target">
+                        <label for="{{name}}-subselect0" class="f-label">Deelfunctie</label>
+                        <select id="{{name}}-subselect0" class="f-select" disabled><option name="default" value="0">Kies een deelfunctie</option></select>
+                    </div>
                 {{/if}}
                 {{#if fields}}
-                <div class="fields">
-                    {{#each fields}}
-                    <div class="f-container {{#if required}}{{required}}{{/if}}">
-                       {{#if checkbox}}
-                        <input 
-                            type="{{type}}"
-                            id="{{../name}}-{{name}}0"
-                            value="{{value}}"
-                            class="f-checkbox" />
-                        <label
-                            for="{{../../name}}-{{name}}0"
-                            class="f-label">{{placeholder}}</label>
-                       {{else}}
-                        <input 
-                            type="{{type}}"
-                            id="{{../../../name}}-{{name}}0"
-                            value="{{value}}"
-                            placeholder="{{placeholder}}"
-                            class="f-input" required />
-                        <label
-                            for="{{../../name}}-{{name}}0"
-                            class="f-label">{{placeholder}}</label>        
-                        {{/if}}
+                    <div class="fields">
+                        {{#each fields}}
+                        <div class="f-container {{#if required}}{{required}}{{/if}}">
+                           {{#if checkbox}}
+                            <input 
+                                type="{{type}}"
+                                id="{{../name}}-{{name}}0"
+                                value="{{value}}"
+                                class="f-checkbox" />
+                            <label
+                                for="{{../../name}}-{{name}}0"
+                                class="f-label">{{placeholder}}</label>
+                           {{else}}
+                            <input 
+                                type="{{type}}"
+                                id="{{../../../name}}-{{name}}0"
+                                value="{{value}}"
+                                placeholder="{{placeholder}}"
+                                class="f-input" required />
+                            <label
+                                for="{{../../name}}-{{name}}0"
+                                class="f-label">{{placeholder}}</label>        
+                            {{/if}}
+                        </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
-                </div>
                 {{/if}}
             </div>    
             {{#if copy.multi}}
