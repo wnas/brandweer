@@ -407,7 +407,7 @@ var brandweer = function($, W) {
                 case 'final':
                     if ($('#confirm').css('display') === 'none') {
                         $('#confirm').hide();
-                        $('#prev').html('Wijzig gegevens');
+
                     }
                     config.body.addClass(config.css.hideMap);
                     break;
