@@ -138,6 +138,7 @@ var brandweer = function($, W) {
                         //render all the navigation items and check which one needs to be active
                         if (i > 0 && i <= config.numberOfQuestions) {
                             renderNavigationItem(config.questions[i], i, (config.questions[i] === hash));
+                            console.log(config.questions[i]);
                         }
                     }
                     buildContactOption(data);
@@ -296,6 +297,7 @@ var brandweer = function($, W) {
         contactInformation = function() {
             var fields,
                 ci;
+            config.answers.contactInformation = [];
             // remove the empty fields div which get built
             // @todo @wilfred make sure only the needed elements get build.
             //$('.fields').empty().remove();
@@ -325,8 +327,10 @@ var brandweer = function($, W) {
                 });
                 config.contacts.id = 'contactInformation-' + config.numberOfContacts;
                 config.contacts.type = 'contactInformation';
-                config.answers.push(config.contacts);
 
+
+                config.answers.contactInformation.push(config.contacts);
+                console.log(config.answers);
                 config.contacts = [];
                 ci.append('<input type="hidden" name="activeBuilding" class="f-input" value="' + config.activeBuilding + '"/> ');
 
@@ -504,7 +508,7 @@ var brandweer = function($, W) {
             // find the inputs where the values are in.
             switch (getActiveFieldset()) {
                 case 'personalInformation':
-                case 'contactInformation':
+                    // case 'contactInformation':
                 case 'functions':
                 case 'people':
                 case 'bhv':
