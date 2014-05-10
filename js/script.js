@@ -549,6 +549,9 @@ var brandweer = function($, W) {
             // @todo check if we are not at the end.
             // go forward
             showHideFieldsets(config.questions[i + 1]);
+
+            // mark the visited step in the top navigation.
+            $('.top-navigation a[href$="' + getActiveFieldset() + '"]').addClass('visited')
         },
 
         setData = function(p) {
