@@ -353,9 +353,9 @@
             "multi": false
         },
         "fields": [{
-            "name": "verdiepingen",
+            "name": "Bouwlagen",
             "type": "number",
-            "placeholder": "Verdiepingen",
+            "placeholder": "Bouwlagen",
             "value": "",
             "checkbox": false,
             "required": ""
