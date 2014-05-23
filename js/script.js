@@ -10,7 +10,7 @@ var brandweer = function($, W) {
     var config = {
         // foo: bar
         "map": null,
-        "src": "/webdata/1031",
+        "src": "",
         "multipleSelectClone": '',
         "headerHeight": $('#header').height(),
         "navHeight": $('#main-nav').height(),
@@ -111,13 +111,16 @@ var brandweer = function($, W) {
             // set the topnavigation item if we do so...
             //
             // @todo Grab the data for the user, based upon the url used to log in
-            //var url = "/webdata/1021";
-            var url = "js/json/data-1021.json",
-                hash = W.location.href.split("#")[1];
-                if (!hash) {
-                        // set the first one
-                        hash = '#intro';
-                    }
+            var url = "/webdata/test";
+            //var url = "js/json/data-1021.json",
+            var hash = W.location.href.split("#")[1];
+            if (!hash) {
+                // set the first one
+                hash = '#intro';
+            }
+            //Grab the userhash (uuid in table web.users) from the url
+            var uuid = getQueryVariable('uuid', 'test');
+            var url = "/webdata/" + uuid;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -161,6 +164,19 @@ var brandweer = function($, W) {
             doNavigation();
             toggleInfo();
             contactInformation();
+        },
+        getQueryVariable = function(variable, defaultvalue) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            console.log(vars);
+            var returnval = defaultvalue;
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) === variable) {
+                    returnval = decodeURIComponent(pair[1]);
+                }
+            }
+            return returnval;
         },
         buildHazards = function(data, index) {
             for (i = 0; i < data.functions.length; i++) {
@@ -948,8 +964,8 @@ var brandweer = function($, W) {
 
             $.ajax({
                 type: 'GET',
-                //url: '/api/bag/panden/' + adres + '?srid=28992',
-                url: 'js/json/panden-815010000001910.json',
+                url: '/api/bag/panden/' + adres + '?srid=28992',
+                //url: 'js/json/panden-815010000001910.json',
                 dataType: 'json',
                 success: function(data) {
                     $.each(data.features, function(index, item) {
