@@ -114,6 +114,10 @@ var brandweer = function($, W) {
             //var url = "/webdata/1021";
             var url = "js/json/data-1021.json",
                 hash = W.location.href.split("#")[1];
+                if (!hash) {
+                        // set the first one
+                        hash = '#intro';
+                    }
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -551,7 +555,7 @@ var brandweer = function($, W) {
             showHideFieldsets(config.questions[i + 1]);
 
             // mark the visited step in the top navigation.
-            $('.top-navigation a[href$="' + getActiveFieldset() + '"]').addClass('visited')
+            $('.top-navigation a[href$="' + getActiveFieldset() + '"]').addClass('visited');
         },
 
         setData = function(p) {
@@ -746,7 +750,7 @@ var brandweer = function($, W) {
 
             if (options.e) {
                 lat = options.e.latlng.lat;
-                lng = options.e.latlng.lng
+                lng = options.e.latlng.lng;
             } else {
                 lat = options.geometry.coordinates[0];
                 lng = options.geometry.coordinates[1];
@@ -760,7 +764,7 @@ var brandweer = function($, W) {
             });
             // @todo put directly into answer.json;
 
-            console.log(options)
+            console.log(options);
             var answer = {
                 "id": question + '-' + config.numberOfMarkers,
                 "kind": question,
@@ -804,7 +808,7 @@ var brandweer = function($, W) {
                     'options': options,
                     'marker': marker,
                     'e': e
-                }
+                };
                 removeMarker(args);
                 // @todo the formfields should also be removed when the marker is
                 // removed
