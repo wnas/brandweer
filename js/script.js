@@ -653,6 +653,7 @@ var brandweer = function($, W) {
                 config.activeBuilding = gid;
                 layer.setStyle(config.css.map.currentStyle);
                 if (buildingQuestion) {
+                    console.log('building question');
                     //    console.log('building question');
                     if (!feature.properties.selected) {
                         feature.properties.selected = true;
@@ -693,6 +694,7 @@ var brandweer = function($, W) {
                             options.single = 'true';
                             addMarker(options);
                             break;
+                        case "buildings":
                         case "functions":
                         case "bhv":
                         case "intro":
@@ -728,7 +730,10 @@ var brandweer = function($, W) {
         addMarker = function(options) {
             // debugger;
             options.numberOfMarkers = config.numberOfMarkers;
-
+            if (options.activeId) {
+                console.log('sorry, we do not do that here...');
+                return;
+            }
             var question = options.activeId || options.properties.type,
                 marker = config.markers[question],
                 custom = 'img/nen1414/' + marker + '.png',
