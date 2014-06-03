@@ -730,7 +730,7 @@ var brandweer = function($, W) {
         addMarker = function(options) {
             // debugger;
             options.numberOfMarkers = config.numberOfMarkers;
-            if (options.activeId) {
+            if (options.activeId === 'buildings' || options.activeId === 'verdiepingen' || options.activeId === 'people' || options.activeId === 'exercise' || options.activeId === 'functions') {
                 console.log('sorry, we do not do that here...');
                 return;
             }
