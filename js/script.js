@@ -298,9 +298,7 @@ var brandweer = function($, W) {
                     // show the correct question
                     showHideFieldsets(loc);
                 });
-            }
-            // if we don't have history support
-            else {
+            } else {
                 // start at the beginning...
                 showHideFieldsets('#intro');
             }
@@ -673,7 +671,6 @@ var brandweer = function($, W) {
                 config.activeBuilding = gid;
                 layer.setStyle(config.css.map.currentStyle);
                 if (buildingQuestion) {
-                    console.log('building question');
                     //    console.log('building question');
                     if (!feature.properties.selected) {
                         feature.properties.selected = true;
@@ -785,7 +782,7 @@ var brandweer = function($, W) {
             });
             // @todo put directly into answer.json;
 
-            console.log(options);
+            //console.log(options);
             var answer = {
                 "id": question + '-' + config.numberOfMarkers,
                 "kind": question,
