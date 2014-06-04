@@ -25,11 +25,12 @@
   background: #00a1de;
   box-shadow: none;
   -webkit-box-shadow: none;
-  background: -moz-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
+  .linear-gradient(bottom,#00a1de,70%,#0091cb,98%);
+  /*background: -moz-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
   background: -webkit-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
   background: -ms-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
   background: -o-linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
-  background: linear-gradient(bottom, #00a1de 70%, #0091c8 98%);
+  background: linear-gradient(bottom, #00a1de 70%, #0091c8 98%);*/
 //  font-family: 'klmicons', verdana, arial, sans-serif;
   text-shadow: 0 2px 1px #1f6e95;
 
@@ -103,7 +104,7 @@ blockpadding {
 .icons {
   &:before {
   font-family: 'iconsregular';
-  font-size: 4.5em;
+  font-size: 4.5rem;
   font-weight: 100;
   line-height: 0.65em;
   content:'a';
@@ -132,13 +133,18 @@ blockpadding {
 // icons
   
 // arrows, for show and hide elements
-.icon-arrow-up {&:before {content:'a';line-height:0.15em;}}
-.icon-arrow-down {&:before {content:'a';line-height: 0.15em;}
-  transform:rotate(180deg);
-  -webkit-transform:rotate(180deg);
-  -moz-transform:rotate(180deg);
-  -o-transform:rotate(180deg);
-  -ms-transform:rotate(180deg);
+.icon-arrow-up {
+    &:before {
+      content:'a';
+      line-height:0.15em;
+    }
+  }
+.icon-arrow-down {
+  &:before {
+    content:'a';
+    line-height: 0.15em;
+  }
+  .rotate(180deg)
   }
 .icon-close {
   &:before {
@@ -159,6 +165,22 @@ blockpadding {
 .icon-logo {&:before {content:'l';line-height: 0.65em;}}
 .icon-brandweer {&:before {content:'b';line-height: 0.65em;}}
 
+
+.rotate(@arg){
+    -moz-transform:rotate(@arg);
+    -ms-transform:rotate(@arg);
+    -o-transform:rotate(@arg);
+    -webkit-transform:rotate(@arg);
+   transform:rotate(@arg);
+}
+
+.linear-gradient(@start,@color1,@position1,@color2,@position2){
+  background: -moz-linear-gradient(@start,@color1 @position1,@color2 @position2);
+  background: -webkit-linear-gradient(@start,@color1 @position1,@color2 @position2);
+  background: -ms-linear-gradient(@start,@color1 @position1,@color2 @position2);
+  background: -o-linear-gradient(b@start,@color1 @position1,@color2 @position2);
+  background: linear-gradient(@start,@color1 @position1,@color2 @position2);
+  }
 
 
 
