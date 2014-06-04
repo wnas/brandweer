@@ -74,25 +74,43 @@
   top: 0;
   left: 0;
   z-index: 50;
-  & h1:extend(blockpadding) {
+  
+  & h1 {
+    margin: 5px auto;
     max-width: 1024px;
     text-align: right;
-    .icons;
-    .icon-logo;
-    font-size: .6em;
-    @media only screen and(max-width:600px) {font-size: .3em;}
-    padding: 11px 0;
-    &:before {color: @logo-color;}
-    & a {
-      padding-right: 1em;
-      .icons;
-      .icon-brandweer;
-      &:before {color: @background-color;}
-      & span {
+    a {
+      display: block;
+      background: url(../img/logo.png) no-repeat top right;
+      background: url(../img/logo.svg) no-repeat top right;
+      height: 40px;
+      span {
         display: none;
       }
     }
+    
+    
   }
+  // old code for logo in a font. Changed that to SVG / png.
+  // & h1:extend(blockpadding) {
+    // max-width: 1024px;
+    // text-align: right;
+    // .icons;
+    // .icon-logo;
+    // font-size: .6em;
+    // @media only screen and(max-width:600px) {font-size: .3em;}
+    // padding: 11px 0;
+    // &:before {color: @logo-color;}
+    // & a {
+      // padding-right: 1em;
+      // .icons;
+      // .icon-brandweer;
+      // &:before {color: @background-color;}
+      // & span {
+        // display: none;
+      // }
+    // }
+  // }
 }
 
 #intro {
