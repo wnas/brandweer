@@ -40,12 +40,25 @@
     width: 30px;
     height: 30px;
     .default-icon-style;
-    .icons;
-    .icon-close;
+    //.icons;
+    //.icon-close;
     .icons-hover;
+    
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -1px -90px;
+      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -31px -90px;
+        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
+        background-size: 90px 150px;
+        background-color: red;
+      }
     }
   }
 }
@@ -66,12 +79,26 @@
     width: 30px;
     height: 30px;
     .default-icon-style;
-    .icons;
-    .icon-close;
+    // .icons;
+    // .icon-close;
     .icons-hover;
+    &:hover {
+      background: red;width: 30px height: 30px;display: block;
+    }
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -1px -90px;
+      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -31px -90px;
+        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
+        background-size: 90px 150px;
+      }
     }
   }
   & .hideCI {
@@ -80,12 +107,24 @@
     height: 30px;
     margin-bottom: 10px;
     .default-icon-style;
-    .icons;
-    .icon-arrow-up;
+    //.icons;
+    //.icon-arrow-up;
     .icons-hover;
+    
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -31px -61px;
+      background: url(../img/iconen-information.svg) no-repeat -31px -61px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -61px -61px;
+        background: url(../img/iconen-information.svg) no-repeat -61px -61px;
+        background-size: 90px 150px;
+      }
     }
   }
   & input.f-input {
@@ -226,11 +265,15 @@ fieldset {
   padding-right: 20px;
 //  display: inline-block;
   height: 30px;
-  .icons;
+  // .icons;
   .default-icon-style;
-  .icon-arrow-up;
+  // .icon-arrow-up;
+  background: url(../img/iconen-information.png) no-repeat -1px -59px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -59px;
+  
+  background-size: 90px 150px;
   &:hover {
-      background: none;
+      background-color: inherit;
       border: 0;
   }
   @media only screen and(max-width:600px) {
@@ -241,10 +284,13 @@ fieldset {
 .hideMe .hideFieldset {
   padding-right:0;
   padding-left: 20px;
-  .icons;
-  .icon-arrow-down;
+  // .icons;
+  // .icon-arrow-down;
+  background: url(../img/iconen-information.png) no-repeat -31px -61px;
+  background: url(../img/iconen-information.svg) no-repeat -31px -61px;
+  background-size: 90px 150px;
   &:hover {
-      background: none;
+      background-color: inherit;
       border: 0;
   } 
 }
@@ -258,16 +304,41 @@ fieldset {
   height:30px;
   cursor: pointer;
   .default-icon-style;
-  .icons;
+  // .icons;
   .icons-hover;
   // don't need this span
   span {display: none;}
 }
 .contact {
-  .icon-contact;
+  // .icon-contact;
+  background: url(../img/iconen-information.png) no-repeat -1px -1px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -1px;
+  background-size: 90px 150px;
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat -31px -1px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -1px;
+    background-size: 90px 150px;
+    background-color: fade(@theme-color,70%);
+    border: 1px solid fade(#ddd,10%);
+  }
 }
 button.revealInformation {
-  .icon-info;
+  // .icon-info;
+  &:before {
+    display: none;
+  }
+  
+  background: url(../img/iconen-information.png) no-repeat -30px -30px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -31px;
+  background-size: 90px 150px;
+  
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat 0 -30px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -31px;
+    background-color: fade(@theme-color,70%);
+    background-size: 90px 150px;
+  }
+  
 }
 
 .revealInformation {
@@ -283,10 +354,50 @@ button#addContact {
   width: 30px;
     height: 30px;
   .default-icon-style;
-  .icons;
-  .icons-hover;
-  .icon-add;
+  // .icons;
+  // .icons-hover;
+  // .icon-add;
+  background: url(../img/iconen-information.png) no-repeat -1px -121px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -121px;
+  background-size: 90px 150px;
+  
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat -31px -121px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -121px;
+    background-color: fade(@theme-color,70%);
+    background-size: 90px 150px;
+  }
   & span {display: none;}
 }
 
+div.button-bar {
+    button#addContact {
+      margin-top: 30px;
+      vertical-align: middle;
+    }
+    label {
+      display: block;
+      margin: -23px 60px 10px;
+    }
+}
+button.hideInformation {
+  &:before 
+      {
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -1px -90px;
+      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -31px -90px;
+        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
+        background-size: 90px 150px;
+        background-color: red;
+      }
+    }
+  
+}
 
