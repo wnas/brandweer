@@ -42,7 +42,7 @@
     .default-icon-style;
     //.icons;
     //.icon-close;
-    .icons-hover;
+    //.icons-hover;
     
     & span {
       display: block;
@@ -76,6 +76,7 @@
   
   & .eraseCI {
     float: right;
+    margin-bottom: 10px;
     width: 30px;
     height: 30px;
     .default-icon-style;
@@ -109,7 +110,7 @@
     .default-icon-style;
     //.icons;
     //.icon-arrow-up;
-    .icons-hover;
+    //.icons-hover;
     
     & span {
       display: block;
@@ -120,13 +121,27 @@
       background: url(../img/iconen-information.svg) no-repeat -31px -61px;
       background-size: 90px 150px;
       text-indent: -111111px;
-      &:hover {
-        background: url(../img/iconen-information.png) no-repeat -61px -61px;
-        background: url(../img/iconen-information.svg) no-repeat -61px -61px;
-        background-size: 90px 150px;
-      }
+    }
+  
+    &:hover span {
+          background: url(../img/iconen-information.png) no-repeat -61px -61px;
+          background: url(../img/iconen-information.svg) no-repeat -61px -61px;
+          background-size: 90px 150px;
     }
   }
+  &.hide button.hideCI {
+    span {
+            background: url(../img/iconen-information.png) no-repeat -1px -61px;
+            background: url(../img/iconen-information.svg) no-repeat -1px -61px;
+            background-size: 90px 150px;
+    }
+    &:hover span {
+            background: url(../img/iconen-information.png) no-repeat -61px -31px;
+            background: url(../img/iconen-information.svg) no-repeat -61px -31px;
+            background-size: 90px 150px;
+    }
+  }
+  
   & input.f-input {
     margin: 1px 0 0 0;
     border: 0;
@@ -134,8 +149,9 @@
     background: fade(@theme-color,5%);
   }
 }
+
 @media screen and (max-width: 600px) {
-    .ci {
+    .ci .hide {
       left: 0;
       width:96%;
       & .hideCI {
@@ -380,24 +396,3 @@ div.button-bar {
       margin: -23px 60px 10px;
     }
 }
-button.hideInformation {
-  &:before 
-      {
-      display: block;
-      margin: 0 auto;
-      width: 30px;
-      height: 30px;
-      background: url(../img/iconen-information.png) no-repeat -1px -90px;
-      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
-      background-size: 90px 150px;
-      text-indent: -111111px;
-      &:hover {
-        background: url(../img/iconen-information.png) no-repeat -31px -90px;
-        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
-        background-size: 90px 150px;
-        background-color: red;
-      }
-    }
-  
-}
-
