@@ -138,7 +138,6 @@ var brandweer = function($, W) {
                         //render all the navigation items and check which one needs to be active
                         if (i > 0 && i <= config.numberOfQuestions) {
                             renderNavigationItem(config.questions[i], i, (config.questions[i] === hash));
-                            console.log(config.questions[i]);
                         }
                     }
                     buildContactOption(data);
@@ -639,8 +638,6 @@ var brandweer = function($, W) {
             return result;
         },
         onEachFeature = function(feature, layer) {
-
-
             layer.on('click', function(e) {
                 var buildingQuestion = false;
                 if (getActiveFieldset() === 'buildings') {
@@ -653,8 +650,6 @@ var brandweer = function($, W) {
                 config.activeBuilding = gid;
                 layer.setStyle(config.css.map.currentStyle);
                 if (buildingQuestion) {
-                    console.log('building question');
-                    //    console.log('building question');
                     if (!feature.properties.selected) {
                         feature.properties.selected = true;
                         if (feature.geometry.type !== "Point") {
@@ -731,7 +726,7 @@ var brandweer = function($, W) {
             // debugger;
             options.numberOfMarkers = config.numberOfMarkers;
             if (options.activeId === 'buildings' || options.activeId === 'verdiepingen' || options.activeId === 'people' || options.activeId === 'exercise' || options.activeId === 'functions') {
-                console.log('sorry, we do not do that here...');
+                // console.log('sorry, we do not do that here...');
                 return;
             }
             var question = options.activeId || options.properties.type,
