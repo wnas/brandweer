@@ -111,8 +111,7 @@ var brandweer = function($, W) {
             // set the topnavigation item if we do so...
             //
             // @todo Grab the data for the user, based upon the url used to log in
-            var url = "/webdata/test";
-            //var url = "js/json/data-1021.json",
+            var url = "/web/api/test";
             var hash = W.location.href.split("#")[1];
             if (!hash) {
                 // set the first one
@@ -120,7 +119,7 @@ var brandweer = function($, W) {
             }
             //Grab the userhash (uuid in table web.users) from the url
             var uuid = getQueryVariable('uuid', 'test');
-            var url = "/webdata/" + uuid;
+            var url = "/web/api/" + uuid;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -966,8 +965,7 @@ var brandweer = function($, W) {
 
             $.ajax({
                 type: 'GET',
-                url: '/api/bag/panden/' + adres + '?srid=28992',
-                //url: 'js/json/panden-815010000001910.json',
+                url: '/web/api/bag/panden/' + adres + '.json?srid=28992',
                 dataType: 'json',
                 success: function(data) {
                     $.each(data.features, function(index, item) {
