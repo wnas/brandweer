@@ -114,7 +114,12 @@
 }
 
 #intro {
-  width: 90%; outline: 1px solid pink;
+  width: 80%; 
+  & .information {
+    right: auto;
+    left:0;
+    width: 50%;
+  }
 }
 
 // 5. Top layer information ;
@@ -131,6 +136,7 @@
   top: 0;
   right: -132%;
   width: 130%;
+
   background: fade(@background-color,90%);
   border: 1px solid #ccc;
   display:none;
