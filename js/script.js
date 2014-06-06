@@ -118,8 +118,9 @@ var brandweer = function($, W) {
                 hash = '#intro';
             }
             //Grab the userhash (uuid in table web.users) from the url
-            var uuid = getQueryVariable('uuid', 'test');
-            var url = "/web/api/" + uuid;
+            var uuid = getQueryVariable('uuid', 'test'),
+                //    var url = "/web/api/" + uuid;
+                url = 'http://geo04.safetymaps.nl/web/api/nogeentest?name=Brandweer';
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -421,10 +422,10 @@ var brandweer = function($, W) {
                     //     }
                     //     break;
                 case 'final':
-                    if ($('#confirm').css('display') === 'none') {
-                        $('#confirm').hide();
+            // if ($('#confirm').css('display') === 'none') {
+            //     $('#confirm').hide();
 
-                    }
+            // }
                     config.body.addClass(config.css.hideMap);
                     break;
                 case 'gevaarlijkestoffen':
@@ -961,7 +962,8 @@ var brandweer = function($, W) {
 
             $.ajax({
                 type: 'GET',
-                url: '/web/api/bag/panden/' + adres + '.json?srid=28992',
+                // url: '/web/api/bag/panden/' + adres + '.json?srid=28992',
+                url: 'http://geo04.safetymaps.nl/web/api/bag/panden/1671010000003916.json?srid=28992',
                 dataType: 'json',
                 success: function(data) {
                     $.each(data.features, function(index, item) {
