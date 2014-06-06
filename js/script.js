@@ -10,7 +10,7 @@ var brandweer = function($, W) {
     var config = {
         // foo: bar
         "map": null,
-        "src": "/webdata/1031",
+        "src": "",
         "multipleSelectClone": '',
         "headerHeight": $('#header').height(),
         "navHeight": $('#main-nav').height(),
@@ -111,9 +111,15 @@ var brandweer = function($, W) {
             // set the topnavigation item if we do so...
             //
             // @todo Grab the data for the user, based upon the url used to log in
-            //var url = "/webdata/1021";
-            var url = "js/json/data-1021.json",
-                hash = W.location.href.split("#")[1];
+            var url = "/web/api/test";
+            var hash = W.location.href.split("#")[1];
+            if (!hash) {
+                // set the first one
+                hash = '#intro';
+            }
+            //Grab the userhash (uuid in table web.users) from the url
+            var uuid = getQueryVariable('uuid', 'test');
+            var url = "/web/api/" + uuid;
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -156,6 +162,19 @@ var brandweer = function($, W) {
             doNavigation();
             toggleInfo();
             contactInformation();
+        },
+        getQueryVariable = function(variable, defaultvalue) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            console.log(vars);
+            var returnval = defaultvalue;
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split('=');
+                if (decodeURIComponent(pair[0]) === variable) {
+                    returnval = decodeURIComponent(pair[1]);
+                }
+            }
+            return returnval;
         },
         buildHazards = function(data, index) {
             for (i = 0; i < data.functions.length; i++) {
@@ -277,9 +296,7 @@ var brandweer = function($, W) {
                     // show the correct question
                     showHideFieldsets(loc);
                 });
-            }
-            // if we don't have history support
-            else {
+            } else {
                 // start at the beginning...
                 showHideFieldsets('#intro');
             }
@@ -550,7 +567,7 @@ var brandweer = function($, W) {
             showHideFieldsets(config.questions[i + 1]);
 
             // mark the visited step in the top navigation.
-            $('.top-navigation a[href$="' + getActiveFieldset() + '"]').addClass('visited')
+            $('.top-navigation a[href$="' + getActiveFieldset() + '"]').addClass('visited');
         },
 
         setData = function(p) {
@@ -746,7 +763,7 @@ var brandweer = function($, W) {
 
             if (options.e) {
                 lat = options.e.latlng.lat;
-                lng = options.e.latlng.lng
+                lng = options.e.latlng.lng;
             } else {
                 lat = options.geometry.coordinates[0];
                 lng = options.geometry.coordinates[1];
@@ -760,7 +777,7 @@ var brandweer = function($, W) {
             });
             // @todo put directly into answer.json;
 
-            console.log(options)
+            //console.log(options);
             var answer = {
                 "id": question + '-' + config.numberOfMarkers,
                 "kind": question,
@@ -804,7 +821,7 @@ var brandweer = function($, W) {
                     'options': options,
                     'marker': marker,
                     'e': e
-                }
+                };
                 removeMarker(args);
                 // @todo the formfields should also be removed when the marker is
                 // removed
@@ -944,8 +961,7 @@ var brandweer = function($, W) {
 
             $.ajax({
                 type: 'GET',
-                //url: '/api/bag/panden/' + adres + '?srid=28992',
-                url: 'js/json/panden-815010000001910.json',
+                url: '/web/api/bag/panden/' + adres + '.json?srid=28992',
                 dataType: 'json',
                 success: function(data) {
                     $.each(data.features, function(index, item) {
