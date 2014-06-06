@@ -23,15 +23,16 @@
       background-color:#fff;
       font-weight: bold;
     }
+    
 
   }
 
 }
 
 
-.navigate:visited {
+.navigate.visited {
   color:lighten(@logo-color,20%);
-  background-color: red;
+  background-color: #f60000;
 }
 .navigate:hover {
   color:darken(@logo-color,10%);
@@ -56,38 +57,70 @@
   
   .f-button {
     background: rgba(255, 255, 255, .4);
-    border: 1px solid #ddd;    
+    border: 1px solid #ddd;
+    &.f-button-primary {
+        background-color:rgba(0, 205, 0, .3);
+
+    }
+    &:before {
+      /*content:"Volgende vraag";*/
+    }
     &.f-button-secondary {
       background: rgba(255, 255, 255, .4);
       border: 1px solid #ddd;
+      &:before {
+      /*content:"Vorige vraag";*/
+      }
+    }
+   
+    & span {
+      display: none;
     }
   }
   
+}
+
+body[data-active="personalInformation"] .f-button-secondary,
+body[data-active="final"] #confirm {
+    display: none !important;
+    /* test */
 }
 
 // style for buttonbar on mobile devices
 @media screen and (max-width: 580px) {
 .f-form nav.f-button-bar {
     & button.f-button.f-button-secondary {
+      color: blue;
       width:  38px;
       height: 40px;
       padding: 0;
       margin: 9px;
-      line-height: 0;
-      transform:rotate(270deg);
-      -webkit-transform:rotate(270deg);
-      -moz-transform:rotate(270deg);
-      -o-transform:rotate(270deg);
-      -ms-transform:rotate(270deg);
+      line-height: 1000;
+      // transform:rotate(270deg);
+      // -webkit-transform:rotate(270deg);
+      // -moz-transform:rotate(270deg);
+      // -o-transform:rotate(270deg);
+      // -ms-transform:rotate(270deg);
+      
       & span {
         display: none;
       }
       &:before {
-      content: "a";
-      font-family: 'iconsregular';
-      font-size: 3.5em;
-      font-weight: 100;
-      color: darken(@primary-color,25%);
+      // content: "a";
+      // font-family: 'iconsregular';
+      // font-size: 3.5em;
+      // font-weight: 100;
+      // color: darken(@primary-color,25%);
+      content: "";
+        display: block;
+        margin: 5px 3px;
+        width: 30px;
+        height: 30px;
+        background: url(../img/iconen-information.png) no-repeat -61px -1px;
+        background: url(../img/iconen-information.svg) no-repeat -61px -1px;
+        background-size: 90px 150px;
+        
+        
       }
     }
     & .f-button-primary {

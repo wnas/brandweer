@@ -4,7 +4,7 @@
     "copy": {
       "header": "SafetyMaps Web",
       "body": "<p>Vul hier uw gegevens in, deels in invoervelden, deels door ze op de kaart aan te geven. Bij ieder scherm is er een 'info' icoontje en een 'contact' mogelijkheid.</p>",
-      "help": "help",
+      "help": "",
       "multi": false
     }
   },
@@ -13,7 +13,7 @@
     "copy": {
       "header": "Persoonlijke informatie",
       "body": "<p>Controleer uw gegevens en pas ze aan waar nodig. Als u klaar bent druk dan op 'volgende'</p>",
-      "help": "help",
+      "help": "<p>Geef uw persoonlijke gegevens op zodat wij contact met u kunnen opnemen voor eventuele vragen. Deze gegevens worden niet gebruikt in geval van een incident. </p>",
       "multi": false
     },
     "fields": [
@@ -21,7 +21,7 @@
         "name": "firstname",
         "type": "text",
         "placeholder": "Voornaam",
-        "value": "",
+        "value": "A",
         "checkbox": false,
         "required": "f-required"
       },
@@ -29,7 +29,7 @@
         "name": "surname",
         "type": "text",
         "placeholder": "Achternaam",
-        "value": "",
+        "value": "D",
         "checkbox": false,
         "required": "f-required"
       },
@@ -37,7 +37,7 @@
         "name": "company",
         "type": "text",
         "placeholder": "Bedrijfsnaam",
-        "value": "Brandweervereniging Mill en Sint Hubert",
+        "value": "Van Deijne, Japanse Auto-Onderdelen B.V.",
         "checkbox": false,
         "required": "f-required"
       },
@@ -45,7 +45,7 @@
         "name": "street",
         "type": "text",
         "placeholder": "Straatnaam",
-        "value": "Jochemsweg",
+        "value": "Jochem De Wildstraat",
         "checkbox": false,
         "required": ""
       },
@@ -53,7 +53,7 @@
         "name": "housenumber",
         "type": "number",
         "placeholder": "Huisnummer",
-        "value": "2",
+        "value": "7",
         "checkbox": false,
         "required": ""
       },
@@ -69,7 +69,7 @@
         "name": "postcode",
         "type": "text",
         "placeholder": "Postcode",
-        "value": "5451HW",
+        "value": "5408RT",
         "checkbox": false,
         "required": "f-required"
       },
@@ -85,7 +85,7 @@
         "name": "kvknumber",
         "type": "text",
         "placeholder": "KVK nummer",
-        "value": "40216843",
+        "value": "16051774",
         "checkbox": false,
         "required": ""
       }
@@ -96,13 +96,13 @@
     "copy": {
       "header": "Gebouwen",
       "body": "<p>Zijn de juiste Panden / gebouwen geselecteerd voor uw locatie?</p><ul><li><strong>Ja:</strong> Verder naar volgende vraag</li><li><strong>Nee:</strong> Klik op de grijze panden die ook bij uw object horen</li></ul>",
-      "help": "help",
+      "help": "<p>Op de kaart is uw eigen gebouw groen gekleurd. Selecteer, indien niet correct, de juiste panden. U kunt hiervoor klikken op de rode gebouwen. Indien u een gebouw wilt de-selecteren klikt u nogmaals op een gebouw. Alleen groene gebouwen worden opgenomen. </p>",
       "multi": false
     },
     "features": [
       {
-        "bag_vbo": "815010000001910",
-        "bag_num": "815200000001910",
+        "bag_vbo": "856010000375700",
+        "bag_num": "856200000375699",
         "geometry": {
           "type": "Point",
           "crs": {
@@ -112,8 +112,8 @@
             }
           },
           "coordinates": [
-            5.78341892478978,
-            51.6782414367867
+            5.66418340496889,
+            51.6455105808092
           ]
         }
       }
@@ -124,7 +124,7 @@
     "copy": {
       "header": "Contact informatie",
       "body": "<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. </p>",
-      "help": "help",
+      "help": "<p>Geef namen en telefoonnummers op van personen die de brandweer kan bellen bij een calamiteit. Deze gegevens worden gebruikt in geval van een incident. Na het ingeven kunt u door middel van het groene kruis de contactgegevens toevoegen. U kunt meerdere personen en/of telefoonnummers toevoegen. </p>",
       "multi": true
     },
     "fields": [
@@ -132,7 +132,7 @@
         "name": "firstname",
         "type": "text",
         "placeholder": "Voornaam",
-        "value": "",
+        "value": "A",
         "checkbox": false,
         "required": "f-required"
       },
@@ -140,7 +140,7 @@
         "name": "surname",
         "type": "text",
         "placeholder": "Achternaam",
-        "value": "",
+        "value": "v D",
         "checkbox": false,
         "required": "f-required"
       },
@@ -156,7 +156,7 @@
         "name": "telephone",
         "type": "tel",
         "placeholder": "Telefoon",
-        "value": "",
+        "value": "413 273073",
         "checkbox": false,
         "required": "f-required"
       }
@@ -167,7 +167,7 @@
     "copy": {
       "header": "Functie",
       "body": "<p>Geef voor elk pand/gebouw de functie op. Klik hierbij op een pand en kies dan de hoofdfunctie en deelfunctie</p>",
-      "help": "help",
+      "help": "<p>Geef per gebouw de hoofdfunctie en deelfunctie op. Doe dit door op elk gebouw te klikken en hierna de functies te selecteren. </p>",
       "multi": false
     },
     "functions": [
@@ -254,7 +254,7 @@
     "copy": {
       "header": "Ingangen",
       "body": "<p>Geef per pand/gebouw de hoofdingang op. Klik op de kaart waar de ingang zich bevindt.</p>",
-      "help": "help",
+      "help": "<p>Klik op de kaart voor het opgeven van de hoofdingang. Wilt u per gebouw &eacute;&eacute;n hoofdingang aangeven? <br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.</p>",
       "multi": false
     }
   },
@@ -263,7 +263,7 @@
     "copy": {
       "header": "Sleutelbuis",
       "body": "<p>Indien u een sleutelkluis of sleutelbuis heeft geef deze dan op de kaart aan.</p>",
-      "help": "help",
+      "help": "<p>Klik op de kaart voor het opgeven van de sleutelkluis of sleutelbuis. U kunt meerdere symbolen plaatsen. <br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken. <br/><br/><em>Uitleg:</em><br/><br/>Een verbindingsweg naar uw pand toe mag geen obstakels hebben zoals hekwerken die op slot zijn, overhangende takken of bijvoorbeeld geparkeerde auto's. Hekwerken kunnen op slot indien in de directe omgeving van het hekwerk een sleutelbuis/-kluis aanwezig is met daarin de toegangsleutel.<br/><img src=\"img/help/sleutelkluis.png\"></img><img src=\"img/help/sleutelbuis.png\"></img> </p>",
       "multi": false
     }
   },
@@ -272,7 +272,7 @@
     "copy": {
       "header": "Gasafsluiter",
       "body": "<p>Klik op de kaart waar de gasafsluiter zich bevindt.</p>",
-      "help": "help",
+      "help": "<p>Klik op de kaart voor het opgeven van de gasafsluiter. U kunt meerdere symbolen plaatsen.<br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.</p>",
       "multi": false
     }
   },
@@ -281,7 +281,7 @@
     "copy": {
       "header": "Hoofdschakelaar elektriciteit",
       "body": "<p>Klik op de kaart waar de hoofdschakelaar elektriciteit zich bevindt.</p>",
-      "help": "help",
+      "help": "<p>Klik op de kaart voor het opgeven van de Hoofdschakelaar elektriciteit. U kunt meerdere symbolen plaatsen.<br/><br/> U kunt een symbool verwijderen door nogmaals op het symbool te klikken.</p>",
       "multi": false
     }
   },
@@ -290,7 +290,7 @@
     "copy": {
       "header": "Hoofdafsluiter water",
       "body": "<p>Klik op de kaart waar de hoofdafsluiter voor water zich bevindt.</p>",
-      "help": "help",
+      "help": "<p>Klik op de kaart voor het opgeven van de afsluiter water. U kunt meerdere symbolen plaatsen. <br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.</p>",
       "multi": false
     }
   },
@@ -299,12 +299,12 @@
     "copy": {
       "header": "Gasflessen",
       "body": "<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie.</p>",
-      "help": "help",
+      "help": "<p>Heeft u gasflessen met een gezamenlijke inhoud van meer dan 115 liter? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen opgeven per locatie. U kunt meerdere symbolen plaatsen.<br/<br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.<br/><br/><em>Voorbeelden:</em><br/><br/><img src=\"img/help/gasflessen1.png\"></img><img src=\"img/help/gasflessen2.png\"></img></p>",
       "multi": false
     },
     "fields": [
       {
-        "name": "gasamm0",
+        "name": "gasamm",
         "type": "number",
         "placeholder": "Aantal gasflessen op deze locatie",
         "value": "",
@@ -318,12 +318,12 @@
     "copy": {
       "header": "Gevaarlijke stoffen",
       "body": "<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie.</p>",
-      "help": "help",
+      "help": "<p>Heeft u 100 liter of 100 kilo brandbare, ontvlambare, bijtende of giftige stoffen? Plaats deze dan op de kaart. Na het plaatsen kunt u de aantallen en hoeveelheden opgeven per locatie. U kunt meerdere symbolen plaatsen.<br/><br/> U kunt een symbool verwijderen door nogmaals op het symbool te klikken.<br/><br/>Deze stoffen zijn te herkennen aan gevaaretiketten:<br/><br/><ul><li>In geval van transport <a href=\"http://www.rivm.nl/rvs/Gevaarsindeling/ADR/Gevaarsetiketten_en_kenmerken\">klik hier voor uitleg (rivm)</a></li><li>In geval van handel en eigen gebruik <a href=\"http://nl.wikipedia.org/wiki/Globally_Harmonised_System_of_Classification_and_Labelling_of_Chemicals#GHS-symbolen\">klik hier voor uitleg (wikipedia)</a></li></ul></p>",
       "multi": false
     },
     "fields": [
       {
-        "name": "gevamm0",
+        "name": "gevamm",
         "type": "number",
         "placeholder": "Hoeveelheid",
         "value": "",
@@ -384,7 +384,7 @@
     "copy": {
       "header": "Droge stijgleiding",
       "body": "<p>Heeft uw een droge stijgleiding, plaats deze dan op de kaart.</p>",
-      "help": "help",
+      "help": "<p>Heeft u een Droge stijgleiding? Plaats deze dan op de kaart. Geef hierbij het aansluitpunt voor de brandweer op. U kunt meerdere symbolen plaatsen.<br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.<br/><br/><em>Voorbeelden van droge stijgleiding:</em><br/><br/><img src=\"img/help/stijgleiding1.png\"></img><img src=\"img/help/stijgleiding2.png\"></img></p>",
       "multi": false
     }
   },
@@ -393,23 +393,31 @@
     "copy": {
       "header": "Rookluiken",
       "body": "<p>Heeft uw automatische rookluiken? Plaats deze dan op de kaart.</p>",
-      "help": "help",
+      "help": "<p>Heeft u automatische rookluiken? Plaats u de locatie van de schakelaar op de kaart. U kunt meerdere symbolen plaatsen.<br/><br/>U kunt een symbool verwijderen door nogmaals op het symbool te klikken.<br/><br/><em>Uitleg rookluiken:</em><br/><br/>Rookbeheersing installaties zoals rook warmte afvoer installaties en overdruktrappenhuizen hebben tot doel om de rook uit het gebouw te drijven of uit het trappenhuis te houden. Door dergelijke installatie krijgen de aanwezige personen in uw gebouw mogelijkheid om gedurende een langere periode veilig te vluchten.<br/><br/><img src=\"img/help/rookluik1.png\"></p>",
       "multi": false
     }
   },
   "verdiepingen": {
     "name": "verdiepingen",
     "copy": {
-      "header": "Verdiepingen",
-      "body": "<p>Heeft uw gebouw meerdere verdiepingen. Geef deze aub hier aan.</p>",
-      "help": "help",
+      "header": "Bouwlagen",
+      "body": "<p>Heeft uw gebouw meerdere bouwlagen. Geef deze aub hier aan.</p>",
+      "help": "<p>Geef op hoeveel verdiepingen u boven en onder de grond heeft.U hoeft geen symbool te plaatsen.</p>",
       "multi": false
     },
     "fields": [
       {
-        "name": "verdiepingen",
+        "name": "bouwlaag1",
         "type": "number",
-        "placeholder": "Verdiepingen",
+        "placeholder": "Laagste bouwlaag",
+        "value": "",
+        "checkbox": false,
+        "required": ""
+      },
+      {
+        "name": "bouwlaag2",
+        "type": "number",
+        "placeholder": "Hoogste bouwlaag",
         "value": "",
         "checkbox": false,
         "required": ""
@@ -421,7 +429,7 @@
     "copy": {
       "header": "Bedrijfshulpverlening",
       "body": "<p>Heeft u een BHV-organisatie?</p>",
-      "help": "help",
+      "help": "<p>Heeft u een BHV-organisatie? Kies <em>[Ja, bij ons is BHV aanwezig]</em> als dit juist is. U hoeft geen symbool te plaatsen.</p>",
       "multi": false
     },
     "fields": [
@@ -440,7 +448,7 @@
     "copy": {
       "header": "Aanwezigen",
       "body": "<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid.</p>",
-      "help": "help",
+      "help": "<p>Geef aan wanneer welke groepen aanwezig zijn en in welke maximale hoeveelheid. U hoeft geen symbool te plaatsen.</p>",
       "multi": false
     },
     "fields": [
@@ -523,7 +531,7 @@
     "copy": {
       "header": "Brandweer oefening",
       "body": "<p>Staat u open voor een brandweer oefening? <em>U wordt niet altijd benaderd.</em></p>",
-      "help": "help",
+      "help": "<p>Geef aan wanneer of u benaderd wilt worden voor een brandweeroefening. U wordt niet altijd benaderd. U hoeft geen symbool te plaatsen.</p>",
       "multi": false
     },
     "fields": [
@@ -541,8 +549,8 @@
     "name": "final",
     "copy": {
       "header": "Dank voor uw medewerking",
-      "body": "<p>Hartelijk dank voor uw medewerking.</p>",
-      "help": "help",
+      "body": "<p>Hartelijk dank voor uw medewerking. U kunt de pagina sluiten.</p>",
+      "help": "",
       "multi": false
     }
   },
@@ -551,7 +559,7 @@
     "copy": {
       "header": "Contact",
       "body": "<p>U kunt voor vragen altijd terecht</p>",
-      "help": "help",
+      "help": "",
       "multi": false
     }
   }

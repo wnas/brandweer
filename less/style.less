@@ -19,6 +19,9 @@
 @import "navigate.less";
 
 @import "layout.less";
+@import "maps.less";
+
+
 
 #contact {
   display:none;
@@ -37,12 +40,25 @@
     width: 30px;
     height: 30px;
     .default-icon-style;
-    .icons;
-    .icon-close;
-    .icons-hover;
+    //.icons;
+    //.icon-close;
+    //.icons-hover;
+    
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -1px -90px;
+      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -31px -90px;
+        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
+        background-size: 90px 150px;
+        background-color: red;
+      }
     }
   }
 }
@@ -60,15 +76,30 @@
   
   & .eraseCI {
     float: right;
+    margin-bottom: 10px;
     width: 30px;
     height: 30px;
     .default-icon-style;
-    .icons;
-    .icon-close;
+    // .icons;
+    // .icon-close;
     .icons-hover;
+    &:hover {
+      background: red;width: 30px height: 30px;display: block;
+    }
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -1px -90px;
+      background: url(../img/iconen-information.svg) no-repeat -1px -90px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+      &:hover {
+        background: url(../img/iconen-information.png) no-repeat -31px -90px;
+        background: url(../img/iconen-information.svg) no-repeat -31px -90px;
+        background-size: 90px 150px;
+      }
     }
   }
   & .hideCI {
@@ -77,23 +108,50 @@
     height: 30px;
     margin-bottom: 10px;
     .default-icon-style;
-    .icons;
-    .icon-arrow-up;
-    .icons-hover;
+    //.icons;
+    //.icon-arrow-up;
+    //.icons-hover;
+    
     & span {
-      position: absolute;
-      left: -999px;
+      display: block;
+      margin: 0 auto;
+      width: 30px;
+      height: 30px;
+      background: url(../img/iconen-information.png) no-repeat -31px -61px;
+      background: url(../img/iconen-information.svg) no-repeat -31px -61px;
+      background-size: 90px 150px;
+      text-indent: -111111px;
+    }
+  
+    &:hover span {
+          background: url(../img/iconen-information.png) no-repeat -61px -61px;
+          background: url(../img/iconen-information.svg) no-repeat -61px -61px;
+          background-size: 90px 150px;
     }
   }
+  &.hide button.hideCI {
+    span {
+            background: url(../img/iconen-information.png) no-repeat -1px -61px;
+            background: url(../img/iconen-information.svg) no-repeat -1px -61px;
+            background-size: 90px 150px;
+    }
+    &:hover span {
+            background: url(../img/iconen-information.png) no-repeat -61px -31px;
+            background: url(../img/iconen-information.svg) no-repeat -61px -31px;
+            background-size: 90px 150px;
+    }
+  }
+  
   & input.f-input {
-    margin: 1px 0 0 0;
+    margin: 5px 0 0 0;
     border: 0;
     border-bottom: 1px solid fade(@theme-color,10%);
     background: fade(@theme-color,5%);
   }
 }
+
 @media screen and (max-width: 600px) {
-    .ci {
+    .ci .hide {
       left: 0;
       width:96%;
       & .hideCI {
@@ -126,6 +184,10 @@ div#questions {
   @media only screen and(max-width:600px) {
     width: 100%;
     }
+}
+
+body[data-active="intro"] #questions{
+  width: 100%;
 }
 
 fieldset {
@@ -219,25 +281,29 @@ fieldset {
   padding-right: 20px;
 //  display: inline-block;
   height: 30px;
-  .icons;
+  // .icons;
   .default-icon-style;
-  .icon-arrow-up;
+  // .icon-arrow-up;
+  background: url(../img/iconen-information.png) no-repeat -1px -59px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -59px;
+  
+  background-size: 90px 150px;
   &:hover {
-      background: none;
+      background-color: inherit;
       border: 0;
-  }
-  @media only screen and(max-width:600px) {
-    width: 74%;
   }
   border: 0;
 }
 .hideMe .hideFieldset {
   padding-right:0;
   padding-left: 20px;
-  .icons;
-  .icon-arrow-down;
+  // .icons;
+  // .icon-arrow-down;
+  background: url(../img/iconen-information.png) no-repeat -31px -61px;
+  background: url(../img/iconen-information.svg) no-repeat -31px -61px;
+  background-size: 90px 150px;
   &:hover {
-      background: none;
+      background-color: inherit;
       border: 0;
   } 
 }
@@ -251,16 +317,41 @@ fieldset {
   height:30px;
   cursor: pointer;
   .default-icon-style;
-  .icons;
+  // .icons;
   .icons-hover;
   // don't need this span
   span {display: none;}
 }
 .contact {
-  .icon-contact;
+  // .icon-contact;
+  background: url(../img/iconen-information.png) no-repeat -1px -1px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -1px;
+  background-size: 90px 150px;
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat -31px -1px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -1px;
+    background-size: 90px 150px;
+    background-color: fade(@theme-color,70%);
+    border: 1px solid fade(#ddd,10%);
+  }
 }
 button.revealInformation {
-  .icon-info;
+  // .icon-info;
+  &:before {
+    display: none;
+  }
+  
+  background: url(../img/iconen-information.png) no-repeat -30px -30px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -31px;
+  background-size: 90px 150px;
+  
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat 0 -30px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -31px;
+    background-color: fade(@theme-color,70%);
+    background-size: 90px 150px;
+  }
+  
 }
 
 .revealInformation {
@@ -276,9 +367,29 @@ button#addContact {
   width: 30px;
     height: 30px;
   .default-icon-style;
-  .icons;
-  .icons-hover;
-  .icon-add;
+  // .icons;
+  // .icons-hover;
+  // .icon-add;
+  background: url(../img/iconen-information.png) no-repeat -1px -121px;
+  background: url(../img/iconen-information.svg) no-repeat -1px -121px;
+  background-size: 90px 150px;
+  
+  &:hover {
+    background: url(../img/iconen-information.png) no-repeat -31px -121px;
+    background: url(../img/iconen-information.svg) no-repeat -31px -121px;
+    background-color: fade(@theme-color,70%);
+    background-size: 90px 150px;
+  }
   & span {display: none;}
 }
 
+div.button-bar {
+    button#addContact {
+      margin-top: 30px;
+      vertical-align: middle;
+    }
+    label {
+      display: block;
+      margin: -23px 60px 10px;
+    }
+}
